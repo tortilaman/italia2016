@@ -37,7 +37,7 @@ ehthumbs.db
 Thumbs.db
 
 .sass-cache/
-craft/config
+craft/alt-config
 craft/plugins
 *.css.map
 
