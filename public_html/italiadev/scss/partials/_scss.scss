@@ -1,0 +1,21 @@
+/*=============================================
+
+All the utility stuff goes here such as variables, mixins, and classes like clearfix that will be used all over the place.
+
+**===========================================*/
+
+//COLORS
+$block-bg: 	rgba( 255, 255, 255, 0.9);
+$bg-color: 	#f8f0e4;
+$color1: 	rgb(77, 188, 133);
+$color1T:	rgba(77, 188, 133, 0.9);
+$color2:	rgb(223, 100, 38);
+$color2T:	rgba(223, 100, 38, 0.9);
+$color3:	rgb(45, 49, 122);
+$color3T:	rgba(45, 49, 122, 0.9);
+
+.clearfix:after {
+	content:"";
+	display:block;
+	clear:both;
+}

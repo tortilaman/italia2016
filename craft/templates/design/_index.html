@@ -1,0 +1,76 @@
+{#
+# Design Index template
+# -------------------------
+#
+# This template gets loaded whenever the Design index is requested, because
+# the Design Index single-entry section's Template setting is set to
+# "design/_index".
+#
+# An `entry` variable will be automatically passed to this template, which will
+# be set to the Design Index entry.
+-#}
+
+{% extends "_layouts/site" %}
+{% set bodyClass = "design" %}
+
+{# Setting up the tag filter stuff #}
+{% set disciplineQuery = craft.request.getParam('discipline') %}
+
+{# Then find categories that match the slugs in your query string. #}
+{% set disciplineTags = craft.tags.group('disciplines').slug(disciplineQuery) %}
+
+{# setup your search parameters #}
+{% set searchParams = {
+	relatedTo:  disciplineTags,
+	section: 'design'
+} %}
+
+{# Find your entries #}
+{% set entries = craft.entries(searchParams).order('score') %}
+
+{% block main %}
+	<form id="d_filter" action="http://dev.sfuitaliadesign.com/design">
+		<select name="discipline" onchange='this.form.submit()'>
+			<option value=""></option>
+			{% for tag in craft.tags.group('disciplines') %}
+				<option value="{{tag.slug}}" {{ tag.slug in disciplineQuery ? 'selected'}}>{{tag.title}}</option>
+			{% endfor %}
+		</select>
+	</form>
+
+	{# Loop through the filtered entries #}
+	{% if entries | length %}
+		{% for entry in entries %}
+			{% if loop.first %}
+			<section id="d_entries">
+			{% endif %}
+				<article class="{{entry.type == 'shortFilm' ? 'film_entry' : 'design_entry'}}">
+					{% if entry.type == "interviewVideo" %}
+						{% set image = entry.parent.intPortrait.first %}
+					{% else %}
+						{% set image = entry.intPortrait.first %}
+					{% endif %}
+					{% if image %}
+						<figure>
+							<a href="{{ entry.url }}">
+								<img src="{{ image.url }}" alt="{{ image.title }}">
+							</a>
+						</figure>
+					{% else %}
+						<figure>
+							<img src="http://dev.sfuitaliadesign.com/assets/images/portraits/placeholder_image.jpg" alt="Placeholder image">
+						</figure>
+					{% endif %}
+					<div class="entry_title">
+						<h3><a href="{{ entry.url }}">{{ entry }}</a></h3>
+					</div>
+				</article>
+			{# End the .flex container after the last entry #}
+			{% if loop.last %}
+			</section>
+			{% endif %}
+		{% endfor %}
+	{% else %}
+		<p>That's strange, we couldn't find anything, our bad. Maybe try looking for something else? We'll fix this ASAP!</p>
+	{% endif %}
+{% endblock %}

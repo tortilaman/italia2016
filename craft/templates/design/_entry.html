@@ -1,0 +1,107 @@
+{#
+# Design entry template
+# -------------------
+#
+# This template gets loaded whenever a Design entry’s URL is requested, because
+# the Design section’s Template setting is set to "design/_entry".
+#
+# An `entry` variable will be automatically passed to this template, which will
+# be set to the requested Design entry.
+-#}
+
+{% extends "_layouts/site" %}
+{% set title = entry.title %}
+
+{# Overwriting the nav. We can easily add it back in as it's in the site.html file #}
+{% block nav %}
+	<span class="v_close_btn"><a href="/design">< The Design</a></span>
+{% endblock %}
+
+{% block main %}
+<article>
+	{% include "_includes/video_header" %}
+	<section id="v_content">
+		{% if entry.type == "designer" %}
+		{% set portrait = entry.intPortrait.first %}
+		{% else %}
+		{% set portrait = entry.parent.intPortrait.first %}
+		{% endif %}
+		<div id="v_info" class="clearfix">
+			{# ============= VIDEO CHAPTERS ================ #}
+			<div id="v_chapters">
+				{% for video in entry.type == "designer" ? entry.children : entry.parent.children %}
+					<div class="v_chapter">
+						<a href="{{video.url}}">
+							<img class="v_chapter_thumb" src="{{ video.intPortrait.first.url }}" alt="{{video.title}}">
+							<div class="v_rel_info">
+								<h3>{{video.title}}</h3>
+								<span>{{video.videoDuration}}</span>
+							</div>
+						</a>
+					</div>
+				{% endfor %}
+			</div>
+			<div class="v_bio clearfix">
+				<div class="v_bio_text">
+					<h2>{{entry}}</h2>
+					{% if entry.type == 'interviewVideo' %}
+					<h3>{{entry.parent}}</h3>
+					{% endif %}
+					<p>{{ entry.type == 'designer' ? entry.quickBio : entry.videoDescription }}</p>
+				</div>
+			</div>
+		</div>
+
+		{# ============= MATRIX CONTENT ================ #}
+		<div id="v_context">
+			{% for block in entry.additionalContent %}
+			{% if block.type == "transcriptionParagraph" %}
+			<!-- Transcription Paragraph -->
+			{% if block.heading == "" %}
+			{% else %}
+			<h2 class="v_mat_transc_heading">{{block.heading}}</h2>
+			{% endif %}
+			{{block.transcriptionContent}}
+
+			{% elseif block.type == "pullquote" %}
+			<!-- Pullquote -->
+			<div class="v_mat_pull_container {{block.position}}">
+				<a class="v_mat_pull_link" href="">
+					<blockquote class="v_mat_pull">
+						{{block.quote}}
+					</blockquote>
+				</a>
+			</div>
+
+			{% elseif block.type == "podcast" %}
+			<!-- Podcast -->
+
+			{% elseif block.type == "image" %}
+			<!-- Image -->
+			<!-- TODO: make this fully standards compliant and everything -->
+			<figure class="v_mat_img_container {{block.position}}">
+				<a class="v_mat_img_link" href="#">
+					<div class="v_mat_img_box">
+						<img class="v_mat_img_asset" src={{block.imageAsset.first().url}} alt="{{block.imageCaption}}">
+					</div>
+				</a>
+				<figcaption class="v_mat_img_caption">{{block.imageCaption}}</figcaption>
+			</figure>
+
+			{% elseif block.type == "vidChapter" %}
+			<!-- Video Chapter -->
+
+			{% endif %}
+			{% endfor %}
+		</div>
+	</section>
+</article>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script src="/js/videoControls.js"></script>
+<script src="/js/videoChapters.js"></script>
+{% endblock %}
+
+
+
+

@@ -1,0 +1,67 @@
+{#
+
+# The site layout template
+# ------------------------
+#
+# This layout template extends the _layouts/base.html layout, and defines the
+# main site layout: the header, footer, and main content area.
+#
+# It’s never accessed directly. Instead it is extended by all of our main site
+# templates.
+#
+# This template defines one block region, `main`, which should be extended by
+# child templates to define the main contents for the page.
+-#}
+
+{% extends "_layouts/base" %}
+
+
+{# Define the site navigation #}
+{% set nav = {
+design:    { title: "The Design", desc: "Interviews with thought leaders" },
+italia: { title: "The Stories", desc: "Experience italia" },
+team:     { title: "The Team", desc: "Who we are" }
+} %}
+
+{# Set the `bodyClass` variable to the entry's section handle if there is one,
+or the first URI segment (this is used by the parent template) #}
+{% if bodyClass is not defined %}
+{% set bodyClass = entry is defined ? entry.section.handle : craft.request.firstSegment %}
+{% endif %}
+
+{# Set the `title` variable to the nav item that matches the first segment #}
+{% if nav[bodyClass] is defined %}
+{% set title %}{% if title is defined %}{{ title }} - {% endif %}{{ nav[bodyClass].title }}{% endset %}
+{% endif %}
+
+
+{% block body %}
+	{% block nav %}
+		<header class="header">
+			{# The dieci logo that goes back to the homepage #}
+			<h1 class="logo">Dieci</h1>
+			<nav>
+				<ul>
+					{% for slug, item in nav %}
+					<li>
+						<a href="{{ url(slug) }}" {% if craft.request.firstSegment == slug %}class="sel"{% endif %}>
+							<strong>{{ item.title }}</strong>
+							<span>-</span>
+							<em>{{ item.desc }}</em>
+						</a>
+					</li>
+					{% endfor %}
+				</ul>
+			</nav>
+		</header>
+	{% endblock %}
+
+	<main id="main" role="main">
+		{% block main %}{% endblock %}
+	</main>
+
+
+	<footer id="footer">
+	{# NOTE: Not sure if there will be a footer yet... #}
+	</footer>
+{% endblock %}

@@ -1,0 +1,54 @@
+#d_filter, #d_entries {
+	position: relative;
+	top: 5rem;
+}
+
+#d_filter {
+	left: 3rem;
+}
+
+.entry {
+	position: relative;
+	display: block;
+	margin: 0;
+	padding: 0.5em;
+	float: left;
+
+	img {
+		position: relative;
+		display: block;
+		width: 100%;
+		height: auto;
+		box-shadow: 0.3rem 0.3rem 0 0 $color3;
+	}
+
+	.entry_title {
+		position: absolute;
+		bottom: 5%;
+		left: 0;
+		padding: 0 0 0.5em 0.5em;
+		opacity: 0.8;
+		transform-origin: bottom left;
+		transition: all 0.5s cubic-bezier(0.95, 0.05, 0.795, 0.035);;
+
+		h3 a{
+			color: $color2T;
+			text-shadow: 0.05em 0.05em 0 $color3;
+		}
+	}
+
+	&:hover > .entry_title {
+		transform: translate(0, -5px);
+		transform: scale(1.1);
+		opacity: 1;
+	}
+}
+.design_entry {
+	@extend .entry;
+	width: 33%;
+}
+
+.film_entry {
+	@extend .entry;
+	width: 50%;
+}

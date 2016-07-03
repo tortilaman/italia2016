@@ -1,0 +1,107 @@
+@charset "UTF-8";
+h1 {
+  font-family: Header;
+  margin-bottom: 0.5rem;
+}
+
+h2, h3, h4, h5, h6 {
+  font-family: SubHead;
+  margin-bottom: 0.5rem;
+}
+
+p, span, div {
+  font-family: body;
+  margin-bottom: 0.5rem;
+  font-size: 1.3rem;
+  line-height: 2rem;
+}
+
+h1 {
+  font-size: 4rem;
+}
+
+h2 {
+  font-size: 3rem;
+}
+
+h3 {
+  font-size: 2rem;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+.header h1 {
+  display: inline-block;
+}
+
+#v_context h1, #v_context h2, #v_context h3, #v_context p {
+  padding-bottom: 0.5rem;
+}
+
+#v_context p {
+  line-height: 1.3em;
+  font-size: 1.2em;
+}
+
+[class*="v_mat"] a {
+  color: black;
+  transition: 0.5s all ease-in-out;
+  text-decoration: none;
+}
+
+[class*="v_mat"] a:hover, [class*="v_mat"] a:active, [class*="v_mat"] a:focus {
+  color: #050505;
+}
+
+/*==================================
+	FONT FACES
+**================================*/
+@font-face {
+  font-family: 'Header';
+  src: url("../assets/fonts/PlayfairDisplay-BoldItalic.eot");
+  src: local("☺"), url("../assets/fonts/PlayfairDisplay-BoldItalic.woff") format("woff"), url("../assets/fonts/PlayfairDisplay-BoldItalic.ttf") format("truetype"), url("../assets/fonts/PlayfairDisplay-BoldItalic.svg") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SubHead';
+  src: url("../assets/fonts/Freschezza_Normal.eot");
+  src: local("☺"), url("../assets/fonts/Freschezza_Normal.woff") format("woff"), url("../assets/fonts/Freschezza_Normal.ttf") format("truetype"), url("../assets/fonts/Freschezza_Normal.svg") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SubHead-Font';
+  src: url("../assets/fonts/Freschezza_Normal.eot");
+  src: local("☺"), url("../assets/fonts/Freschezza_Normal.woff") format("woff"), url("../assets/fonts/Freschezza_Normal.ttf") format("truetype"), url("../assets/fonts/Freschezza_Normal.svg") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Body';
+  src: url("../assets/fonts/N_Book.eot");
+  src: local("☺"), url("../assets/fonts/N_Book.woff") format("woff"), url("../assets/fonts/N_Book.ttf") format("truetype"), url("../assets/fonts/N_Book.svg") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Body';
+  src: url("../assets/fonts/N_Bold.eot");
+  src: local("☺"), url("../assets/fonts/N_Bold.woff") format("woff"), url("../assets/fonts/N_Bold.ttf") format("truetype"), url("../assets/fonts/N_Bold.svg") format("svg");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Body';
+  src: url("../assets/fonts/N_BookItalic.eot");
+  src: local("☺"), url("../assets/fonts/N_BookItalic.woff") format("woff"), url("../assets/fonts/N_BookItalic.ttf") format("truetype"), url("../assets/fonts/N_BookItalic.svg") format("svg");
+  font-weight: normal;
+  font-style: italic;
+}
