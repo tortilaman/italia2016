@@ -35,7 +35,7 @@ function debounce(callback, wait) {
 String.prototype.toMMSS = function () {
 	var sec_num = parseInt(this, 10); // don't forget the second param
 	var minutes = Math.floor(sec_num / 60);
-	var seconds = sec_num - (minutes * 60);
+	var seconds = sec_num % 60;
 
 	if (minutes < 10) {minutes = "0"+minutes;}
 	if (seconds < 10) {seconds = "0"+seconds;}
@@ -58,22 +58,49 @@ String.prototype.toMMSS = function () {
 $(document).ready(function() {
 	//VARIABLE DECLARATIONS
 	var windowheight = window.innerHeight // height of browser window
-		vidScroll = document.getElementById("v_content").offsetTop //Height of chapter vid section
-		vWrapper = document.querySelector("#v_wrapper")
-		vPlayer = document.querySelector("#v_player");
+		$vidScroll = $("#v_content").offset().top //Height of chapter vid section
+		$vWrapper = $("#v_wrapper")
+		vPlayer = document.getElementById("v_player");
 	//Controls
-	var vTime = $(".v_cur_time")
-		vDur = $(".v_duration")
-		vTimeCont = document.querySelector(".v_time_ind")
-		background = document.querySelector("#v_header")
-		vProgBarCont = document.querySelector("#v_progress_bar")
-		vProgBar = document.querySelector("#v_show_progress");
+	var $vTime = $(".v_cur_time")
+		$vDur = $(".v_duration")
+		$vTimeCont = $(".v_time_ind")
+		$background = $("#v_header")
+		$vProgBarCont = $("#v_progress_bar")
+		$vProgBar = $("#v_show_progress");
 	//Info
-	var title = document.querySelector("#v_title")
-		chapters = document.querySelector("#v_chapters");
+	var $title = $("#v_title")
+		chapters = $("#v_chapters");
 
 	//Scroll window to where we want it to start.
-	$(window).scrollTop(chapters.scrollHeight); //FIXME: Make sure this is the right value.
+	$(window).scrollTop(chapters.outerHeight()); //FIXME: Make sure this is the right value.
+
+	/*=================================
+		HIDE & SHOW CONTROLS
+	**===============================*/
+
+	function showControls() {
+		$title.removeClass("oHidden");
+		$vTimeCont.removeClass("oHidden");
+		$vProgBarCont.removeClass("oHidden");
+	}
+
+	function hideControls() {
+		$title.addClass("oHidden");
+		$vTimeCont.addClass("oHidden");
+		$vProgBarCont.addClass("oHidden");
+	}
+
+	var i = null;
+	$("body").mousemove(function() {
+		clearTimeout(i);
+		showControls();
+		i = setTimeout(hideControls, 2000);
+	}).click(function() {
+		clearTimeout(i);
+		showControls();
+		i = setTimeout(hideControls, 2000);
+	});
 
 
 	/*=================================
@@ -83,39 +110,29 @@ $(document).ready(function() {
 	//Function to resize video and change bg color
 	function videoResize() {
 		scrollPos = window.pageYOffset; // get number of pixels document has scrolled vertically
-		scrollPercent = scrollPos / vidScroll;
+		scrollPercent = scrollPos / $vidScroll;
 		scrollPercentInv = 1-scrollPercent;
 
-		if (scrollPercent > 0 && scrollPercent < 1) {
+		if (scrollPercent < 1) {
 			//Scale Video Player
 			scaleValue = scrollPercentInv.map(0,1, 0.7, 1).toFixed(2);
-			vWrapper.style.transform = 'scale('+scaleValue+')';
-
-			if (scrollPercent <0.5) {
-				bgColor = scrollPercent.map(0, 0.5, 0, 255).toFixed(0);
-				opacityValue = scrollPercentInv.map(0.5,1,0.2,1).toFixed(2);
-			}
-			else {
-				bgColor = 255;
-				opacityValue = 0.2;
-			}
-
-			background.style.background = 'rgb('+bgColor+', '+bgColor+', '+bgColor+')';
-			vWrapper.style.opacity = opacityValue;
+			$vWrapper.css( 'transform', 'scale('+scaleValue+')');
 		}
 
 		//Hide video elements / controls when scrolled
 		//TODO: Optimize how often this is called.
 		if (scrollPercent > 0.5) {
-			title.style.opacity = "0";
-			vTimeCont.style.opacity = "0";
-			vProgBarCont.style.opacity = "0";
-
+			bgColor = 255;
+			opacityValue = 0.2;
+			hideControls();
 		} else {
-			title.style.opacity = "1";
-			vTimeCont.style.opacity = "1";
-			vProgBarCont.style.opacity = "1"
+			bgColor = scrollPercent.map(0, 0.5, 0, 255).toFixed(0);
+			opacityValue = scrollPercentInv.map(0.5,1,0.2,1).toFixed(2);
+			showControls();
+
 		}
+		$background.css( 'background', 'rgb('+bgColor+', '+bgColor+', '+bgColor+')');
+		$vWrapper.css( 'opacity', opacityValue);
 	}
 
 	//One last run of videoResize() to catch any straggling changes.
@@ -145,7 +162,7 @@ $(document).ready(function() {
 	**===============================*/
 
 	function timeUpdate() {
-		vProgBar.style.width = ((vPlayer.currentTime / vPlayer.duration) *100) + '%';
+		$vProgBar.css('width', ((vPlayer.currentTime / vPlayer.duration) *100) + '%');
 	}
 
 	//Play Progress event listener
@@ -155,39 +172,12 @@ $(document).ready(function() {
 		});
 	});
 
-	vProgBarCont.onclick = function(e) {
-		var newTime = (((e.pageX - vProgBarCont.offsetLeft) / vProgBarCont.offsetWidth) * vPlayer.duration);
-		console.log(e.pageX+', '+vProgBarCont.offsetLeft+', '+vProgBarCont.offsetWidth+', '+newTime);
+	$vProgBarCont.onclick = function(e) {
+		var newTime = (((e.pageX - $vProgBarCont.offset().left) / $vProgBarCont.outerWidth()) * vPlayer.duration);
+		console.log(e.pageX+', '+$vProgBarCont.offset.left+', '+$vProgBarCont.outerWidth()+', '+newTime);
 		vPlayer.currentTime = newTime;
 
 	};
-
-	/*=================================
-		HIDE & SHOW CONTROLS
-	**===============================*/
-
-	function showControls() {
-		$("#v_title").removeClass("oHidden");
-		$(".v_time_ind").removeClass("oHidden");
-		$("#v_progress_bar").removeClass("oHidden");
-	}
-
-	function hideControls() {
-		$("#v_title").addClass("oHidden");
-		$(".v_time_ind").addClass("oHidden");
-		$("#v_progress_bar").addClass("oHidden");
-	}
-
-	var i = null;
-	$("body").mousemove(function() {
-		clearTimeout(i);
-		showControls();
-		i = setTimeout(hideControls, 2000);
-	}).click(function() {
-		clearTimeout(i);
-		showControls();
-		i = setTimeout(hideControls, 2000);
-	});
 
 	/*=================================
 		PLAY BUTTON
@@ -250,9 +240,9 @@ $(document).ready(function() {
 				this.vidPlayer.play()
 				//VIDEO TIME
 				var updateTime = setInterval(function() {
-					vTime.text(vPlayer.currentTime.toFixed(0).toMMSS());
-					vDur.text(vPlayer.duration.toFixed(0).toMMSS());
-					vTimeCont.style.opacity = '1';
+					$vTime.text(vPlayer.currentTime.toFixed(0).toMMSS());
+					$vDur.text(vPlayer.duration.toFixed(0).toMMSS());
+					$vTimeCont.css('opacity', '1');
 				}, 1000);
 			//Pause
 			} else {

@@ -14,7 +14,7 @@ header.header {
 	padding: 0.5rem;
 	background-color: $block-bg;
 	box-shadow: 0 0 0.5rem 0.5rem $block-bg;
-	z-index: 2;
+	z-index: 10;
 
 	nav {
 		display: inline-block;

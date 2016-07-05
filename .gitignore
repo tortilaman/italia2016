@@ -40,4 +40,5 @@ Thumbs.db
 craft/config
 craft/plugins
 *.css.map
+prepros.cfg
 
