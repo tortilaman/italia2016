@@ -1,13 +1,22 @@
+/* ================================================================
+	MAIN TODO BLOCK
+
+	TODO: Timeline bar isn't hidden when you go to a video page
+
+** ==============================================================*/
+
 /*=================================
 	BLANK VARIABLE DECLARATIONS
 **===============================*/
 
+//Scrolling Variables
 var scrollPos;
 var scrollPercent;
 var scrollPercentInv;
 var scaleValue;
 var opacityValue;
 var bgColor;
+//Other Variables
 var played = false;
 
 /*=================================
@@ -56,56 +65,41 @@ String.prototype.toMMSS = function () {
 **===============================*/
 
 $(document).ready(function() {
-	//VARIABLE DECLARATIONS
-	var windowheight = window.innerHeight // height of browser window
-		$vidScroll = $("#v_content").offset().top //Height of chapter vid section
-		$vWrapper = $("#v_wrapper")
-		vPlayer = document.getElementById("v_player");
-	//Controls
-	var $vTime = $(".v_cur_time")
+	//SCROLLING VARIABLES
+	var	$vidScroll = $("#v_content").offset().top //Height of chapter vid section
+		$vWrapper = $("#v_wrapper");
+	//HIDE & SHOW CONTROLS VARIABLES
+	var $title = $("#v_title")
+		$vTimeCont = $(".v_time_ind")
+		$vProgBarCont = $("#v_progress_bar");
+	//INTERFACE VARIABLES
+	//vPlayer is a js (not jQuery) object b/c it's more concise later.
+	var vPlayer = document.getElementById("v_player")
+		$vTime = $(".v_cur_time")
 		$vDur = $(".v_duration")
 		$vTimeCont = $(".v_time_ind")
 		$background = $("#v_header")
-		$vProgBarCont = $("#v_progress_bar")
 		$vProgBar = $("#v_show_progress");
 	//Info
-	var $title = $("#v_title")
-		chapters = $("#v_chapters");
+	var chapters = $("#v_chapters");
 
 	//Scroll window to where we want it to start.
 	$(window).scrollTop(chapters.outerHeight()); //FIXME: Make sure this is the right value.
 
-	/*=================================
-		HIDE & SHOW CONTROLS
-	**===============================*/
+/* ======================================================================================
 
-	function showControls() {
-		$title.removeClass("oHidden");
-		$vTimeCont.removeClass("oHidden");
-		$vProgBarCont.removeClass("oHidden");
-	}
+ ad88888ba                                        88  88  88
+d8"     "8b                                       88  88  ""
+Y8,                                               88  88
+`Y8aaaaa,     ,adPPYba,  8b,dPPYba,   ,adPPYba,   88  88  88  8b,dPPYba,    ,adPPYb,d8
+  `"""""8b,  a8"     ""  88P'   "Y8  a8"     "8a  88  88  88  88P'   `"8a  a8"    `Y88
+		`8b  8b          88          8b       d8  88  88  88  88       88  8b       88
+Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  88  88       88  "8a,   ,d88
+ "Y88888P"    `"Ybbd8"'  88           `"YbbdP"'   88  88  88  88       88   `"YbbdP"Y8
+																			aa,    ,88
+																			 "Y8bbdP"
 
-	function hideControls() {
-		$title.addClass("oHidden");
-		$vTimeCont.addClass("oHidden");
-		$vProgBarCont.addClass("oHidden");
-	}
-
-	var i = null;
-	$("body").mousemove(function() {
-		clearTimeout(i);
-		showControls();
-		i = setTimeout(hideControls, 2000);
-	}).click(function() {
-		clearTimeout(i);
-		showControls();
-		i = setTimeout(hideControls, 2000);
-	});
-
-
-	/*=================================
-		VIDEO RESIZING
-	**===============================*/
+** ====================================================================================*/
 
 	//Function to resize video and change bg color
 	function videoResize() {
@@ -148,6 +142,46 @@ $(document).ready(function() {
 		});
 	});
 
+/* ========================================================================================
+
+88                                                 ad88
+88                ,d                              d8"
+88                88                              88
+88  8b,dPPYba,  MM88MMM  ,adPPYba,  8b,dPPYba,  MM88MMM  ,adPPYYba,   ,adPPYba,   ,adPPYba,
+88  88P'   `"8a   88    a8P_____88  88P'   "Y8    88     ""     `Y8  a8"     ""  a8P_____88
+88  88       88   88    8PP"""""""  88            88     ,adPPPPP88  8b          8PP"""""""
+88  88       88   88,   "8b,   ,aa  88            88     88,    ,88  "8a,   ,aa  "8b,   ,aa
+88  88       88   "Y888  `"Ybbd8"'  88            88     `"8bbdP"Y8   `"Ybbd8"'   `"Ybbd8"'
+
+** ======================================================================================*/
+
+	/*=================================
+		HIDE & SHOW CONTROLS
+	**===============================*/
+
+	function showControls() {
+		$title.removeClass("oHidden");
+		$vTimeCont.removeClass("oHidden");
+		$vProgBarCont.removeClass("oHidden");
+	}
+
+	function hideControls() {
+		$title.addClass("oHidden");
+		$vTimeCont.addClass("oHidden");
+		$vProgBarCont.addClass("oHidden");
+	}
+
+	var i = null;
+	$("body").mousemove(function() {
+		clearTimeout(i);
+		showControls();
+		i = setTimeout(hideControls, 2000);
+	}).click(function() {
+		clearTimeout(i);
+		showControls();
+		i = setTimeout(hideControls, 2000);
+	});
+
 	/*=================================
 		VOLUME BUTTON
 	**===============================*/
@@ -158,7 +192,7 @@ $(document).ready(function() {
 	})
 
 	/*=================================
-		VIDEO TIME
+		VIDEO PROGRESS BAR
 	**===============================*/
 
 	function timeUpdate() {
@@ -261,7 +295,6 @@ $(document).ready(function() {
 	};
 
 	playButton.init();
-
 
 });
 

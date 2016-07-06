@@ -36,9 +36,24 @@
 ehthumbs.db
 Thumbs.db
 
+# SASS files #
+##############
 .sass-cache/
+*.css.map
+
+# Non code files #
+######################
 craft/config
 craft/plugins
-*.css.map
+public_html/italiadev/assets
 public_html/italiadev/prepros.cfg
+prepros.cfg
+
+# Minified Files #
+######################
+*-min.*
+
+
+
+
 

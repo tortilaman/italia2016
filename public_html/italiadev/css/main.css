@@ -47,11 +47,13 @@ a { color: #df6426; text-decoration: none; }
 
 #v_context p { line-height: 1.3em; font-size: 1.2em; }
 
-[class*="v_mat"] a { color: black; -webkit-transition: 0.5s all ease-in-out; transition: 0.5s all ease-in-out; text-decoration: none; }
+[class*="v_mat"] a { color: black; transition: 0.5s all ease-in-out; text-decoration: none; }
 
 [class*="v_mat"] a:hover, [class*="v_mat"] a:active, [class*="v_mat"] a:focus { color: #050505; }
 
-/*================================== FONT FACES ================================*/
+/*==================================
+	FONT FACES
+**================================*/
 @font-face { font-family: 'Header'; src: url("../assets/fonts/PlayfairDisplay-BoldItalic.eot"); src: local("☺"), url("../assets/fonts/PlayfairDisplay-BoldItalic.woff") format("woff"), url("../assets/fonts/PlayfairDisplay-BoldItalic.ttf") format("truetype"), url("../assets/fonts/PlayfairDisplay-BoldItalic.svg") format("svg"); font-weight: normal; font-style: normal; }
 
 @font-face { font-family: 'SubHead'; src: url("../assets/fonts/Freschezza_Normal.eot"); src: local("☺"), url("../assets/fonts/Freschezza_Normal.woff") format("woff"), url("../assets/fonts/Freschezza_Normal.ttf") format("truetype"), url("../assets/fonts/Freschezza_Normal.svg") format("svg"); font-weight: normal; font-style: normal; }
@@ -84,7 +86,7 @@ a { color: #df6426; text-decoration: none; }
 
 .entry img, .design_entry img, .film_entry img { position: relative; display: block; width: 100%; height: auto; box-shadow: 0.3rem 0.3rem 0 0 #2d317a; }
 
-.entry .entry_title, .design_entry .entry_title, .film_entry .entry_title { position: absolute; bottom: 5%; left: 0; padding: 0 0 0.5em 0.5em; opacity: 0.8; -webkit-transform-origin: bottom left; -ms-transform-origin: bottom left; transform-origin: bottom left; -webkit-transition: all 0.5s cubic-bezier(0.95, 0.05, 0.795, 0.035); transition: all 0.5s cubic-bezier(0.95, 0.05, 0.795, 0.035); }
+.entry .entry_title, .design_entry .entry_title, .film_entry .entry_title { position: absolute; bottom: 5%; left: 0; padding: 0 0 0.5em 0.5em; opacity: 0.8; -webkit-transform-origin: bottom left; -ms-transform-origin: bottom left; transform-origin: bottom left; transition: all 0.5s cubic-bezier(0.95, 0.05, 0.795, 0.035); }
 
 .entry .entry_title h3 a, .design_entry .entry_title h3 a, .film_entry .entry_title h3 a { color: rgba(223, 100, 38, 0.9); text-shadow: 0.05em 0.05em 0 #2d317a; }
 
@@ -108,21 +110,25 @@ span.v_close_btn a { text-decoration: none; color: black; }
 88           88  ,adPPPPP88   `8b   d8'   8PP"""""""  88
 88           88  88,    ,88    `8b,d8'    "8b,   ,aa  88
 88           88  `"8bbdP"Y8      Y88'      `"Ybbd8"'  88
-                                 d8'
-                                d8'
+								 d8'
+								d8'
 
 **=====================================================================*/
-#v_header { position: fixed; top: 0; display: table; width: 100vw; max-width: 100%; height: 100vh; z-index: 0; -webkit-transition: background 0.5s; transition: background 0.5s; }
+#v_header, .v_header { position: fixed; top: 0; display: table; width: 100vw; max-width: 100%; height: 100vh; z-index: 0; transition: background 0.5s; }
 
 #v_container { position: relative; display: table-cell; vertical-align: middle; }
 
-#v_title { position: absolute; top: 1.5vmin; left: 3vmin; z-index: 5; color: white; text-shadow: 0.1rem 0.1rem 0 #2d317a; opacity: 0; -webkit-transition: all 0.5s; transition: all 0.5s; }
+#v_title { position: absolute; top: 1.5vmin; left: 3vmin; z-index: 5; color: white; text-shadow: 0.1rem 0.1rem 0 #2d317a; opacity: 0; transition: all 0.5s; }
 
-#v_wrapper { position: relative; display: block; padding-bottom: 42.86%; /* 21:9 */ width: 100%; height: 0; -webkit-transform-origin: top left; -ms-transform-origin: top left; transform-origin: top left; -webkit-transform: scale(0.7); -ms-transform: scale(0.7); transform: scale(0.7); -webkit-transition: all 0.1s; transition: all 0.1s; }
+#italia_content #v_wrapper { width: 100vw; max-width: 100%; opacity: 0; }
+
+#v_wrapper { position: relative; display: block; padding-bottom: 42.86%; /* 21:9 */ width: 100%; height: 0; -webkit-transform-origin: top left; -ms-transform-origin: top left; transform-origin: top left; -webkit-transform: scale(0.7); -ms-transform: scale(0.7); transform: scale(0.7); transition: all 0.1s; }
 
 #v_wrapper video, #v_wrapper #v_player { position: absolute; display: block; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
 
-/*==================== VIDEO CONTROLS ==================*/
+/*====================
+	VIDEO CONTROLS
+**==================*/
 .v_controls { position: fixed; display: block; top: 95vh; left: 0; width: 100vw; max-width: 100%; height: 2rem; margin: 0; padding: 0 3vw; z-index: 2; }
 
 .v_control_elem, .v_play_btn_cont, .v_vol_btn_cont, .v_time_ind { float: left; height: 2rem; width: 2rem; z-index: 10; color: white; text-align: justify; padding: 0; margin: 0 0 0 0.5rem; }
@@ -133,13 +139,13 @@ span.v_close_btn a { text-decoration: none; color: black; }
 
 .v_vol_btn_cont .svg_volume_icon { -webkit-transform-origin: center left; -ms-transform-origin: center left; transform-origin: center left; }
 
-.v_vol_btn_cont .svg_volume_icon .group-wave { fill-opacity: 1; -webkit-transition: all 0.5s ease-in; transition: all 0.5s ease-in; }
+.v_vol_btn_cont .svg_volume_icon .group-wave { fill-opacity: 1; transition: all 0.5s ease-in; }
 
 .v_vol_btn_cont .svg_volume_icon .mute-anim { -webkit-transform: translateX(-2rem); -ms-transform: translateX(-2rem); transform: translateX(-2rem); -webkit-transform: scale(0 0); -ms-transform: scale(0 0); transform: scale(0 0); fill-opacity: 0; }
 
-.v_time_ind { float: right; width: 7em; opacity: 0; -webkit-transition: all 0.25s; transition: all 0.25s; }
+.v_time_ind { float: right; width: 7em; opacity: 0; transition: all 0.25s; }
 
-#v_show_progress, #v_progress_bar { background: white; height: 0.5rem; margin: 0; padding: 0; -webkit-transition: width 0.1s; transition: width 0.1s; z-index: 2; }
+#v_show_progress, #v_progress_bar { background: white; height: 0.5rem; margin: 0; padding: 0; transition: width 0.1s; z-index: 2; }
 
 #v_progress_bar { margin: 0.75rem 11rem 0 6rem; background: rgba(255, 255, 255, 0.3); z-index: 1; }
 
@@ -199,25 +205,31 @@ section#v_content { position: relative; display: block; top: 110vh; width: 100vw
 
 [class*="v_mat"] { margin: 0.5em; }
 
-/*========================= IMAGES =======================*/
+/*=========================
+	IMAGES
+**=======================*/
 .v_mat_img_container { position: relative; display: inline-block; }
 
 .v_mat_img_container .v_mat_img_box { overflow: hidden; z-index: 1; }
 
-.v_mat_img_container .v_mat_img_box .v_mat_img_asset { position: relative; margin: 0; z-index: 2; -webkit-transition: 0s all; transition: 0s all; }
+.v_mat_img_container .v_mat_img_box .v_mat_img_asset { position: relative; margin: 0; z-index: 2; transition: 0s all; }
 
-.v_mat_img_container .v_mat_img_box .v_mat_img_asset:hover, .v_mat_img_container .v_mat_img_box .v_mat_img_asset:focus, .v_mat_img_container .v_mat_img_box .v_mat_img_asset:active { -webkit-transform: scale(1.4, 1.4); -ms-transform: scale(1.4, 1.4); transform: scale(1.4, 1.4); -webkit-transition: 8s all ease-out; transition: 8s all ease-out; }
+.v_mat_img_container .v_mat_img_box .v_mat_img_asset:hover, .v_mat_img_container .v_mat_img_box .v_mat_img_asset:focus, .v_mat_img_container .v_mat_img_box .v_mat_img_asset:active { -webkit-transform: scale(1.4, 1.4); -ms-transform: scale(1.4, 1.4); transform: scale(1.4, 1.4); transition: 8s all ease-out; }
 
 .v_mat_img_container .v_mat_img_caption { bottom: 0; width: 100%; margin: 0 0.5em; z-index: 2; }
 
-/*========================= PULLQUOTES =======================*/
+/*=========================
+	PULLQUOTES
+**=======================*/
 .v_mat_pull_container { width: 40%; display: inline-block; }
 
 .v_mat_pull_container .v_mat_pull_link, .v_mat_pull_container .v_mat_pull { margin: 0; }
 
 .v_mat_pull_container .v_mat_pull { font-size: 1.5em; line-height: 1.4em; }
 
-/*========================= ALIGNMENT =======================*/
+/*=========================
+	ALIGNMENT
+**=======================*/
 .left { float: left; }
 
 .right { float: right; }
