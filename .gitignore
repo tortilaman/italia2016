@@ -46,14 +46,8 @@ Thumbs.db
 craft/config
 craft/plugins
 public_html/italiadev/assets
-public_html/italiadev/prepros.cfg
-prepros.cfg
+/public_html/italiadev/prepros.cfg
 
 # Minified Files #
 ######################
 *-min.*
-
-
-
-
-

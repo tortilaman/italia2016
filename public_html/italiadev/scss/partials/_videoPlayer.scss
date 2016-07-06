@@ -158,6 +158,8 @@ span.v_close_btn {
 	transition: all 0.25s;
 }
 
+
+
 #v_show_progress, #v_progress_bar {
 	background: white;
 	height: 0.5rem;
@@ -171,6 +173,7 @@ span.v_close_btn {
 	margin: 0.75rem 11rem 0 6rem;
 	background: rgba(255, 255, 255, 0.3);
 	z-index: 1;
+	transition: opacity 0.25s;
 }
 
 
