@@ -8,18 +8,26 @@
 }
 
 .entry {
+	@extend .clearfix;
 	position: relative;
 	display: block;
 	margin: 0;
 	padding: 0.5em;
 	float: left;
 
-	img {
+	.entry_thumb_cont {
 		position: relative;
-		display: block;
-		width: 100%;
-		height: auto;
-		box-shadow: 0.3rem 0.3rem 0 0 $color3;
+		float: right;
+		overflow: hidden;
+
+		img {
+			position: relative;
+			display: block;
+			box-shadow: 0.3rem 0.3rem 0 0 $color3;
+
+			.portrait {width: 100%;}
+			.landscape {height: 100%;}
+		}
 	}
 
 	.entry_title {
@@ -43,12 +51,52 @@
 		opacity: 1;
 	}
 }
+
+/* ==================================================
+
+  ,ad8888ba,               88           88
+ d8"'    `"8b              ""           88
+d8'                                     88
+88             8b,dPPYba,  88   ,adPPYb,88
+88      88888  88P'   "Y8  88  a8"    `Y88
+Y8,        88  88          88  8b       88
+ Y8a.    .a88  88          88  "8a,   ,d88
+  `"Y88888P"   88          88   `"8bbdP"Y8
+
+** ================================================*/
+
+#d_entries {
+	width: 100vw;
+}
+
+.w-1 {
+	width: 25vw;
+	.entry_thumb_cont {width: 20vw;}
+}
+
+.w-2 {
+	width: 50vw;
+	.entry_thumb_cont {width: 45vw;}
+}
+
+.h-1 {
+	height: 25vw;
+	.entry_thumb_cont {height: 20vw;}
+}
+
+.h-2 {
+	height: 50vw;
+	.entry_thumb_cont {height: 45vw;}
+}
+
 .design_entry {
 	@extend .entry;
-	width: 33%;
+	@extend .w-1;
+	@extend .h-1;
 }
 
 .film_entry {
 	@extend .entry;
-	width: 50%;
+	@extend .w-2;
+	@extend .h-2;
 }

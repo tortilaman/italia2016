@@ -51,3 +51,4 @@ public_html/italiadev/assets
 # Minified Files #
 ######################
 *-min.*
+/public_html/italiadev/Prepros Build/

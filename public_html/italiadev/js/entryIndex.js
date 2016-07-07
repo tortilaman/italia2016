@@ -295,7 +295,7 @@ Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  88  88       88  "8a, 
 					$vDur.text(vPlayer.duration.toFixed(0).toMMSS());
 					$vTimeCont.css('opacity', '1');
 				}, 1000);
-				//Pause
+			//Pause
 			} else {
 				clearInterval(updateTime);
 				this.vidPlayer.pause();
@@ -310,6 +310,5 @@ Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  88  88       88  "8a, 
 			return this.iconEls[this.state].getAttribute("d");
 		}
 	};
-
 	playButton.init();
 });
