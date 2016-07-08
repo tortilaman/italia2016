@@ -1,10 +1,8 @@
-#d_filter, #d_entries {
-	position: relative;
-	top: 5rem;
-}
-
 #d_filter {
-	left: 3rem;
+	position: relative;
+	top: 6rem;
+	max-width: 100%;
+	margin-left: 3rem;
 }
 
 .entry {
@@ -65,28 +63,40 @@ Y8,        88  88          88  8b       88
 
 ** ================================================*/
 
-#d_entries {
-	width: 100vw;
+section[id^="d_entries_"] {
+	position: relative;
+	width: 80vw;
+	margin: 0 auto;
+	top: 8rem;
+
+	.year_title {
+		position: absolute;
+		left: -5vw;
+		top: 5vh;
+		color: $color1;
+		text-shadow: 0.1rem 0.1rem $color2;
+		z-index: 10;
+	}
 }
 
 .w-1 {
-	width: 25vw;
-	.entry_thumb_cont {width: 20vw;}
+	width: 20vw;
+	.entry_thumb_cont {width: 15vw;}
 }
 
 .w-2 {
-	width: 50vw;
-	.entry_thumb_cont {width: 45vw;}
+	width: 40vw;
+	.entry_thumb_cont {width: 35vw;}
 }
 
 .h-1 {
-	height: 25vw;
-	.entry_thumb_cont {height: 20vw;}
+	height: 20vw;
+	.entry_thumb_cont {height: 15vw;}
 }
 
 .h-2 {
-	height: 50vw;
-	.entry_thumb_cont {height: 45vw;}
+	height: 40vw;
+	.entry_thumb_cont {height: 35vw;}
 }
 
 .design_entry {

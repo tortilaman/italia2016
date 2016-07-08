@@ -19,31 +19,74 @@
 {# Then find categories that match the slugs in your query string. #}
 {% set disciplineTags = craft.tags.group('disciplines').slug(disciplineQuery) %}
 
-{# setup your search parameters #}
-{% set searchParams = {
-	relatedTo:  disciplineTags,
-	section: 'design'
-} %}
+{% set years = [2016, 2015, 2014, 2013, 2012] %}
 
-{# Find your entries #}
-{% set entries = craft.entries(searchParams).order('score') %}
+{# =========================== Filter Form =========================== #}
 
 {% block main %}
-	<form id="d_filter" action="http://dev.sfuitaliadesign.com/design">
-		<select name="discipline" onchange='this.form.submit()'>
-			<option value=""></option>
-			{% for tag in craft.tags.group('disciplines') %}
-				<option value="{{tag.slug}}" {{ tag.slug in disciplineQuery ? 'selected'}}>{{tag.title}}</option>
-			{% endfor %}
-		</select>
-	</form>
+<form id="d_filter" action="http://dev.sfuitaliadesign.com/design">
+	<select name="discipline" onchange='this.form.submit()'>
+		<option value=""></option>
+		{% for tag in craft.tags.group('disciplines') %}
+		<option value="{{tag.slug}}" {{ tag.slug in disciplineQuery ? 'selected'}}>{{tag.title}}</option>
+		{% endfor %}
+	</select>
+</form>
 
-	{# Loop through the filtered entries #}
-	{% if entries | length %}
-		{% for entry in entries %}
-			{% if loop.first %}
-			<section id="d_entries">
-			{% endif %}
+{# =========================== Find Entries Logic =========================== #}
+
+	{% for year in years %}
+		{# setup your search parameters #}
+		{% set designerParams = {
+			relatedTo:  disciplineTags,
+			section: 'design',
+			type: 'designer',
+			videoYear: year
+		} %}
+		{% set filmParams = {
+			relatedTo:  disciplineTags,
+			section: 'design',
+			type: 'shortFilm',
+			videoYear: year
+		} %}
+
+		{# Find your entries #}
+		{% set designerEntries = craft.entries(designerParams).order('postDate desc') %}
+		{% set filmEntries = craft.entries(filmParams).order('postDate desc') %}
+		{% set filmOffset = designerEntries|length // filmEntries|length %}
+
+		{% set entries = [] %}
+
+		{% if filmEntries|length and designerEntries|length %}
+			{% for i in 0..(filmEntries|length-1) %}
+				{# IF THERE'S ONLY ONE VIDEO IT NEEDS A BRACKET TO MAKE IT AN ARRAY... #}
+				{% set entries = entries|merge([filmEntries.nth(i)]) %}
+				{% set entries = entries|merge(
+					designerEntries|slice(
+						(i*filmOffset),
+						((i*filmOffset)+(filmOffset - 1))
+					)
+				) %}
+			{% endfor %}
+			{% set entries = entries|merge(
+				designerEntries|slice(
+					(filmOffset*filmEntries - 1),
+					(designerEntries|length)
+				)
+			) %}
+		{% elseif designerEntries|length %}
+			<!-- No Short Films -->
+			{% set entries = designerEntries %}
+		{% endif %}
+
+{# =========================== Display Entries =========================== #}
+
+		{% if entries | length %}
+			{% for entry in entries %}
+				{% if loop.first %}
+					<section id="d_entries_{{year}}" class="clearfix">
+						<h1 class="year_title">{{year}}</h1>
+				{% endif %}
 				<article class="{{entry.type == 'shortFilm' ? 'film_entry' : 'design_entry'}}">
 					{% if entry.type == "interviewVideo" %}
 						{% set image = entry.parent.intPortrait.first %}
@@ -53,9 +96,9 @@
 					{% if image %}
 						<figure>
 							<a href="{{ entry.url }}">
-							<div class="entry_thumb_cont">
-								<img src="{{ image.url }}" alt="{{ image.title }}">
-							</div>
+								<div class="entry_thumb_cont">
+									<img src="{{ image.url }}" alt="{{ image.title }}">
+								</div>
 							</a>
 						</figure>
 					{% else %}
@@ -67,24 +110,25 @@
 						<h3><a href="{{ entry.url }}">{{ entry }}</a></h3>
 					</div>
 				</article>
-			{# End the .flex container after the last entry #}
-			{% if loop.last %}
-			</section>
-			{% endif %}
-		{% endfor %}
-	{% else %}
-		<p>That's strange, we couldn't find anything, our bad. Maybe try looking for something else? We'll fix this ASAP!</p>
-	{% endif %}
+				{# End the .flex container after the last entry #}
+				{% if loop.last %}
+					</section>
+				{% endif %}
+			{% endfor %}
+		{% else %}
+		{# <p>That's strange, we couldn't find anything, our bad. Maybe try looking for something else? We'll fix this ASAP!</p> #}
+		{% endif %}
+	{% endfor %}
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 <script src="https://npmcdn.com/masonry-layout@4.0/dist/masonry.pkgd.min.js"></script>
-<script src="/js/entryIndex.js"></script>
 <script>
-	$('#d_entries').masonry({
+	/*$("[id^='d_entries_']").masonry({
 		// options
-		itemSelector: "div[class*='_entry']",
-		columnWidth: '.w-1',
+		itemSelector: "[class*='_entry']",
+		columnWidth: '.design_entry',
 		percentPosition: true
-	});
+	});*/
 </script>
 
 {% endblock %}
