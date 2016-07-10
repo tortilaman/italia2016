@@ -4,13 +4,8 @@ body {
 	line-height: 2rem;
 }
 
-h1 {
+h1, h2, h3, h4, h5, h6 {
 	font-family: Header;
-	margin-bottom: 0.5rem
-}
-
-h2, h3, h4, h5, h6 {
-	font-family: SubHead;
 	margin-bottom: 0.5rem
 }
 
@@ -35,6 +30,7 @@ h4 {
 }
 
 a {
+	font-family: SubHead;
 	color: $color2;
 	text-decoration: none;
 }
@@ -72,16 +68,16 @@ a {
 
 @font-face {
 	font-family: 'Header';
-	src: url('../assets/fonts/PlayfairDisplay-BoldItalic.eot');
-	src: local('☺'), url('../assets/fonts/PlayfairDisplay-BoldItalic.woff') format('woff'), url('../assets/fonts/PlayfairDisplay-BoldItalic.ttf') format('truetype'), url('../assets/fonts/PlayfairDisplay-BoldItalic.svg') format('svg');
-	font-weight: normal;
+	src: url('../assets/fonts/N_Bold.eot');
+	src: local('☺'), url('../assets/fonts/N_Bold.woff') format('woff'), url('../assets/fonts/N_Bold.ttf') format('truetype'), url('../assets/fonts/N_Bold.svg') format('svg');
+	font-weight: bold;
 	font-style: normal;
 }
 
 @font-face {
 	font-family: 'SubHead';
-	src: url('../assets/fonts/Freschezza_Normal.eot');
-	src: local('☺'), url('../assets/fonts/Freschezza_Normal.woff') format('woff'), url('../assets/fonts/Freschezza_Normal.ttf') format('truetype'), url('../assets/fonts/Freschezza_Normal.svg') format('svg');
+	src: url('../assets/fonts/N_Demi.eot');
+	src: local('☺'), url('../assets/fonts/N_Demi.woff') format('woff'), url('../assets/fonts/N_Demi.ttf') format('truetype'), url('../assets/fonts/N_Demi.svg') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }

@@ -5,14 +5,15 @@ All the utility stuff goes here such as variables, mixins, and classes like clea
 **===========================================*/
 
 //COLORS
+//TODO: Figure out what the RGB values actually are for the new colors...
 $block-bg: 	rgba( 255, 255, 255, 0.9);
-$bg-color: 	#f8f0e4;
-$color1: 	rgb(77, 188, 133);
-$color1T:	rgba(77, 188, 133, 0.9);
-$color2:	rgb(223, 100, 38);
-$color2T:	rgba(223, 100, 38, 0.9);
-$color3:	rgb(45, 49, 122);
-$color3T:	rgba(45, 49, 122, 0.9);
+$bg-color: 	#F6EEE2;
+$color1: 	rgb(76, 184, 132);
+$color1T:	rgba(76, 184, 132, 0.9);
+$color2:	rgb(255, 208, 13);
+$color2T:	rgba(255, 208, 13, 0.9);
+$color3:	rgb(91, 147, 206);
+$color3T:	rgba(91, 147, 206, 0.9);
 
 .clearfix:after {
 	content:"";

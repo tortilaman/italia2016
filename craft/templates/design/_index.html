@@ -1,14 +1,14 @@
 {#
 # Design Index template
-# -------------------------
+# _________________________
 #
 # This template gets loaded whenever the Design index is requested, because
-# the Design Index single-entry section's Template setting is set to
+# the Design Index single_entry section's Template setting is set to
 # "design/_index".
 #
 # An `entry` variable will be automatically passed to this template, which will
 # be set to the Design Index entry.
--#}
+_#}
 
 {% extends "_layouts/site" %}
 {% set bodyClass = "design" %}
@@ -35,6 +35,7 @@
 
 {# =========================== Find Entries Logic =========================== #}
 
+	{# One year at a time #}
 	{% for year in years %}
 		{# setup your search parameters #}
 		{% set designerParams = {
@@ -54,13 +55,14 @@
 		{% set designerEntries = craft.entries(designerParams).order('postDate desc') %}
 		{% set filmEntries = craft.entries(filmParams).order('postDate desc') %}
 		{% set filmOffset = designerEntries|length // filmEntries|length %}
-
 		{% set entries = [] %}
 
+		{# Rearrange entries #}
 		{% if filmEntries|length and designerEntries|length %}
 			{% for i in 0..(filmEntries|length-1) %}
-				{# IF THERE'S ONLY ONE VIDEO IT NEEDS A BRACKET TO MAKE IT AN ARRAY... #}
+				{# Film Entry #}
 				{% set entries = entries|merge([filmEntries.nth(i)]) %}
+				{# Designer Entries #}
 				{% set entries = entries|merge(
 					designerEntries|slice(
 						(i*filmOffset),
@@ -75,60 +77,44 @@
 				)
 			) %}
 		{% elseif designerEntries|length %}
-			<!-- No Short Films -->
+			{# No short films in this year #}
 			{% set entries = designerEntries %}
 		{% endif %}
 
 {# =========================== Display Entries =========================== #}
 
 		{% if entries | length %}
-			{% for entry in entries %}
-				{% if loop.first %}
-					<section id="d_entries_{{year}}" class="clearfix">
-						<h1 class="year_title">{{year}}</h1>
-				{% endif %}
-				<article class="{{entry.type == 'shortFilm' ? 'film_entry' : 'design_entry'}}">
-					{% if entry.type == "interviewVideo" %}
-						{% set image = entry.parent.intPortrait.first %}
-					{% else %}
-						{% set image = entry.intPortrait.first %}
-					{% endif %}
-					{% if image %}
-						<figure>
-							<a href="{{ entry.url }}">
+			<h1 class="year_title">{{year}}</h1>
+			<section id="flex_grid_{{year}}" class="flexbox_grid clearfix">
+				{% for entry in entries %}
+					<article class="{{entry.type == 'shortFilm' ? 'film_entry' : 'design_entry'}} item">
+						{% if entry.type == "interviewVideo" %}
+							{% set image = entry.parent.intPortrait.first %}
+						{% else %}
+							{% set image = entry.intPortrait.first %}
+						{% endif %}
+						<a href="{{ entry.url }}">
+							{% if image %}
 								<div class="entry_thumb_cont">
 									<img src="{{ image.url }}" alt="{{ image.title }}">
 								</div>
-							</a>
-						</figure>
-					{% else %}
-						<figure>
-							<img src="http://dev.sfuitaliadesign.com/assets/images/portraits/placeholder_image.jpg" alt="Placeholder image">
-						</figure>
-					{% endif %}
-					<div class="entry_title">
-						<h3><a href="{{ entry.url }}">{{ entry }}</a></h3>
-					</div>
-				</article>
-				{# End the .flex container after the last entry #}
-				{% if loop.last %}
-					</section>
-				{% endif %}
-			{% endfor %}
+							{% else %}
+								<div class="entry_thumb_cont">
+									<img src="http://dev.sfuitaliadesign.com/assets/images/portraits/placeholder-image.jpg" alt="Placeholder image">
+								</div>
+							{% endif %}
+							<div class="entry_title">
+								<h3>{{ entry }}</h3>
+								<span>{{entry.type != 'shortFilm'?entry.companyField}}</span>
+							</div>
+						</a>
+					</article>
+				{% endfor %}
+			</section>
 		{% else %}
 		{# <p>That's strange, we couldn't find anything, our bad. Maybe try looking for something else? We'll fix this ASAP!</p> #}
 		{% endif %}
 	{% endfor %}
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-<script src="https://npmcdn.com/masonry-layout@4.0/dist/masonry.pkgd.min.js"></script>
-<script>
-	/*$("[id^='d_entries_']").masonry({
-		// options
-		itemSelector: "[class*='_entry']",
-		columnWidth: '.design_entry',
-		percentPosition: true
-	});*/
-</script>
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+	<script src="/js/designIndex.js"></script>
 {% endblock %}

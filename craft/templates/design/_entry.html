@@ -1,13 +1,13 @@
 {#
 # Design entry template
-# -------------------
+# ___________________
 #
 # This template gets loaded whenever a Design entry’s URL is requested, because
 # the Design section’s Template setting is set to "design/_entry".
 #
 # An `entry` variable will be automatically passed to this template, which will
 # be set to the requested Design entry.
--#}
+_#}
 
 {% extends "_layouts/site" %}
 {% set title = entry.title %}
@@ -56,7 +56,7 @@
 		<div id="v_context">
 			{% for block in entry.additionalContent %}
 			{% if block.type == "transcriptionParagraph" %}
-			<!-- Transcription Paragraph -->
+			<!__ Transcription Paragraph __>
 			{% if block.heading == "" %}
 			{% else %}
 			<h2 class="v_mat_transc_heading">{{block.heading}}</h2>
@@ -64,7 +64,7 @@
 			{{block.transcriptionContent}}
 
 			{% elseif block.type == "pullquote" %}
-			<!-- Pullquote -->
+			<!__ Pullquote __>
 			<div class="v_mat_pull_container {{block.position}}">
 				<a class="v_mat_pull_link" href="">
 					<blockquote class="v_mat_pull">
@@ -74,11 +74,11 @@
 			</div>
 
 			{% elseif block.type == "podcast" %}
-			<!-- Podcast -->
+			<!__ Podcast __>
 
 			{% elseif block.type == "image" %}
-			<!-- Image -->
-			<!-- TODO: make this fully standards compliant and everything -->
+			<!__ Image __>
+			<!__ TODO: make this fully standards compliant and everything __>
 			<figure class="v_mat_img_container {{block.position}}">
 				<a class="v_mat_img_link" href="#">
 					<div class="v_mat_img_box">
@@ -89,7 +89,7 @@
 			</figure>
 
 			{% elseif block.type == "vidChapter" %}
-			<!-- Video Chapter -->
+			<!__ Video Chapter __>
 
 			{% endif %}
 			{% endfor %}

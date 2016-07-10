@@ -137,12 +137,12 @@ span.v_close_btn {
 	.svg_volume_icon {
 		transform-origin: center left;
 
-		.group-wave {
+		.group_wave {
 			fill-opacity: 1;
 			transition: all 0.5s ease-in;
 		}
 
-		.mute-anim {
+		.mute_anim {
 			transform: translateX(-2rem);
 			transform: scale(0 0);
 			fill-opacity: 0;
@@ -198,8 +198,6 @@ section#v_content {
 	top: 110vh;
 	width: 100vw;
 	max-width: 100%;
-	//	background-color: $block-bg;
-	//	box-shadow: 0 0 2em 2em $block-bg;
 	z-index: 1;
 }
 
@@ -382,12 +380,12 @@ section#v_content {
 	text-align:center;
 }
 
-.drop-left {
+.drop_left {
 	float: left;
 	//TODO: Figure out the crazy fucking solution for the drop alignments...
 }
 
-.drop-right {
+.drop_right {
 	float: right;
 	margin-right: 0;
 }

@@ -23,8 +23,8 @@ var resizeTimeout;
 **===============================*/
 
 //Function to scale numbers between two ranges.
-Number.prototype.map = function (in_min, in_max, out_min, out_max) {
-	return (this - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+Number.prototype.map = function (in-min, in-max, out-min, out-max) {
+	return (this - in-min) * (out-max - out-min) / (in-max - in-min) + out-min;
 }
 
 //Convert seconds to minutes and seconds
@@ -206,7 +206,7 @@ Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  88  88       88  "8a, 
 	**===============================*/
 
 	$(".v_vol_btn").click(function() {
-		$(".svg_volume_icon .group-wave").toggleClass(" mute-anim");
+		$(".svg_volume_icon .group_wave").toggleClass(" mute_anim");
 		vPlayer.muted ? vPlayer.muted = false : vPlayer.muted = true;
 	})
 
@@ -240,11 +240,11 @@ Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  88  88       88  "8a, 
 
 	/* global d3, document */
 	var playButton = {
-		el: document.querySelector(".js-button"),
+		el: document.querySelector(".js_button"),
 
 		iconEls: {
-			playing: document.querySelector("#pause-icon"),
-			paused:  document.querySelector("#play-icon")
+			playing: document.querySelector("#pause_icon"),
+			paused:  document.querySelector("#play_icon")
 		},
 
 		nextState: {
@@ -270,7 +270,7 @@ Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  88  88       88  "8a, 
 		replaceUseEl: function () {
 			d3.select(this.el.querySelector("use")).remove();
 			d3.select(this.el.querySelector("svg")).append("path")
-				.attr("class", "js-icon")
+				.attr("class", "js_icon")
 				.attr("d", this.stateIconPath());
 		},
 
@@ -278,7 +278,7 @@ Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  88  88       88  "8a, 
 		toggle: function () {
 			this.goToNextState();
 
-			d3.select(this.el.querySelector(".js-icon")).transition()
+			d3.select(this.el.querySelector(".js_icon")).transition()
 				.duration(this.animationDuration)
 				.attr("d", this.stateIconPath());
 			//Play
