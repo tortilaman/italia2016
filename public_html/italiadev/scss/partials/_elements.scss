@@ -1,0 +1,51 @@
+//Base button, gets extended
+.button {
+	position: relative;
+	display: inline-block;
+	margin: 2vw auto 0 auto;
+	padding: 0;
+	box-shadow: 0.1rem 0.1rem 0.1rem $shadow;
+	transition: all 0.2s;
+
+	a {
+		position: relative;
+		display: block;
+		height: 100%;
+		width: 100%;
+		margin: 0;
+		padding: 0.5rem 2rem;
+		text-align: center;
+		z-index: 20;//TODO: This will need to be specific to block, maybe make it dynamic or something.
+	}
+
+	span {
+		margin: 0 auto;
+		padding: 0;
+		color: white;
+	}
+
+	&:hover {
+		transform: translateY(0.05rem);
+		box-shadow: 0.05rem 0.05rem 0.1rem $shadow;
+		::after {
+			mix-blend-mode: normal;
+			background: white;
+		}
+	}
+}
+
+.button_green {
+	@extend .button;
+	@extend .green_bg;
+	&:hover span {
+		color: $color1;
+	}
+}
+
+.button_yellow {
+	@extend .button;
+	@extend .yellow_bg;
+	&:hover span {
+		color: $color2;
+	}
+}

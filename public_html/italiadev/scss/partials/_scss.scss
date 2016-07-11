@@ -14,9 +14,40 @@ $color2:	rgb(255, 208, 13);
 $color2T:	rgba(255, 208, 13, 0.9);
 $color3:	rgb(91, 147, 206);
 $color3T:	rgba(91, 147, 206, 0.9);
+$shadow:	rgba(50, 50, 50, 0.2);
 
 .clearfix:after {
 	content:"";
 	display:block;
 	clear:both;
+}
+
+//Layout Variables
+$sUnit:	2vw;
+
+.bg {
+	&::after {
+		content: '';
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		mix-blend-mode: multiply;
+	}
+}
+
+.green_bg {
+	@extend .bg;
+	&::after {
+		background: $color1;
+	}
+}
+
+.yellow_bg {
+	@extend .bg;
+	&::after {
+		background: $color2;
+	}
 }

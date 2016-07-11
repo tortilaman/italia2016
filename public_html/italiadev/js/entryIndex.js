@@ -23,8 +23,8 @@ var resizeTimeout;
 **===============================*/
 
 //Function to scale numbers between two ranges.
-Number.prototype.map = function (in-min, in-max, out-min, out-max) {
-	return (this - in-min) * (out-max - out-min) / (in-max - in-min) + out-min;
+Number.prototype.map = function (in_min, in_max, out_min, out_max) {
+	return (this - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;d
 }
 
 //Convert seconds to minutes and seconds
@@ -57,7 +57,7 @@ $(document).ready(function() {
 		totalHeight = 0,
 		$vContainer = $("#v_header");
 	//NOTE:For homepage it might make sense to change this value
-	var $entries = $(".italia_entry");
+	var $entries = $(".italia_entry, .home_entry");
 
 	//Hide / Show Variables
 	var $title = $("#v_title"),
@@ -115,7 +115,7 @@ Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  88  88       88  "8a, 
 		VIDEO RESIZING
 	**===============================*/
 
-	//Function to resize video and change bg color
+	/*//Function to resize video and change bg color
 	function videoResize(sPos) {
 		var	$vWrapper = $("#v_wrapper"),
 			$nav = $('header.header'),
@@ -163,7 +163,7 @@ Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  88  88       88  "8a, 
 			videoResize(scrollPos);
 			controlsTimeout;
 		});
-	});
+	});*/
 
 	/* ========================================================================================
 
@@ -182,7 +182,7 @@ Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  88  88       88  "8a, 
 		HIDE & SHOW CONTROLS
 	**===============================*/
 
-	function showControls() {
+	/*function showControls() {
 		$(".v_controls").removeClass("oHidden");
 	}
 
@@ -199,22 +199,22 @@ Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  88  88       88  "8a, 
 	}
 
 	//Call controlsTimeout on mouse move or click.
-	$("body").mousemove(controlsTimeout).click(controlsTimeout);
+	$("body").mousemove(controlsTimeout).click(controlsTimeout);*/
 
 	/*=================================
 		VOLUME BUTTON
 	**===============================*/
 
-	$(".v_vol_btn").click(function() {
+	/*$(".v_vol_btn").click(function() {
 		$(".svg_volume_icon .group_wave").toggleClass(" mute_anim");
 		vPlayer.muted ? vPlayer.muted = false : vPlayer.muted = true;
-	})
+	})*/
 
 	/*=================================
 		VIDEO PROGRESS BAR
 	**===============================*/
 
-	function timeUpdate() {
+	/*function timeUpdate() {
 		$vProgBar.css('width', ((vPlayer.currentTime / vPlayer.duration) *100) + '%');
 	}
 
@@ -228,7 +228,7 @@ Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  88  88       88  "8a, 
 	$vProgBarCont.onclick = function(e) {
 		var newTime = (((e.pageX - $vProgBarCont.offset().left) / $vProgBarCont.outerWidth()) * vPlayer.duration);
 		vPlayer.currentTime = newTime;
-	};
+	};*/
 
 	/*=================================
 		PLAY BUTTON
@@ -236,9 +236,9 @@ Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  88  88       88  "8a, 
 
 	//TODO: Redo this code so it matches everything else
 
-	"use strict";
+	/*"use strict";
 
-	/* global d3, document */
+	 global d3, document
 	var playButton = {
 		el: document.querySelector(".js_button"),
 
@@ -310,5 +310,5 @@ Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  88  88       88  "8a, 
 			return this.iconEls[this.state].getAttribute("d");
 		}
 	};
-	playButton.init();
+	playButton.init();*/
 });
