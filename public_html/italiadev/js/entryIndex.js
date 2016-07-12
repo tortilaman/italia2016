@@ -117,11 +117,11 @@ Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  88  88       88  "8a, 
 			var oldTop = parseInt($('#home_films').css('top').replace('px', '')),
 				inMin = $("#home_videos").attr('data-offset'),
 				inMax =  parseFloat(inMin) + parseFloat($("#home_videos").outerHeight()),
-				outMin = oldTop *0.8,
-				outMax = oldTop,
-				newVal = scrolled.map(inMin, inMax, outMin, outMax)+'px';
+				outMin = 0,
+				outMax = $(window).outerHeight()*0.6,
+				newVal = -scrolled.map(inMin, inMax, outMin, outMax)+'px';
 			console.log(oldTop+', '+inMin+', '+inMax+', '+outMin+', '+outMax+', '+newVal);
-			$('#home_films').css('top', newVal );
+			$('#home_films').css('transform', 'translateY('+newVal+')' );
 		}
 	}
 
@@ -191,7 +191,7 @@ Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  88  88       88  "8a, 
 			});
 			videoResize(scrollPos);
 			controlsTimeout;
-//			parallax();
+			parallax();
 		});
 	});
 

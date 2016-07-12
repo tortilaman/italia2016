@@ -36,6 +36,7 @@
 	}
 
 	h1 {
+		font-size: 2rem;
 		letter-spacing: 0.2rem;
 	}
 }
@@ -113,7 +114,6 @@
 		h1, p {
 			position: relative;
 			display: block;
-			width: 70%;
 			margin-top: 2vw;
 			text-align: left;
 			color: white;
@@ -125,6 +125,17 @@
 
 		p {
 			margin-left: 6vw;
+		}
+
+		.inner {
+			top: -2vw;
+			left: -2vw;
+		}
+
+		.button_yellow {
+			position: absolute;
+			top: 11vw;
+			left: 13vw;
 		}
 	}
 
@@ -138,7 +149,11 @@
 
 		.button {
 			position: absolute;
-			right: 4vw;
+			right: 2vw;
+			bottom: 5vw;
+			&::after {
+				z-index: 1;
+			}
 		}
 		h1 {
 			width: 32vw;
@@ -149,6 +164,9 @@
 			width: 30vw;
 			margin-top: 1vw;
 			margin-left: 13vw;
+		}
+		&::after {
+			z-index: 1;
 		}
 
 	}
