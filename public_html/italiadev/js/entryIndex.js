@@ -93,11 +93,11 @@ Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  88  88       88  "8a, 
 
 	$entries.each(function() {
 		$(this).attr('data-offset', totalHeight);
-		var $height = $(this).outerHeight();
+		var $height = $(this).outerHeight(true);
 		$(this).attr('data-height', $height);
 		$('body').css('min-height', totalHeight+=$height);
-		$(this).css('z-index', 4 - iterator++);
-	})
+		$(this).css('z-index', $entries.length - iterator++);
+	});
 
 	//TODO: Maybe figure out how the video can just use the code that's for $entries?
 	//Give the video some space
@@ -153,17 +153,18 @@ Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  88  88       88  "8a, 
 			$vControls.css('opacity', opacityValue);
 		}
 	}
-
+*/
 	window.addEventListener('scroll', function(){
 		requestAnimationFrame(function() {
 			var scrollPos = window.pageYOffset;
 			$entries.each(function() {
 				$(this).toggleClass('is_scrollable', scrollPos > $(this).attr('data-offset'));
 			});
-			videoResize(scrollPos);
-			controlsTimeout;
+//			videoResize(scrollPos);
+//			controlsTimeout;
+			console.log("Scroll position is: "+ scrollPos);
 		});
-	});*/
+	});
 
 	/* ========================================================================================
 

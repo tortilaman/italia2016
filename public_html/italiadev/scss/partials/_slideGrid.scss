@@ -1,3 +1,16 @@
+/* =================================================================================
+
+88888888888                                   88
+88                         ,d                 ""
+88                         88
+88aaaaa      8b,dPPYba,  MM88MMM  8b,dPPYba,  88   ,adPPYba,  ,adPPYba,
+88"""""      88P'   `"8a   88     88P'   "Y8  88  a8P_____88  I8[    ""
+88           88       88   88     88          88  8PP"""""""   `"Y8ba,
+88           88       88   88,    88          88  "8b,   ,aa  aa    ]8I
+88888888888  88       88   "Y888  88          88   `"Ybbd8"'  `"YbbdP"'
+
+** ===============================================================================*/
+
 .home_entry {
 	position: fixed;
 	top: 0;
@@ -27,10 +40,10 @@
 	}
 }
 
-#home_play {
+#home_play, #v_header.home_entry {
 	height: calc(100vh - 14vw);
 	width: 86vw;
-	margin: 7vw;
+	margin: 7vw 0 0 7vw;
 	background: white;
 
 	.inner {
@@ -78,6 +91,7 @@
 	width: 80%;
 	margin-top: 5vw;
 	margin-left: 5vw;
+//	margin-bottom: 5vw;
 	color: white;
 	box-shadow: none;
 
@@ -116,4 +130,25 @@
 		height: 50%;
 		width: 70%;
 	}
+}
+
+#v_header.home_entry {
+	box-shadow: none;
+}
+
+/* =================================================================================
+
+  ,ad8888ba,               88           88
+ d8"'    `"8b              ""           88
+d8'                                     88
+88             8b,dPPYba,  88   ,adPPYb,88
+88      88888  88P'   "Y8  88  a8"    `Y88
+Y8,        88  88          88  8b       88
+ Y8a.    .a88  88          88  "8a,   ,d88
+  `"Y88888P"   88          88   `"8bbdP"Y8
+
+** ===============================================================================*/
+
+.is_scrollable {
+	position: relative;
 }

@@ -18,9 +18,12 @@
 
 {# Define the site navigation #}
 {% set nav = {
-design:    { title: "The Design", desc: "Interviews with thought leaders" },
-italia: { title: "The Stories", desc: "Experience italia" },
-team:     { title: "The Team", desc: "Who we are" }
+team: 	{ title: "about"},
+italia: { title: "film"},
+design: { title: "interviews"},
+"": 	{ title: "italiaDesign"}
+
+
 } %}
 
 {# Set the `bodyClass` variable to the entry's section handle if there is one,
@@ -38,16 +41,12 @@ or the first URI segment (this is used by the parent template) #}
 {% block body %}
 	{% block nav %}
 		<header class="header">
-			{# The dieci logo that goes back to the homepage #}
-			<h1 class="logo">Dieci</h1>
 			<nav>
 				<ul>
 					{% for slug, item in nav %}
 					<li>
 						<a href="{{ url(slug) }}" {% if craft.request.firstSegment == slug %}class="sel"{% endif %}>
-							<strong>{{ item.title }}</strong>
-							<span>-</span>
-							<em>{{ item.desc }}</em>
+							{{ item.title }}
 						</a>
 					</li>
 					{% endfor %}
@@ -56,7 +55,7 @@ or the first URI segment (this is used by the parent template) #}
 		</header>
 	{% endblock %}
 
-	<main id="main" role="main">
+	<main id="main" role="main" class="{{bodyClass}}">
 		{% block main %}{% endblock %}
 	</main>
 

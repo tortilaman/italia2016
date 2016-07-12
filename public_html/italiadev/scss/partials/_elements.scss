@@ -27,7 +27,7 @@
 	&:hover {
 		transform: translateY(0.05rem);
 		box-shadow: 0.05rem 0.05rem 0.1rem $shadow;
-		::after {
+		&::after {
 			mix-blend-mode: normal;
 			background: white;
 		}

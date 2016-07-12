@@ -7,11 +7,12 @@
 header.header {
 	position: fixed;
 	display: block;
-	width: 100vw;
-	max-width: 100%;
-	padding: 0.5rem;
-	background-color: $block-bg;
-	box-shadow: 0 0 0.5rem 0.5rem $block-bg;
+	top: 5vw;
+	right: 97vw;
+	width: calc(100vh - 10vw);
+	padding: 0;
+	transform: rotate(270deg);
+	transform-origin: right top 0;
 	z-index: 10;
 
 	nav {
@@ -21,6 +22,7 @@ header.header {
 
 nav {
 	display: inline-block;
+	float: right;
 
 	ul {
 		list-style: none;
@@ -28,6 +30,13 @@ nav {
 		li {
 			display: inline-block;
 			margin-left: 2em;
+		}
+	}
+	a {
+		color: $color3;
+
+		&.sel {
+			color: $color2;
 		}
 	}
 }

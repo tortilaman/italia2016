@@ -69,8 +69,6 @@ span.v_close_btn {
 	padding-bottom: 42.86%; /* 21:9 */
 	width: 100%;
 	height: 0;
-	transform-origin: top left;
-	transform: scale(0.7);
 	transition: all 0.1s;
 
 	video, #v_player {
@@ -82,6 +80,11 @@ span.v_close_btn {
 		height: 100%;
 		z-index: 1;
 	}
+}
+
+#v_header.body_entry #v_wrapper {
+	transform-origin: top left;
+	transform: scale(0.7);
 }
 
 /*====================
@@ -100,6 +103,16 @@ span.v_close_btn {
 	padding: 0 3vw;
 	z-index: 2;
 }
+
+main.home .v_controls {
+	top: initial;
+	bottom: 7vw;
+	left: 5vw;
+	width: 86vw;
+	max-width: 86%;
+	padding: 0 2vw;
+}
+
 //Standard for buttons
 .v_control_elem {
 	float: left;
