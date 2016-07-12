@@ -26,6 +26,7 @@
 		width: 100%;
 		height: 100%;
 		color: white;
+		transition: opacity 0.5s;
 	}
 
 	h1, p {
@@ -35,7 +36,6 @@
 	}
 
 	h1 {
-		font-size: 2rem;
 		letter-spacing: 0.2rem;
 	}
 }
@@ -70,10 +70,16 @@
 	background-repeat: no-repeat;
 	background-size: contain;
 
+	&.bgHidden {
+		background-image:url();
+		background-color: $color1;
+	}
+
 	.inner {
 		float: right;
-		width: 50%;
+		width: 34vw;
 		height: 100%;
+		margin-right: 2vw;
 		text-align: center;
 
 		p, h1 {
@@ -125,15 +131,54 @@
 	#home_films {
 		@extend .yellow_bg;
 		position: absolute;
-		bottom: 4vw;
-		right: 0;
+		top: 15vw;
+		left: 30vw;
 		height: 50%;
-		width: 70%;
+		width: 45vw;
+
+		.button {
+			position: absolute;
+			right: 4vw;
+		}
+		h1 {
+			width: 32vw;
+			margin-top: 3vw;
+			margin-left: 11vw
+		}
+		p {
+			width: 30vw;
+			margin-top: 1vw;
+			margin-left: 13vw;
+		}
+
+	}
+
+	.pattern {
+		position: absolute;
+		bottom: -2vw;
+		left: 0;
+		mix-blend-mode: multiply;
+		z-index: 20;
+		width: 25vw;
+		height: auto;
+		transition: opacity 0.5s;
+	}
+
+	.rome {
+		position: absolute;
+		top: 12.5vw;
+		right: 2vw;
+		width: 31vw;
+		height: auto;
+		mix-blend-mode: multiply;
+		z-index: 20;
+		transition: opacity 0.5s;
 	}
 }
 
 #v_header.home_entry {
 	box-shadow: none;
+	background: none;
 }
 
 /* =================================================================================

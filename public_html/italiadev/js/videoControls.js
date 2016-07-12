@@ -223,11 +223,11 @@ Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  88  88       88  "8a, 
 
 	/* global d3, document */
 	var playButton = {
-		el: document.querySelector(".js_button"),
+		el: document.querySelector(".js-button"),
 
 		iconEls: {
-			playing: document.querySelector("#pause_icon"),
-			paused:  document.querySelector("#play_icon")
+			playing: document.querySelector("#pause-icon"),
+			paused:  document.querySelector("#play-icon")
 		},
 
 		nextState: {
@@ -253,7 +253,7 @@ Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  88  88       88  "8a, 
 		replaceUseEl: function () {
 			d3.select(this.el.querySelector("use")).remove();
 			d3.select(this.el.querySelector("svg")).append("path")
-				.attr("class", "js_icon")
+				.attr("class", "js-icon")
 				.attr("d", this.stateIconPath());
 		},
 
@@ -261,7 +261,7 @@ Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  88  88       88  "8a, 
 		toggle: function () {
 			this.goToNextState();
 
-			d3.select(this.el.querySelector(".js_icon")).transition()
+			d3.select(this.el.querySelector(".js-icon")).transition()
 				.duration(this.animationDuration)
 				.attr("d", this.stateIconPath());
 			//Play

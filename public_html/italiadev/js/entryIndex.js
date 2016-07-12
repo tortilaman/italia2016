@@ -57,7 +57,7 @@ $(document).ready(function() {
 		totalHeight = 0,
 		$vContainer = $("#v_header");
 	//NOTE:For homepage it might make sense to change this value
-	var $entries = $(".italia_entry, .home_entry");
+	var $entries = $("[class*='_entry']");
 
 	//Hide / Show Variables
 	var $title = $("#v_title"),
@@ -67,7 +67,7 @@ $(document).ready(function() {
 	var vPlayer = document.getElementById("v_player"),
 		$vTime = $(".v_cur_time"),
 		$vDur = $(".v_duration"),
-		$background = $("#v_header"),
+		$background = $('body'),
 		$vProgBar = $("#v_show_progress");
 	//Info
 	var chapters = $("#v_chapters");
@@ -107,6 +107,23 @@ Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  88  88       88  "8a, 
 	$('body').css('min-height', h );
 	iterator = 0;
 
+	/*=================================
+		PARALLAX SOME DIVS
+	**===============================*/
+
+	function parallax() {
+		var scrolled = $(window).scrollTop();
+		if(scrolled > $('#home_videos').attr('data-offset') && scrolled < $("#v_header").attr('data-offset')) {
+			var oldTop = parseInt($('#home_films').css('top').replace('px', '')),
+				inMin = $("#home_videos").attr('data-offset'),
+				inMax =  parseFloat(inMin) + parseFloat($("#home_videos").outerHeight()),
+				outMin = oldTop *0.8,
+				outMax = oldTop,
+				newVal = scrolled.map(inMin, inMax, outMin, outMax)+'px';
+			console.log(oldTop+', '+inMin+', '+inMax+', '+outMin+', '+outMax+', '+newVal);
+			$('#home_films').css('top', newVal );
+		}
+	}
 
 
 /* ======================	Everything below here is for the homepage only	==========*/
@@ -115,19 +132,22 @@ Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  88  88       88  "8a, 
 		VIDEO RESIZING
 	**===============================*/
 
-	/*//Function to resize video and change bg color
+	//Function to resize video and change bg color
 	function videoResize(sPos) {
 		var	$vWrapper = $("#v_wrapper"),
 			$nav = $('header.header'),
 			$vControls = $('.v_controls'),
-			$vScrollStart = parseInt($entries.last().attr('data-offset'));
-			pos = sPos;
+			$vScrollStart = $("main.home #v_header")
+							? parseInt($entries.eq(-2).attr('data-offset'))
+							: parseInt($entries.last().attr('data-offset')),
+			pos = sPos,
+			scaleRatio = ($(window).outerWidth() / $("#v_container").outerWidth()).toFixed(2);
 
 		if(sPos > $vScrollStart) {
 			scrollPercent = ((sPos - $vScrollStart) / (totalHeight - $vScrollStart)).toFixed(2);
 
 			//Hide video elements / controls when scrolled
-			if (scrollPercent > 0.95) {
+			if (scrollPercent > 0.5) {
 				scrollPercent = 1;
 				bgColor = 000;
 				opacityValue = 1;
@@ -143,26 +163,35 @@ Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  88  88       88  "8a, 
 			}
 
 			var wrapStyles = {
-				transform : 'scale('+scrollPercent+')',
-				opacity: opacityValue
+				transform : 'scale('+parseFloat(scrollPercent).map(0, 1, 1, scaleRatio)+')',
+//				opacity: opacityValue
 			};
 
 			$vWrapper.css(wrapStyles);
-			$background.css( 'background', 'rgb('+bgColor+', '+bgColor+', '+bgColor+')');
-			$nav.css('opacity', 1-opacityValue);
+			if(played) {
+				$background.css( 'background', 'rgb('+bgColor+', '+bgColor+', '+bgColor+')');
+				$nav.css('opacity', 1-opacityValue);
+			}
 			$vControls.css('opacity', opacityValue);
 		}
 	}
-*/
+
 	window.addEventListener('scroll', function(){
 		requestAnimationFrame(function() {
 			var scrollPos = window.pageYOffset;
 			$entries.each(function() {
 				$(this).toggleClass('is_scrollable', scrollPos > $(this).attr('data-offset'));
+				if(scrollPos > $(this).attr('data-offset')) {
+					$(this).next().find('.hide').removeClass('oHidden');
+					$(this).next().removeClass('bgHidden');
+				} else {
+					$(this).next().find('.hide').addClass('oHidden');
+					$(this).next().addClass('bgHidden');
+				}
 			});
-//			videoResize(scrollPos);
-//			controlsTimeout;
-			console.log("Scroll position is: "+ scrollPos);
+			videoResize(scrollPos);
+			controlsTimeout;
+//			parallax();
 		});
 	});
 
@@ -183,12 +212,16 @@ Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  88  88       88  "8a, 
 		HIDE & SHOW CONTROLS
 	**===============================*/
 
-	/*function showControls() {
+	function showControls() {
 		$(".v_controls").removeClass("oHidden");
+		$("header.header").css('opacity', '1');
 	}
 
 	function hideControls() {
-		$(".v_controls").addClass("oHidden");
+		if(vPlayer.paused == false) {
+			$(".v_controls").addClass("oHidden");
+			$("header.header").css('opacity', '0');
+		}
 	}
 
 	var i = null;
@@ -200,22 +233,22 @@ Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  88  88       88  "8a, 
 	}
 
 	//Call controlsTimeout on mouse move or click.
-	$("body").mousemove(controlsTimeout).click(controlsTimeout);*/
+	$("body").mousemove(controlsTimeout).click(controlsTimeout);
 
 	/*=================================
 		VOLUME BUTTON
 	**===============================*/
 
-	/*$(".v_vol_btn").click(function() {
+	$(".v_vol_btn").click(function() {
 		$(".svg_volume_icon .group_wave").toggleClass(" mute_anim");
 		vPlayer.muted ? vPlayer.muted = false : vPlayer.muted = true;
-	})*/
+	})
 
 	/*=================================
 		VIDEO PROGRESS BAR
 	**===============================*/
 
-	/*function timeUpdate() {
+	function timeUpdate() {
 		$vProgBar.css('width', ((vPlayer.currentTime / vPlayer.duration) *100) + '%');
 	}
 
@@ -229,23 +262,21 @@ Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  88  88       88  "8a, 
 	$vProgBarCont.onclick = function(e) {
 		var newTime = (((e.pageX - $vProgBarCont.offset().left) / $vProgBarCont.outerWidth()) * vPlayer.duration);
 		vPlayer.currentTime = newTime;
-	};*/
+	};
 
 	/*=================================
 		PLAY BUTTON
 	**===============================*/
 
-	//TODO: Redo this code so it matches everything else
+	"use strict";
 
-	/*"use strict";
-
-	 global d3, document
+	/* global d3, document */
 	var playButton = {
-		el: document.querySelector(".js_button"),
+		el: document.querySelector(".js-button"),
 
 		iconEls: {
-			playing: document.querySelector("#pause_icon"),
-			paused:  document.querySelector("#play_icon")
+			playing: document.querySelector("#pause-icon"),
+			paused:  document.querySelector("#play-icon")
 		},
 
 		nextState: {
@@ -271,7 +302,7 @@ Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  88  88       88  "8a, 
 		replaceUseEl: function () {
 			d3.select(this.el.querySelector("use")).remove();
 			d3.select(this.el.querySelector("svg")).append("path")
-				.attr("class", "js_icon")
+				.attr("class", "js-icon")
 				.attr("d", this.stateIconPath());
 		},
 
@@ -279,24 +310,24 @@ Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  88  88       88  "8a, 
 		toggle: function () {
 			this.goToNextState();
 
-			d3.select(this.el.querySelector(".js_icon")).transition()
+			d3.select(this.el.querySelector(".js-icon")).transition()
 				.duration(this.animationDuration)
 				.attr("d", this.stateIconPath());
 			//Play
 			if(this.vidPlayer.paused) {
 				if(played == false) {
-					$('html,body').animate({
-						scrollTop: $("#v_wrapper").attr('data-offset')},'slow');
 					played=true;
 				}
-				this.vidPlayer.play()
+				this.vidPlayer.play();
+				$('body').css('background', 'black');
+				$("header.header").css('opacity', '0');
 				//VIDEO TIME
 				var updateTime = setInterval(function() {
 					$vTime.text(vPlayer.currentTime.toFixed(0).toMMSS());
 					$vDur.text(vPlayer.duration.toFixed(0).toMMSS());
 					$vTimeCont.css('opacity', '1');
 				}, 1000);
-			//Pause
+				//Pause
 			} else {
 				clearInterval(updateTime);
 				this.vidPlayer.pause();
@@ -311,5 +342,7 @@ Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  88  88       88  "8a, 
 			return this.iconEls[this.state].getAttribute("d");
 		}
 	};
-	playButton.init();*/
+
+	playButton.init();
+
 });

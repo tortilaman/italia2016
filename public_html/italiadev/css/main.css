@@ -15,7 +15,9 @@ All the utility stuff goes here such as variables, mixins, and classes like clea
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-header.header { position: fixed; display: block; top: 5vw; right: 97vw; width: -webkit-calc(100vh - 10vw); width: calc(100vh - 10vw); padding: 0; -webkit-transform: rotate(270deg); -ms-transform: rotate(270deg); transform: rotate(270deg); -webkit-transform-origin: right top 0; -ms-transform-origin: right top 0; transform-origin: right top 0; z-index: 10; }
+body { -webkit-transition: color 0.5s; transition: color 0.5s; }
+
+header.header { position: fixed; display: block; top: 5vw; right: 97vw; width: -webkit-calc(100vh - 10vw); width: calc(100vh - 10vw); padding: 0; -webkit-transform: rotate(270deg); -ms-transform: rotate(270deg); transform: rotate(270deg); -webkit-transform-origin: right top 0; -ms-transform-origin: right top 0; transform-origin: right top 0; z-index: 10; -webkit-transition: opacity 0.5s; transition: opacity 0.5s; }
 
 header.header nav { display: inline-block; }
 
@@ -75,14 +77,14 @@ a { font-family: SubHead; color: #ffd00d; text-decoration: none; }
 
 @font-face { font-family: 'Body'; src: url("../assets/fonts/N_BookItalic.eot"); src: local("☺"), url("../assets/fonts/N_BookItalic.woff") format("woff"), url("../assets/fonts/N_BookItalic.ttf") format("truetype"), url("../assets/fonts/N_BookItalic.svg") format("svg"); font-weight: normal; font-style: italic; }
 
-/* ================================================================================= 88888888888                                   88                          88                         ,d                 ""                          88                         88                                             88aaaaa      8b,dPPYba,  MM88MMM  8b,dPPYba,  88   ,adPPYba,  ,adPPYba,   88"""""      88P'   `"8a   88     88P'   "Y8  88  a8P_____88  I8[    ""   88           88       88   88     88          88  8PP"""""""   `"Y8ba,    88           88       88   88,    88          88  "8b,   ,aa  aa    ]8I   88888888888  88       88   "Y888  88          88   `"Ybbd8"'  `"YbbdP"'   ===============================================================================*/
+/* ================================================================================= 88888888888                                   88 88                         ,d                 "" 88                         88 88aaaaa      8b,dPPYba,  MM88MMM  8b,dPPYba,  88   ,adPPYba,  ,adPPYba, 88"""""      88P'   `"8a   88     88P'   "Y8  88  a8P_____88  I8[    "" 88           88       88   88     88          88  8PP"""""""   `"Y8ba, 88           88       88   88,    88          88  "8b,   ,aa  aa    ]8I 88888888888  88       88   "Y888  88          88   `"Ybbd8"'  `"YbbdP"' ===============================================================================*/
 .home_entry { position: fixed; top: 0; left: 0; margin: 0; padding: 0; box-shadow: 0.05rem 0.05rem 0.1rem rgba(50, 50, 50, 0.2); }
 
-.home_entry .inner { position: relative; top: 0; left: 0; width: 100%; height: 100%; color: white; }
+.home_entry .inner { position: relative; top: 0; left: 0; width: 100%; height: 100%; color: white; -webkit-transition: opacity 0.5s; transition: opacity 0.5s; }
 
 .home_entry h1, .home_entry p { position: relative; color: white; z-index: 20; }
 
-.home_entry h1 { font-size: 2rem; letter-spacing: 0.2rem; }
+.home_entry h1 { letter-spacing: 0.2rem; }
 
 #home_play, #v_header.home_entry { height: -webkit-calc(100vh - 14vw); height: calc(100vh - 14vw); width: 86vw; margin: 7vw 0 0 7vw; background: white; }
 
@@ -92,7 +94,9 @@ a { font-family: SubHead; color: #ffd00d; text-decoration: none; }
 
 #home_about { height: -webkit-calc(100vh - 18vw); height: calc(100vh - 18vw); width: 72vw; margin-top: 13vw; margin-left: 23vw; background-image: url(/assets/images/team_pic_small.png); background-color: #4cb884; background-blend-mode: multiply; background-position: left; background-repeat: no-repeat; background-size: contain; }
 
-#home_about .inner { float: right; width: 50%; height: 100%; text-align: center; }
+#home_about.bgHidden { background-image: url(); background-color: #4cb884; }
+
+#home_about .inner { float: right; width: 34vw; height: 100%; margin-right: 2vw; text-align: center; }
 
 #home_about .inner p, #home_about .inner h1 { text-align: left; }
 
@@ -108,11 +112,21 @@ a { font-family: SubHead; color: #ffd00d; text-decoration: none; }
 
 #home_videos #home_interviews p { margin-left: 6vw; }
 
-#home_videos #home_films { position: absolute; bottom: 4vw; right: 0; height: 50%; width: 70%; }
+#home_videos #home_films { position: absolute; top: 15vw; left: 30vw; height: 50%; width: 45vw; }
 
-#v_header.home_entry { box-shadow: none; }
+#home_videos #home_films .button, #home_videos #home_films .button_green, #home_videos #home_films .button_yellow { position: absolute; right: 4vw; }
 
-/* ================================================================================= ,ad8888ba,               88           88   d8"'    `"8b              ""           88   d8'                                     88   88             8b,dPPYba,  88   ,adPPYb,88   88      88888  88P'   "Y8  88  a8"    `Y88   Y8,        88  88          88  8b       88   Y8a.    .a88  88          88  "8a,   ,d88   `"Y88888P"   88          88   `"8bbdP"Y8   ===============================================================================*/
+#home_videos #home_films h1 { width: 32vw; margin-top: 3vw; margin-left: 11vw; }
+
+#home_videos #home_films p { width: 30vw; margin-top: 1vw; margin-left: 13vw; }
+
+#home_videos .pattern { position: absolute; bottom: -2vw; left: 0; mix-blend-mode: multiply; z-index: 20; width: 25vw; height: auto; -webkit-transition: opacity 0.5s; transition: opacity 0.5s; }
+
+#home_videos .rome { position: absolute; top: 12.5vw; right: 2vw; width: 31vw; height: auto; mix-blend-mode: multiply; z-index: 20; -webkit-transition: opacity 0.5s; transition: opacity 0.5s; }
+
+#v_header.home_entry { box-shadow: none; background: none; }
+
+/* ================================================================================= ,ad8888ba,               88           88 d8"'    `"8b              ""           88 d8'                                     88 88             8b,dPPYba,  88   ,adPPYb,88 88      88888  88P'   "Y8  88  a8"    `Y88 Y8,        88  88          88  8b       88 Y8a.    .a88  88          88  "8a,   ,d88 `"Y88888P"   88          88   `"8bbdP"Y8 ===============================================================================*/
 .is_scrollable { position: relative; }
 
 #d_filter { position: relative; top: 6rem; max-width: 100%; margin-left: 3rem; }
@@ -213,7 +227,7 @@ span.v_close_btn a { text-decoration: none; color: black; }
 **==================*/
 .v_controls { position: fixed; display: block; top: 95vh; left: 0; width: 100vw; max-width: 100%; height: 2rem; margin: 0; padding: 0 3vw; z-index: 2; }
 
-main.home .v_controls { top: initial; bottom: 7vw; left: 5vw; width: 86vw; max-width: 86%; padding: 0 2vw; }
+main.home .v_controls { top: initial; bottom: 8vw; left: 5vw; width: 86vw; max-width: 86%; padding: 0 2vw; }
 
 .v_control_elem, .v_play_btn_cont, .v_vol_btn_cont, .v_time_ind { float: left; height: 2rem; width: 2rem; z-index: 10; color: white; text-align: justify; padding: 0; margin: 0 0 0 0.5rem; }
 

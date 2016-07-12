@@ -20,6 +20,7 @@ _#}
 {% set disciplineTags = craft.tags.group('disciplines').slug(disciplineQuery) %}
 
 {% set years = [2016, 2015, 2014, 2013, 2012] %}
+{% set entryYears = [] %}
 
 {# =========================== Filter Form =========================== #}
 
@@ -84,6 +85,7 @@ _#}
 {# =========================== Display Entries =========================== #}
 
 		{% if entries | length %}
+			{% set entryYears = entryYears|merge([year]) %}
 			<h1 class="year_title">{{year}}</h1>
 			<section id="flex_grid_{{year}}" class="flexbox_grid clearfix">
 				{% for entry in entries %}
@@ -115,6 +117,13 @@ _#}
 		{# <p>That's strange, we couldn't find anything, our bad. Maybe try looking for something else? We'll fix this ASAP!</p> #}
 		{% endif %}
 	{% endfor %}
+	<div id="year_links">
+		{% for year in entryYears %}
+			<a href="#flex_grid_{{year}}">
+				{{year}}
+			</a>
+		{% endfor %}
+	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 	<script src="/js/designIndex.js"></script>
 {% endblock %}
