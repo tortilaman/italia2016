@@ -17,7 +17,7 @@ All the utility stuff goes here such as variables, mixins, and classes like clea
 
 body { -webkit-transition: color 0.5s; transition: color 0.5s; }
 
-header.header { position: fixed; display: block; top: 5vw; right: 97vw; width: -webkit-calc(100vh - 10vw); width: calc(100vh - 10vw); padding: 0; -webkit-transform: rotate(270deg); -ms-transform: rotate(270deg); transform: rotate(270deg); -webkit-transform-origin: right top 0; -ms-transform-origin: right top 0; transform-origin: right top 0; z-index: 10; -webkit-transition: opacity 0.5s; transition: opacity 0.5s; }
+header.header { position: fixed; display: block; top: 5vw; right: 97.5vw; width: -webkit-calc(100vh - 10vw); width: calc(100vh - 10vw); padding: 0; -webkit-transform: rotate(270deg); -ms-transform: rotate(270deg); transform: rotate(270deg); -webkit-transform-origin: right top 0; -ms-transform-origin: right top 0; transform-origin: right top 0; z-index: 10; -webkit-transition: opacity 0.5s; transition: opacity 0.5s; }
 
 header.header nav { display: inline-block; }
 
@@ -35,9 +35,8 @@ nav a.sel { color: #ffd00d; }
 
 .oHidden { opacity: 0 !important; }
 
-/*main {
-	padding: 5vw;
-}*/
+.design main { position: relative; margin: 5vw; padding: 0.25rem; background-color: #F6EEE2; -webkit-transition: all 0.5s; transition: all 0.5s; }
+
 body { font-family: body; font-size: 1.3rem; line-height: 2rem; }
 
 h1, h2, h3, h4, h5, h6 { font-family: Header; margin-bottom: 0.5rem; }
@@ -129,12 +128,28 @@ a { font-family: SubHead; color: #ffd00d; text-decoration: none; }
 /* ================================================================================= ,ad8888ba,               88           88 d8"'    `"8b              ""           88 d8'                                     88 88             8b,dPPYba,  88   ,adPPYb,88 88      88888  88P'   "Y8  88  a8"    `Y88 Y8,        88  88          88  8b       88 Y8a.    .a88  88          88  "8a,   ,d88 `"Y88888P"   88          88   `"8bbdP"Y8 ===============================================================================*/
 .is_scrollable { position: relative; }
 
-#d_filter { position: relative; top: 6rem; max-width: 100%; margin-left: 3rem; }
+#d_filter { position: fixed; top: 0; right: 5vw; width: 90vw; height: 5vw; max-width: 90%; background: white; z-index: 200; -webkit-transition: height 0.5s; transition: height 0.5s; }
+
+#d_filter form { position: absolute; right: 0; bottom: 0.55rem; }
+
+#d_filter input { position: relative; top: 0; right: 0; border: none; box-shadow: none; border-bottom: 0.5rem solid #5b93ce; outline: none; font-size: 3rem; width: 20vw; color: #5b93ce; -webkit-transition: all, 0.5s; transition: all, 0.5s; }
+
+#d_filter .lSearch { top: 25vh; right: 20vw; width: 50vw; background: none; }
+
+#d_filter span { position: absolute; right: 2vw; top: 3vw; font-size: 3rem; font-weight: bold; color: #5b93ce; cursor: pointer; -webkit-transition: opacity 0.5s; transition: opacity 0.5s; }
 
 /* =================================================================================================== 88888888888  88                                      ,ad8888ba,               88           88 88           88                                     d8"'    `"8b              ""           88 88           88                                    d8'                                     88 88aaaaa      88   ,adPPYba,  8b,     ,d8           88             8b,dPPYba,  88   ,adPPYb,88 88"""""      88  a8P_____88   `Y8, ,8P'  aaaaaaaa  88      88888  88P'   "Y8  88  a8"    `Y88 88           88  8PP"""""""     )888(    """"""""  Y8,        88  88          88  8b       88 88           88  "8b,   ,aa   ,d8" "8b,             Y8a.    .a88  88          88  "8a,   ,d88 88           88   `"Ybbd8"'  8P'     `Y8             `"Y88888P"   88          88   `"8bbdP"Y8 =================================================================================================*/
-section[id^="flex_grid_"] { position: relative; display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex; -webkit-flex-flow: row wrap; -ms-flex-flow: row wrap; flex-flow: row wrap; -webkit-box-pack: justify; -webkit-justify-content: space-between; -ms-flex-pack: justify; justify-content: space-between; width: 80vw; margin: 0 auto 3vh auto; }
+section[id^="flex_grid_"] { position: relative; display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex; -webkit-flex-flow: row wrap; -ms-flex-flow: row wrap; flex-flow: row wrap; -webkit-box-pack: justify; -webkit-justify-content: space-between; -ms-flex-pack: justify; justify-content: space-between; width: 80vw; margin: -5vh auto 3vh auto; }
 
-.year_title { position: relative; margin-left: 5vw; color: #4cb884; text-shadow: 0.1rem 0.1rem #ffd00d; -webkit-transform: translateY(8vh); -ms-transform: translateY(8vh); transform: translateY(8vh); z-index: 100; }
+h1[id*="year_title_"] { position: relative; margin-left: 5vw; color: #ffd00d; font-size: 8rem; margin: 0.5em 3vw; padding-top: 5.5vw; -webkit-transform: translateY(-5vw); -ms-transform: translateY(-5vw); transform: translateY(-5vw); z-index: 100; mix-blend-mode: multiply; }
+
+#year_links { position: fixed; top: 7vw; right: 4.5vw; }
+
+#year_links ul { list-style: none; }
+
+#year_links li { list-style: none; margin-bottom: 2rem; }
+
+#year_links a { color: #5b93ce; font-family: subhead; }
 
 /* ======================================================== ENTRY CLASS: Gets extended, never called directly. Useful for designer and team thumbnails. ======================================================*/
 .entry, .design_entry, .film_entry { position: relative; display: block; margin: 0; padding: 0; mix-blend-mode: multiply; z-index: 5; }
@@ -143,7 +158,7 @@ section[id^="flex_grid_"] { position: relative; display: -webkit-box; display: -
 
 .entry .entry_thumb_cont, .design_entry .entry_thumb_cont, .film_entry .entry_thumb_cont { position: relative; display: table; margin-left: 50%; -webkit-transform: translateX(-50%); -ms-transform: translateX(-50%); transform: translateX(-50%); width: auto; height: 100%; }
 
-.entry .entry_thumb_cont img, .design_entry .entry_thumb_cont img, .film_entry .entry_thumb_cont img { position: relative; display: block; -webkit-transform-origin: center center; -ms-transform-origin: center center; transform-origin: center center; width: auto; height: 100%; -webkit-transition: -webkit-transform 0.5s; transition: transform 0.5s; }
+.entry .entry_thumb_cont img, .design_entry .entry_thumb_cont img, .film_entry .entry_thumb_cont img { position: relative; display: block; -webkit-transform-origin: center center; -ms-transform-origin: center center; transform-origin: center center; width: auto; height: 100%; -webkit-transition: all 0.5s; transition: all 0.5s; }
 
 .entry .entry_title, .design_entry .entry_title, .film_entry .entry_title { position: absolute; top: 5%; left: 0; right: 0; text-align: center; padding: 0 1vw 0.5em 1vw; z-index: 50; -webkit-transition: all 0.5s; transition: all 0.5s; }
 
@@ -151,7 +166,7 @@ section[id^="flex_grid_"] { position: relative; display: -webkit-box; display: -
 
 .entry .entry_title span, .design_entry .entry_title span, .film_entry .entry_title span { color: white; padding: 0; margin: 0 auto; }
 
-.entry:hover img, .design_entry:hover img, .film_entry:hover img { -webkit-transform: scale(1.4); -ms-transform: scale(1.4); transform: scale(1.4); -webkit-transition: -webkit-transform 8s; transition: transform 8s; }
+.entry:hover img, .design_entry:hover img, .film_entry:hover img { -webkit-transform: scale(1.2); -ms-transform: scale(1.2); transform: scale(1.2); -webkit-transition: -webkit-transform 8s; transition: transform 8s; }
 
 .entry::after, .design_entry::after, .film_entry::after { content: ''; position: absolute; display: block; top: 0; left: 0; width: 100%; height: 100%; mix-blend-mode: multiply; z-index: 6; }
 

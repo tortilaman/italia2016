@@ -17,7 +17,7 @@ _#}
 {% set disciplineQuery = craft.request.getParam('discipline') %}
 
 {# Then find categories that match the slugs in your query string. #}
-{% set disciplineTags = craft.tags.group('disciplines').slug(disciplineQuery) %}
+{% set disciplineTags = craft.entries.slug(disciplineQuery)|merge([craft.tags.group('disciplines').slug(disciplineQuery)]) %}
 
 {% set years = [2016, 2015, 2014, 2013, 2012] %}
 {% set entryYears = [] %}
@@ -25,14 +25,18 @@ _#}
 {# =========================== Filter Form =========================== #}
 
 {% block main %}
-<form id="d_filter" action="http://dev.sfuitaliadesign.com/design">
-	<select name="discipline" onchange='this.form.submit()'>
+<div id="d_filter">
+	<form action="http://dev.sfuitaliadesign.com/design">
+		<input id="search" type="search" name="discipline" placeholder="type to search" onchange='this.form.submit()'>
+		{# <select name="discipline" onchange='this.form.submit()'>
 		<option value=""></option>
 		{% for tag in craft.tags.group('disciplines') %}
 		<option value="{{tag.slug}}" {{ tag.slug in disciplineQuery ? 'selected'}}>{{tag.title}}</option>
 		{% endfor %}
-	</select>
-</form>
+		</select> #}
+	</form>
+	<span class="oHidden">x</span>
+</div>
 
 {# =========================== Find Entries Logic =========================== #}
 
@@ -86,7 +90,7 @@ _#}
 
 		{% if entries | length %}
 			{% set entryYears = entryYears|merge([year]) %}
-			<h1 class="year_title">{{year}}</h1>
+			<h1 id="year_title_{{year}}">{{year}}</h1>
 			<section id="flex_grid_{{year}}" class="flexbox_grid clearfix">
 				{% for entry in entries %}
 					<article class="{{entry.type == 'shortFilm' ? 'film_entry' : 'design_entry'}} item">
@@ -118,11 +122,15 @@ _#}
 		{% endif %}
 	{% endfor %}
 	<div id="year_links">
-		{% for year in entryYears %}
-			<a href="#flex_grid_{{year}}">
-				{{year}}
-			</a>
-		{% endfor %}
+		<ul>
+			{% for year in entryYears %}
+				<li>
+					<a href="#year_title_{{year}}">
+						{{year}}
+					</a>
+				</li>
+			{% endfor %}
+		</ul>
 	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 	<script src="/js/designIndex.js"></script>

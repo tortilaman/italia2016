@@ -23,13 +23,29 @@ Y8,        88  88          88  8b       88
 		//Prevent consecutive overlaps.
 		if(index > 0) {
 			var oldMargin = $entries.get(index-1).style.marginLeft;
-			/*if(oldMargin.slice(0,oldMargin.length-3)< 0) {
-				$(this).css('margin-left', getRandomInt(0, 4).toFixed(1)+'vw');
-			}
-			else{
-				$(this).css('margin-left', getRandomInt(-4, 0).toFixed(1)+'vw');
-			}*/
 		}
 		$(".film_entry + .design_entry").css('left', getRandomInt(-4, 0).toFixed(1)+'vw');
+	});
+	$("#d_filter").focusin(function() {
+		$('article img').addClass("oHidden");
+		$('article .entry_title').addClass("oHidden");
+		$("#search").addClass("lSearch");
+		$("#d_filter").css('height', '1vw');
+		$(".design main").css({
+			'margin' : '1vw',
+			'padding': '5vw'
+		});
+		$("#d_filter span").removeClass("oHidden");
+	});
+	$("#d_filter").focusout(function() {
+		$('article img').removeClass("oHidden");
+		$('article .entry_title').removeClass("oHidden");
+		$(".design main").css({
+			'margin' : '5vw',
+			'padding': '0.25em'
+		});
+		$("#d_filter").css('height', '5vw');
+		$('#search').removeClass("lSearch");
+		$("#d_filter span").addClass("oHidden");
 	});
 });

@@ -12,7 +12,7 @@ header.header {
 	position: fixed;
 	display: block;
 	top: 5vw;
-	right: 97vw;
+	right: 97.5vw;
 	width: calc(100vh - 10vw);
 	padding: 0;
 	transform: rotate(270deg);
@@ -61,6 +61,10 @@ nav {
 	opacity: 0 !important;
 }
 
-/*main {
-	padding: 5vw;
-}*/
+.design main {
+	position: relative;
+	margin: 5vw;
+	padding: 0.25rem;
+	background-color: $bg-color;
+	transition: all 0.5s;
+}
