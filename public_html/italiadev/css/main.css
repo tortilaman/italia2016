@@ -138,6 +138,17 @@ a { font-family: SubHead; color: #ffd00d; text-decoration: none; }
 
 #d_filter span { position: absolute; right: 2vw; top: 3vw; font-size: 3rem; font-weight: bold; color: #5b93ce; cursor: pointer; -webkit-transition: opacity 0.5s; transition: opacity 0.5s; }
 
+#d_filter #undo_search { position: absolute; right: 0.25rem; top: 1rem; font-size: 3rem; font-weight: bold; color: #5b93ce; z-index: 50; }
+
+/*==============================
+Auto-Complete
+**============================*/
+ul.ui-autocomplete { position: fixed; top: -webkit-calc(25vh + 3rem); top: calc(25vh + 3rem); left: 25vw; background: none; padding: 0.2rem; box-shadow: none; border: none; }
+
+ul.ui-autocomplete li.ui-menu-item { box-shadow: none; border: none; padding: 0.5rem; font-size: 2.5rem; color: #5b93ce; list-style: none; cursor: pointer; }
+
+ul.ui-autocomplete li.ui-menu-item:hover { color: #4cb884; }
+
 /* =================================================================================================== 88888888888  88                                      ,ad8888ba,               88           88 88           88                                     d8"'    `"8b              ""           88 88           88                                    d8'                                     88 88aaaaa      88   ,adPPYba,  8b,     ,d8           88             8b,dPPYba,  88   ,adPPYb,88 88"""""      88  a8P_____88   `Y8, ,8P'  aaaaaaaa  88      88888  88P'   "Y8  88  a8"    `Y88 88           88  8PP"""""""     )888(    """"""""  Y8,        88  88          88  8b       88 88           88  "8b,   ,aa   ,d8" "8b,             Y8a.    .a88  88          88  "8a,   ,d88 88           88   `"Ybbd8"'  8P'     `Y8             `"Y88888P"   88          88   `"8bbdP"Y8 =================================================================================================*/
 section[id^="flex_grid_"] { position: relative; display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex; -webkit-flex-flow: row wrap; -ms-flex-flow: row wrap; flex-flow: row wrap; -webkit-box-pack: justify; -webkit-justify-content: space-between; -ms-flex-pack: justify; justify-content: space-between; width: 80vw; margin: -5vh auto 3vh auto; }
 

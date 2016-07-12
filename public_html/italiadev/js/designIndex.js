@@ -26,7 +26,7 @@ Y8,        88  88          88  8b       88
 		}
 		$(".film_entry + .design_entry").css('left', getRandomInt(-4, 0).toFixed(1)+'vw');
 	});
-	$("#d_filter").focusin(function() {
+	$("#search").focusin(function() {
 		$('article img').addClass("oHidden");
 		$('article .entry_title').addClass("oHidden");
 		$("#search").addClass("lSearch");
@@ -37,7 +37,7 @@ Y8,        88  88          88  8b       88
 		});
 		$("#d_filter span").removeClass("oHidden");
 	});
-	$("#d_filter").focusout(function() {
+	$("#search").focusout(function() {
 		$('article img').removeClass("oHidden");
 		$('article .entry_title').removeClass("oHidden");
 		$(".design main").css({
@@ -48,4 +48,9 @@ Y8,        88  88          88  8b       88
 		$('#search').removeClass("lSearch");
 		$("#d_filter span").addClass("oHidden");
 	});
+
+	$(".ui-auto-complete").click(function() {
+		console.log("Submitting supposedly");
+		$("#d_filter form").submit();
+	})
 });

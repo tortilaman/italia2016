@@ -47,6 +47,44 @@
 		cursor:pointer;
 		transition: opacity 0.5s;
 	}
+
+	#undo_search {
+		position: absolute;
+		right: 0.25rem;
+		top: 1rem;
+		font-size: 3rem;
+		font-weight: bold;
+		color: $color3;
+		z-index: 50;
+	}
+}
+
+/*==============================
+Auto-Complete
+**============================*/
+
+ul.ui-autocomplete {
+	position: fixed;
+	top: calc(25vh + 3rem);
+	left: 25vw;
+	background: none;
+	padding: 0.2rem;
+	box-shadow: none;
+	border: none;
+
+	li.ui-menu-item {
+		box-shadow: none;
+		border: none;
+		padding: 0.5rem;
+		font-size: 2.5rem;
+		color: $color3;
+		list-style: none;
+		cursor: pointer;
+
+		&:hover {
+			color: $color1;
+		}
+	}
 }
 
 /* ===================================================================================================
