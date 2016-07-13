@@ -53,4 +53,67 @@ Y8,        88  88          88  8b       88
 		console.log("Submitting supposedly");
 		$("#d_filter form").submit();
 	})
+
+/* =======================================================
+
+ ad88888ba                                                   88
+d8"     "8b                                                  88
+Y8,                                                          88
+`Y8aaaaa,     ,adPPYba,  ,adPPYYba,  8b,dPPYba,   ,adPPYba,  88,dPPYba,
+  `"""""8b,  a8P_____88  ""     `Y8  88P'   "Y8  a8"     ""  88P'    "8a
+		`8b  8PP"""""""  ,adPPPPP88  88          8b          88       88
+Y8a     a8P  "8b,   ,aa  88,    ,88  88          "8a,   ,aa  88       88
+ "Y88888P"    `"Ybbd8"'  `"8bbdP"Y8  88           `"Ybbd8"'  88       88
+
+** =====================================================*/
+
+	var $rawData = $("[data-title]"),
+		newArray = new Array();
+	$rawData.each(function(int, el) {
+		newArray.push($(this).attr('data-title'));
+	})
+	$("#search").autocomplete({
+		source: newArray/*,
+			minLength: 1,
+			focus: function( event, ui) {
+				$("#search").val(ui.item.title);
+				return false;
+			},
+			select: function( event, ui ) {
+				$("#search").val(ui.item.title);
+				return false;
+			}*/
+	})/*.autocomplete("instance")._renderItem = function(ul, item) {
+			return $("<li>").append("<div>" + item.title + "</div>").appendTo(ul);
+			console.log(item.title);
+		}*/;
+
+	/* =======================================================
+	KEYBOARD EVENT LISTENER
+	** =====================================================*/
+	$("#search").keyup(function() {
+		console.log("key pressed");
+		var $notTyped = "article:not([data-title*='"+$(this).val()+"'])";
+		var $typed = "article[data-title*='"+$(this).val()+"']";
+		$($notTyped).hide("fast").addClass("oHidden");
+		$($typed).show("fast").removeClass("oHidden");
+
+		if($(this).val() == '') {
+			$("[data-title]").show("fast");
+		}
+
+		if($(this).val() != '') {
+			for( var year = 2012; year < 2016; year++) {
+				//All articles are hidden
+				console.log("#flex_grid_"+year+" article");
+				if(!$("#flex_grid_"+year+" article").not(".oHidden").length) {
+					$("#year_title_"+year).hide("fast");
+					console.log("Everything in "+year+" is hidden");
+				} else {
+					console.log("Not everything is hidden");
+					$("#year_title_"+year).show("fast");
+				}
+			}
+		}
+	})
 });

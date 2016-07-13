@@ -13,12 +13,6 @@ _#}
 {% extends "_layouts/site" %}
 {% set bodyClass = "design" %}
 
-{# Setting up the tag filter stuff #}
-{% set disciplineQuery = craft.request.getParam('discipline') %}
-
-{# Then find categories that match the slugs in your query string. #}
-{% set disciplineTags = craft.entries.slug(disciplineQuery)|merge([craft.tags.group('disciplines').slug(disciplineQuery)]) %}
-
 {% set years = [2016, 2015, 2014, 2013, 2012] %}
 {% set entryYears = [] %}
 
@@ -28,12 +22,6 @@ _#}
 <div id="d_filter">
 	<form action="http://dev.sfuitaliadesign.com/design">
 		<input id="search" type="search" name="discipline" placeholder="{{disciplineQuery|length ? disciplineQuery : 'type to search'}}" onchange='this.form.submit()'>
-		{# <select name="discipline" onchange='this.form.submit()'>
-		<option value=""></option>
-		{% for tag in craft.tags.group('disciplines') %}
-		<option value="{{tag.slug}}" {{ tag.slug in disciplineQuery ? 'selected'}}>{{tag.title}}</option>
-		{% endfor %}
-		</select> #}
 		{% if disciplineQuery|length %}
 			<a id="undo_search" href="/design">x</a>
 		{% endif %}
@@ -45,25 +33,10 @@ _#}
 
 	{# One year at a time #}
 	{% for year in years %}
-		{# setup your search parameters #}
-		{% if disciplineQuery|length %}
-			{% set designerParams = {
-				query: disciplineQuery,
-				subLeft: true,
-				subRight: true
-			}
-			%}
-			{% set filmParams = {
-				query: disciplineQuery,
-				subLeft: true,
-				subRight: true
-			}
-			%}
-		{% endif %}
 
 		{# Find your entries #}
-		{% set designerEntries = craft.entries.search(designerParams).section('design').type('designer').videoYear(year).order('postDate desc') %}
-		{% set filmEntries = craft.entries.search(filmParams).section('design').type('shortFilm').videoYear(year).order('postDate desc') %}
+		{% set designerEntries = craft.entries.section('design').type('designer').videoYear(year).order('postDate desc') %}
+		{% set filmEntries = craft.entries.section('design').type('shortFilm').videoYear(year).order('postDate desc') %}
 		{% set filmOffset = designerEntries|length // filmEntries|length %}
 		{% set entries = [] %}
 
@@ -98,7 +71,11 @@ _#}
 			<h1 id="year_title_{{year}}">{{year}}</h1>
 			<section id="flex_grid_{{year}}" class="flexbox_grid clearfix">
 				{% for entry in entries %}
-					<article class="{{entry.type == 'shortFilm' ? 'film_entry' : 'design_entry'}} item">
+					<article class="{{entry.type == 'shortFilm' ? 'film_entry' : 'design_entry'}} item" data-title="{{entry|lower}}" data-tags='[
+						{% for tag in entry.disciplines  %}
+							&#34;{{tag}}&#34;{{tag == entry.disciplines.last() ? " " :","}}
+						{% endfor %}
+					]'>
 						{% if entry.type == "interviewVideo" %}
 							{% set image = entry.parent.intPortrait.first %}
 						{% else %}
@@ -140,29 +117,4 @@ _#}
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 	<script src="/js/designIndex.js"></script>
-	<script>
-		var rawData = {{craft.entries.section('design').find() | prune(['title'])|json_encode() | raw}};
-		var array = $.makeArray(rawData);
-		var newArray = new Array();
-		$.each(array, function(key, value) {
-			$.each(value, function(keyNew, valueNew){
-				newArray.push(valueNew);
-			});
-		});
-		$("#search").autocomplete({
-			source: newArray/*,
-			minLength: 1,
-			focus: function( event, ui) {
-				$("#search").val(ui.item.title);
-				return false;
-			},
-			select: function( event, ui ) {
-				$("#search").val(ui.item.title);
-				return false;
-			}*/
-		})/*.autocomplete("instance")._renderItem = function(ul, item) {
-			return $("<li>").append("<div>" + item.title + "</div>").appendTo(ul);
-			console.log(item.title);
-		};*/
-	</script>
 {% endblock %}
