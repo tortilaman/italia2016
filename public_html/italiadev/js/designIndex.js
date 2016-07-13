@@ -1,5 +1,19 @@
+function getParameterByName(name, url) {
+	if (!url) url = window.location.href;
+	name = name.replace(/[\[\]]/g, "\\$&");
+	var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+		results = regex.exec(url);
+	if (!results) return null;
+	if (!results[2]) return '';
+	return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
 $(document).ready(function() {
-	var $entries = $("[class*='_entry']");
+	var searching = false,
+		keyPlace = "",
+		key = "",
+		$entries = $("[class*='_entry']");
+	$("#search").focus();
 /* =========================================================================
 
   ,ad8888ba,               88           88
@@ -26,33 +40,6 @@ Y8,        88  88          88  8b       88
 		}
 		$(".film_entry + .design_entry").css('left', getRandomInt(-4, 0).toFixed(1)+'vw');
 	});
-	$("#search").focusin(function() {
-		$('article img').addClass("oHidden");
-		$('article .entry_title').addClass("oHidden");
-		$("#search").addClass("lSearch");
-		$("#d_filter").css('height', '1vw');
-		$(".design main").css({
-			'margin' : '1vw',
-			'padding': '5vw'
-		});
-		$("#d_filter span").removeClass("oHidden");
-	});
-	$("#search").focusout(function() {
-		$('article img').removeClass("oHidden");
-		$('article .entry_title').removeClass("oHidden");
-		$(".design main").css({
-			'margin' : '5vw',
-			'padding': '0.25em'
-		});
-		$("#d_filter").css('height', '5vw');
-		$('#search').removeClass("lSearch");
-		$("#d_filter span").addClass("oHidden");
-	});
-
-	$(".ui-auto-complete").click(function() {
-		console.log("Submitting supposedly");
-		$("#d_filter form").submit();
-	})
 
 /* =======================================================
 
@@ -71,49 +58,106 @@ Y8a     a8P  "8b,   ,aa  88,    ,88  88          "8a,   ,aa  88       88
 		newArray = new Array();
 	$rawData.each(function(int, el) {
 		newArray.push($(this).attr('data-title'));
-	})
+	});
+
+	function showSearch() {
+		console.log("show search");
+		searching = true;
+//		$("#search").val(key);
+//		key = "";
+		$('article img').addClass("oHidden");
+		$('article .entry_title').addClass("oHidden");
+		$("#search").addClass("lSearch");
+		$("#d_filter").css('height', '1vw');
+		$(".design main").css({
+			'margin' : '1vw',
+			'padding': '5vw'
+		});
+		$("#d_filter span").removeClass("oHidden");
+	}
+
+	function hideSearch() {
+		console.log("hide search");
+		$('article img').removeClass("oHidden");
+		$('article .entry_title').removeClass("oHidden");
+		$(".design main").css({
+			'margin' : '5vw',
+			'padding': '0.25em'
+		});
+		$("#d_filter").css('height', '5vw');
+		$('#search').removeClass("lSearch");
+		$("#d_filter span").addClass("oHidden");
+		searching = false;
+//		$("#search").blur();
+//		$(window).focus();
+	}
+
+	function $filterResults() {
+		if($("#search").val() != '') {
+			var $notTyped = "article:not([data-title*='"+$("#search").val()+"'])";
+			var $typed = "article[data-title*='"+$("#search").val()+"']";
+			$($notTyped).hide("fast").addClass("oHidden");
+			$($typed).show("fast").removeClass("oHidden");
+		}
+
+
+		if($("#search").val() == '') {
+			$("[data-title]").show("fast");
+		}
+
+		if($("#search").val() != '') {
+			for( var year = 2012; year < 2016; year++) {
+				//All articles are hidden
+				if(!$("#flex_grid_"+year+" article").not(".oHidden").length) {
+					$("#year_title_"+year).hide("fast");
+				} else {
+					$("#year_title_"+year).show("fast");
+				}
+			}
+		}
+	}
+
+	//AUTOCOMPLETE
 	$("#search").autocomplete({
-		source: newArray/*,
-			minLength: 1,
-			focus: function( event, ui) {
-				$("#search").val(ui.item.title);
-				return false;
-			},
-			select: function( event, ui ) {
-				$("#search").val(ui.item.title);
-				return false;
-			}*/
-	})/*.autocomplete("instance")._renderItem = function(ul, item) {
-			return $("<li>").append("<div>" + item.title + "</div>").appendTo(ul);
-			console.log(item.title);
-		}*/;
+		source: newArray,
+		select: function(event, ui) {
+			console.log("item selected");
+			$("#search").val(ui.item.value);
+			hideSearch();
+			$(window).focus();
+			$filterResults();
+		}
+	});
+	$("#search").focusin(function() {
+		console.log("focusin");
+		$("#search").val("");
+	});
+	$("#search").focusout(function() {
+		console.log("focusout");
+		hideSearch();
+	});
+
+	$("#searchForm").submit(function() {
+		console.log("submitForm");
+		$("#search").blur();
+		return false;
+	});
+
+	$("search").on("autocompleteselect", function(event, ui) {});
 
 	/* =======================================================
 	KEYBOARD EVENT LISTENER
 	** =====================================================*/
-	$("#search").keyup(function() {
-		console.log("key pressed");
-		var $notTyped = "article:not([data-title*='"+$(this).val()+"'])";
-		var $typed = "article[data-title*='"+$(this).val()+"']";
-		$($notTyped).hide("fast").addClass("oHidden");
-		$($typed).show("fast").removeClass("oHidden");
-
-		if($(this).val() == '') {
-			$("[data-title]").show("fast");
-		}
-
-		if($(this).val() != '') {
-			for( var year = 2012; year < 2016; year++) {
-				//All articles are hidden
-				console.log("#flex_grid_"+year+" article");
-				if(!$("#flex_grid_"+year+" article").not(".oHidden").length) {
-					$("#year_title_"+year).hide("fast");
-					console.log("Everything in "+year+" is hidden");
-				} else {
-					console.log("Not everything is hidden");
-					$("#year_title_"+year).show("fast");
-				}
-			}
+	$("#search").keyup( function() {
+		if(searching == false) {showSearch();}
+		$filterResults();
+	});
+	$(window).on("keyup", function(e) {
+		if(searching == false && e.keyCode >= 65 && e.keyCode <=90) {
+			key = String.fromCharCode(e.keyCode).toLowerCase();
+			$("#search").focus();
+			$("#search").val(key);
+			showSearch();
 		}
 	})
 });

@@ -19,12 +19,13 @@
 		position: relative;
 		top: 0;
 		right: 0;
+		background: none;
 		border: none;
 		box-shadow: none;
 		border-bottom: 0.5rem solid $color3;
 		outline: none;
 		font-size: 3rem;
-		width: 20vw;
+		width: 30vw;
 		color: $color3;
 		transition: all, 0.5s;
 	}
@@ -87,6 +88,10 @@ ul.ui-autocomplete {
 	}
 }
 
+span[role="status"] {
+	display: none;
+}
+
 /* ===================================================================================================
 
 88888888888  88                                      ,ad8888ba,               88           88
@@ -107,6 +112,7 @@ section[id^="flex_grid_"] {
 	justify-content: space-between;
 	width: 80vw;
 	margin: -5vh auto 3vh auto;
+	padding-bottom: 2rem;
 }
 
 h1[id*="year_title_"] {

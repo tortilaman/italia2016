@@ -20,8 +20,8 @@ _#}
 
 {% block main %}
 <div id="d_filter">
-	<form action="http://dev.sfuitaliadesign.com/design">
-		<input id="search" type="search" name="discipline" placeholder="{{disciplineQuery|length ? disciplineQuery : 'type to search'}}" onchange='this.form.submit()'>
+	<form id="searchForm">
+		<input id="search" type="search" placeholder="type to search">
 		{% if disciplineQuery|length %}
 			<a id="undo_search" href="/design">x</a>
 		{% endif %}
