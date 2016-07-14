@@ -14,6 +14,15 @@ $(document).ready(function() {
 		key = "",
 		$entries = $("[class*='_entry']");
 	$("#search").focus();
+
+	function findWithAttr(array, attr, value) {
+		for(var i = 0; i < array.length; i += 1) {
+			if(array[i][attr] == value) {
+				return i;
+			}
+		}
+	}
+
 /* =========================================================================
 
   ,ad8888ba,               88           88
@@ -72,7 +81,7 @@ Y8a     a8P  "8b,   ,aa  88,    ,88  88          "8a,   ,aa  88       88
 
 	//Sort first by category and then alphabetically.
 	newArray.sort(function(a,b) {
-		if(a.category == "Disciplines" && b.cateogry == "Interviewees") {
+		if(a.category == "Disciplines" && b.category == "Interviewees") {
 			return -1
 		} else if(a.category == "Interviewees" && b.category == "Disciplines") {
 			return 1
@@ -171,7 +180,21 @@ Y8a     a8P  "8b,   ,aa  88,    ,88  88          "8a,   ,aa  88       88
 	** =======================================*/
 
 	$("#search").autocomplete({
-		source: newArray,
+		source: function(request, response) {
+			var results = $.ui.autocomplete.filter(newArray, request.term);
+			if(request.term == 0) {
+				var index = newArray.map(function(e) { return e.category; }).indexOf('Interviewees');
+				console.log(index);
+				results = newArray.slice(0, index);
+			}
+
+			if (!results.length) {
+				results = [NoResultsLabel];
+			}
+
+			response(results);
+		},
+		minLength: 0,
 		delay: 0,
 		select: function(event, ui) {
 			$("#search").val(ui.item.label);
@@ -225,12 +248,14 @@ Y8a     a8P  "8b,   ,aa  88,    ,88  88          "8a,   ,aa  88       88
 
 	$("#search").focusin(function() {
 //		console.log("focusin");
-		$("#search").val("");
+		$(this).val("");
+		$('main').removeClass("noResults");
 	});
 
 	$("#search").focusout(function() {
 //		console.log("focusout");
 		hideSearch();
+		$('main').removeClass("noResults");
 	});
 
 	$("#searchForm").submit(function() {
@@ -239,8 +264,10 @@ Y8a     a8P  "8b,   ,aa  88,    ,88  88          "8a,   ,aa  88       88
 		return false;
 	});
 
-	$("#search").click(function() {
+	$("#search").on("click", function() {
 		showSearch();
+		$(this).autocomplete("search", "");
+		$('main').removeClass("noResults");
 	});
 
 	$("#search").on("keyup", function(e) {
