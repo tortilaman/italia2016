@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/* Main TODO List: TODO: Cards slide in from bottom on homepage load. */
+/* Main TODO List: TODO: Cards slide in from bottom on homepage load. TODO: Justify align navigation elements to take up most of the page worth of height. TODO: Playful empty search something. Not sure what. FIXME: Using the hide() method moves the nav when lots of shit is hidden */
 /*=============================================
 
 All the utility stuff goes here such as variables, mixins, and classes like clearfix that will be used all over the place.
@@ -140,11 +140,13 @@ a { font-family: SubHead; color: #ffd00d; text-decoration: none; }
 
 #d_filter form { position: absolute; right: 0; bottom: 0.55rem; }
 
-#d_filter input { position: relative; top: 0; right: 0; background: none; border: none; box-shadow: none; border-bottom: 0.5rem solid #5b93ce; outline: none; font-size: 3rem; width: 30vw; color: #5b93ce; -webkit-transition: all, 0.5s; transition: all, 0.5s; }
+#d_filter input { position: relative; top: 0; right: 0; background: none; border: none; box-shadow: none; border-bottom: 0.5rem solid #5b93ce; outline: none; font-size: 3rem; width: 30vw; color: #5b93ce; -webkit-transition: all, 0.5s; transition: all, 0.5s; mix-blend-mode: multiply; }
 
 #d_filter .lSearch { top: 25vh; right: 20vw; width: 50vw; background: none; }
 
-#d_filter span { position: absolute; right: 2vw; top: 3vw; font-size: 3rem; font-weight: bold; color: #5b93ce; cursor: pointer; -webkit-transition: opacity 0.5s; transition: opacity 0.5s; }
+#d_filter span { position: absolute; right: 3vw; top: 3vh; font-size: 3rem; font-weight: bold; color: #5b93ce; opacity: 0; cursor: pointer; -webkit-transition: all 0.5s; transition: all 0.5s; }
+
+#d_filter span.active { right: 21vw; top: 21vh; opacity: 1; }
 
 #d_filter #undo_search { position: absolute; right: 0.25rem; top: 1rem; font-size: 3rem; font-weight: bold; color: #5b93ce; z-index: 50; }
 
@@ -153,11 +155,17 @@ Auto-Complete
 **============================*/
 ul.ui-autocomplete { position: fixed; top: -webkit-calc(25vh + 3rem); top: calc(25vh + 3rem); left: 25vw; background: none; padding: 0.2rem; box-shadow: none; border: none; }
 
-ul.ui-autocomplete li.ui-menu-item { box-shadow: none; border: none; padding: 0.5rem; font-size: 2.5rem; color: #5b93ce; list-style: none; cursor: pointer; }
+ul.ui-autocomplete li.ui-menu-item { box-shadow: none; border: none; padding: 0.5rem; font-size: 2.5rem; color: #5b93ce; list-style: none; cursor: pointer; mix-blend-mode: multiply; }
 
 ul.ui-autocomplete li.ui-menu-item:hover { color: #4cb884; }
 
+ul.ui-autocomplete li.ui-menu-item .highlight { color: #4cb884; }
+
 span[role="status"] { display: none; }
+
+.noResults { background-image: url(/assets/images/bike.png); background-position: 20% 50%; background-repeat: no-repeat; background-attachment: fixed; min-height: 100vh; }
+
+.noResults::after { content: 'Nothing to see here, go find something else silly!'; display: block; position: absolute; top: 60%; left: 50%; }
 
 /* =================================================================================================== 88888888888  88                                      ,ad8888ba,               88           88 88           88                                     d8"'    `"8b              ""           88 88           88                                    d8'                                     88 88aaaaa      88   ,adPPYba,  8b,     ,d8           88             8b,dPPYba,  88   ,adPPYb,88 88"""""      88  a8P_____88   `Y8, ,8P'  aaaaaaaa  88      88888  88P'   "Y8  88  a8"    `Y88 88           88  8PP"""""""     )888(    """"""""  Y8,        88  88          88  8b       88 88           88  "8b,   ,aa   ,d8" "8b,             Y8a.    .a88  88          88  "8a,   ,d88 88           88   `"Ybbd8"'  8P'     `Y8             `"Y88888P"   88          88   `"8bbdP"Y8 =================================================================================================*/
 section[id^="flex_grid_"] { position: relative; display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex; -webkit-flex-flow: row wrap; -ms-flex-flow: row wrap; flex-flow: row wrap; -webkit-box-pack: justify; -webkit-justify-content: space-between; -ms-flex-pack: justify; justify-content: space-between; width: 80vw; margin: -5vh auto 3vh auto; padding-bottom: 2rem; }

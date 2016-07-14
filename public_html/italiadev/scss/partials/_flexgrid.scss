@@ -28,6 +28,7 @@
 		width: 30vw;
 		color: $color3;
 		transition: all, 0.5s;
+		mix-blend-mode: multiply;
 	}
 
 	.lSearch {
@@ -40,13 +41,20 @@
 
 	span {
 		position: absolute;
-		right: 2vw;
-		top: 3vw;
+		right: 3vw;
+		top: 3vh;
 		font-size: 3rem;
 		font-weight: bold;
 		color: $color3;
+		opacity: 0;
 		cursor:pointer;
-		transition: opacity 0.5s;
+		transition: all 0.5s;
+
+		&.active {
+			right: 21vw;
+			top: 21vh;
+			opacity: 1
+		}
 	}
 
 	#undo_search {
@@ -81,8 +89,12 @@ ul.ui-autocomplete {
 		color: $color3;
 		list-style: none;
 		cursor: pointer;
+		mix-blend-mode: multiply;
 
 		&:hover {
+			color: $color1;
+		}
+		.highlight {
 			color: $color1;
 		}
 	}
@@ -90,6 +102,22 @@ ul.ui-autocomplete {
 
 span[role="status"] {
 	display: none;
+}
+
+.noResults {
+	background-image: url(/assets/images/bike.png);
+	background-position: 20% 50%;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	min-height: 100vh;
+
+	&::after {
+		content: 'Nothing to see here, go find something else silly!';
+		display: block;
+		position: absolute;
+		top: 60%;
+		left: 50%;
+	}
 }
 
 /* ===================================================================================================
