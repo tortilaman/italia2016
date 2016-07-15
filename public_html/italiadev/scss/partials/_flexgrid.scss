@@ -1,3 +1,6 @@
+/* ==============================
+	FILTER
+** ============================*/
 #d_filter {
 	position: fixed;
 	top: 0;
@@ -41,8 +44,8 @@
 
 	span {
 		position: absolute;
-		right: 3vw;
-		top: 3vh;
+		right: 0.5rem;
+		bottom: 1rem;
 		font-size: 3rem;
 		font-weight: bold;
 		color: $color3;
@@ -52,8 +55,12 @@
 
 		&.active {
 			right: 21vw;
-			top: 21vh;
+			top: 20vh;
 			opacity: 1
+		}
+
+		&.hideActive {
+			opacity: 1;
 		}
 	}
 
@@ -69,7 +76,7 @@
 }
 
 /*==============================
-Auto-Complete
+Auto-Complete Filter
 **============================*/
 
 ul.ui-autocomplete {
@@ -80,22 +87,33 @@ ul.ui-autocomplete {
 	padding: 0.2rem;
 	box-shadow: none;
 	border: none;
+	z-index: 200;
 
 	li.ui-menu-item {
 		box-shadow: none;
 		border: none;
 		padding: 0.5rem;
 		font-size: 2.5rem;
-		color: $color3;
+		color: $color2;
 		list-style: none;
 		cursor: pointer;
+		text-shadow: 0.1rem 0.1rem 0.1rem rgba(55, 55, 55, 0.5);
 		mix-blend-mode: multiply;
+//		text-transform: uppercase;
+		font-family: header;
 
-		&:hover {
-			color: $color1;
-		}
 		.highlight {
 			color: $color1;
+		}
+		a {
+			color: $color3;
+			mix-blend-mode: multiply;
+//			text-transform: capitalize;
+			font-family: subhead;
+
+			&:hover {
+				color: $color1;
+			}
 		}
 	}
 }
@@ -109,7 +127,6 @@ span[role="status"] {
 	background-position: 20% 50%;
 	background-repeat: no-repeat;
 	background-attachment: fixed;
-	min-height: 100vh;
 
 	&::after {
 		content: 'Nothing to see here, go find something else silly!';
@@ -203,7 +220,7 @@ h1[id*="year_title_"] {
 	//Images that are bigger than the container will be centered by this element
 	.entry_thumb_cont {
 		position: relative;
-		display: table;
+		display: inline-block;
 		margin-left: 50%;
 		transform: translateX(-50%);
 		width: auto;
@@ -285,3 +302,7 @@ h1[id*="year_title_"] {
 		background-color: $color1;
 	}
 }
+
+/* ========================================================
+	ANIMATIONS
+** ======================================================*/

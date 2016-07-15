@@ -71,7 +71,7 @@ _#}
 			<h1 id="year_title_{{year}}">{{year}}</h1>
 			<section id="flex_grid_{{year}}" class="flexbox_grid clearfix">
 				{% for entry in entries %}
-					<article class="{{entry.type == 'shortFilm' ? 'film_entry' : 'design_entry'}} item" data-title="{{entry|lower}}" data-tags='{% for tag in entry.disciplines  %}{{tag}}{{tag == entry.disciplines.last() ? "" :","}}{% endfor %}'>
+					<article class="{{entry.type == 'shortFilm' ? 'film_entry' : 'design_entry'}} item" data-title="{{entry|lower}}" data-tags='{% for tag in entry.disciplines  %}{{tag}}{{tag == entry.disciplines.last() ? "" :","}}{% endfor %}' data-show="true">
 						{% if entry.type == "interviewVideo" %}
 							{% set image = entry.parent.intPortrait.first %}
 						{% else %}

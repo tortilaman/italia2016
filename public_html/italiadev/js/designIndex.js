@@ -23,6 +23,19 @@ $(document).ready(function() {
 		}
 	}
 
+	function getRandomInt(min, max) {
+		return Math.round(Math.random() * (max - min + 1) + min);
+	}
+
+	$.fn.extend({
+		animateCss: function (animationName) {
+			var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+			$(this).addClass('animated ' + animationName).one(animationEnd, function() {
+				$(this).removeClass('animated ' + animationName);
+			});
+		}
+	});
+
 /* =========================================================================
 
   ,ad8888ba,               88           88
@@ -35,9 +48,6 @@ Y8,        88  88          88  8b       88
   `"Y88888P"   88          88   `"8bbdP"Y8
 
 ** =======================================================================*/
-	function getRandomInt(min, max) {
-		return Math.round(Math.random() * (max - min + 1) + min);
-	}
 
 	$entries.each(function(index, value) {
 		$(this).css('left', getRandomInt(-2, 2).toFixed(1)+'vw');
@@ -99,7 +109,6 @@ Y8a     a8P  "8b,   ,aa  88,    ,88  88          "8a,   ,aa  88       88
 	});
 
 	function showSearch() {
-//		console.log("show search");
 		searching = true;
 		$('article img').addClass("oHidden");
 		$('article .entry_title').addClass("oHidden");
@@ -113,7 +122,6 @@ Y8a     a8P  "8b,   ,aa  88,    ,88  88          "8a,   ,aa  88       88
 	}
 
 	function hideSearch() {
-//		console.log("hide search");
 		$('article img').removeClass("oHidden");
 		$('article .entry_title').removeClass("oHidden");
 		$(".design main").css({
@@ -131,47 +139,67 @@ Y8a     a8P  "8b,   ,aa  88,    ,88  88          "8a,   ,aa  88       88
 	** =========================================================*/
 
 	function $filterResults() {
-		//There is a search term
-		if($("#search").val() != '') {
-			//Interviewees & Films
-			$("article[data-title]").each(function() {
-				var tags = $(this).attr("data-tags"),
-					names = $(this).attr("data-title").toLowerCase(),
-					//Merge names and tags if there are tags.
-					data = tags == "" ? names : names.concat(" ", tags),
-					show = false;
+		//Interviewees & Films
+		console.log("======Filtering=====");
+		$("article[data-title]").each(function() {
+			var tags = $(this).attr("data-tags"),
+				names = $(this).attr("data-title").toLowerCase(),
+				//Merge names and tags if there are tags.
+				data = tags == "" ? names : names.concat(" ", tags),
+				show = false,
+				changed;
 
-				var $search = $("#search").val().toLowerCase();//search is the search data
-				var matcher = new RegExp('(^| )' + $search, 'i');
-//					if($search.match("^|"+data)) {
-				if(matcher.test(data)) {
-					show = true;
-				}
-				if(show) {
-					$(this).show("fast").removeClass("oHidden");
-				} else {
-					$(this).hide("fast").addClass("oHidden");
-				}
-			});
-			//Year Titles
-			for( var year = 2012; year < 2016; year++) {
-				//All articles are hidden
-				if(!$("#flex_grid_"+year+" article").not(".oHidden").length) {
-					$("#year_title_"+year).hide("fast");
-				} else {
-					$("#year_title_"+year).show("fast");
-				}
-			}
-			//Empty search results. Can't have that!
-			if(!$("[id*='flex_grid_'] article").not(".oHidden").length) {
-				$('main').addClass("noResults");
+			var $search = $("#search").val().toLowerCase();
+			//Match using the search term starting at the beginning of every word.
+			var matcher = new RegExp('(^|)'+$search,'i');
+
+			if(matcher.test(data)) {
+				if($(this).attr('data-show') == "true") {changed = false;} else {changed = true;}
+				console.log("Show is true and Changed is "+changed+" for "+names);
+				$(this).attr('data-show', "true");
+				show = true;
 			} else {
-				$('main').removeClass("noResults");
+				if($(this).attr('data-show') == "false"){changed = false;} else{changed = true;}
+				console.log("Show is false and Changed is "+changed+" for "+names);
+				$(this).attr('data-show', "false");
+				show = false;
+			}
+
+			if($("#search").val() == '') {
+				if($(this).attr('data-show') == "true") {changed = false;} else {changed = true;}
+				console.log("Show is false and Changed is "+changed+" for "+names);
+				$(this).attr('data-show', "true");
+				show = true;
+			}
+
+			if(show == true && changed == true) {
+				var dict = {0: "fadeInDown", 1: "fadeInLeft", 2: "fadeInRight", 3: "fadeInUp"};
+				$(this).removeClass("dHidden").animateCss(dict[getRandomInt(0,3)]);
+			} else if(show == false && changed == true) {
+				var dict = {0: "fadeOutDown", 1: "fadeOutLeft", 2: "fadeOutRight", 3: "fadeOutUp"};
+				$(this).addClass("dHidden").animateCss(dict[getRandomInt(0,3)]);
+			} else if(show == true) {
+				$(this).removeClass("dHidden");
+			} else if(show == false) {
+				$(this).addClass("dHidden");
+			} else {
+				console.log(names+" wasn't filtered")
+			}
+		});
+		//Year Titles
+		for( var year = 2012; year < 2016; year++) {
+			//All articles are hidden
+			if(!$("#flex_grid_"+year+" article").not(".dHidden").length) {
+				$("#year_title_"+year).hide("fast");
+			} else {
+				$("#year_title_"+year).show("fast");
 			}
 		}
-		//There's no search term
-		else {
-			$("[data-title]").show("fast");
+		//Empty search results. Can't have that!
+		if(!$("[id*='flex_grid_'] article").not(".dHidden").length) {
+			$('main').addClass("noResults");
+		} else {
+			$('main').removeClass("noResults");
 		}
 	}
 
@@ -184,7 +212,6 @@ Y8a     a8P  "8b,   ,aa  88,    ,88  88          "8a,   ,aa  88       88
 			var results = $.ui.autocomplete.filter(newArray, request.term);
 			if(request.term == 0) {
 				var index = newArray.map(function(e) { return e.category; }).indexOf('Interviewees');
-				console.log(index);
 				results = newArray.slice(0, index);
 			}
 
@@ -198,8 +225,8 @@ Y8a     a8P  "8b,   ,aa  88,    ,88  88          "8a,   ,aa  88       88
 		delay: 0,
 		select: function(event, ui) {
 			$("#search").val(ui.item.label);
-			console.log($("#search").val());
-			$filterResults();
+			$("#d_filter span").addClass("hideActive");
+			requestAnimationFrame($filterResults);
 			hideSearch();
 			$(window).focus();
 		}
@@ -246,37 +273,42 @@ Y8a     a8P  "8b,   ,aa  88,    ,88  88          "8a,   ,aa  88       88
 		EVENT LISTENERS
 	** =====================================================*/
 
+	$("#d_filter span").on("click", function(e) {
+		$("#search").val("");
+		requestAnimationFrame($filterResults);
+		hideSearch();
+		$(this).removeClass("hideActive, active");
+	});
+
 	$("#search").focusin(function() {
-//		console.log("focusin");
 		$(this).val("");
 		$('main').removeClass("noResults");
 	});
 
 	$("#search").focusout(function() {
-//		console.log("focusout");
 		hideSearch();
-		$('main').removeClass("noResults");
 	});
 
 	$("#searchForm").submit(function() {
-//		console.log("submitForm");
 		$("#search").blur();
 		return false;
 	});
 
 	$("#search").on("click", function() {
+		$(this).val("");
+		$('main').removeClass("noResults");
 		showSearch();
 		$(this).autocomplete("search", "");
-		$('main').removeClass("noResults");
+		requestAnimationFrame($filterResults);
 	});
 
 	$("#search").on("keyup", function(e) {
 		if(e.keyCode === 27) {
-			$("#search").val("")
+			$(this).val("")
 			hideSearch();
 		} else {
 			if(searching == false) {showSearch();}
-			$filterResults();
+			requestAnimationFrame($filterResults);
 		}
 	});
 

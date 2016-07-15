@@ -6,6 +6,8 @@
 
 body {
 	transition: color 0.5s;
+	min-height: 80vh;
+	height: 100%;
 }
 
 header.header {
@@ -60,11 +62,16 @@ nav {
 .oHidden {
 	opacity: 0 !important;
 }
+.dHidden {
+	display: none !important;
+}
 
 .design main {
 	position: relative;
 	margin: 5vw;
 	padding: 0.25rem;
 	background-color: $bg-color;
+	height: 100%;
+	min-height: 85vh;
 	transition: all 0.5s;
 }
