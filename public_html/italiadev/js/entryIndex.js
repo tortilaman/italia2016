@@ -118,10 +118,9 @@ Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  88  88       88  "8a, 
 				inMin = $("#home_videos").attr('data-offset'),
 				inMax =  parseFloat(inMin) + parseFloat($("#home_videos").outerHeight()),
 				outMin = 0,
-				outMax = $(window).outerHeight()*0.6,
+				outMax = $(window).outerHeight()*0.8,
 				newVal = -scrolled.map(inMin, inMax, outMin, outMax)+'px';
-			console.log(oldTop+', '+inMin+', '+inMax+', '+outMin+', '+outMax+', '+newVal);
-			$('#home_films').css('transform', 'translateY('+newVal+')' );
+			$('#home_films').css('margin-top', newVal);
 		}
 	}
 
@@ -152,7 +151,7 @@ Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  88  88       88  "8a, 
 				bgColor = 000;
 				opacityValue = 1;
 //				hideControls(); //Not sure what to do with these...
-			} else if(scrollPercent < 0.05) {
+			} else if(scrollPercent < 0.1) {
 				scrollPercent = 0;
 				bgColor = 255;
 				opacityValue = 0;
@@ -161,10 +160,13 @@ Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  88  88       88  "8a, 
 				opacityValue = scrollPercent;//.map(0,1,0,1).toFixed(2);
 //				showControls();
 			}
-
+			var parsedScrollPercent = parseFloat(scrollPercent);
 			var wrapStyles = {
-				transform : 'scale('+parseFloat(scrollPercent).map(0, 1, 1, scaleRatio)+')',
-//				opacity: opacityValue
+//				transform : 'scale('+parseFloat(scrollPercent).map(0, 1, 1, scaleRatio)+')',
+				width : parsedScrollPercent.map(0, 1, 86, 100)+'vw',
+				height : parsedScrollPercent.map(0, 1, 36.86, 42.86)+'vw',
+				marginLeft : parsedScrollPercent.map(0, 1, 0, -7)+'vw',
+				marginTop : parsedScrollPercent.map(0, 1, 0, -3)+'vw'
 			};
 
 			$vWrapper.css(wrapStyles);
@@ -181,13 +183,6 @@ Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  88  88       88  "8a, 
 			var scrollPos = window.pageYOffset;
 			$entries.each(function() {
 				$(this).toggleClass('is_scrollable', scrollPos > $(this).attr('data-offset'));
-				if(scrollPos > $(this).attr('data-offset')) {
-					$(this).next().find('.hide').removeClass('oHidden');
-					$(this).next().removeClass('bgHidden');
-				} else {
-					$(this).next().find('.hide').addClass('oHidden');
-					$(this).next().addClass('bgHidden');
-				}
 			});
 			videoResize(scrollPos);
 			controlsTimeout;

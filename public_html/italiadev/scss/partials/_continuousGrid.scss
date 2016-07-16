@@ -29,7 +29,7 @@
 		outline: none;
 		font-size: 3rem;
 		width: 30vw;
-		color: $color3;
+		color: $color5;
 		transition: all, 0.5s;
 		mix-blend-mode: multiply;
 	}
@@ -81,7 +81,7 @@ Auto-Complete Filter
 
 ul.ui-autocomplete {
 	position: fixed;
-	top: calc(25vh + 3rem);
+	top: calc(25vh + 1rem);
 	left: 25vw;
 	background: none;
 	padding: 0.2rem;
@@ -94,25 +94,24 @@ ul.ui-autocomplete {
 		border: none;
 		padding: 0.5rem;
 		font-size: 2.5rem;
-		color: $color2;
+		color: $color5;
 		list-style: none;
 		cursor: pointer;
 		text-shadow: 0.1rem 0.1rem 0.1rem rgba(55, 55, 55, 0.5);
 		mix-blend-mode: multiply;
-//		text-transform: uppercase;
 		font-family: header;
 
 		.highlight {
 			color: $color1;
+			text-decoration: none;
+			mix-blend-mode: multiply;
 		}
 		a {
-			color: $color3;
+			color: $color5;
 			mix-blend-mode: multiply;
-//			text-transform: capitalize;
 			font-family: subhead;
 
 			&:hover {
-				color: $color1;
 			}
 		}
 	}

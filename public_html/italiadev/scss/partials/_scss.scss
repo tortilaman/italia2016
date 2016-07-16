@@ -7,13 +7,23 @@ All the utility stuff goes here such as variables, mixins, and classes like clea
 //COLORS
 //TODO: Figure out what the RGB values actually are for the new colors...
 $block-bg: 	rgba( 255, 255, 255, 0.9);
-$bg-color: 	#F6EEE2;
+//Green
 $color1: 	rgb(76, 184, 132);
 $color1T:	rgba(76, 184, 132, 0.9);
-$color2:	rgb(255, 208, 13);
-$color2T:	rgba(255, 208, 13, 0.9);
-$color3:	rgb(91, 147, 206);
-$color3T:	rgba(91, 147, 206, 0.9);
+//Yellow (is gone replaced for now with the green.)
+$color2:	rgb(154, 182, 244);
+$color2T:	rgba(154, 182, 244, 0.9);
+/*$color2:	rgb(255, 208, 13);
+$color2T:	rgba(255, 208, 13, 0.9);*/
+//Blue
+$color3:	rgb(154, 182, 244);
+$color3T:	rgba(154, 182, 244, 0.9);
+//Tan
+$color4: 	rgb(255, 250, 243);
+//Dark Blue
+$color5:	rgb(58, 75, 193);
+$color5T:	rgba(58, 75, 193, 0.9);
+//Other
 $shadow:	rgba(50, 50, 50, 0.2);
 
 .clearfix:after {

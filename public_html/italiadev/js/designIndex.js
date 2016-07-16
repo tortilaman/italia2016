@@ -7,7 +7,20 @@ function getParameterByName(name, url) {
 	if (!results[2]) return '';
 	return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
+/* ============================================================
 
+88888888ba                                   88
+88      "8b                                  88
+88      ,8P                                  88
+88aaaaaa8P'  ,adPPYba,  ,adPPYYba,   ,adPPYb,88  8b       d8
+88""""88'   a8P_____88  ""     `Y8  a8"    `Y88  `8b     d8'
+88    `8b   8PP"""""""  ,adPPPPP88  8b       88   `8b   d8'
+88     `8b  "8b,   ,aa  88,    ,88  "8a,   ,d88    `8b,d8'
+88      `8b  `"Ybbd8"'  `"8bbdP"Y8   `"8bbdP"Y8      Y88'
+                                                     d8'
+                                                    d8'
+
+** ==========================================================*/
 $(document).ready(function() {
 	var searching = false,
 		keyPlace = "",
@@ -27,27 +40,22 @@ $(document).ready(function() {
 		return Math.round(Math.random() * (max - min + 1) + min);
 	}
 
+	//ANIMATE.CSS JQUERY FUNCTION
 	$.fn.extend({
-		animateCss: function (animationName) {
+		animateCss: function (fadeDirection) {
 			var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
-			$(this).addClass('animated ' + animationName).one(animationEnd, function() {
+			var animationName = "fade"+fadeDirection+$(this).attr('data-dir');
+			console.log("Adding "+animationName+" to "+$(this).attr('data-title'));
+			$(this).addClass('animated ' + animationName).one("animationend", function(e) {
 				$(this).removeClass('animated ' + animationName);
+				console.log("Removing "+animationName+" from "+$(this).attr('data-title'));
 			});
 		}
 	});
 
-/* =========================================================================
-
-  ,ad8888ba,               88           88
- d8"'    `"8b              ""           88
-d8'                                     88
-88             8b,dPPYba,  88   ,adPPYb,88
-88      88888  88P'   "Y8  88  a8"    `Y88
-Y8,        88  88          88  8b       88
- Y8a.    .a88  88          88  "8a,   ,d88
-  `"Y88888P"   88          88   `"8bbdP"Y8
-
-** =======================================================================*/
+/* ==================
+	GRID FUNCTION
+** ================*/
 
 	$entries.each(function(index, value) {
 		$(this).css('left', getRandomInt(-2, 2).toFixed(1)+'vw');
@@ -58,6 +66,9 @@ Y8,        88  88          88  8b       88
 			var oldMargin = $entries.get(index-1).style.marginLeft;
 		}
 		$(".film_entry + .design_entry").css('left', getRandomInt(-4, 0).toFixed(1)+'vw');
+
+		var dict = {0: "Up", 1: "Down", 2: "Left", 3: "Right"};
+		$(this).attr('data-dir', dict[getRandomInt(0,3)]);
 	});
 
 /* =======================================================
@@ -113,7 +124,11 @@ Y8a     a8P  "8b,   ,aa  88,    ,88  88          "8a,   ,aa  88       88
 		$('article img').addClass("oHidden");
 		$('article .entry_title').addClass("oHidden");
 		$("#search").addClass("lSearch");
-		$("#d_filter").css('height', '1vw');
+		$("#d_filter").css({
+			'height': '1vw',
+			'max-width': '100%',
+			'right': '0'
+		});
 		$(".design main").css({
 			'margin' : '1vw',
 			'padding': '5vw'
@@ -128,14 +143,18 @@ Y8a     a8P  "8b,   ,aa  88,    ,88  88          "8a,   ,aa  88       88
 			'margin' : '5vw',
 			'padding': '0.25em'
 		});
-		$("#d_filter").css('height', '5vw');
+		$("#d_filter").css({
+			'height': '5vw',
+			'max-width': '90%',
+			'right': '5vw'
+		});
 		$('#search').removeClass("lSearch");
 		$("#d_filter span").removeClass("active");
 		searching = false;
 	}
 
 	/* ===========================================================
-		PAGE ITEM FILTER
+		THUMBNAIL FILTER
 	** =========================================================*/
 
 	function $filterResults() {
@@ -147,45 +166,32 @@ Y8a     a8P  "8b,   ,aa  88,    ,88  88          "8a,   ,aa  88       88
 				//Merge names and tags if there are tags.
 				data = tags == "" ? names : names.concat(" ", tags),
 				show = false,
-				changed;
+				changed,
+				$search = $("#search").val().toLowerCase(),
+				//Match using the search term starting at the beginning of every word.
+				matcher = new RegExp('(^| )'+$search,'i');
 
-			var $search = $("#search").val().toLowerCase();
-			//Match using the search term starting at the beginning of every word.
-			var matcher = new RegExp('(^|)'+$search,'i');
-
+			//Should this thumbnail show, and has that changed?
 			if(matcher.test(data)) {
 				if($(this).attr('data-show') == "true") {changed = false;} else {changed = true;}
-				console.log("Show is true and Changed is "+changed+" for "+names);
 				$(this).attr('data-show', "true");
 				show = true;
 			} else {
 				if($(this).attr('data-show') == "false"){changed = false;} else{changed = true;}
-				console.log("Show is false and Changed is "+changed+" for "+names);
 				$(this).attr('data-show', "false");
 				show = false;
 			}
 
-			if($("#search").val() == '') {
-				if($(this).attr('data-show') == "true") {changed = false;} else {changed = true;}
-				console.log("Show is false and Changed is "+changed+" for "+names);
-				$(this).attr('data-show', "true");
-				show = true;
-			}
-
-			if(show == true && changed == true) {
-				var dict = {0: "fadeInDown", 1: "fadeInLeft", 2: "fadeInRight", 3: "fadeInUp"};
-				$(this).removeClass("dHidden").animateCss(dict[getRandomInt(0,3)]);
-			} else if(show == false && changed == true) {
-				var dict = {0: "fadeOutDown", 1: "fadeOutLeft", 2: "fadeOutRight", 3: "fadeOutUp"};
-				$(this).addClass("dHidden").animateCss(dict[getRandomInt(0,3)]);
-			} else if(show == true) {
+			//Trigger the animations
+			if(show&&changed) {
+				$(this).animateCss('In');
 				$(this).removeClass("dHidden");
-			} else if(show == false) {
+			} else if(!show&&changed) {
+				$(this).animateCss('Out');
 				$(this).addClass("dHidden");
-			} else {
-				console.log(names+" wasn't filtered")
 			}
 		});
+
 		//Year Titles
 		for( var year = 2012; year < 2016; year++) {
 			//All articles are hidden
@@ -195,7 +201,8 @@ Y8a     a8P  "8b,   ,aa  88,    ,88  88          "8a,   ,aa  88       88
 				$("#year_title_"+year).show("fast");
 			}
 		}
-		//Empty search results. Can't have that!
+
+		//Empty search results. Let's make this interesting!
 		if(!$("[id*='flex_grid_'] article").not(".dHidden").length) {
 			$('main').addClass("noResults");
 		} else {
@@ -216,7 +223,7 @@ Y8a     a8P  "8b,   ,aa  88,    ,88  88          "8a,   ,aa  88       88
 			}
 
 			if (!results.length) {
-				results = [NoResultsLabel];
+				results = [{label: "Nothing to see here", category: "Oops!"}];
 			}
 
 			response(results);
@@ -274,10 +281,12 @@ Y8a     a8P  "8b,   ,aa  88,    ,88  88          "8a,   ,aa  88       88
 	** =====================================================*/
 
 	$("#d_filter span").on("click", function(e) {
-		$("#search").val("");
+		$("#search").val('');
 		requestAnimationFrame($filterResults);
-		hideSearch();
-		$(this).removeClass("hideActive, active");
+		console.log("Got past the filter");
+		if($("#search").hasClass('lsearch'))hideSearch();
+		console.log("Got past hideSearch");
+		$(this).removeClass("hideActive active");
 	});
 
 	$("#search").focusin(function() {
@@ -291,6 +300,7 @@ Y8a     a8P  "8b,   ,aa  88,    ,88  88          "8a,   ,aa  88       88
 
 	$("#searchForm").submit(function() {
 		$("#search").blur();
+		if($("#search").val() != '') $("#d_filter span").addClass("hideActive");
 		return false;
 	});
 

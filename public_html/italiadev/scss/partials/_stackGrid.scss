@@ -26,18 +26,22 @@
 		width: 100%;
 		height: 100%;
 		color: white;
-		transition: opacity 0.5s;
 	}
 
 	h1, p {
 		position: relative;
 		color: white;
 		z-index: 20;
+		transition: opacity 0.5s;
 	}
 
 	h1 {
 		font-size: 2rem;
 		letter-spacing: 0.2rem;
+	}
+
+	[class^='button_'] {
+		transition: opacity 0.5s;
 	}
 }
 
@@ -45,7 +49,13 @@
 	height: calc(100vh - 14vw);
 	width: 86vw;
 	margin: 7vw 0 0 7vw;
-	background: white;
+	background-color: $color4;
+	background-image: url(/assets/images/soft_wallpaper.png);
+	background-repeat: repeat;
+	background-position: top left;
+	background-blend-mode: multiply;
+//	background-size: 200%;
+	animation-delay: 0.75s;
 
 	.inner {
 		display: flex;
@@ -63,13 +73,14 @@
 	height: calc(100vh - 18vw);
 	width: 72vw;
 	margin-top: 13vw;
-	margin-left: 23vw;
+	margin-left: 21.5vw;
 	background-image:url(/assets/images/team_pic_small.png);
 	background-color: $color1;
 	background-blend-mode: multiply;
 	background-position: left;
 	background-repeat: no-repeat;
 	background-size: contain;
+	animation-delay: 0.5s;
 
 	&.bgHidden {
 		background-image:url();
@@ -81,6 +92,7 @@
 		width: 34vw;
 		height: 100%;
 		margin-right: 2vw;
+		margin-top: 8%;
 		text-align: center;
 
 		p, h1 {
@@ -96,18 +108,19 @@
 #home_videos {
 	height: calc(100vh - 14vw);
 	width: 80%;
-	margin-top: 5vw;
+	margin-top: 6vw;
 	margin-left: 5vw;
 //	margin-bottom: 5vw;
 	color: white;
 	box-shadow: none;
+	animation-delay: 0.25s;
 
 	#home_interviews {
 		@extend .yellow_bg;
 		position: relative;
-		height: 100%;
+//		height: 100%;
 		width: 45vw;
-		padding: 2vw;
+		padding: 3vw;
 		text-align: center;
 		box-shadow: 0.05rem 0.05rem 0.1rem $shadow;
 
@@ -131,39 +144,35 @@
 			top: -2vw;
 			left: -2vw;
 		}
-
-		.button_yellow {
-			position: absolute;
-			top: 11vw;
-			left: 13vw;
-		}
 	}
 
 	#home_films {
 		@extend .yellow_bg;
 		position: absolute;
-		top: 15vw;
+		top: 12vw;
 		left: 30vw;
-		height: 50%;
+//		height: 50%;
 		width: 45vw;
+		padding: 3vw;
+		text-align: center;
 
-		.button {
+/*		.button {
 			position: absolute;
 			right: 2vw;
 			bottom: 5vw;
 			&::after {
 				z-index: 1;
 			}
-		}
+		}*/
 		h1 {
-			width: 32vw;
 			margin-top: 3vw;
-			margin-left: 11vw
+			margin-left: 7vw;
+			text-align: left;
 		}
 		p {
-			width: 30vw;
 			margin-top: 1vw;
-			margin-left: 13vw;
+			margin-left: 9vw;
+			text-align: left;
 		}
 		&::after {
 			z-index: 1;

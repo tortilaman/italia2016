@@ -40,10 +40,10 @@ nav {
 		}
 	}
 	a {
-		color: $color3;
+		color: $color5;
 
 		&.sel {
-			color: $color2;
+			color: $color1;
 		}
 	}
 }
@@ -70,7 +70,11 @@ nav {
 	position: relative;
 	margin: 5vw;
 	padding: 0.25rem;
-	background-color: $bg-color;
+	background-image: url(/assets/images/soft_wallpaper.png);
+	background-repeat: repeat;
+	background-position: top left;
+	background-color: $color4;
+	background-blend-mode: multiply;
 	height: 100%;
 	min-height: 85vh;
 	transition: all 0.5s;
