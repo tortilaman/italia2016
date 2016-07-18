@@ -2,31 +2,31 @@
 .button {
 	position: relative;
 	display: inline-block;
-	margin: 2vw auto 0 auto;
-	padding: 0;
-	box-shadow: 0.1rem 0.1rem 0.1rem $shadow;
-	transition: all 0.2s;
+	margin: 2vw auto 0;
+	padding: .5rem 2rem;
+	color: white;
+	text-align: center;
+	box-shadow: .1rem .1rem .1rem $shadow;
+	transition: box-shadow .2s, color 0.2s;
+	z-index:10;
 
-	a {
-		position: relative;
-		display: block;
-		height: 100%;
-		width: 100%;
-		margin: 0;
-		padding: 0.5rem 2rem;
-		text-align: center;
-		z-index: 20;//TODO: This will need to be specific to block, maybe make it dynamic or something.
+	&::after {
+		z-index: 12;
+		transition: background-color 0.2s;
+	}
+
+	&:hover::before {
+		display: none;
 	}
 
 	span {
-		margin: 0 auto;
-		padding: 0;
-		color: white;
+		position: relative;
+		display: inline-block;
+		z-index:20;
 	}
 
 	&:hover {
-		transform: translateY(0.05rem);
-		box-shadow: 0.05rem 0.05rem 0.1rem $shadow;
+		box-shadow: .05rem .05rem .1rem $shadow;
 		&::after {
 			mix-blend-mode: normal;
 			background: white;
@@ -34,18 +34,28 @@
 	}
 }
 
-.button_green {
+.button-green {
 	@extend .button;
-	@extend .green_bg;
+	@extend .green-bg;
+
+	&::after {
+		background-color: darken($color1, 10%);
+	}
+
 	&:hover span {
 		color: $color1;
 	}
 }
 
-.button_yellow {
+.button-blue {
 	@extend .button;
-	@extend .yellow_bg;
+	@extend .blue-bg;
+
+	&::after {
+		background-color: darken($color2, 10%);
+	}
+
 	&:hover span {
-		color: $color2;
+		color: $color5;
 	}
 }

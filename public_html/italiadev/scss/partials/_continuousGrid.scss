@@ -1,23 +1,20 @@
-/* ==============================
-	FILTER
-** ============================*/
-#d_filter {
+// ==============================
+// 	FILTER
+// ==============================
+#d-filter {
 	position: fixed;
 	top: 0;
 	right: 5vw;
 	width: 90vw;
 	height: 5vw;
-	max-width: 90%;
 	background: white;
 	z-index: 200;
-	transition: height 0.5s;
-
+	transition: height .5s;
 	form {
 		position: absolute;
 		right: 0;
-		bottom: 0.55rem;
+		bottom: .55rem;
 	}
-
 	input {
 		position: relative;
 		top: 0;
@@ -25,48 +22,43 @@
 		background: none;
 		border: none;
 		box-shadow: none;
-		border-bottom: 0.5rem solid $color3;
+		border-bottom: .5rem solid $color3;
 		outline: none;
 		font-size: 3rem;
 		width: 30vw;
 		color: $color5;
-		transition: all, 0.5s;
+		transition: all, .5s;
 		mix-blend-mode: multiply;
 	}
-
 	.lSearch {
-//		position: absolute;
+		//		position: absolute;
 		top: 25vh;
 		right: 20vw;
 		width: 50vw;
 		background: none;
 	}
-
 	span {
 		position: absolute;
-		right: 0.5rem;
+		right: .5rem;
 		bottom: 1rem;
 		font-size: 3rem;
 		font-weight: bold;
 		color: $color3;
 		opacity: 0;
-		cursor:pointer;
-		transition: all 0.5s;
-
+		cursor: pointer;
+		transition: all .5s;
 		&.active {
 			right: 21vw;
 			top: 20vh;
-			opacity: 1
+			opacity: 1;
 		}
-
 		&.hideActive {
 			opacity: 1;
 		}
 	}
-
-	#undo_search {
+	#undo-search {
 		position: absolute;
-		right: 0.25rem;
+		right: .25rem;
 		top: 1rem;
 		font-size: 3rem;
 		font-weight: bold;
@@ -75,32 +67,29 @@
 	}
 }
 
-/*==============================
-Auto-Complete Filter
-**============================*/
-
+// ==============================
+// 	Auto-Complete Filter
+// ==============================
 ul.ui-autocomplete {
 	position: fixed;
 	top: calc(25vh + 1rem);
 	left: 25vw;
 	background: none;
-	padding: 0.2rem;
+	padding: .2rem;
 	box-shadow: none;
 	border: none;
 	z-index: 200;
-
 	li.ui-menu-item {
 		box-shadow: none;
 		border: none;
-		padding: 0.5rem;
+		padding: .5rem;
 		font-size: 2.5rem;
 		color: $color5;
 		list-style: none;
 		cursor: pointer;
-		text-shadow: 0.1rem 0.1rem 0.1rem rgba(55, 55, 55, 0.5);
+		text-shadow: .1rem .1rem .1rem rgba(55, 55, 55, 0.5);
 		mix-blend-mode: multiply;
 		font-family: header;
-
 		.highlight {
 			color: $color1;
 			text-decoration: none;
@@ -110,9 +99,7 @@ ul.ui-autocomplete {
 			color: $color5;
 			mix-blend-mode: multiply;
 			font-family: subhead;
-
-			&:hover {
-			}
+			&:hover {}
 		}
 	}
 }
@@ -122,11 +109,10 @@ span[role="status"] {
 }
 
 .noResults {
-	background-image: url(/assets/images/bike.png);
+	background-image: url("/assets/images/bike.png");
 	background-position: 20% 50%;
 	background-repeat: no-repeat;
 	background-attachment: fixed;
-
 	&::after {
 		content: 'Nothing to see here, go find something else silly!';
 		display: block;
@@ -136,95 +122,91 @@ span[role="status"] {
 	}
 }
 
-/* ===================================================================================================
-
-88888888888  88                                      ,ad8888ba,               88           88
-88           88                                     d8"'    `"8b              ""           88
-88           88                                    d8'                                     88
-88aaaaa      88   ,adPPYba,  8b,     ,d8           88             8b,dPPYba,  88   ,adPPYb,88
-88"""""      88  a8P_____88   `Y8, ,8P'  aaaaaaaa  88      88888  88P'   "Y8  88  a8"    `Y88
-88           88  8PP"""""""     )888(    """"""""  Y8,        88  88          88  8b       88
-88           88  "8b,   ,aa   ,d8" "8b,             Y8a.    .a88  88          88  "8a,   ,d88
-88           88   `"Ybbd8"'  8P'     `Y8             `"Y88888P"   88          88   `"8bbdP"Y8
-
-** =================================================================================================*/
-
-section[id^="flex_grid_"] {
+// ===================================================================================================
+//
+// 	88888888888  88                                      ,ad8888ba,               88           88
+// 	88           88                                     d8"'    `"8b              ""           88
+// 	88           88                                    d8'                                     88
+// 	88aaaaa      88   ,adPPYba,  8b,     ,d8           88             8b,dPPYba,  88   ,adPPYb,88
+// 	88"""""      88  a8P_____88   `Y8, ,8P'  aaaaaaaa  88      88888  88P'   "Y8  88  a8"    `Y88
+// 	88           88  8PP"""""""     )888(    """"""""  Y8,        88  88          88  8b       88
+// 	88           88  "8b,   ,aa   ,d8" "8b,             Y8a.    .a88  88          88  "8a,   ,d88
+// 	88           88   `"Ybbd8"'  8P'     `Y8             `"Y88888P"   88          88   `"8bbdP"Y8
+//
+// ===================================================================================================
+section[id^="flex-grid-"] {
 	position: relative;
 	display: flex;
 	flex-flow: row wrap;
 	justify-content: space-between;
 	width: 80vw;
-	margin: -5vh auto 3vh auto;
+	margin: -5vh auto 3vh;
 	padding-bottom: 2rem;
 }
 
-h1[id*="year_title_"] {
+h1[id*="year-title-"] {
 	position: relative;
 	margin-left: 5vw;
 	color: $color2;
 	font-size: 8rem;
-	margin: 0.5em 3vw;
+	margin: .5em 3vw;
 	padding-top: 5.5vw;
 	transform: translateY(-5vw);
 	z-index: 100;
 	mix-blend-mode: multiply;
 }
 
-#year_links {
+#year-links {
 	position: fixed;
 	top: 7vw;
 	right: 4.5vw;
-
 	ul {
 		list-style: none;
 	}
-
 	li {
 		list-style: none;
 		margin-bottom: 2rem;
 	}
-
 	a {
 		color: $color3;
-		font-family:subhead;
+		font-family: subhead;
 	}
 }
 
-/* ========================================================
-	ENTRY CLASS:
-	Gets extended, never called directly.
-	Useful for designer and team thumbnails.
-** ======================================================*/
-
+// ========================================================
+// 	ENTRY CLASS:
+// 	Gets extended, never called directly.
+// 	Useful for designer and team thumbnails.
+// ========================================================
 .entry {
 	position: relative;
 	display: block;
 	margin: 0;
 	padding: 0;
-	mix-blend-mode: multiply;
 	z-index: 5;
-
 	//The link hides the overflow
 	a {
 		position: relative;
-		display:block;
+		display: block;
 		top: 0;
 		left: 0;
 		height: 100%;
 		width: 100%;
 		overflow: hidden;
-	}
 
+		&:hover::before {
+			display: none;
+		}
+	}
 	//Images that are bigger than the container will be centered by this element
-	.entry_thumb_cont {
+	.entry-thumb-cont {
 		position: relative;
 		display: inline-block;
 		margin-left: 50%;
 		transform: translateX(-50%);
 		width: auto;
 		height: 100%;
-
+		mix-blend-mode: multiply;
 		//Because of the hover scale, the centering couldn't happen on the image.
 		img {
 			position: relative;
@@ -232,76 +214,53 @@ h1[id*="year_title_"] {
 			transform-origin: center center;
 			width: auto;
 			height: 100%;
-			transition: all 0.5s;
+			transition: all .5s;
 		}
 	}
-
-	.entry_title {
+	.entry-title {
 		position: absolute;
 		top: 5%;
 		left: 0;
 		right: 0;
 		text-align: center;
-		padding: 0 1vw 0.5em 1vw;
+		padding: 0 1vw .5em;
 		z-index: 50;
-		transition: all 0.5s;
-
+		transition: all .5s;
 		h3 {
 			color: white;
 			z-index: 100;
 		}
-
 		span {
 			color: white;
 			padding: 0;
 			margin: 0 auto;
 		}
 	}
-
 	&:hover img {
 		transform: scale(1.2);
 		transition: transform 8s;
 	}
-
-	&::after {
-		content: '';
-		position: absolute;
-		display: block;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		mix-blend-mode: multiply;
-		z-index: 6;
-	}
 }
 
-/* ========================================================
-	Entries:
-	Controls aspect ratios of entries as well as
-	the multiplied color.
-** ======================================================*/
-
-.design_entry {
+// ========================================================
+// 	Entries:
+// 	Controls aspect ratios of entries as well as
+// 	the multiplied color.
+// ========================================================
+.design-entry {
 	@extend .entry;
+	@extend .blue-bg;
 	width: 12vw;
 	height: 18vw;
-
-	&::after {
-		background-color: $color2;
-	}
 }
 
-.film_entry {
+.film-entry {
 	@extend .entry;
+	@extend .green-bg;
 	width: 40vw;
 	height: 26.66vw;
-
-	&::after {
-		background-color: $color1;
-	}
 }
 
-/* ========================================================
-	ANIMATIONS
-** ======================================================*/
+// ========================================================
+// 	ANIMATIONS
+// ========================================================

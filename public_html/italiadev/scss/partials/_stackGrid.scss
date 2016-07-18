@@ -1,24 +1,23 @@
-/* =================================================================================
+// =================================================================================
+//
+//	 88888888888                                   88
+// 	88                         ,d                 ""
+// 	88                         88
+// 	88aaaaa      8b,dPPYba,  MM88MMM  8b,dPPYba,  88   ,adPPYba,  ,adPPYba,
+// 	88"""""      88P'   `"8a   88     88P'   "Y8  88  a8P_____88  I8[    ""
+// 	88           88       88   88     88          88  8PP"""""""   `"Y8ba,
+// 	88           88       88   88,    88          88  "8b,   ,aa  aa    ]8I
+// 	88888888888  88       88   "Y888  88          88   `"Ybbd8"'  `"YbbdP"'
+//
+// ===============================================================================
 
-88888888888                                   88
-88                         ,d                 ""
-88                         88
-88aaaaa      8b,dPPYba,  MM88MMM  8b,dPPYba,  88   ,adPPYba,  ,adPPYba,
-88"""""      88P'   `"8a   88     88P'   "Y8  88  a8P_____88  I8[    ""
-88           88       88   88     88          88  8PP"""""""   `"Y8ba,
-88           88       88   88,    88          88  "8b,   ,aa  aa    ]8I
-88888888888  88       88   "Y888  88          88   `"Ybbd8"'  `"YbbdP"'
-
-** ===============================================================================*/
-
-.home_entry {
+[class*='-section'] {
 	position: fixed;
 	top: 0;
-	left:0;
+	left: 0;
 	margin: 0;
 	padding: 0;
 	box-shadow: 0.05rem 0.05rem 0.1rem $shadow;
-
 	.inner {
 		position: relative;
 		top: 0;
@@ -27,143 +26,143 @@
 		height: 100%;
 		color: white;
 	}
-
-	h1, p {
+	h1,
+	p {
 		position: relative;
-		color: white;
 		z-index: 20;
+		color: white;
 		transition: opacity 0.5s;
 	}
-
 	h1 {
-		font-size: 2rem;
 		letter-spacing: 0.2rem;
+		font-size: 2rem;
 	}
-
-	[class^='button_'] {
+	[class^='button-'] {
 		transition: opacity 0.5s;
+	}
+	.v-title {
+		position: absolute;
+		top: 4rem;
+		left: 2rem;
+		z-index: 8;
+	}
+	.v-thumbnail {
+		position: relative;
+		width: 100%;
+		height: auto;
+		mix-blend-mode: multiply;
+		z-index: 1;
+	}
+	.v-description {
+		position: absolute;
+		top: 7rem;
+		left: 5rem;
+		width: 50%;
+		z-index: 8;
 	}
 }
 
-#home_play, #v_header.home_entry {
-	height: calc(100vh - 14vw);
-	width: 86vw;
+//==========================================
+//	HOMEPAGE ENTRIES
+//==========================================
+#home-play {
 	margin: 7vw 0 0 7vw;
+	width: 86vw;
+	height: calc(100vh - 14vw);
 	background-color: $color4;
-	background-image: url(/assets/images/soft_wallpaper.png);
-	background-repeat: repeat;
+	background-image: url("/assets/images/soft_wallpaper.png");
 	background-position: top left;
-	background-blend-mode: multiply;
-//	background-size: 200%;
+	background-repeat: repeat;
 	animation-delay: 0.75s;
-
+	background-blend-mode: multiply;
 	.inner {
 		display: flex;
 		height: 100%;
 	}
-
-	#home_play_logo {
+	#home-play-logo {
+		margin: auto;
 		width: 50vmin;
 		height: auto;
-		margin: auto;
 	}
 }
 
-#home_about {
-	height: calc(100vh - 18vw);
-	width: 72vw;
+#home-about {
 	margin-top: 13vw;
 	margin-left: 21.5vw;
-	background-image:url(/assets/images/team_pic_small.png);
+	width: 72vw;
+	height: calc(100vh - 18vw);
 	background-color: $color1;
-	background-blend-mode: multiply;
+	background-image: url("/assets/images/team_pic_small.png");
 	background-position: left;
-	background-repeat: no-repeat;
 	background-size: contain;
+	background-repeat: no-repeat;
 	animation-delay: 0.5s;
-
+	background-blend-mode: multiply;
 	&.bgHidden {
-		background-image:url();
 		background-color: $color1;
+		background-image: url("");
 	}
-
 	.inner {
 		float: right;
+		margin-top: 8%;
+		margin-right: 2vw;
 		width: 34vw;
 		height: 100%;
-		margin-right: 2vw;
-		margin-top: 8%;
 		text-align: center;
-
-		p, h1 {
+		h1,
+		p {
 			text-align: left;
 		}
-
 		p {
 			margin: 3em 0 0 20%;
 		}
 	}
 }
 
-#home_videos {
-	height: calc(100vh - 14vw);
-	width: 80%;
+#home-videos {
 	margin-top: 6vw;
 	margin-left: 5vw;
-//	margin-bottom: 5vw;
-	color: white;
+	width: 80%;
+	height: calc(100vh - 14vw);
 	box-shadow: none;
+	color: white;
 	animation-delay: 0.25s;
+	animation-fill-mode: forwards;
 
-	#home_interviews {
-		@extend .yellow_bg;
-		position: relative;
-//		height: 100%;
-		width: 45vw;
+	#home-interviews {
+		position: relative; //		height: 100%;
 		padding: 3vw;
-		text-align: center;
+		width: 45vw;
 		box-shadow: 0.05rem 0.05rem 0.1rem $shadow;
-
-		h1, p {
+		text-align: center;
+		@extend .blue-bg;
+		h1,
+		p {
 			position: relative;
 			display: block;
 			margin-top: 2vw;
-			text-align: left;
 			color: white;
+			text-align: left;
 		}
-
 		h1 {
 			margin-left: 4vw;
 		}
-
 		p {
 			margin-left: 6vw;
 		}
-
 		.inner {
 			top: -2vw;
 			left: -2vw;
 		}
 	}
-
-	#home_films {
-		@extend .yellow_bg;
+	#home-films {
 		position: absolute;
 		top: 12vw;
-		left: 30vw;
-//		height: 50%;
-		width: 45vw;
+		left: 30vw; //		height: 50%;
 		padding: 3vw;
+		width: 45vw;
 		text-align: center;
-
-/*		.button {
-			position: absolute;
-			right: 2vw;
-			bottom: 5vw;
-			&::after {
-				z-index: 1;
-			}
-		}*/
+		@extend .blue-bg;
 		h1 {
 			margin-top: 3vw;
 			margin-left: 7vw;
@@ -177,36 +176,185 @@
 		&::after {
 			z-index: 1;
 		}
-
-	}
-
-	.pattern {
-		position: absolute;
-		bottom: -2vw;
-		left: 0;
-		mix-blend-mode: multiply;
-		z-index: 20;
-		width: 25vw;
-		height: auto;
-		transition: opacity 0.5s;
-	}
-
-	.rome {
-		position: absolute;
-		top: 12.5vw;
-		right: 2vw;
-		width: 31vw;
-		height: auto;
-		mix-blend-mode: multiply;
-		z-index: 20;
-		transition: opacity 0.5s;
 	}
 }
 
-#v_header.home_entry {
-	box-shadow: none;
+#v-header.home-section {
 	background: none;
+	box-shadow: none;
 }
+
+//==========================================
+//	ITALIA ENTRIES
+//==========================================
+#italia-content {
+	width: 80vw;
+}
+
+[id^='italia-'] {
+	width: 60vw;
+	height: 25.71vw;
+	overflow: hidden;
+}
+
+#italia-intro {
+	margin-top: 17vw;
+	margin-left: 25vw;
+	width: 30vw;
+	height: 13.71vw;
+	background: white;
+	.inner {
+		padding: 1em;
+		h2,
+		p {
+			position: relative;
+			color: $color5;
+			margin-top: 0.5em;
+		}
+		p {
+			margin-left: 1em;
+		}
+	}
+}
+
+#italia-pace {
+	@extend .green-bg;
+	margin-top: 5vw;
+	margin-left: 5vw;
+}
+
+#italia-workers {
+	@extend .blue-bg;
+	margin-top: 15vw;
+	margin-left: 35vw;
+}
+
+#italia-italy {
+	@extend .tan-bg;
+	margin-top: 25vw;
+	margin-left: 20vw;
+}
+
+//==========================================
+//	INTERVIEW ENTRIES
+//==========================================
+#v-intro {
+	position: relative;
+	margin-top: 10vw;
+	margin-left: 18vw;
+	width: 62vw;
+	height: calc(100vh - 20vw);
+	box-shadow: none;
+	opacity: 0;
+	animation-delay: 0.75s;
+	animation-fill-mode: forwards;
+
+	#v-contents {
+		position: absolute;
+		top: 0;
+		left: 0;
+		padding: 2em 2em 10em 2em;
+		width: 24vw;
+		height: calc(100vh - 26vw);
+		@extend .green-bg;
+
+		#v-chapter-ind {
+			position: absolute;
+			top: 5em;
+			width: 25vw;
+			height: 3.25em;
+			margin-left: -1em;
+			//FIXME: This will for sure cause problems once the play button is added...
+			transition: margin-top 0.3s ease-in-out;
+			@extend .green-bg;
+
+			&::before {
+				content: '';
+				position: absolute;
+				display: block;
+				left: 0.75em;
+				top: 0.625em;
+				width: 0;
+				height: 0;
+				z-index: 20;
+				border-top: 1em solid transparent;
+				border-left: 2em solid white;
+				border-bottom: 1em solid transparent;
+			}
+		}
+		&::after {
+			z-index: 1;
+		}
+	}
+
+	.v-chapter {
+		position: relative;
+		width: 100%;
+		height: 3em;
+		z-index: 8;
+
+		a {
+			display: block;
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 100%;
+			width: 100%;
+
+			&:hover::before {
+				display: none;
+			}
+		}
+
+		.v-chapter-number {
+			width: 3em;
+			font-size: 1.5rem;
+		}
+
+		.v-chapter-number, .v-chapter-title, .v-chapter-duration {
+			position: relative;
+			display: inline-block;
+			height: 1em;
+			margin: 1em 0;
+			font-family: Header;
+			color: white;
+		}
+
+		.v-chapter-duration {
+			position: absolute;
+			right: 0;
+			top: 0;
+			font-family: body;
+		}
+	}
+
+	#v-description {
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		padding: 4vw 8vw;
+		width: 40vw;
+		height: calc(100vh - 30vw);
+		@extend .blue-bg;
+
+		.inner {
+			position: absolute;
+			top: 4em;
+			left: 6em;
+			width: 28vw;
+			opacity: 1;
+			transition: opacity 0.5s;
+		}
+	}
+}
+
+#v-context {
+	margin-top: 8vw;
+	margin-left: 14vw;
+	width: 70vw;
+	box-shadow: none;
+}
+
 
 /* =================================================================================
 
@@ -221,6 +369,6 @@ Y8,        88  88          88  8b       88
 
 ** ===============================================================================*/
 
-.is_scrollable {
-	position: relative;
+.is-scrollable {
+	position: relative !important;
 }

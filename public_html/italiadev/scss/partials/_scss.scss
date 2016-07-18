@@ -1,63 +1,65 @@
-/*=============================================
-
-All the utility stuff goes here such as variables, mixins, and classes like clearfix that will be used all over the place.
-
-**===========================================*/
-
+// =============================================
+//
+// 	All the utility stuff goes here such as variables, mixins, and classes like clearfix that will be used all over the place.
+//
+// =============================================
 //COLORS
 //TODO: Figure out what the RGB values actually are for the new colors...
-$block-bg: 	rgba( 255, 255, 255, 0.9);
-//Green
-$color1: 	rgb(76, 184, 132);
-$color1T:	rgba(76, 184, 132, 0.9);
-//Yellow (is gone replaced for now with the green.)
-$color2:	rgb(154, 182, 244);
-$color2T:	rgba(154, 182, 244, 0.9);
+$block-bg: rgba( 255, 255, 255, 0.9); //Green
+$color1: rgb(76, 184, 132);
+$color1T: rgba(76, 184, 132, 0.9); //Yellow (is gone replaced for now with the green.)
+$color2: rgb(154, 182, 244);
+$color2T: rgba(154, 182, 244, 0.9);
+
 /*$color2:	rgb(255, 208, 13);
 $color2T:	rgba(255, 208, 13, 0.9);*/
-//Blue
-$color3:	rgb(154, 182, 244);
-$color3T:	rgba(154, 182, 244, 0.9);
-//Tan
-$color4: 	rgb(255, 250, 243);
-//Dark Blue
-$color5:	rgb(58, 75, 193);
-$color5T:	rgba(58, 75, 193, 0.9);
-//Other
-$shadow:	rgba(50, 50, 50, 0.2);
 
+//Blue
+$color3: rgb(154, 182, 244);
+$color3T: rgba(154, 182, 244, 0.9); //Tan
+$color4: rgb(255, 250, 243); //Dark Blue
+$color5: rgb(58, 75, 193);
+$color5T: rgba(58, 75, 193, 0.9); //Other
+$shadow: rgba(50, 50, 50, 0.2);
 .clearfix:after {
-	content:"";
-	display:block;
-	clear:both;
+	content: "";
+	display: block;
+	clear: both;
 }
 
 //Layout Variables
-$sUnit:	2vw;
-
+$sUnit: 2vw;
 .bg {
 	&::after {
 		content: '';
-		display: block;
 		position: absolute;
+		display: block;
 		top: 0;
 		left: 0;
 		width: 100%;
 		height: 100%;
 		mix-blend-mode: multiply;
+		z-index: -1;
 	}
 }
 
-.green_bg {
+.green-bg {
 	@extend .bg;
 	&::after {
 		background: $color1;
 	}
 }
 
-.yellow_bg {
+.blue-bg {
 	@extend .bg;
 	&::after {
 		background: $color2;
+	}
+}
+
+.tan-bg {
+	@extend .bg;
+	&::after {
+		background: $color4;
 	}
 }

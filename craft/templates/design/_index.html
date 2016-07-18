@@ -19,11 +19,11 @@ _#}
 {# =========================== Filter Form =========================== #}
 
 {% block main %}
-<div id="d_filter">
+<div id="d-filter">
 	<form id="searchForm">
 		<input id="search" type="search" placeholder="type to search">
 		{% if disciplineQuery|length %}
-			<a id="undo_search" href="/design">x</a>
+			<a id="undo-search" href="/design">x</a>
 		{% endif %}
 	</form>
 	<span>x</span>
@@ -68,10 +68,10 @@ _#}
 
 		{% if entries | length %}
 			{% set entryYears = entryYears|merge([year]) %}
-			<h1 id="year_title_{{year}}">{{year}}</h1>
-			<section id="flex_grid_{{year}}" class="flexbox_grid clearfix">
+			<h1 id="year-title-{{year}}">{{year}}</h1>
+			<section id="flex-grid-{{year}}" class="flexbox-grid clearfix">
 				{% for entry in entries %}
-					<article class="{{entry.type == 'shortFilm' ? 'film_entry' : 'design_entry'}} item" data-title="{{entry|lower}}" data-tags='{% for tag in entry.disciplines  %}{{tag}}{{tag == entry.disciplines.last() ? "" :","}}{% endfor %}' data-show="true">
+					<article class="{{entry.type == 'shortFilm' ? 'film-entry' : 'design-entry'}} item" data-title="{{entry|lower}}" data-tags='{% for tag in entry.disciplines  %}{{tag}}{{tag == entry.disciplines.last() ? "" :","}}{% endfor %}' data-show="true">
 						{% if entry.type == "interviewVideo" %}
 							{% set image = entry.parent.intPortrait.first %}
 						{% else %}
@@ -79,15 +79,15 @@ _#}
 						{% endif %}
 						<a href="{{ entry.url }}">
 							{% if image %}
-								<div class="entry_thumb_cont">
+								<div class="entry-thumb-cont">
 									<img src="{{ image.url }}" alt="{{ image.title }}">
 								</div>
 							{% else %}
-								<div class="entry_thumb_cont">
+								<div class="entry-thumb-cont">
 									<img src="http://dev.sfuitaliadesign.com/assets/images/portraits/placeholder-image.jpg" alt="Placeholder image">
 								</div>
 							{% endif %}
-							<div class="entry_title">
+							<div class="entry-title">
 								<h3>{{ entry }}</h3>
 								<span>{{entry.type != 'shortFilm'?entry.companyField}}</span>
 							</div>
@@ -99,11 +99,11 @@ _#}
 		{# <p>That's strange, we couldn't find anything, our bad. Maybe try looking for something else? We'll fix this ASAP!</p> #}
 		{% endif %}
 	{% endfor %}
-	<div id="year_links">
+	<div id="year-links">
 		<ul>
 			{% for year in entryYears %}
 				<li>
-					<a href="#year_title_{{year}}">
+					<a href="#year-title-{{year}}">
 						{{year}}
 					</a>
 				</li>
