@@ -20,5 +20,4 @@ $(document).ready(function () {
 		$("#v-description .inner").addClass("dHidden");
 		$("#v-description .inner:eq("+index+")").removeClass("dHidden");
 	});
-
 });

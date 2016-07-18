@@ -233,6 +233,10 @@ $(document).ready(function () {
 
 	playButton.init();
 
+	if($("main").hasClass("child")) {
+		playButton.toggle();
+	}
+
 	/*=================================
 		EVENT LISTENERS
 	**===============================*/

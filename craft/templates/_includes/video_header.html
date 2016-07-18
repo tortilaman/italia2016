@@ -8,8 +8,8 @@
 # An `entry` variable is expected to be defined. -
 #}
 
-<section id="v-header" class="{{bodyClass}}-section {{entry.videoYear == '2016' ? 'v21-9' : 'v16-9'}} animated bounceInUp">
-	<div id="v-container">
+<section id="v-header" class="{{bodyClass}}-section">
+	<div id="v-container" class="{{entry.videoYear == '2016' ? 'v21-9' : 'v16-9'}}">
 		<h3 id="v-title">{{entry}}</h3>
 		<video id="v-player" src="{{entry.videoID}}">
 			Oops! Your browser doesn't support the video tag. Consider downloading <a href="https://www.google.com/chrome/browser/desktop/index.html">Chrome</a>.

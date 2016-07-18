@@ -13,6 +13,8 @@ $color2T:	rgba(255, 208, 13, 0.9);*/
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
+html { height: 100%; overflow: auto; }
+
 body { -webkit-transition: color 0.5s; transition: color 0.5s; min-height: 80vh; height: 100%; }
 
 header.header { position: fixed; display: block; top: 5vw; right: 97.5vw; width: -webkit-calc(100vh - 10vw); width: calc(100vh - 10vw); padding: 0; -webkit-transform: rotate(270deg); -ms-transform: rotate(270deg); transform: rotate(270deg); -webkit-transform-origin: right top 0; -ms-transform-origin: right top 0; transform-origin: right top 0; z-index: 10; -webkit-transition: opacity 0.5s; transition: opacity 0.5s; }
@@ -147,31 +149,35 @@ a:hover:before { visibility: visible; -webkit-transform: scaleX(1.1); -ms-transf
 
 #italia-italy { margin-top: 25vw; margin-left: 20vw; }
 
-#v-intro { position: relative; margin-top: 10vw; margin-left: 18vw; width: 62vw; height: -webkit-calc(100vh - 20vw); height: calc(100vh - 20vw); box-shadow: none; opacity: 0; -webkit-animation-delay: 0.75s; animation-delay: 0.75s; -webkit-animation-fill-mode: forwards; animation-fill-mode: forwards; }
+main:not([class*='child']) #v-intro { opacity: 0; }
 
-#v-intro #v-contents { position: absolute; top: 0; left: 0; padding: 2em 2em 10em 2em; width: 24vw; height: -webkit-calc(100vh - 26vw); height: calc(100vh - 26vw); }
+#v-intro { position: relative; margin: 10vw auto 0 auto; height: -webkit-calc(100vh - 25vw); height: calc(100vh - 25vw); box-shadow: none; -webkit-animation-delay: 0.75s; animation-delay: 0.75s; -webkit-animation-fill-mode: forwards; animation-fill-mode: forwards; }
 
-#v-intro #v-contents #v-chapter-ind { position: absolute; top: 5em; width: 25vw; height: 3.25em; margin-left: -1em; -webkit-transition: margin-top 0.3s ease-in-out; transition: margin-top 0.3s ease-in-out; }
+#v-intro #v-contents { position: absolute; top: 0; left: 5%; padding: 1.5em 3% 3% 3%; width: 35%; min-height: 75%; }
+
+#v-intro #v-contents #v-chapter-ind { position: absolute; top: 3.5em; width: 105%; height: 3em; margin-left: -1em; -webkit-transition: margin-top 0.3s ease-in-out; transition: margin-top 0.3s ease-in-out; }
 
 #v-intro #v-contents #v-chapter-ind::before { content: ''; position: absolute; display: block; left: 0.75em; top: 0.625em; width: 0; height: 0; z-index: 20; border-top: 1em solid transparent; border-left: 2em solid white; border-bottom: 1em solid transparent; }
 
 #v-intro #v-contents::after { z-index: 1; }
 
-#v-intro .v-chapter { position: relative; width: 100%; height: 3em; z-index: 8; }
+#v-intro .v-contents-title { margin-top: 0; }
 
-#v-intro .v-chapter a { display: block; position: absolute; top: 0; left: 0; height: 100%; width: 100%; }
+#v-intro .v-chapter { position: relative; display: table; width: 100%; height: 3em; z-index: 8; }
+
+#v-intro .v-chapter a { display: table-cell; height: 100%; width: 100%; vertical-align: middle; }
 
 #v-intro .v-chapter a:hover::before { display: none; }
 
 #v-intro .v-chapter .v-chapter-number { width: 3em; font-size: 1.5rem; }
 
-#v-intro .v-chapter .v-chapter-number, #v-intro .v-chapter .v-chapter-title, #v-intro .v-chapter .v-chapter-duration { position: relative; display: inline-block; height: 1em; margin: 1em 0; font-family: Header; color: white; }
+#v-intro .v-chapter .v-chapter-number, #v-intro .v-chapter .v-chapter-title, #v-intro .v-chapter .v-chapter-duration { position: relative; display: inline-block; height: 1em; margin: 0; font-family: Header; color: white; }
 
-#v-intro .v-chapter .v-chapter-duration { position: absolute; right: 0; top: 0; font-family: body; }
+#v-intro .v-chapter .v-chapter-duration { float: right; font-family: body; }
 
-#v-intro #v-description { position: absolute; bottom: 0; right: 0; padding: 4vw 8vw; width: 40vw; height: -webkit-calc(100vh - 30vw); height: calc(100vh - 30vw); }
+#v-intro #v-description { position: absolute; bottom: 0; right: 5%; padding: 4% 6%; width: 57%; height: 70%; }
 
-#v-intro #v-description .inner { position: absolute; top: 4em; left: 6em; width: 28vw; opacity: 1; -webkit-transition: opacity 0.5s; transition: opacity 0.5s; }
+#v-intro #v-description .inner { opacity: 1; -webkit-transition: opacity 0.5s; transition: opacity 0.5s; }
 
 #v-context { margin-top: 8vw; margin-left: 14vw; width: 70vw; box-shadow: none; }
 
@@ -280,21 +286,21 @@ span.v-close-btn a { text-decoration: none; color: black; }
 								d8'
 
 **=====================================================================*/
-#v-header { position: fixed; top: 0; right: 0; bottom: 0; left: 0; margin: auto; padding: 0; background-color: #fffaf3; background-image: url("/assets/images/soft_wallpaper.png"); background-position: top left; background-repeat: repeat; background-blend-mode: multiply; }
+#v-header { position: fixed; display: block; top: 0; left: 0; height: -webkit-calc(100vh - 7vw); height: calc(100vh - 7vw); margin: 0; padding-top: 7vw; width: 100vw; max-width: 100%; box-shadow: none; }
 
-main.v #v-header { -webkit-animation-delay: 0.25s; animation-delay: 0.25s; }
+main.v #v-header { -webkit-animation-delay: 0.5s; animation-delay: 0.5s; }
 
 main.home #v-header { -webkit-animation-delay: 0.75s; animation-delay: 0.75s; }
 
-@media screen and (orientation: landscape) { .v21-9 { height: -webkit-calc(100vh - 14vw); height: calc(100vh - 14vw); width: 0; padding-right: 90% !important; } }
+@media (orientation: landscape) { .v21-9 { height: -webkit-calc(100vh - 14vw); height: calc(100vh - 14vw); width: -webkit-calc((100vh - 14vw)/9*21); width: calc((100vh - 14vw)/9*21); } }
 
-@media screen and (orientation: portrait) { .v21-9 { width: 86vw; height: 36.86vw; } }
+@media (orientation: portrait) { .v21-9 { width: 86vw; height: 36.86vw; } }
 
-@media screen and (orientation: landscape) { .v16-9 { height: -webkit-calc(100vh - 14vw); height: calc(100vh - 14vw); width: 0; padding-right: 75.1% !important; } }
+@media (orientation: landscape) { .v16-9 { height: -webkit-calc(100vh - 14vw); height: calc(100vh - 14vw); width: -webkit-calc((100vh - 14vw)/9*16); width: calc((100vh - 14vw)/9*16); } }
 
-@media screen and (orientation: portrait) { .v16-9 { width: 86vw; height: 48.375vw; } }
+@media (orientation: portrait) { .v16-9 { width: 86vw; height: 48.375vw; } }
 
-#v-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block; margin: 0; }
+#v-container { position: relative; display: block; margin: 0 auto; }
 
 #v-container video, #v-container #v-player { position: absolute; display: block; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
 

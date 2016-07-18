@@ -3,6 +3,16 @@ Number.prototype.map = function (in_min, in_max, out_min, out_max) {
 	return (this - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 };
 
+$.fn.extend({
+	animateCss: function (animationName) {
+		var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+		$(this).addClass('animated ' + animationName).one(animationEnd, function() {
+			$(this).removeClass('animated ' + animationName);
+			$(this).css('opacity', 1);
+		});
+	}
+});
+
 //=========================================================================
 //
 //	88888888ba   88888888888         db         88888888ba,  8b        d8
@@ -21,22 +31,7 @@ $(document).ready(function () {
 	var scrollPos,
 		iterator = 0,
 		totalHeight = 0,
-		$vContainer = $("#v-header");
-	//NOTE:For homepage it might make sense to change this value
-	var $entries = $("[class*='-section']");
-
-	//Hide / Show Variables
-	var $title = $("#v-title"),
-		$vTimeCont = $(".v-time-ind"),
-		$vProgBarCont = $("#v-progress-bar");
-	//Interface Variables
-	var vPlayer = document.getElementById("v-player"),
-		$vTime = $(".v-cur-time"),
-		$vDur = $(".v-duration"),
-		$background = $('body'),
-		$vProgBar = $("#v-show-progress");
-	//Info
-	var chapters = $("#v-chapters");
+		$entries = $("[class*='-section']");
 
 	//========================================================================================
 	//
@@ -66,6 +61,13 @@ $(document).ready(function () {
 	});
 	iterator = 0;
 
+	if($("main").hasClass("child")) {
+		$('html, body').animate({
+			scrollTop: $("#v-header").outerHeight(true)
+		}, 200);
+		console.log(window.scrollY);
+	}
+
 	/*=================================
 		PARALLAX SOME DIVS
 	**===============================*/
@@ -93,10 +95,7 @@ $(document).ready(function () {
 		});
 	});
 
-	//Force repaint for stupid chrome bug...
-	$(".bounceInUp").one('animationend', function() {
-		$(this).removeClass('animated bounceInUp');
-		$(this).css('opacity', 1);
-		$(this).hide().show(0);
-	});
+	if(!$("main").hasClass("child")) {
+		$("[class*='-section']").animateCss("bounceInUp");
+	}
 });

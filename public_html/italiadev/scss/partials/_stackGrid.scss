@@ -238,31 +238,32 @@
 //==========================================
 //	INTERVIEW ENTRIES
 //==========================================
+main:not([class*='child']) #v-intro {
+	opacity: 0;
+}
+
 #v-intro {
 	position: relative;
-	margin-top: 10vw;
-	margin-left: 18vw;
-	width: 62vw;
-	height: calc(100vh - 20vw);
+	margin: 10vw auto 0 auto;
+	height: calc(100vh - 25vw);
 	box-shadow: none;
-	opacity: 0;
 	animation-delay: 0.75s;
 	animation-fill-mode: forwards;
 
 	#v-contents {
 		position: absolute;
 		top: 0;
-		left: 0;
-		padding: 2em 2em 10em 2em;
-		width: 24vw;
-		height: calc(100vh - 26vw);
+		left: 5%;
+		padding: 1.5em 3% 3% 3%;
+		width: 35%;
+		min-height: 75%;
 		@extend .green-bg;
 
 		#v-chapter-ind {
 			position: absolute;
-			top: 5em;
-			width: 25vw;
-			height: 3.25em;
+			top: 3.5em;
+			width: 105%;
+			height: 3em;
 			margin-left: -1em;
 			//FIXME: This will for sure cause problems once the play button is added...
 			transition: margin-top 0.3s ease-in-out;
@@ -287,19 +288,22 @@
 		}
 	}
 
+	.v-contents-title {
+		margin-top: 0;
+	}
+
 	.v-chapter {
 		position: relative;
+		display: table;
 		width: 100%;
 		height: 3em;
 		z-index: 8;
 
 		a {
-			display: block;
-			position: absolute;
-			top: 0;
-			left: 0;
+			display: table-cell;
 			height: 100%;
 			width: 100%;
+			vertical-align: middle;
 
 			&:hover::before {
 				display: none;
@@ -315,15 +319,13 @@
 			position: relative;
 			display: inline-block;
 			height: 1em;
-			margin: 1em 0;
+			margin: 0;
 			font-family: Header;
 			color: white;
 		}
 
 		.v-chapter-duration {
-			position: absolute;
-			right: 0;
-			top: 0;
+			float: right;
 			font-family: body;
 		}
 	}
@@ -331,17 +333,13 @@
 	#v-description {
 		position: absolute;
 		bottom: 0;
-		right: 0;
-		padding: 4vw 8vw;
-		width: 40vw;
-		height: calc(100vh - 30vw);
+		right: 5%;
+		padding: 4% 6%;
+		width: 57%;
+		height: 70%;
 		@extend .blue-bg;
 
 		.inner {
-			position: absolute;
-			top: 4em;
-			left: 6em;
-			width: 28vw;
 			opacity: 1;
 			transition: opacity 0.5s;
 		}

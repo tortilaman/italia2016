@@ -3,6 +3,10 @@
 	padding: 0;
 	box-sizing: border-box;
 }
+html {
+	height: 100%;
+	overflow: auto;
+}
 
 body {
 	transition: color 0.5s;

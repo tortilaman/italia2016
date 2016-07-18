@@ -11,7 +11,7 @@ _#}
 
 {% extends "_layouts/site" %}
 {% set title = entry.title %}
-{% set bodyClass = "v" %}
+{% set bodyClass = entry.type == 'interviewVideo' ? 'child v' : 'v' %}
 {% set children = entry.type == 'designer' ? entry.children : entry.parent.children %}
 {% if entry.type == "designer" %}
 	{% set portrait = entry.intPortrait.first %}
@@ -21,14 +21,14 @@ _#}
 
 {% block main %}
 	{# ============= INTRODUCTION ================ #}
-	{% if entry.type != 'shortFilm' %}
-		<section id="v-intro" class="v-section animated bounceInUp">
+	{% if entry.children|length or entry.siblings|length < 10 %}
+		<section id="v-intro" class="v-section is-scrollable {{entry.videoYear == '2016' ? 'v21-9' : 'v16-9'}}">
 			<div id="v-contents">
 				<h1 class="v-contents-title">interview chapters</h1>
 				<div id="v-chapter-ind"></div>
 				{% for i in 0..(children|length-1) %}
-					<div class="v-chapter" data-chapter="{{i}}" data-offset="{{i*3.25}}">
-						<a>
+					<div class="v-chapter" data-chapter="{{i}}" data-offset="{{i*3}}">
+						<a href="{{children.nth(i).url}}#v-header">
 							<span class="v-chapter-number">{{i+1}}</span>
 							<span class="v-chapter-title">{{children.nth(i)}}</span>
 							<span class="v-chapter-duration">{{children.nth(i).videoDuration}}</span>
@@ -50,47 +50,49 @@ _#}
 	{% include "_includes/video_header" %}
 
 	{# ============= MATRIX CONTENT ================ #}
-	<section id="v-context" class="v-section animated bounceInUp">
-		{% for block in entry.additionalContent %}
-		{% if block.type == "transcriptionParagraph" %}
-		<!__ Transcription Paragraph __>
-		{% if block.heading == "" %}
-		{% else %}
-		<h2 class="v-mat-transc-heading">{{block.heading}}</h2>
-		{% endif %}
-		{{block.transcriptionContent}}
+	{% if entry.additionalContent|length %}
+		<section id="v-context" class="v-section">
+			{% for block in entry.additionalContent %}
+			{% if block.type == "transcriptionParagraph" %}
+			<!__ Transcription Paragraph __>
+			{% if block.heading == "" %}
+			{% else %}
+			<h2 class="v-mat-transc-heading">{{block.heading}}</h2>
+			{% endif %}
+			{{block.transcriptionContent}}
 
-		{% elseif block.type == "pullquote" %}
-		<!__ Pullquote __>
-		<div class="v-mat-pull-container {{block.position}}">
-			<a class="v-mat-pull-link" href="">
-				<blockquote class="v-mat-pull">
-					{{block.quote}}
-				</blockquote>
-			</a>
-		</div>
+			{% elseif block.type == "pullquote" %}
+			<!__ Pullquote __>
+			<div class="v-mat-pull-container {{block.position}}">
+				<a class="v-mat-pull-link" href="">
+					<blockquote class="v-mat-pull">
+						{{block.quote}}
+					</blockquote>
+				</a>
+			</div>
 
-		{% elseif block.type == "podcast" %}
-		<!__ Podcast __>
+			{% elseif block.type == "podcast" %}
+			<!__ Podcast __>
 
-		{% elseif block.type == "image" %}
-		<!__ Image __>
-		<!__ TODO: make this fully standards compliant and everything __>
-		<figure class="v-mat-img-container {{block.position}}">
-			<a class="v-mat-img-link" href="#">
-				<div class="v-mat-img-box">
-					<img class="v-mat-img-asset" src={{block.imageAsset.first().url}} alt="{{block.imageCaption}}">
-				</div>
-			</a>
-			<figcaption class="v-mat-img-caption">{{block.imageCaption}}</figcaption>
-		</figure>
+			{% elseif block.type == "image" %}
+			<!__ Image __>
+			<!__ TODO: make this fully standards compliant and everything __>
+			<figure class="v-mat-img-container {{block.position}}">
+				<a class="v-mat-img-link" href="#">
+					<div class="v-mat-img-box">
+						<img class="v-mat-img-asset" src={{block.imageAsset.first().url}} alt="{{block.imageCaption}}">
+					</div>
+				</a>
+				<figcaption class="v-mat-img-caption">{{block.imageCaption}}</figcaption>
+			</figure>
 
-		{% elseif block.type == "vidChapter" %}
-		<!__ Video Chapter __>
+			{% elseif block.type == "vidChapter" %}
+			<!__ Video Chapter __>
 
-		{% endif %}
-		{% endfor %}
-	</section>
+			{% endif %}
+			{% endfor %}
+		</section>
+	{% endif %}
 	<script src="http://d3js.org/d3.v3.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 	<script src="/js/entryIndex.js"></script>
