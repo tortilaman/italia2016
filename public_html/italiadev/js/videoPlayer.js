@@ -69,7 +69,7 @@ $(document).ready(function () {
 
 	//Function to resize video and change bg color
 	function videoResize(sPos) {
-		var $vControls = $('.v-controls'),
+		var $vControls = $('.v-ui'),
 			$vScrollStart = parseInt($entries.eq(-2).attr('data-offset')),
 			pos = parseFloat(sPos).toFixed(2),
 			totalHeight = parseFloat($('#v-header').attr('data-offset') + $('#v-header').attr('data-height')).toFixed(2),
@@ -108,37 +108,88 @@ $(document).ready(function () {
 	**===============================*/
 
 	function showControls() {
-		$(".v-controls").removeClass("oHidden");
-		$("header.header").css('opacity', '1');
+		if (played === true) {
+			$("#v-title, #v-interviewee, #v-share, a.v-prev-link, .v-controls").removeClass("oHidden");
+		}
 	}
 
 	function hideControls() {
 		if (vPlayer.paused === false) {
-			$(".v-controls").addClass("oHidden");
-			$("header.header").css('opacity', '0');
+			$("#v-title, #v-interviewee, #v-share, a.v-prev-link, .v-controls").addClass("oHidden");
 		}
 	}
 
 	var i = null;
+	var prev_x = null;
 
-	function controlsTimeout() {
-		clearTimeout(i);
-		showControls();
-		i = setTimeout(hideControls, 2000);
+	//Fix for chrome mousemove event call while in fullscreen
+	function controlsTimeout(e) {
+		if ((prev_x !== null) && (prev_x != e.x)) {
+			clearTimeout(i);
+			showControls();
+			i = setTimeout(hideControls, 2000);
+		}
+		prev_x = e.x;
 	}
 
 	//Call controlsTimeout on mouse move or click.
-	$("body").on("mousemove click", function () {
-		controlsTimeout();
-	});
+	document.addEventListener("mousemove", controlsTimeout, false);
 
 	/*=================================
-		VOLUME BUTTON
+		SOCIAL MEDIA
 	**===============================*/
 
-	$(".v-vol-btn").click(function () {
-		$(".svg-volume-icon .group-wave").toggleClass(" mute-anim");
-		vPlayer.muted = vPlayer.muted ? false : true;
+	$(".v-share-btn-open").on("click", function() {
+		$(this).css('transform', 'rotateY(90deg)');
+		$(".v-share-btn-close").css('transform', 'rotateY(180deg)');
+		for(var i = 0; i < $(".v-share-btns-container a").length; i++) {
+			$(".v-share-btns-container a").eq(i).css('top', (i*1.5)+'em');
+		}
+	});
+
+	$(".v-share-btn-close").on("click", function() {
+		$(this).css('transform', 'rotateY(90deg)');
+		$(".v-share-btn-open").css('transform', 'rotateY(0deg)');
+		for(var i = 0; i < $(".v-share-btns-container a").length; i++) {
+			$(".v-share-btns-container a").eq(i).css('top', -1.5+'em');
+		}
+	});
+
+
+	/*=================================
+		FULLSCREEN BUTTON
+	**===============================*/
+
+	// Find the right method, call on correct element
+	$("#v-full-btn").on("click", function() {
+		var el = document.querySelector("#v-container");
+		var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement;
+		console.log(fullscreenElement);
+		if(!fullscreenElement) {
+			console.log("Not fullscreen");
+			if(el.requestFullscreen) {
+				el.requestFullscreen();
+			} else if(el.mozRequestFullScreen) {
+				el.mozRequestFullScreen();
+			} else if(el.webkitRequestFullscreen) {
+				el.webkitRequestFullscreen();
+			} else if(el.msRequestFullscreen) {
+				el.msRequestFullscreen();
+			}
+			$("#v-full-btn polygon").css('transform', 'rotate(180deg)');
+		} else {
+			console.log("Fullscreen");
+			if(document.exitFullscreen) {
+				document.exitFullscreen();
+			} else if(document.mozExitFullscreen) {
+				document.mozExitFullscreen();
+			} else if(document.webkitExitFullscreen) {
+				document.webkitExitFullscreen();
+			} else if(document.msExitFullscreen) {
+				document.msExitFullscreen();
+			}
+			$("#v-full-btn polygon").css('transform', 'rotate(0deg)');
+		}
 	});
 
 	/*=================================
@@ -149,10 +200,13 @@ $(document).ready(function () {
 		$vProgBar.css('width', ((vPlayer.currentTime / vPlayer.duration) * 100) + '%');
 	}
 
-	$vProgBarCont.onclick = function (e) {
-		var newTime = (((e.pageX - $vProgBarCont.offset().left) / $vProgBarCont.outerWidth()) * vPlayer.duration);
-		vPlayer.currentTime = newTime;
-	};
+	$vProgBarCont.click(function (e) {
+		console.log("Clicked progress bar");
+		if(!vPlayer.paused && !vPlayer.ended){
+			var newTime = (((e.pageX - $vProgBarCont.offset().left) / $vProgBarCont.outerWidth()) * vPlayer.duration);
+			vPlayer.currentTime = newTime;
+		}
+	});
 
 	/*=================================
 		PLAY BUTTON
@@ -236,6 +290,52 @@ $(document).ready(function () {
 	if($("main").hasClass("child")) {
 		playButton.toggle();
 	}
+
+	/*=================================
+		INITIAL STATE & PLAY BUTTON
+	**===============================*/
+
+	if($(".v-init-play").length) {
+		console.log("It thinks there's a play button");
+		$("#v-title, #v-interviewee, #v-share, a.v-prev-link, .v-controls").addClass("oHidden");
+		$(".v-init-play").one("click", function() {
+			playButton.toggle();
+			$(this).addClass("oHidden").remove();
+			showControls();
+		});
+	}
+
+	/*=================================
+		NEXT VIDEO F'N
+	**===============================*/
+
+	var cdTime = 5;
+	var initOffset = '440';
+	var count = 1;
+
+	/* Need initial run as interval hasn't yet occured... */
+	$('.circle-animation').css('stroke-dashoffset', initOffset-(1*(initOffset/cdTime)));
+
+	document.querySelector("#v-player").onended = function() {
+		$(".v-ended").removeClass("oHidden");
+		$(".v-ended").css('z-index', '5');
+		var interval = setInterval(function() {
+			$('.v-ended-cd-num').text(cdTime - count);
+			$('.v-ended-cancel').one("click", function() {
+				clearInterval(interval);
+				$(".v-ended").addClass("oHidden").remove();
+				$(".v-suggestions").css('z-index', 5).removeClass("oHidden");
+			});
+			if (count == cdTime) {
+				$('.v-ended-cd-num').text('GO!');
+				clearInterval(interval);
+				window.location.href = $('.v-ended').attr('data-url');
+				return;
+			}
+			$('.circle-animation').css('stroke-dashoffset', initOffset-((count+1)*(initOffset/cdTime)));
+			count++;
+		}, 1000);
+	};
 
 	/*=================================
 		EVENT LISTENERS

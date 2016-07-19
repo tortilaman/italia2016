@@ -73,10 +73,19 @@ main.home #v-header {
 	}
 }
 
+#v-middle {
+	position: relative;
+	display: block;
+	height: 100%;
+	margin: 0 auto;
+}
+
 #v-container {
 	position:relative;
 	display: block;
-	margin: 0 auto;
+	margin: 0;
+	padding: 0;
+	height: 100%;
 	video,
 	#v-player {
 		position: absolute;
@@ -87,23 +96,243 @@ main.home #v-header {
 		height: 100%;
 		z-index: 1;
 	}
+	&:-webkit-full-screen {
+		background-color: black;
+		width: 100%;
+		height: 100%;
+	}
+}
+
+/*====================
+	INTERFACE
+**==================*/
+
+#v-interviewee {
+	position: absolute;
+	top: 0;
+	left: 1%;
+	z-index: 5;
+	color: white;
+	opacity: 1;
+	transition: all 1s
 }
 
 #v-title {
 	position: absolute;
-	top: 1.5vmin;
-	left: 3vmin;
+	top: 2.4em;
+	left: 3%;
 	z-index: 5;
 	color: white;
-	text-shadow: 0.1rem 0.1rem 0 $color3;
-	opacity: 0;
-	transition: all 0.5s
+	opacity: 1;
+	transition: all 1s
 }
 
+a.v-prev-link {
+	position: absolute;
+	top: 1em;
+	right: 3em;
+	z-index: 5;
+	color: white;
+	font-size: 1.2em;
+	transition: opacity 1s;
+}
+
+#v-share {
+	position: absolute;
+	top: 1.5em;
+	right: 1em;
+	transition: opacity 1s;
+
+	[class^='v-share-btn'] {
+		position: absolute;
+		display: block;
+		top: 0;
+		right: 0;
+		height: 1em;
+		width: 1em;
+		z-index: 5;
+
+		img {
+			position: relative;
+			display: block;
+			width: 1em;
+			height: 1em;
+			margin: 0;
+			padding: 0;
+		}
+	}
+
+	.v-share-btn-open, .v-share-btn-close {
+		top: 0;
+		transform: rotateY(0deg);
+		transition: transform 0.2s;
+	}
+
+	.v-share-btn-close {
+		transform: rotateY(90deg);
+	}
+
+	.v-share-btns-container {
+		position: absolute;
+		display: block;
+		top: 1em;
+		right: 0;
+		height: 4.5em;
+		width: 1em;
+		overflow: hidden;
+		a {
+			position: absolute;
+			top: -1.5em;
+			left: 0;
+			height: 1em;
+			width: 1em;
+			margin-top: 0.5em;
+			transition: top 0.2s;
+		}
+	}
+}
+
+.v-init-play {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+	height: 7em;
+	width: 8em;
+	text-align: center;
+	z-index: 5;
+	transition: opacity 0.5;
+
+	.v-init-play-btn {
+		position: relative;
+		display: inline-block;
+		margin: 0 auto;
+		width: 0;
+		height: 0;
+		z-index: 5;
+		border-top: 2em solid transparent;
+		border-left: 4em solid white;
+		border-bottom: 2em solid transparent;
+		transition: border 0.2s;
+	}
+
+	.v-init-play-label {
+		position: relative;
+		display: inline-block;
+		margin: 0.25em auto;
+		color: white;
+	}
+
+	a {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		&:hover {
+			.v-init-play-btn {
+				border-left: 4em solid $color2;
+			}
+
+			&::before {
+				display: none;
+			}
+		}
+	}
+}
+
+/*====================
+	NEXT VIDEO F'N
+**==================*/
+
+.v-ended {
+	position: absolute;
+	display: block;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+	height: 10em;
+	width: 8em;
+	text-align: center;
+	z-index: 1;
+	color: white;
+
+	span {
+		color: white;
+		display: block;
+		text-align: center;
+	}
+
+	.v-ended-cd-cont {
+		position: relative;
+		display: table-cell;
+		vertical-align: middle;
+		height: 8em;
+		width: 8em;
+
+		svg {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 8em;
+			height: 8em;
+			transform: rotate(-90deg);
+		}
+	}
+
+	.circle-animation {
+		stroke-dasharray: 440; /* this value is the pixel circumference of the circle */
+		stroke-dashoffset: 440;
+		transition: all 1s linear;
+	}
+}
+
+.v-suggestions {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+	height: 6em;
+	z-index: 5;
+	text-align: center;
+
+	.v-suggestion {
+		display: inline-block;
+		margin: 0 1em;
+
+		p {
+			text-align: center;
+			color: white;
+		}
+
+		img {
+			position: relative;
+			height: 4em;
+			width: auto;
+		}
+	}
+}
 
 /*====================
 	VIDEO CONTROLS
 **==================*/
+
+#v-ui {
+	position: relative;
+	height: 100%;
+	width: 100%;
+	transition: opacity 0.5s;
+}
+
+.is-scrollable #v-ui {
+	opacity: 1;
+}
 
 .v-controls {
 	position: absolute;
@@ -188,10 +417,56 @@ main.home .v-controls {
 }
 
 #v-progress-bar {
-	margin: 0.75rem 11rem 0 6rem;
+	margin: 0.75rem 12rem 0 3rem;
 	background: rgba(255, 255, 255, 0.3);
 	z-index: 1;
 	transition: opacity 0.25s;
+}
+
+#v-full-btn {
+	position: relative;
+	margin: 0.5rem 0.5rem 0 0;
+	height: 1rem;
+	width: 1rem;
+	float: right;
+
+	svg {
+		position: absolute;
+		display: block;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		transform: scale(1, 1);
+		transition: transform 0.2s;
+
+		polygon {
+			fill: white;
+			transform-origin: center center;
+			transform: rotate(0deg);
+			transition: transform 0.2s;
+		}
+	}
+
+	a {
+		position: absolute;
+		display: block;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		padding: 0;
+
+		&:hover {
+			svg {
+				transform: scale(0.9, 0.9);
+			}
+
+			&::before {
+				display: none;
+			}
+		}
+	}
 }
 
 
@@ -278,12 +553,12 @@ section#v-content {
 				text-transform: uppercase;
 				margin: 0;
 				padding: 0;
-				line-height: 1.3rem;
+				line-height: 1.3;
 			}
 			span {
 				margin: 0;
 				padding: 0;
-				line-height: 1.3rem;
+				line-height: 1.3;
 			}
 		}
 	}
@@ -367,7 +642,7 @@ section#v-content {
 	}
 	.v-mat-pull {
 		font-size: 1.5em;
-		line-height: 1.4em;
+		line-height: 1.4;
 	}
 }
 

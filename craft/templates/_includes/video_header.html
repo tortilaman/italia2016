@@ -8,43 +8,108 @@
 # An `entry` variable is expected to be defined. -
 #}
 
+{# All to find which video in the playlist we're on... #}
+{% set next = false %}
+{% if entry.type == 'designer' and entry.hasDescendants() %}
+	{% set siblings = [entry]|merge(entry.children) %}
+	{% set next = entry.children.first() %}
+{% elseif entry.type == 'designer' and not entry.hasDescendants() %}
+	{% set siblings = false %}
+{% elseif entry.type == 'interviewVideo' %}
+	{% set siblings = [entry.parent]|merge(entry.parent.children) %}
+	{% set next = entry.nextSibling() %}
+{% elseif entry.section == 'italia' %}
+	{% set siblings  = craft.entries.section.italia %}
+{% elseif entry.section == 'team' %}
+	{% set siblings  = craft.entries.section.team %}
+{% endif %}
+
+{% set chaptIndex = siblings|indexOf(entry) %}
+{% set newChaptInd = chaptIndex + 1 %}
+{% set relatedEntries = craft.entries.section('design').relatedTo(entry.disciplines).limit(2) %}
+
 <section id="v-header" class="{{bodyClass}}-section">
-	<div id="v-container" class="{{entry.videoYear == '2016' ? 'v21-9' : 'v16-9'}}">
-		<h3 id="v-title">{{entry}}</h3>
-		<video id="v-player" src="{{entry.videoID}}">
-			Oops! Your browser doesn't support the video tag. Consider downloading <a href="https://www.google.com/chrome/browser/desktop/index.html">Chrome</a>.
-		</video>
-		<div class="v-controls">
-			<div class="v-play-btn-cont js-button">
-				<button class="v-play-btn">
-					<svg width="100%" height="100%" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg">
-						<defs>
-							<path id="pause-icon" data-state="playing" d="M11,10 L17,10 17,26 11,26 M20,10 L26,10 26,26 20,26" />
-							<path id="play-icon"  data-state="paused"  d="M11,10 L18,13.74 18,22.28 11,26 M18,13.74 L26,18 26,18 18,22.28" />
-						</defs>
-						<use xlink:href="#play-icon" />
-					</svg>
-				</button>
-			</div>
-			<div class="v-vol-btn-cont">
-				<button class="v-vol-btn">
-					<svg class="svg-volume-icon" width="100%" height="100%" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-						<g>
-							<polygon class="speaker" fill="#fff" points=" 21.517,66 44,87.208 44,12.791 21.517,34 0,34 0,66 " transform="matrix(0.57539192,0,0,0.57539192,3.3431808,3.2306919)" />
-							<g class="group-wave">
-								<path class="wave-l" fill="#fff" d="m 37.991813,22.751636 -3.083782,3.083783 c 1.588254,1.572528 2.571897,3.753462 2.571897,6.164853 0,2.410848 -0.983643,4.592324 -2.571897,6.16431 l 3.083782,3.083782 c 2.364757,-2.368011 3.82775,-5.637242 3.82775,-9.248093 0,-3.611392 -1.462993,-6.880083 -3.82775,-9.248636 z" />
-								<path class="wave-c" fill="#fff" d="m 50.496123,32 c 0,-6.005432 -2.440672,-11.440956 -6.383379,-15.369023 L 41.05987,19.68385 c 3.149937,3.15319 5.097703,7.506925 5.097703,12.31615 0,4.808682 -1.948309,9.162417 -5.097703,12.31615 l 3.052874,3.052873 C 48.055451,43.440956 50.496123,38.005431 50.496123,32 z" />
-								<path class="wave-r" fill="#fff" d="m 59.173768,32.000271 c 0,-8.402181 -3.412386,-16.006711 -8.925453,-21.505137 l -3.068057,3.068056 c 4.72843,4.713247 7.654417,11.233274 7.654417,18.437081 0,7.203264 -2.925987,13.723833 -7.654417,18.436538 l 3.068057,3.068057 c 5.513067,-5.497884 8.925453,-13.102957 8.925453,-21.504595 z" />
-							</g>
-						</g>
-					</svg>
-				</button>
-			</div>
-			<div class="v-time-ind">
-				<span class="v-cur-time">00:00</span> / <span class="v-duration">00:00</span>
-			</div>
-			<div id="v-progress-bar">
-				<div id="v-show-progress"></div>
+	<div id="v-middle"class="{#{{entry.videoYear == '2016' ? 'v21-9' : 'v16-9'}}#}v16-9">
+		<div id="v-container">
+			<video id="v-player" src="{{entry.videoID}}">
+				Oops! Your browser doesn't support the video tag. Consider downloading <a href="https://www.google.com/chrome/browser/desktop/index.html">Chrome</a>.
+			</video>
+			<div id="v-ui">
+				<h2 id="v-interviewee">{{entry.type =='interviewVideo' ? entry.parent : entry.title}}</h2>
+				<h4 id="v-title">{{entry.type !='interviewVideo' ? '' : entry}}</h4>
+				<a class="v-prev-link">{{entry.videoYear.value is even ? 'italiaDesign ' : 'dutchDesign '}}{{entry.videoYear}}</a>
+				<div id="v-share">
+					<a class="v-share-btn-open"><img src="/assets/images/social-icons/open-01.png"></a>
+					<a class="v-share-btn-close"><img src="/assets/images/social-icons/close-01.png"></a>
+					<div class="v-share-btns-container">
+						<a class="v-share-tw"><img src="/assets/images/social-icons/twitter-01.png"></a>
+						<a class="v-share-fb"><img src="/assets/images/social-icons/facebook-01.png"></a>
+						<a class="v-share-li"><img src="/assets/images/social-icons/linkedin-01.png"></a>
+					</div>
+				</div>
+				{% if entry.type == 'designer' and entry.hasDescendants() %}
+					<div class="v-init-play">
+						<a>
+							<div class="v-init-play-btn"></div>
+							<h4 class="v-init-play-label">Watch Playlist</h4>
+						</a>
+					</div>
+				{% endif %}
+				{# TODO: Make the proper logic later for next video... #}
+				<div class="v-ended oHidden" data-url="{{siblings[chapterIndex+1].url}}">
+					<span>up next:</span>
+					<span>{{siblings[chaptIndex+1].title}} ({{chaptIndex}}/{{siblings|length}})</span>
+					<div class="v-ended-cd-cont">
+						<h2 class="v-ended-cd-num">5</h2>
+						<svg width="160" height="160" xmlns="http://www.w3.org/2000/svg">
+							<circle class="circle-bg" r="69.85699" cy="80" cx="80" stroke-width="8" stroke="#ffffff" fill="none"/>
+							<circle class="circle-animation" r="69.85699" cy="81" cx="81" stroke-width="8" stroke="#6fdb6f" fill="none"/>
+						</svg>
+					</div>
+					<a class="v-ended-cancel">cancel</a>
+				</div>
+				<div class="v-suggestions oHidden">
+					<p>Suggested Videos</p>
+					{% for entry in relatedEntries %}
+						<div class="v-suggestion">
+							<a href="{{entry.url}}">
+								<p>{{entry.title}}</p>
+								<img src="{{entry.intPortrait.first().url}}">
+							</a>
+						</div>
+					{% endfor %}
+				</div>
+				<div class="v-controls">
+					<div class="v-play-btn-cont js-button">
+						<button class="v-play-btn">
+							<svg width="100%" height="100%" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg">
+								<defs>
+									<path id="pause-icon" data-state="playing" d="M11,10 L17,10 17,26 11,26 M20,10 L26,10 26,26 20,26" />
+									<path id="play-icon"  data-state="paused"  d="M11,10 L18,13.74 18,22.28 11,26 M18,13.74 L26,18 26,18 18,22.28" />
+								</defs>
+								<use xlink:href="#play-icon" />
+							</svg>
+						</button>
+					</div>
+					<div id="v-full-btn">
+						<a href="#!">
+							<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+								 viewBox="0 0 209 208" enable-background="new 0 0 209 208" xml:space="preserve">
+								<polygon id="TL" points="30,89 30,30 90,30 90,0 0,0 0,89 	"/>
+								<polygon id="BL" points="30,119 0,119 0,208 90,208 90,178 30,178 	"/>
+								<polygon id="TR" points="179,89 209,89 209,0 120,0 120,30 179,30 	"/>
+								<polygon id="BR" points="179,119 179,178 120,178 120,208 209,208 209,119 	"/>
+							</svg>
+						</a>
+					</div>
+					<div class="v-time-ind">
+						<span class="v-cur-time">00:00</span> / <span class="v-duration">00:00</span>
+					</div>
+					<div id="v-progress-bar">
+						<div id="v-show-progress"></div>
+					</div>
+
+				</div>
 			</div>
 		</div>
 	</div>

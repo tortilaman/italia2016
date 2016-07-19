@@ -62,6 +62,8 @@ _#}
 		{% elseif designerEntries|length %}
 			{# No short films in this year #}
 			{% set entries = designerEntries %}
+		{% elseif filmEntries|length %}
+			{% set entries = filmEntries %}
 		{% endif %}
 
 {# =========================== Display Entries =========================== #}
