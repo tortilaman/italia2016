@@ -17,15 +17,17 @@ function getParameterByName(name, url) {
 88    `8b   8PP"""""""  ,adPPPPP88  8b       88   `8b   d8'
 88     `8b  "8b,   ,aa  88,    ,88  "8a,   ,d88    `8b,d8'
 88      `8b  `"Ybbd8"'  `"8bbdP"Y8   `"8bbdP"Y8      Y88'
-                                                     d8'
-                                                    d8'
+													 d8'
+													d8'
 
 ** ==========================================================*/
 $(document).ready(function () {
 	var searching = false,
 		keyPlace = "",
 		key = "",
-		$entries = $("[class*='-entry']");
+		$entries = $("[class*='-entry']"),
+		hOffset = ['-2vw', '0', '2vw'],
+		vOffset = ['-2vw', '0', '2vw', '9vw', '16vw', '18vw'];
 	$("#search").focus();
 
 	function findWithAttr(array, attr, value) {
@@ -58,8 +60,8 @@ $(document).ready(function () {
 	** ================*/
 
 	$entries.each(function (index, value) {
-		$(this).css('left', getRandomInt(-2, 2).toFixed(1) + 'vw');
-		$(this).css('margin-top', getRandomInt(0, 4).toFixed(1) + 'rem');
+		$(this).css('left', hOffset[Math.floor(Math.random() * hOffset.length)]);
+		$(this).css('margin-top', vOffset[Math.floor(Math.random() * vOffset.length)]);
 		$(this).css('z-index', index + 1);
 		//Prevent consecutive overlaps.
 		if (index > 0) {

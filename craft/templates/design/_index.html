@@ -31,6 +31,7 @@ _#}
 
 {# =========================== Find Entries Logic =========================== #}
 
+
 	{# One year at a time #}
 	{% for year in years %}
 
@@ -65,13 +66,18 @@ _#}
 		{% elseif filmEntries|length %}
 			{% set entries = filmEntries %}
 		{% endif %}
-
 {# =========================== Display Entries =========================== #}
-
 		{% if entries | length %}
 			{% set entryYears = entryYears|merge([year]) %}
-			<h1 id="year-title-{{year}}">{{year}}</h1>
+			<!--<h1 id="year-title-{{year}}">{{year}}</h1>-->
 			<section id="flex-grid-{{year}}" class="flexbox-grid clearfix">
+				<h1 id="year-title-{{year}}">{{year}}</h1>
+				{% if year == '2016' %}
+					<article id="page-info">
+						<h1>Interviews</h1>
+						<p>{{entry.body}}</p>
+					</article>
+				{% endif %}
 				{% for entry in entries %}
 					<article class="{{entry.type == 'shortFilm' ? 'film-entry' : 'design-entry'}} item" data-title="{{entry|lower}}" data-tags='{% for tag in entry.disciplines  %}{{tag}}{{tag == entry.disciplines.last() ? "" :","}}{% endfor %}' data-show="true">
 						{% if entry.type == "interviewVideo" %}
@@ -95,6 +101,9 @@ _#}
 							</div>
 						</a>
 					</article>
+					{% if random(1) == 0 %}
+						<article class="design-entry item blank" data-show="true"></article>
+					{% endif %}
 				{% endfor %}
 			</section>
 		{% else %}

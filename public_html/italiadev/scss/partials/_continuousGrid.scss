@@ -140,8 +140,24 @@ section[id^="flex-grid-"] {
 	flex-flow: row wrap;
 	justify-content: space-between;
 	width: 80vw;
-	margin: -5vh auto 3vh;
+	margin: 2vh auto 3vh;
 	padding-bottom: 2rem;
+}
+
+#page-info {
+	background: white;
+	padding: 2em 2em 2em 5em;
+	width: 30vw;
+	color: $color5;
+
+	h1 {
+		line-height: 1.0;
+		margin-top: 0;
+	}
+
+	&::after {
+		display: none;
+	}
 }
 
 h1[id*="year-title-"] {
@@ -249,9 +265,12 @@ h1[id*="year-title-"] {
 // ========================================================
 .design-entry {
 	@extend .entry;
-	@extend .blue-bg;
 	width: 12vw;
 	height: 18vw;
+
+	&:not(.blank) {
+		@extend .blue-bg;
+	}
 }
 
 .film-entry {

@@ -3,59 +3,27 @@
 	position: relative;
 	display: inline-block;
 	margin: 2vw auto 0;
-	padding: .5rem 2rem;
 	color: white;
 	text-align: center;
-	box-shadow: .1rem .1rem .1rem $shadow;
-	transition: box-shadow .2s, color 0.2s;
 	z-index:10;
-
-	&::after {
-		z-index: 12;
-		transition: background-color 0.2s;
-	}
-
-	&:hover::before {
-		display: none;
-	}
 
 	span {
 		position: relative;
 		display: inline-block;
 		z-index:20;
 	}
-
-	&:hover {
-		box-shadow: .05rem .05rem .1rem $shadow;
-		&::after {
-			mix-blend-mode: normal;
-			background: white;
-		}
-	}
 }
 
 .button-green {
 	@extend .button;
-	@extend .green-bg;
-
-	&::after {
+	&::before {
 		background-color: darken($color1, 10%);
-	}
-
-	&:hover span {
-		color: $color1;
 	}
 }
 
 .button-blue {
 	@extend .button;
-	@extend .blue-bg;
-
-	&::after {
+	&::before {
 		background-color: darken($color2, 10%);
-	}
-
-	&:hover span {
-		color: $color5;
 	}
 }
