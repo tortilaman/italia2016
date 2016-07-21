@@ -47,10 +47,8 @@ $(document).ready(function () {
 		animateCss: function (fadeDirection) {
 			var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
 			var animationName = "fade" + fadeDirection + $(this).attr('data-dir');
-			console.log("Adding " + animationName + " to " + $(this).attr('data-title'));
 			$(this).addClass('animated ' + animationName).one("animationend", function (e) {
 				$(this).removeClass('animated ' + animationName);
-				console.log("Removing " + animationName + " from " + $(this).attr('data-title'));
 			});
 		}
 	});
@@ -92,7 +90,7 @@ $(document).ready(function () {
 	** =====================================================*/
 
 	var $rawData = $("[data-title]"),
-		newArray = new Array(),
+		newArray =[],
 		tagsArr = [],
 		wordsToSkip = ['is', 'in'];
 	//Populate newArray with data.
@@ -103,7 +101,7 @@ $(document).ready(function () {
 		});
 		var tags = $(this).attr("data-tags").split(",");
 		tags.forEach(function (element, index, array) {
-			if ($.inArray(element, tagsArr) === -1 && element != "") {
+			if ($.inArray(element, tagsArr) === -1 && element !== "") {
 				newArray.push({
 					label: element,
 					category: "Disciplines"
@@ -116,9 +114,9 @@ $(document).ready(function () {
 	//Sort first by category and then alphabetically.
 	newArray.sort(function (a, b) {
 		if (a.category == "Disciplines" && b.category == "Interviewees") {
-			return -1
+			return -1;
 		} else if (a.category == "Interviewees" && b.category == "Disciplines") {
-			return 1
+			return 1;
 		} else if (a.category == "Interviewees" && b.category == "Interviewees") {
 			var aName = a.label.split(' ');
 			var bName = b.label.split(' ');
@@ -144,7 +142,7 @@ $(document).ready(function () {
 		});
 		$(".design main").css({
 			'margin': '1vw',
-			'padding': '5vw'
+			'padding': '5vw 4vw'
 		});
 		$("#d-filter span").addClass("active");
 	}
@@ -153,11 +151,11 @@ $(document).ready(function () {
 		$('article img').removeClass("oHidden");
 		$('article .entry-title').removeClass("oHidden");
 		$(".design main").css({
-			'margin': '5vw',
+			'margin': '6vw 5vw',
 			'padding': '0.25em'
 		});
 		$("#d-filter").css({
-			'height': '5vw',
+			'height': '6vw',
 			'width': '90vw',
 			'right': '5vw'
 		});
@@ -172,12 +170,11 @@ $(document).ready(function () {
 
 	function $filterResults() {
 		//Interviewees & Films
-		console.log("======Filtering=====");
 		$("article[data-title]").each(function () {
 			var tags = $(this).attr("data-tags"),
 				names = $(this).attr("data-title").toLowerCase(),
 				//Merge names and tags if there are tags.
-				data = tags == "" ? names : names.concat(" ", tags),
+				data = tags === "" ? names : names.concat(" ", tags),
 				show = false,
 				changed,
 				$search = $("#search").val().toLowerCase(),
@@ -288,7 +285,7 @@ $(document).ready(function () {
 				li.attr("aria-label", item.category + " : " + item.label);
 			}
 		});
-	}
+	};
 
 	// Overrides the default autocomplete filter function to search only from the beginning of the string
 	$.ui.autocomplete.filter = function (array, term) {
@@ -311,9 +308,7 @@ $(document).ready(function () {
 	$("#d-filter span").on("click", function (e) {
 		$("#search").val('');
 		requestAnimationFrame($filterResults);
-		console.log("Got past the filter");
 		if ($("#search").hasClass('lsearch')) hideSearch();
-		console.log("Got past hideSearch");
 		$(this).removeClass("hideActive active");
 	});
 
@@ -342,7 +337,7 @@ $(document).ready(function () {
 
 	$("#search").on("keyup", function (e) {
 		if (e.keyCode === 27) {
-			$(this).val("")
+			$(this).val("");
 			hideSearch();
 		} else {
 			if (searching == false) {
@@ -359,5 +354,5 @@ $(document).ready(function () {
 			$("#search").val(key);
 			showSearch();
 		}
-	})
+	});
 });

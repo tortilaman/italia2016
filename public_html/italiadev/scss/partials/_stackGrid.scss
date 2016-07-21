@@ -11,13 +11,17 @@
 //
 // ===============================================================================
 
+.is-scrollable {
+	position: relative !important;
+}
+
 [class*='-section'] {
 	position: fixed;
 	top: 0;
 	left: 0;
 	margin: 0;
 	padding: 0;
-	box-shadow: 0.05rem 0.05rem 0.1rem $shadow;
+	box-shadow: 0.05rem 0.05rem 1rem rgba(50, 50, 50, 0.6);
 	.inner {
 		position: relative;
 		top: 0;
@@ -32,10 +36,6 @@
 		z-index: 20;
 		color: white;
 		transition: opacity 0.5s;
-	}
-	h1 {
-		letter-spacing: 0.2rem;
-		font-size: 2rem;
 	}
 	[class^='button-'] {
 		transition: opacity 0.5s;
@@ -62,9 +62,19 @@
 	}
 }
 
-//==========================================
-//	HOMEPAGE ENTRIES
-//==========================================
+/*==========================================
+
+88        88
+88        88
+88        88
+88aaaaaaaa88   ,adPPYba,   88,dPYba,,adPYba,    ,adPPYba,
+88""""""""88  a8"     "8a  88P'   "88"    "8a  a8P_____88
+88        88  8b       d8  88      88      88  8PP"""""""
+88        88  "8a,   ,a8"  88      88      88  "8b,   ,aa
+88        88   `"YbbdP"'   88      88      88   `"Ybbd8"'
+
+//========================================*/
+
 #home-play {
 	margin: 7vw 0 0 7vw;
 	width: 86vw;
@@ -184,9 +194,18 @@
 	box-shadow: none;
 }
 
-//==========================================
-//	ITALIA ENTRIES
-//==========================================
+/*==========================================
+
+88                       88  88
+88    ,d                 88  ""
+88    88                 88
+88  MM88MMM  ,adPPYYba,  88  88  ,adPPYYba,
+88    88     ""     `Y8  88  88  ""     `Y8
+88    88     ,adPPPPP88  88  88  ,adPPPPP88
+88    88,    88,    ,88  88  88  88,    ,88
+88    "Y888  `"8bbdP"Y8  88  88  `"8bbdP"Y8
+
+//========================================*/
 #italia-content {
 	width: 80vw;
 }
@@ -233,11 +252,22 @@
 	@extend .tan-bg;
 	margin-top: 25vw;
 	margin-left: 20vw;
+	margin-bottom: calc(100vh - 50.71vw);
 }
 
-//==========================================
-//	INTERVIEW ENTRIES
-//==========================================
+/*==========================================
+
+88                                                           88
+88                ,d                                         ""
+88                88
+88  8b,dPPYba,  MM88MMM  ,adPPYba,  8b,dPPYba,  8b       d8  88   ,adPPYba,  8b      db      d8
+88  88P'   `"8a   88    a8P_____88  88P'   "Y8  `8b     d8'  88  a8P_____88  `8b    d88b    d8'
+88  88       88   88    8PP"""""""  88           `8b   d8'   88  8PP"""""""   `8b  d8'`8b  d8'
+88  88       88   88,   "8b,   ,aa  88            `8b,d8'    88  "8b,   ,aa    `8bd8'  `8bd8'
+88  88       88   "Y888  `"Ybbd8"'  88              "8"      88   `"Ybbd8"'      YP      YP
+
+//========================================*/
+
 main:not([class*='child']) #v-intro {
 	opacity: 0;
 }
@@ -250,6 +280,14 @@ main:not([class*='child']) #v-intro {
 	animation-delay: 0.75s;
 	animation-fill-mode: forwards;
 
+	.v-portrait {
+		position:absolute;
+		top: 0%;
+		left: 10%;
+		height: 75%;
+		width: auto;
+	}
+
 	#v-contents {
 		position: absolute;
 		top: 0;
@@ -258,6 +296,12 @@ main:not([class*='child']) #v-intro {
 		width: 35%;
 		min-height: 75%;
 		@extend .green-bg;
+
+		.quote {
+			font-size: 1.5em;
+			padding-left: 30%;
+			margin-top: 7%;
+		}
 
 		#v-chapter-ind {
 			position: absolute;
@@ -346,27 +390,200 @@ main:not([class*='child']) #v-intro {
 	}
 }
 
-#v-context {
-	margin-top: 8vw;
-	margin-left: 14vw;
-	width: 70vw;
+main.team-vid {
+	#v-intro #v-contents {
+		left: 25%;
+		top: 7%;
+		padding-bottom: 1%;
+		min-height:0;
+
+		.v-contents-title {
+			padding-left: 22%;
+			display: inline-block;
+		}
+	}
+	#v-intro #v-description {
+		width: 55%;
+		right: 15%;
+		top: 19%;
+		height: 60%;
+
+		.v-chapter-desc {
+			top: 15%;
+		}
+	}
+}
+
+/*==========================================
+
+888888888888
+     88
+     88
+     88   ,adPPYba,  ,adPPYYba,  88,dPYba,,adPYba,
+     88  a8P_____88  ""     `Y8  88P'   "88"    "8a
+     88  8PP"""""""  ,adPPPPP88  88      88      88
+     88  "8b,   ,aa  88,    ,88  88      88      88
+     88   `"Ybbd8"'  `"8bbdP"Y8  88      88      88
+
+//========================================*/
+
+#team-about {
+	position: fixed;
+	margin-top: 15vw;
+	margin-left: 15vw;
+	width: 60vw;
+	height: 50vh;
+	padding: 2em;
+	background-color: $color1;
+	background-image: url("/assets/images/team_pic_small.png");
+	background-position: left;
+	background-size: contain;
+	background-repeat: no-repeat;
+	animation-delay: 0.5s;
+	background-blend-mode: multiply;
+}
+
+main.team #flex-grid-team {
+	position: fixed;
+	margin: 0 5vw;
+	width: 90vw;
 	box-shadow: none;
 }
 
+/*=======================================================================
 
-/* =================================================================================
+88b           d88                                   88
+888b         d888                ,d                 ""
+88`8b       d8'88                88
+88 `8b     d8' 88  ,adPPYYba,  MM88MMM  8b,dPPYba,  88  8b,     ,d8
+88  `8b   d8'  88  ""     `Y8    88     88P'   "Y8  88   `Y8, ,8P'
+88   `8b d8'   88  ,adPPPPP88    88     88          88     )888(
+88    `888'    88  88,    ,88    88,    88          88   ,d8" "8b,
+88     `8'     88  `"8bbdP"Y8    "Y888  88          88  8P'     `Y8
 
-  ,ad8888ba,               88           88
- d8"'    `"8b              ""           88
-d8'                                     88
-88             8b,dPPYba,  88   ,adPPYb,88
-88      88888  88P'   "Y8  88  a8"    `Y88
-Y8,        88  88          88  8b       88
- Y8a.    .a88  88          88  "8a,   ,d88
-  `"Y88888P"   88          88   `"8bbdP"Y8
+**=====================================================================*/
 
-** ===============================================================================*/
+//Context information - it's contained in the matrix fields everything is styling.
+#v-context {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	align-content: flex-start;
+	padding: 1em;
+	margin-top: 8vw;
+	margin-left: 5vw;
+	width: 90vw;
+	box-shadow: none;
 
-.is-scrollable {
-	position: relative !important;
+	a[class*="link"] {
+		margin: 0;
+		padding: 0;
+	}
+
+	.qa {
+		position: relative;
+		display: block;
+		height: 60vh;
+		width: 30vw;
+		padding: 3%;
+		margin-top: 20vh;
+		z-index: 10;
+		background-color: $color1;
+		mix-blend-mode: multiply;
+		left: -10vw;
+	}
 }
+
+[class*="v-mat"] {
+	margin: 0.5em;
+}
+
+
+/*=========================
+IMAGES
+**=======================*/
+
+.v-mat-img-container {
+	position: relative;
+	display: inline-block;
+
+	&.large {
+		width: auto;
+		height: 60vh;
+	}
+
+	&.small {
+		width: auto;
+		height: 30vh;
+	}
+
+	.v-mat-img-box {
+		overflow: hidden;
+		z-index: 1;
+		width: auto;
+		height: 100%;
+
+		.v-mat-img-asset {
+			position: relative;
+			margin: 0;
+			z-index: 2;
+			transition: 0s all;
+			width: auto;
+			height: 100%;
+		}
+	}
+	.v-mat-img-caption {
+		bottom: 0;
+		width: 100%;
+		margin: 0 0.5em;
+		z-index: 2;
+	}
+}
+
+
+/*=========================
+PULLQUOTES
+**=======================*/
+
+.v-mat-pull-container {
+	width: 40%;
+	display: inline-block;
+	.v-mat-pull-link,
+	.v-mat-pull {
+		margin: 0;
+	}
+	.v-mat-pull {
+		font-size: 1.5em;
+		line-height: 1.4;
+	}
+}
+
+
+/*=========================
+ALIGNMENT
+**=======================*/
+
+/*.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
+.center {
+	margin: 0 auto;
+	text-align: center;
+}
+
+.drop-left {
+	float: left;
+	//TODO: Figure out the crazy fucking solution for the drop alignments...
+}
+
+.drop-right {
+	float: right;
+	margin-right: 0;
+}*/

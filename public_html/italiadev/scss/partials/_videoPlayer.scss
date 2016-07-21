@@ -35,9 +35,9 @@ span.v-close-btn {
 	top: 0;
 	left: 0;
 	height: calc(100vh - 7vw);
-	margin: 0;
+	margin: 0 0 7vw 5vw;
 	padding-top: 7vw;
-	width: 100vw;
+	width: 90vw;
 	max-width: 100%;
 	box-shadow: none;
 
@@ -53,8 +53,14 @@ main.home #v-header {
 
 .v21-9 {
 	@media (orientation: landscape) {
-		height: calc(100vh - 14vw);
-		width: calc((100vh - 14vw)/9*21);
+		height: 38.25vw !important;
+		width: 90vw !important;
+
+		#v-player {
+			top: -6.2vw !important;
+			width: 90vw !important;
+			height: 50.625vw !important;
+		}
 	}
 	@media (orientation: portrait) {
 		width: 86vw;
@@ -86,8 +92,9 @@ main.home #v-header {
 	margin: 0;
 	padding: 0;
 	height: 100%;
-	video,
-	#v-player {
+	overflow: hidden;
+
+	video {
 		position: absolute;
 		display: block;
 		top: 0;
@@ -96,16 +103,34 @@ main.home #v-header {
 		height: 100%;
 		z-index: 1;
 	}
-	&:-webkit-full-screen {
+
+	&:-webkit-full-screen{
 		background-color: black;
-		width: 100%;
-		height: 100%;
+		width: 100% !important;
+		height: 100% !important;
+
+		video {
+			top: 0 !important;
+			width: 100% !important;
+			height: 100% !important;
+		}
 	}
 }
 
 /*====================
 	INTERFACE
 **==================*/
+
+.v-ui-top {
+	position: absolute;
+	display: block;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 7rem;
+	background: linear-gradient(to top, transparent 0%, rgba(0, 0, 0, 0.05) 20%, rgba(0, 0, 0, 0.45) 90%);
+
+}
 
 #v-interviewee {
 	position: absolute;
@@ -412,8 +437,11 @@ main.home .v-controls {
 	height: 0.5rem;
 	margin: 0;
 	padding: 0;
-	transition: width 0.1s;
 	z-index: 2;
+}
+
+#v-show-progress {
+	transition: width 0.5s;
 }
 
 #v-progress-bar {
@@ -493,6 +521,20 @@ section#v-content {
 	z-index: 1;
 }
 
+.v-overlay {
+	position:absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-image: url(/assets/images/soft_wallpaper.png);
+	background-repeat: repeat;
+	background-position: top left;
+	background-color: $color4;
+	background-blend-mode: multiply;
+	z-index: 6;
+}
+
 #v-info {
 	margin: 1em;
 	.v-bio {
@@ -562,114 +604,4 @@ section#v-content {
 			}
 		}
 	}
-}
-
-
-/*=======================================================================
-
-88b           d88                                   88
-888b         d888                ,d                 ""
-88`8b       d8'88                88
-88 `8b     d8' 88  ,adPPYYba,  MM88MMM  8b,dPPYba,  88  8b,     ,d8
-88  `8b   d8'  88  ""     `Y8    88     88P'   "Y8  88   `Y8, ,8P'
-88   `8b d8'   88  ,adPPPPP88    88     88          88     )888(
-88    `888'    88  88,    ,88    88,    88          88   ,d8" "8b,
-88     `8'     88  `"8bbdP"Y8    "Y888  88          88  8P'     `Y8
-
-**=====================================================================*/
-
-//Context information - it's contained in the matrix fields everything is styling.
-#v-context {
-	padding: 1em;
-	p,
-	.v-mat-transc-heading {
-		width: 80vw;
-		margin: 0 auto;
-	}
-	a[class*="link"] {
-		margin: 0;
-		padding: 0;
-	}
-}
-
-[class*="v-mat"] {
-	margin: 0.5em;
-}
-
-
-/*=========================
-	IMAGES
-**=======================*/
-
-.v-mat-img-container {
-	position: relative;
-	display: inline-block;
-	.v-mat-img-box {
-		overflow: hidden;
-		z-index: 1;
-		.v-mat-img-asset {
-			position: relative;
-			margin: 0;
-			z-index: 2;
-			transition: 0s all;
-			&:hover,
-			&:focus,
-			&:active {
-				transform: scale(1.4, 1.4);
-				transition: 8s all ease-out
-			}
-		}
-	}
-	.v-mat-img-caption {
-		bottom: 0;
-		width: 100%;
-		margin: 0 0.5em;
-		z-index: 2;
-	}
-}
-
-
-/*=========================
-	PULLQUOTES
-**=======================*/
-
-.v-mat-pull-container {
-	width: 40%;
-	display: inline-block;
-	.v-mat-pull-link,
-	.v-mat-pull {
-		margin: 0;
-	}
-	.v-mat-pull {
-		font-size: 1.5em;
-		line-height: 1.4;
-	}
-}
-
-
-/*=========================
-	ALIGNMENT
-**=======================*/
-
-.left {
-	float: left;
-}
-
-.right {
-	float: right;
-}
-
-.center {
-	margin: 0 auto;
-	text-align: center;
-}
-
-.drop-left {
-	float: left;
-	//TODO: Figure out the crazy fucking solution for the drop alignments...
-}
-
-.drop-right {
-	float: right;
-	margin-right: 0;
 }

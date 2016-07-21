@@ -1,0 +1,47 @@
+{#
+# Matrix content include template
+# -------------------------------
+#
+# Any page that uses matrix should have this include
+#
+# An `entry` variable is expected to be defined. -
+#}
+
+{% if entry.additionalContent|length %}
+	<section id="v-context" class="v-section">
+		{% for block in entry.additionalContent %}
+			{% if block.type == "qa" %}
+				<div class="qa">
+					{# Q & A #}
+					{% if block.question == "" %}
+					{% else %}
+						<h2>Q: {{block.question}}</h2>
+					{% endif %}
+					<p>A: {{block.answer}}</p>
+				</div>
+			{% elseif block.type == "pullquote" %}
+				<!__ Pullquote __>
+				<div class="v-mat-pull-container {{block.position}}">
+					<a class="v-mat-pull-link" href="">
+						<blockquote class="v-mat-pull">
+							{{block.quote}}
+						</blockquote>
+					</a>
+				</div>
+			{% elseif block.type == "podcast" %}
+				<!__ Podcast __>
+			{% elseif block.type == "image" %}
+				<!__ Image __>
+				<!__ TODO: make this fully standards compliant and everything __>
+				<figure class="v-mat-img-container {{block.position}} {{block.size}}">
+					<div class="v-mat-img-box">
+						<img class="v-mat-img-asset" src={{block.imageAsset.first().url}} alt="{{block.imageCaption}}">
+					</div>
+					<figcaption class="v-mat-img-caption">{{block.imageCaption}}</figcaption>
+				</figure>
+			{% elseif block.type == "vidChapter" %}
+				<!__ Video Chapter __>
+			{% endif %}
+		{% endfor %}
+	</section>
+{% endif %}

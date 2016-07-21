@@ -31,6 +31,7 @@ $(document).ready(function () {
 	var scrollPos,
 		iterator = 0,
 		totalHeight = 0,
+		offset = 0,
 		$entries = $("section[class*='-section']");
 
 	//========================================================================================
@@ -52,25 +53,29 @@ $(document).ready(function () {
 		LAYERS OF DIVS
 	**===============================*/
 
-	$entries.each(function () {
-		$(this).attr('data-offset', totalHeight);
-		var $height = $(this).outerHeight(true);
-		$(this).attr('data-height', $height);
-		$('body').css('height', totalHeight += $height);
-		$(this).css('z-index', $entries.length - iterator++);
-	});
-	console.log($('body').css('height'));
-	var hFix = parseFloat($entries.eq(0).css('margin-top').replace('px', ''));
-	var h = parseFloat($('body').css('height').replace('px', '')) - hFix;
-//	$('body').css('height', h);
-	iterator = 0;
-	console.log($('body').css('height'));
+	function calcHeights() {
+		$entries.each(function () {
+			$(this).attr('data-offset', offset);
+			var $height = $(this).is($entries.first()) ? $(this).outerHeight() : $(this).outerHeight(true);
+			offset += $(this).outerHeight(true);
+			$(this).attr('data-height', $(this).outerHeight(true));
+			$('body').css('height', totalHeight += $height);
+			$(this).css('z-index', $entries.length - iterator++);
+		});
+		iterator = offset = totalHeight = 0;
+	}
+
+	if($("#v-context img").length) {
+		$("#v-context img").on('load', calcHeights);
+	} else {
+		calcHeights();
+	}
+
 
 	if($("main").hasClass("child")) {
 		$('html, body').animate({
 			scrollTop: $("#v-header").outerHeight(true)
 		}, 200);
-		console.log(window.scrollY);
 	}
 
 	/*=================================
@@ -94,7 +99,9 @@ $(document).ready(function () {
 		requestAnimationFrame(function () {
 			scrollPos = window.pageYOffset;
 			$entries.each(function () {
-				$(this).toggleClass('is-scrollable', scrollPos > $(this).attr('data-offset'));
+//				if(!$(this).is($entries.first())){
+					$(this).toggleClass('is-scrollable', scrollPos > $(this).attr('data-offset'));
+//				}
 			});
 			parallax();
 		});

@@ -70,7 +70,9 @@ $(document).ready(function () {
 	//Function to resize video and change bg color
 	function videoResize(sPos) {
 		var $vControls = $('.v-ui'),
+			$vOverlay = $('.v-overlay'),
 			$vScrollStart = parseInt($entries.eq(-2).attr('data-offset')),
+			$zVal = 0,
 			pos = parseFloat(sPos).toFixed(2),
 			totalHeight = parseFloat($('#v-header').attr('data-offset') + $('#v-header').attr('data-height')).toFixed(2),
 			scrollPercent = ((pos - $vScrollStart) / (totalHeight - $vScrollStart)).toFixed(2);
@@ -80,13 +82,20 @@ $(document).ready(function () {
 			if (scrollPercent > 0.5) {
 				scrollPercent = 1;
 				opacityValue = 1;
+				$zVal = 1;
 			} else if (scrollPercent < 0.1) {
 				scrollPercent = 0;
 				opacityValue = 0;
+				$zVal = 6;
 			} else {
 				opacityValue = scrollPercent; //.map(0,1,0,1).toFixed(2);
+				$zVal = 6;
 			}
 			$vControls.css('opacity', opacityValue);
+			$vOverlay.css('opacity', 1 - opacityValue);
+			$vOverlay.css('z-index', $zVal);
+			console.log("Opacity Value is: "+1 - opacityValue);
+
 		}
 	}
 
@@ -164,9 +173,7 @@ $(document).ready(function () {
 	$("#v-full-btn").on("click", function() {
 		var el = document.querySelector("#v-container");
 		var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement;
-		console.log(fullscreenElement);
 		if(!fullscreenElement) {
-			console.log("Not fullscreen");
 			if(el.requestFullscreen) {
 				el.requestFullscreen();
 			} else if(el.mozRequestFullScreen) {
@@ -178,7 +185,6 @@ $(document).ready(function () {
 			}
 			$("#v-full-btn polygon").css('transform', 'rotate(180deg)');
 		} else {
-			console.log("Fullscreen");
 			if(document.exitFullscreen) {
 				document.exitFullscreen();
 			} else if(document.mozExitFullscreen) {
@@ -201,7 +207,6 @@ $(document).ready(function () {
 	}
 
 	$vProgBarCont.click(function (e) {
-		console.log("Clicked progress bar");
 		if(!vPlayer.paused && !vPlayer.ended){
 			var newTime = (((e.pageX - $vProgBarCont.offset().left) / $vProgBarCont.outerWidth()) * vPlayer.duration);
 			vPlayer.currentTime = newTime;
@@ -296,7 +301,6 @@ $(document).ready(function () {
 	**===============================*/
 
 	if($(".v-init-play").length) {
-		console.log("It thinks there's a play button");
 		$("#v-title, #v-interviewee, #v-share, a.v-prev-link, .v-controls").addClass("oHidden");
 		$(".v-init-play").one("click", function() {
 			playButton.toggle();
@@ -341,7 +345,7 @@ $(document).ready(function () {
 		EVENT LISTENERS
 	**===============================*/
 
-	if($("main").hasClass("home")) {
+	if($("#v-intro").length == 1 || $("main").hasClass("home")) {
 		//Scroll progress even tlistener
 		window.addEventListener('scroll', function () {
 			requestAnimationFrame(function () {
@@ -349,7 +353,10 @@ $(document).ready(function () {
 				videoResize(scrollPos);
 			});
 		});
+	} else {
+		$(".v-overlay").remove();
 	}
+	console.log($("#v-intro").length);
 
 	//Play Progress event listener
 	vPlayer.addEventListener("timeupdate", function () {

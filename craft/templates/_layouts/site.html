@@ -20,10 +20,7 @@
 {% set nav = {
 team: 	{ title: "about"},
 italia: { title: "film"},
-design: { title: "interviews"},
-"": 	{ title: "italiaDesign"}
-
-
+design: { title: "interviews"}
 } %}
 
 {# Set the `bodyClass` variable to the entry's section handle if there is one,
@@ -40,6 +37,7 @@ or the first URI segment (this is used by the parent template) #}
 
 {% block body %}
 	{% block nav %}
+		<a id="home-btn" rel="home" href="{{siteUrl}}"><img src="/assets/images/Logo.png"></a>
 		<header class="header">
 			<nav>
 				<ul>

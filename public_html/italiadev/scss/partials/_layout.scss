@@ -11,6 +11,32 @@ body {
 	transition: color 0.5s;
 }
 
+#home-btn {
+	position: fixed;
+	top: 1vh;
+	left: 1vh;
+	height: 13vh;
+	width: auto;
+	z-index:2;
+
+	img {
+		height: 100%;
+		width: auto;
+	}
+
+	&:hover {
+
+		&::before {
+			display: none;
+		}
+	}
+}
+
+.design #home-btn, .team #home-btn, .team-vid #home-btn {
+	z-index:201;
+	clip-path: polygon(0 0, 100% 0, 100% 72%, 37% 72%, 37% 100%, 0 100%);
+}
+
 header.header {
 	position: fixed;
 	display: block;
@@ -20,8 +46,9 @@ header.header {
 	padding: 0;
 	transform: rotate(270deg);
 	transform-origin: right top 0;
-	z-index: 10;
+	z-index: 1;
 	transition: opacity 0.5s;
+	text-align: center;
 
 	nav {
 		display: inline-block;
@@ -30,18 +57,18 @@ header.header {
 
 nav {
 	display: inline-block;
-	float: right;
 
 	ul {
 		list-style: none;
 
 		li {
 			display: inline-block;
-			margin-left: 2em;
+			margin-left: 10vh;
 		}
 	}
 	a {
 		color: $color5;
+		font-size: 1.4em;
 
 		&.sel {
 			color: $color1;
@@ -67,15 +94,40 @@ nav {
 	display: none !important;
 }
 
-.design main {
+main.design, main.team #flex-grid-team .inner {
 	position: relative;
-	margin: 5vw;
-	padding: 0.25rem;
+	margin: 6vw 5vw;
+	padding: 2rem;
 	background-image: url(/assets/images/soft_wallpaper.png);
 	background-repeat: repeat;
 	background-position: top left;
 	background-color: $color4;
 	background-blend-mode: multiply;
 	min-height: 85vh;
+	width: 90vw;
 	transition: all 0.5s;
+}
+
+main.team {
+	margin-bottom: 0;
+
+	#flex-grid-team {
+		width: 100vw;
+		margin-bottom: 0;
+
+		.inner {
+			min-height: none;
+			transition: none;
+			margin: 6vw 0 0 0;
+			padding: 2rem 3vw;
+		}
+	}
+
+	#contact-info {
+		position: relative;
+		margin: 1vw 5vw;
+		h1, p {
+			color: $color5
+		}
+	}
 }

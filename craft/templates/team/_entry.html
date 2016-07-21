@@ -1,0 +1,42 @@
+{#
+# Team entry template
+# ___________________
+#
+# This template gets loaded whenever a team entry’s URL is requested, because
+# the team section’s Template setting is set to "team/_entry".
+#
+# An `entry` variable will be automatically passed to this template, which will
+# be set to the requested Design entry.
+_#}
+
+{% extends "_layouts/site" %}
+{% set title = entry.title %}
+{% set bodyClass = "team-vid" %}
+{% set portrait = entry.intPortrait.first %}
+
+{% block main %}
+	{# ============= INTRODUCTION ================ #}
+	<section id="v-intro" class="v-section is-scrollable {{entry.videoYear >= '2015' ? 'v21-9' : 'v16-9'}}">
+		<img class="v-portrait" src="{{entry.portraitCollage.first().url()}}">
+		<div id="v-contents">
+			<h1 class="v-contents-title">{{entry}}</h1>
+			<p class="quote">{{entry.companyField}}</p>
+		</div>
+		<div id="v-description">
+			<p class="v-chapter-desc">{{entry.videoDescription}}</p>
+		</div>
+	</section>
+	{# ============= VIDEO ================ #}
+	{% include "_includes/video_header" %}
+	{# ============= MATRIX CONTENT ================ #}
+	{% include "_includes/matrix_body" %}
+	<script src="http://d3js.org/d3.v3.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+	<script src="/js/entryIndex.js"></script>
+	<script src="/js/videoPlayer.js"></script>
+	<script src="/js/interview.js"></script>
+{% endblock %}
+
+
+
+
