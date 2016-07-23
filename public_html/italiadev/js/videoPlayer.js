@@ -94,7 +94,7 @@ $(document).ready(function () {
 			$vControls.css('opacity', opacityValue);
 			$vOverlay.css('opacity', 1 - opacityValue);
 			$vOverlay.css('z-index', $zVal);
-			console.log("Opacity Value is: "+1 - opacityValue);
+			console.log("Opacity Value is: " + opacityValue);
 
 		}
 	}
