@@ -324,7 +324,7 @@ a.v-prev-link {
 	bottom: 0;
 	margin: auto;
 	height: 6em;
-	z-index: 5;
+	z-index: 3;
 	text-align: center;
 
 	.v-suggestion {
@@ -371,11 +371,6 @@ a.v-prev-link {
 	z-index: 2;
 	transition: opacity 0.5s;
 	background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.25) 50%, rgba(0, 0, 0, 0.65) 80%);
-}
-
-//They controls should initially be hidden on the homepage.
-main.home .v-controls {
-	opacity: 0;
 }
 
 //Standard for buttons

@@ -43,7 +43,7 @@ String.prototype.toMMSS = function () {
 $(document).ready(function () {
 	//Video Resizing Variables
 	var scrollPos;
-	var opacityValue;
+	var opacityValue = 0;
 	//Other Variables
 	var played = false;
 	//Scrolling Variables
@@ -62,6 +62,14 @@ $(document).ready(function () {
 		$vProgBar = $("#v-show-progress");
 	//Info
 	var chapters = $("#v-chapters");
+	var vidIndex;
+
+	//Figure out which item in $entries is the video so videoResize can work properly.
+	$entries.each(function(ind, el) {
+		if($(this).is($("#v-header"))) {
+			vidIndex = ind;
+		}
+	});
 
 	/*=================================
 		VIDEO RESIZING
@@ -71,7 +79,7 @@ $(document).ready(function () {
 	function videoResize(sPos) {
 		var $vControls = $('.v-ui'),
 			$vOverlay = $('.v-overlay'),
-			$vScrollStart = parseInt($entries.eq(-2).attr('data-offset')),
+			$vScrollStart = parseInt($entries.eq(vidIndex - 1).attr('data-offset')),
 			$zVal = 0,
 			pos = parseFloat(sPos).toFixed(2),
 			totalHeight = parseFloat($('#v-header').attr('data-offset') + $('#v-header').attr('data-height')).toFixed(2),
@@ -83,18 +91,20 @@ $(document).ready(function () {
 				scrollPercent = 1;
 				opacityValue = 1;
 				$zVal = 1;
+				if(!played && $("main").hasClass("home")) {
+					playButton.toggle();
+				}
 			} else if (scrollPercent < 0.1) {
 				scrollPercent = 0;
 				opacityValue = 0;
 				$zVal = 6;
 			} else {
-				opacityValue = scrollPercent; //.map(0,1,0,1).toFixed(2);
+				opacityValue = parseFloat(scrollPercent); //.map(0,1,0,1).toFixed(2);
 				$zVal = 6;
 			}
 			$vControls.css('opacity', opacityValue);
 			$vOverlay.css('opacity', 1 - opacityValue);
 			$vOverlay.css('z-index', $zVal);
-			console.log("Opacity Value is: "+1 - opacityValue);
 
 		}
 	}
@@ -131,7 +141,7 @@ $(document).ready(function () {
 	var i = null;
 	var prev_x = null;
 
-	//Fix for chrome mousemove event call while in fullscreen
+	//CHROMEBUG: Fix for chrome mousemove event call while in fullscreen
 	function controlsTimeout(e) {
 		if ((prev_x !== null) && (prev_x != e.x)) {
 			clearTimeout(i);
@@ -292,8 +302,12 @@ $(document).ready(function () {
 
 	playButton.init();
 
-	if($("main").hasClass("child")) {
-		playButton.toggle();
+	if($("main").hasClass("autoplay")) {
+		if(!$("main").hasClass("home")) {
+			playButton.toggle();
+		}
+		$(".v-init-play").remove();
+
 	}
 
 	/*=================================
@@ -356,7 +370,6 @@ $(document).ready(function () {
 	} else {
 		$(".v-overlay").remove();
 	}
-	console.log($("#v-intro").length);
 
 	//Play Progress event listener
 	vPlayer.addEventListener("timeupdate", function () {

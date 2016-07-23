@@ -1,26 +1,36 @@
 // =============================================
 //
-// 	All the utility stuff goes here such as variables, mixins, and classes like clearfix that will be used all over the place.
+// 	All the utility stuff goes here such as variables, mixins,
+//  and classes like clearfix that will be used all over the place.
 //
 // =============================================
+
 //COLORS
-//TODO: Figure out what the RGB values actually are for the new colors...
-$block-bg: rgba( 255, 255, 255, 0.9); //Green
+
+//Green
+$block-bg: rgba( 255, 255, 255, 0.9);
 $color1: rgb(76, 184, 132);
-$color1T: rgba(76, 184, 132, 0.9); //Yellow (is gone replaced for now with the green.)
+$color1T: rgba(76, 184, 132, 0.9);
+//Blue
 $color2: rgb(154, 182, 244);
 $color2T: rgba(154, 182, 244, 0.9);
-
-/*$color2:	rgb(255, 208, 13);
-$color2T:	rgba(255, 208, 13, 0.9);*/
-
-//Blue
 $color3: rgb(154, 182, 244);
-$color3T: rgba(154, 182, 244, 0.9); //Tan
-$color4: rgb(255, 250, 243); //Dark Blue
+$color3T: rgba(154, 182, 244, 0.9);
+//Dark Blue
 $color5: rgb(58, 75, 193);
-$color5T: rgba(58, 75, 193, 0.9); //Other
+$color5T: rgba(58, 75, 193, 0.9);
+//Tan
+$color4: rgb(255, 250, 243);
+
 $shadow: rgba(50, 50, 50, 0.2);
+
+$breakpoints: (
+	phone: 480px,
+	tablet: 700px,
+	laptop: 1024px,
+	desktop: 1600px
+);
+
 .clearfix:after {
 	content: "";
 	display: block;
@@ -61,5 +71,42 @@ $sUnit: 2vw;
 	@extend .bg;
 	&::after {
 		background: $color4;
+	}
+}
+
+// ==================================
+// 	RESPONSIVE TYPE MIXIN
+// ==================================
+
+@mixin font-size($fs-map, $fs-breakpoints: $breakpoints) {
+	@each $fs-breakpoint, $fs-font-size in $fs-map {
+		@if $fs-breakpoint == null {
+			@include make-font-size($fs-font-size);
+		}
+		@else {
+			// If $fs-font-size is a key that exists in
+			// $fs-breakpoints, use the value
+			@if map-has-key($fs-breakpoints, $fs-breakpoint) {
+				$fs-breakpoint: map-get($fs-breakpoints, $fs-breakpoint);
+			}
+			@media screen and (min-width: $fs-breakpoint) {
+				@include make-font-size($fs-font-size);
+			}
+		}
+	}
+}
+
+// Utility function for mixin font-size
+@mixin make-font-size($fs-font-size) {
+	// If $fs-font-size is a list, include
+	// both font-size and line-height
+	@if type-of($fs-font-size) == "list" {
+		font-size: nth($fs-font-size, 1);
+		@if (length($fs-font-size) > 1) {
+			line-height: nth($fs-font-size, 2);
+		}
+	}
+	@else {
+		font-size: $fs-font-size;
 	}
 }

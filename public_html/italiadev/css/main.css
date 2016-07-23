@@ -1,6 +1,4 @@
 @charset "UTF-8";
-/*$color2:	rgb(255, 208, 13);
-$color2T:	rgba(255, 208, 13, 0.9);*/
 .clearfix:after { content: ""; display: block; clear: both; }
 
 .bg::after, .green-bg::after, #italia-pace::after, #v-intro #v-contents::after, #v-intro #v-contents #v-chapter-ind::after, .film-entry::after, .blue-bg::after, #home-videos #home-interviews::after, #home-videos #home-films::after, #italia-workers::after, #v-intro #v-description::after, .design-entry:not(.blank)::after, .tan-bg::after, #italia-italy::after { content: ''; position: absolute; display: block; top: 0; left: 0; width: 100%; height: 100%; mix-blend-mode: multiply; z-index: -1; }
@@ -21,7 +19,7 @@ body { -webkit-transition: color 0.5s; transition: color 0.5s; }
 
 #home-btn:hover::before { display: none; }
 
-.design #home-btn, .team #home-btn, .team-vid #home-btn { z-index: 201; -webkit-clip-path: polygon(0 0, 100% 0, 100% 72%, 37% 72%, 37% 100%, 0 100%); clip-path: polygon(0 0, 100% 0, 100% 72%, 37% 72%, 37% 100%, 0 100%); }
+.design #home-btn, .team #home-btn, .team-vid #home-btn, .italia #home-btn { z-index: 201; -webkit-clip-path: polygon(0 0, 100% 0, 100% 72%, 37% 72%, 37% 100%, 0 100%); clip-path: polygon(0 0, 100% 0, 100% 72%, 37% 72%, 37% 100%, 0 100%); }
 
 header.header { position: fixed; display: block; top: 5vw; right: 97.5vw; width: -webkit-calc(100vh - 10vw); width: calc(100vh - 10vw); padding: 0; -webkit-transform: rotate(270deg); -ms-transform: rotate(270deg); transform: rotate(270deg); -webkit-transform-origin: right top 0; -ms-transform-origin: right top 0; transform-origin: right top 0; z-index: 1; -webkit-transition: opacity 0.5s; transition: opacity 0.5s; text-align: center; }
 
@@ -55,7 +53,15 @@ main.team #contact-info { position: relative; margin: 1vw 5vw; }
 
 main.team #contact-info h1, main.team #contact-info p { color: #3a4bc1; }
 
-body { font-family: 'karla', sans-serif; font-size: 1.2rem; line-height: 1.8; }
+body { font-family: 'karla', sans-serif; font-size: 0.8rem; line-height: 1.8; }
+
+@media screen and (min-width: 480px) { body { font-size: 0.9rem; line-height: 1.8; } }
+
+@media screen and (min-width: 700px) { body { font-size: 1rem; line-height: 1.8; } }
+
+@media screen and (min-width: 1024px) { body { font-size: 1rem; line-height: 1.8; } }
+
+@media screen and (min-width: 1600px) { body { font-size: 1.2rem; line-height: 1.8; } }
 
 h1, h2, h3, h4, h5, h6 { font-family: 'SubHead'; font-size: 2.4rem; margin: 0 0 0.5rem 0; padding: 0; letter-spacing: 0.1em; line-height: 1.05; color: white; }
 
@@ -185,17 +191,18 @@ a:hover:before { visibility: visible; -webkit-transform: scaleX(1.1); -ms-transf
 88  88       88   "Y888  `"Ybbd8"'  88              "8"      88   `"Ybbd8"'      YP      YP
 
 //========================================*/
-main:not([class*='child']) #v-intro { opacity: 0; }
-
+/*main:not([class*='child']) #v-intro { opacity: 0; }*/
 #v-intro { position: relative; margin: 10vw auto 0 auto; height: -webkit-calc(100vh - 25vw); height: calc(100vh - 25vw); box-shadow: none; -webkit-animation-delay: 0.75s; animation-delay: 0.75s; -webkit-animation-fill-mode: forwards; animation-fill-mode: forwards; }
 
 #v-intro .v-portrait { position: absolute; top: 0%; left: 10%; height: 75%; width: auto; }
 
 #v-intro #v-contents { position: absolute; top: 0; left: 5%; padding: 1.5em 3% 3% 3%; width: 35%; min-height: 75%; }
 
-#v-intro #v-contents .quote { font-size: 1.5em; padding-left: 30%; margin-top: 7%; }
+#v-intro #v-contents .quote { font-size: 1.5em; padding-left: 30%; margin-top: 2%; }
 
-#v-intro #v-contents #v-chapter-ind { position: absolute; top: 4.25em; width: 105%; height: 3em; margin-left: -1em; -webkit-transition: margin-top 0.3s ease-in-out; transition: margin-top 0.3s ease-in-out; }
+#v-intro #v-contents .v-chapter-container { position: relative; }
+
+#v-intro #v-contents #v-chapter-ind { position: absolute; top: 0; width: 125%; height: 3em; margin-left: -1em; -webkit-transition: margin-top 0.3s ease-in-out; transition: margin-top 0.3s ease-in-out; }
 
 #v-intro #v-contents #v-chapter-ind::before { content: ''; position: absolute; display: block; left: 0.75em; top: 0.625em; width: 0; height: 0; z-index: 20; border-top: 1em solid transparent; border-left: 2em solid white; border-bottom: 1em solid transparent; }
 
@@ -223,7 +230,7 @@ main.team-vid #v-intro #v-contents { left: 25%; top: 7%; padding-bottom: 1%; min
 
 main.team-vid #v-intro #v-contents .v-contents-title { padding-left: 22%; display: inline-block; }
 
-main.team-vid #v-intro #v-description { width: 55%; right: 15%; top: 19%; height: 60%; }
+main.team-vid #v-intro #v-description { width: 55%; right: 15%; top: -webkit-calc(7% + 4.5em); top: calc(7% + 4.5em); height: 60%; }
 
 main.team-vid #v-intro #v-description .v-chapter-desc { top: 15%; }
 
@@ -462,7 +469,7 @@ a.v-prev-link { position: absolute; top: 1em; right: 3em; z-index: 5; color: whi
 
 .v-ended .circle-animation { stroke-dasharray: 440; /* this value is the pixel circumference of the circle */ stroke-dashoffset: 440; -webkit-transition: all 1s linear; transition: all 1s linear; }
 
-.v-suggestions { position: absolute; top: 0; left: 0; right: 0; bottom: 0; margin: auto; height: 6em; z-index: 5; text-align: center; }
+.v-suggestions { position: absolute; top: 0; left: 0; right: 0; bottom: 0; margin: auto; height: 6em; z-index: 3; text-align: center; }
 
 .v-suggestions .v-suggestion { display: inline-block; margin: 0 1em; }
 
@@ -478,8 +485,6 @@ a.v-prev-link { position: absolute; top: 1em; right: 3em; z-index: 5; color: whi
 .is-scrollable #v-ui { opacity: 1; }
 
 .v-controls { position: absolute; display: block; bottom: 0; left: 0; width: 100%; height: 7rem; padding: 4.25rem 0.75rem 0.75rem 0.25rem; margin: 0; z-index: 2; -webkit-transition: opacity 0.5s; transition: opacity 0.5s; background: -webkit-linear-gradient(top, transparent 0%, rgba(0, 0, 0, 0.25) 50%, rgba(0, 0, 0, 0.65) 80%); background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.25) 50%, rgba(0, 0, 0, 0.65) 80%); }
-
-main.home .v-controls { opacity: 0; }
 
 .v-control-elem, .v-play-btn-cont, .v-vol-btn-cont, .v-time-ind { float: left; height: 2rem; width: 2rem; z-index: 10; color: white; text-align: justify; padding: 0; margin: 0 0 0 0.5rem; }
 

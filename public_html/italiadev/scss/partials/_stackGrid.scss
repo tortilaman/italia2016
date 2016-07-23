@@ -268,9 +268,9 @@
 
 //========================================*/
 
-main:not([class*='child']) #v-intro {
+/*main:not([class*='child']) #v-intro {
 	opacity: 0;
-}
+}*/
 
 #v-intro {
 	position: relative;
@@ -300,13 +300,17 @@ main:not([class*='child']) #v-intro {
 		.quote {
 			font-size: 1.5em;
 			padding-left: 30%;
-			margin-top: 7%;
+			margin-top: 2%;
+		}
+
+		.v-chapter-container {
+			position: relative;
 		}
 
 		#v-chapter-ind {
 			position: absolute;
-			top: 4.25em;
-			width: 105%;
+			top: 0;
+			width: 125%;
 			height: 3em;
 			margin-left: -1em;
 			//FIXME: This will for sure cause problems once the play button is added...
@@ -405,7 +409,7 @@ main.team-vid {
 	#v-intro #v-description {
 		width: 55%;
 		right: 15%;
-		top: 19%;
+		top: calc(7% + 4.5em);
 		height: 60%;
 
 		.v-chapter-desc {

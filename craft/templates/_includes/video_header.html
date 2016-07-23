@@ -50,7 +50,8 @@
 						</div>
 					</div>
 				</div>
-				{% if entry.type == 'designer' and entry.hasDescendants() %}
+				{% if entry.type == 'designer' and entry.hasDescendants() == false %}
+				{% else %}
 					<div class="v-init-play">
 						<a>
 							<div class="v-init-play-btn"></div>

@@ -11,7 +11,7 @@ _#}
 
 {% extends "_layouts/site" %}
 {% set title = entry.title %}
-{% set bodyClass = entry.type == 'interviewVideo' ? 'child v' : 'v' %}
+{% set bodyClass = entry.type == 'interviewVideo' ? 'v autoplay' : 'v' %}
 {% set children = entry.type == 'designer' ? entry.children : entry.parent.children %}
 {% if entry.type == "designer" %}
 	{% set portrait = entry.intPortrait.first %}
@@ -22,19 +22,21 @@ _#}
 {% block main %}
 	{# ============= INTRODUCTION ================ #}
 	{% if entry.children|length or entry.siblings|length < 10 %}
-		<section id="v-intro" class="v-section is-scrollable {{entry.videoYear == '2016' ? 'v21-9' : 'v16-9'}}">
+		<section id="v-intro" class="v-section is-scrollable {{entry.videoYear >= '2015' ? 'v21-9' : 'v16-9'}}">
 			<div id="v-contents">
 				<h1 class="v-contents-title">interview chapters</h1>
-				<div id="v-chapter-ind"></div>
-				{% for i in 0..(children|length-1) %}
-					<div class="v-chapter" data-chapter="{{i}}" data-offset="{{i*3}}">
-						<a href="{{children.nth(i).url}}#v-header">
-							<span class="v-chapter-number">{{i+1}}</span>
-							<span class="v-chapter-title">{{children.nth(i)}}</span>
-							<span class="v-chapter-duration">{{children.nth(i).videoDuration}}</span>
-						</a>
-					</div>
-				{% endfor %}
+				<div class="v-chapter-container">
+					<div id="v-chapter-ind"></div>
+					{% for i in 0..(children|length-1) %}
+						<div class="v-chapter" data-chapter="{{i}}" data-offset="{{i*3}}">
+							<a href="{{children.nth(i).url}}#v-header">
+								<span class="v-chapter-number">{{i+1}}</span>
+								<span class="v-chapter-title">{{children.nth(i)}}</span>
+								<span class="v-chapter-duration">{{children.nth(i).videoDuration}}</span>
+							</a>
+						</div>
+					{% endfor %}
+				</div>
 			</div>
 			<div id="v-description">
 				{% for i in 0..(children|length-1) %}

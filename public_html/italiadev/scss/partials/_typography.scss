@@ -1,7 +1,14 @@
+$body-font-sizes: (
+	null: (0.8rem, 1.8),
+	phone: (0.9rem, 1.8),
+	tablet: (1rem, 1.8),
+	laptop: (1.0rem, 1.8),
+	desktop: (1.2rem, 1.8)
+);
+
 body {
 	font-family: 'karla', sans-serif;
-	font-size  : 1.2rem;
-	line-height: 1.8;
+	@include font-size($body-font-sizes);
 }
 h1,
 h2,
