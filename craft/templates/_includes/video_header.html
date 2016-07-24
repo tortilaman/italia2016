@@ -65,9 +65,10 @@
 					<span>{{siblings[chaptIndex+1].title}} ({{chaptIndex}}/{{siblings|length}})</span>
 					<div class="v-ended-cd-cont">
 						<h2 class="v-ended-cd-num">5</h2>
-						<svg width="160" height="160" xmlns="http://www.w3.org/2000/svg">
+						<svg viewbox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+							{# The viewbox attribute allows the svg to scale and gives crazy control. Really awesome: https://css-tricks.com/scale-svg/ #}
 							<circle class="circle-bg" r="69.85699" cy="80" cx="80" stroke-width="8" stroke="#ffffff" fill="none"/>
-							<circle class="circle-animation" r="69.85699" cy="81" cx="81" stroke-width="8" stroke="#6fdb6f" fill="none"/>
+							<path class="tProgBar" d="M10,80a70,70 0 1,0 140,0a70,70 0 1,0 -140,0" />
 						</svg>
 					</div>
 					<a class="v-ended-cancel">cancel</a>

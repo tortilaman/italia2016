@@ -529,12 +529,11 @@ main.team #flex-grid-team {
 		display: block;
 		height: 60vh;
 		width: 30vw;
-		padding: 3%;
+		padding: 2em;
 		margin-top: 20vh;
 		z-index: 10;
 		background-color: $color1;
 		mix-blend-mode: multiply;
-		left: -10vw;
 	}
 }
 
@@ -553,7 +552,7 @@ IMAGES
 
 	&.large {
 		width: auto;
-		height: 60vh;
+		height: 55vh;
 	}
 
 	&.small {

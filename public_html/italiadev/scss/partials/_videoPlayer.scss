@@ -312,14 +312,18 @@ a.v-prev-link {
 			left: 0;
 			width: 8em;
 			height: 8em;
-			transform: rotate(-90deg);
 		}
 	}
 
-	.circle-animation {
-		stroke-dasharray: 440; /* this value is the pixel circumference of the circle */
-		stroke-dashoffset: 440;
-		transition: all 1s linear;
+	.tProgBar {
+		position: absolute;
+		top: 0;
+		left: 0;
+		stroke: $color1;
+		stroke-width: 8;
+		fill: none;
+		height: 100%;
+		width: 100%;
 	}
 }
 

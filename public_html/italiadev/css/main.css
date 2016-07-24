@@ -286,7 +286,7 @@ main.team #flex-grid-team { position: fixed; margin: 0 5vw; width: 90vw; box-sha
 
 #v-context a[class*="link"] { margin: 0; padding: 0; }
 
-#v-context .qa { position: relative; display: block; height: 60vh; width: 30vw; padding: 3%; margin-top: 20vh; z-index: 10; background-color: #4cb884; mix-blend-mode: multiply; left: -10vw; }
+#v-context .qa { position: relative; display: block; height: 60vh; width: 30vw; padding: 2em; margin-top: 20vh; z-index: 10; background-color: #4cb884; mix-blend-mode: multiply; }
 
 [class*="v-mat"] { margin: 0.5em; }
 
@@ -295,7 +295,7 @@ IMAGES
 **=======================*/
 .v-mat-img-container { position: relative; display: inline-block; }
 
-.v-mat-img-container.large { width: auto; height: 60vh; }
+.v-mat-img-container.large { width: auto; height: 55vh; }
 
 .v-mat-img-container.small { width: auto; height: 30vh; }
 
@@ -519,9 +519,9 @@ a.v-prev-link { position: absolute; top: 1em; right: 3em; z-index: 5; color: whi
 
 .v-ended .v-ended-cd-cont { position: relative; display: table-cell; vertical-align: middle; height: 8em; width: 8em; }
 
-.v-ended .v-ended-cd-cont svg { position: absolute; top: 0; left: 0; width: 8em; height: 8em; -webkit-transform: rotate(-90deg); -ms-transform: rotate(-90deg); transform: rotate(-90deg); }
+.v-ended .v-ended-cd-cont svg { position: absolute; top: 0; left: 0; width: 8em; height: 8em; }
 
-.v-ended .circle-animation { stroke-dasharray: 440; /* this value is the pixel circumference of the circle */ stroke-dashoffset: 440; -webkit-transition: all 1s linear; transition: all 1s linear; }
+.v-ended .tProgBar { position: absolute; top: 0; left: 0; stroke: #4cb884; stroke-width: 8; fill: none; height: 100%; width: 100%; }
 
 .v-suggestions { position: absolute; top: 0; left: 0; right: 0; bottom: 0; margin: auto; height: 6em; z-index: 3; text-align: center; }
 

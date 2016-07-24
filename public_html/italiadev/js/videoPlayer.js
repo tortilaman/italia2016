@@ -326,18 +326,35 @@ $(document).ready(function () {
 		NEXT VIDEO F'N
 	**===============================*/
 
-	var cdTime = 5;
-	var initOffset = '440';
-	var count = 1;
+	var cdTime = 5,
+		path = document.querySelector(".tProgBar");
+	var length = path.getTotalLength(),
+		count = 1;
 
 	/* Need initial run as interval hasn't yet occured... */
-	$('.circle-animation').css('stroke-dashoffset', initOffset-(1*(initOffset/cdTime)));
+//	$('.circle-animation').css('stroke-dashoffset', initOffset-(1*(initOffset/cdTime)));
 
 	document.querySelector("#v-player").onended = function() {
-		$(".v-ended").removeClass("oHidden");
-		$(".v-ended").css('z-index', '5');
+		//Show it
+		$(".v-ended").css('z-index', '5').removeClass("oHidden");
+		// Clear any previous transition
+		path.style.transition = path.style.WebkitTransition =
+			'none';
+		// Set up the starting positions
+		path.style.strokeDasharray = length + ' ' + length;
+		path.style.strokeDashoffset = length;
+		// Trigger a layout so styles are calculated & the browser
+		// picks up the starting position before animating
+		path.getBoundingClientRect();
+		// Define our transition
+		path.style.transition = path.style.WebkitTransition =
+			'stroke-dashoffset 5s ease-in-out';
+		// Go!
+		path.style.strokeDashoffset = '0';
 		var interval = setInterval(function() {
+			//Set text in middle
 			$('.v-ended-cd-num').text(cdTime - count);
+			//If cancel is clicked
 			$('.v-ended-cancel').one("click", function() {
 				clearInterval(interval);
 				$(".v-ended").addClass("oHidden").remove();
@@ -349,7 +366,6 @@ $(document).ready(function () {
 				window.location.href = $('.v-ended').attr('data-url');
 				return;
 			}
-			$('.circle-animation').css('stroke-dashoffset', initOffset-((count+1)*(initOffset/cdTime)));
 			count++;
 		}, 1000);
 	};
@@ -358,7 +374,7 @@ $(document).ready(function () {
 		EVENT LISTENERS
 	**===============================*/
 
-	if($("#v-intro").length == 1 || $("main").hasClass("home")) {
+	if($("#v-intro").length || $("main").hasClass("home")) {
 		//Scroll progress even tlistener
 		window.addEventListener('scroll', function () {
 			requestAnimationFrame(function () {

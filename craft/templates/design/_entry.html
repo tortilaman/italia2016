@@ -19,6 +19,20 @@ _#}
 	{% set portrait = entry.parent.intPortrait.first %}
 {% endif %}
 
+{% block head %}
+	{{ parent() }}
+	<meta property="og:site_name"	content="SFU italiaDesign field school" />
+	<meta property="og:url"			content="{{entry.url}}" />
+	<meta property="og:type"		content="{{entry.type == 'designer' ? 'profile' : 'video.other'}}" />
+	{% if title is defined %}
+		<meta property="og:title"	content="{{title}}" />
+	{% endif %}
+	{% if entry.videDescription is defined %}
+		<meta property="og:description"	content="{{entry.videoDescription}}" />
+	{% endif %}
+	<meta property="og:image"		content="{{entry.type == 'designer' ? entry.intPortrait.first().url : entry.videoThumbnail.first().url}}" />
+{% endblock %}
+
 {% block main %}
 	{# ============= INTRODUCTION ================ #}
 	{% if entry.children|length or entry.siblings|length < 10 %}

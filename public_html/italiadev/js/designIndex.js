@@ -7,6 +7,7 @@ function getParameterByName(name, url) {
 	if (!results[2]) return '';
 	return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
+
 /* ============================================================
 
 88888888ba                                   88
@@ -30,22 +31,6 @@ $(document).ready(function () {
 		hOffset,
 		vOffset;
 
-	if($(window).outerWidth() >= breakpoints.phone && $(window).outerWidth() < breakpoints.tablet) {
-		hOffset = ['-5vw', '-5vw', '0', '5vw', '5vw'];
-		vOffset = ['1vw', '2vw', '25vw', '50vw'];
-	}
-	else if($(window).outerWidth() >= breakpoints.tablet && $(window).outerWidth() < breakpoints.laptop) {
-		hOffset = ['-4vw', '0', '4vw', '4vw'];
-		vOffset = ['-6vw', '1vw', '6vw', '16vw', '30vw'];
-	}
-	else if($(window).outerWidth() >= breakpoints.laptop && $(window).outerWidth() < breakpoints.desktop) {
-		hOffset = ['-4vw', '0', '4vw', '4vw'];
-		vOffset = ['-4vw', '1vw', '4vw', '14vw', '26vw'];
-	}
-	else if($(window).outerWidth() >= breakpoints.desktop) {
-		hOffset = ['-2vw', '0', '2vw', '2vw'];
-		vOffset = ['-2vw', '1vw', '3vw', '9vw', '15vw'];
-	}
 	$("#search").focus();
 
 	function findWithAttr(array, attr, value) {
@@ -76,8 +61,23 @@ $(document).ready(function () {
 	** ================*/
 
 	function offsetGrid() {
-		console.log("Orientation changed, window resized, or reloaded");
 		if($(window).outerWidth() >= breakpoints.phone) {
+			if($(window).outerWidth() >= breakpoints.phone && $(window).outerWidth() < breakpoints.tablet) {
+				hOffset = ['-5vw', '-5vw', '0', '5vw', '5vw'];
+				vOffset = ['1vw', '2vw', '25vw', '50vw'];
+			}
+			else if($(window).outerWidth() >= breakpoints.tablet && $(window).outerWidth() < breakpoints.laptop) {
+				hOffset = ['-4vw', '0', '4vw', '4vw'];
+				vOffset = ['-6vw', '1vw', '6vw', '16vw', '30vw'];
+			}
+			else if($(window).outerWidth() >= breakpoints.laptop && $(window).outerWidth() < breakpoints.desktop) {
+				hOffset = ['-4vw', '0', '4vw', '4vw'];
+				vOffset = ['-4vw', '1vw', '4vw', '14vw', '26vw'];
+			}
+			else if($(window).outerWidth() >= breakpoints.desktop) {
+				hOffset = ['-2vw', '0', '2vw', '2vw'];
+				vOffset = ['-2vw', '1vw', '3vw', '9vw', '15vw'];
+			}
 			$entries.each(function (index, value) {
 				$(this).css('left', hOffset[Math.floor(Math.random() * hOffset.length)]);
 				$(this).css('margin-top', vOffset[Math.floor(Math.random() * vOffset.length)]);
@@ -95,10 +95,6 @@ $(document).ready(function () {
 	}
 
 	offsetGrid();
-
-	//TODO: orientation change is not working...
-	$(window).on('resize', offsetGrid());
-	$(window).on('orientationchange', offsetGrid());
 
 
 	/* =======================================================
@@ -333,6 +329,11 @@ $(document).ready(function () {
 	/* =======================================================
 		EVENT LISTENERS
 	** =====================================================*/
+
+	//Reflow grid on window resize or orientation change
+	$(window).on('resize', offsetGrid());
+	var orientationCheck = window.matchMedia("(orientation: portrait)");
+	orientationCheck.addListener(offsetGrid);
 
 	//Clicked search close button.
 	$("#d-filter span").on("click", function (e) {
