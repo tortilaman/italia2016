@@ -1,3 +1,10 @@
+// ==============================
+//
+//	Things that appear on most pages and aren't
+//	general typography are here.
+//
+// ==============================
+
 *, *::before, *::after {
 	margin: 0;
 	padding: 0;
@@ -11,11 +18,52 @@ body {
 	transition: color 0.5s;
 }
 
+.clearfix:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+.bg {
+	&::after {
+		content: '';
+		position: absolute;
+		display: block;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		mix-blend-mode: multiply;
+		z-index: -1;
+	}
+}
+
+.green-bg {
+	@extend .bg;
+	&::after {
+		background: $color1;
+	}
+}
+
+.blue-bg {
+	@extend .bg;
+	&::after {
+		background: $color2;
+	}
+}
+
+.tan-bg {
+	@extend .bg;
+	&::after {
+		background: $color4;
+	}
+}
+
 #home-btn {
 	position: fixed;
 	top: 1vh;
 	left: 1vh;
-	height: 13vh;
+	height: 6vmin;
 	width: auto;
 	z-index:2;
 
@@ -30,6 +78,13 @@ body {
 			display: none;
 		}
 	}
+
+	@include respond-to(tablet) {
+		height: 6vh;
+	}
+	@include respond-to(laptop) {
+		height: 13vh;
+	}
 }
 
 .design #home-btn, .team #home-btn, .team-vid #home-btn, .italia #home-btn {
@@ -40,18 +95,27 @@ body {
 header.header {
 	position: fixed;
 	display: block;
-	top: 5vw;
-	right: 97.5vw;
-	width: calc(100vh - 10vw);
+	top: 0;
+	left: 13vw;
+	width: 50vw;
 	padding: 0;
-	transform: rotate(270deg);
+	transform: rotate(0);
 	transform-origin: right top 0;
-	z-index: 1;
+	z-index: 201;
 	transition: opacity 0.5s;
-	text-align: center;
+	text-align: left;
 
-	nav {
-		display: inline-block;
+	@include respond-to(phone) {
+		top: 1vw;
+	}
+	@include respond-to(laptop) {
+		transform: rotate(270deg);
+		top: 5vw;
+		left: auto;
+		right: calc(95vw + 3em);
+		width: calc(100vh - 10vw);
+		z-index: 1;
+		text-align: center;
 	}
 }
 
@@ -63,7 +127,16 @@ nav {
 
 		li {
 			display: inline-block;
-			margin-left: 10vh;
+			margin-left: 0.5rem;
+			line-height: 0.8;
+
+			@include respond-to(phone) {
+				margin-left: 2vw;
+				line-height: 1.8;
+			}
+			@include respond-to(laptop) {
+				margin-left: 10vh;
+			}
 		}
 	}
 	a {
@@ -97,7 +170,7 @@ nav {
 main.design, main.team #flex-grid-team .inner {
 	position: relative;
 	margin: 6vw 5vw;
-	padding: 2rem;
+	padding: 0.25rem;
 	background-image: url(/assets/images/soft_wallpaper.png);
 	background-repeat: repeat;
 	background-position: top left;
@@ -106,6 +179,10 @@ main.design, main.team #flex-grid-team .inner {
 	min-height: 85vh;
 	width: 90vw;
 	transition: all 0.5s;
+
+	@include respond-to(tablet) {
+		padding: 2rem;
+	}
 }
 
 main.team {

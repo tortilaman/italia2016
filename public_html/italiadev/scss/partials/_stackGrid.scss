@@ -1,5 +1,13 @@
 // =================================================================================
 //
+//	Basically everything but the interviews page uses this. It's sectioned off
+//	by which page is being styled. This isn't just the grid cards, but also the
+//	layout for all the blocks within the grid.
+//
+// =================================================================================
+
+// =================================================================================
+//
 //	 88888888888                                   88
 // 	88                         ,d                 ""
 // 	88                         88
@@ -8,6 +16,10 @@
 // 	88           88       88   88     88          88  8PP"""""""   `"Y8ba,
 // 	88           88       88   88,    88          88  "8b,   ,aa  aa    ]8I
 // 	88888888888  88       88   "Y888  88          88   `"Ybbd8"'  `"YbbdP"'
+//
+// ===============================================================================
+//
+//	General stuff that applies to all stacking grids
 //
 // ===============================================================================
 
@@ -257,14 +269,14 @@
 
 /*==========================================
 
-88                                                           88
-88                ,d                                         ""
-88                88
-88  8b,dPPYba,  MM88MMM  ,adPPYba,  8b,dPPYba,  8b       d8  88   ,adPPYba,  8b      db      d8
-88  88P'   `"8a   88    a8P_____88  88P'   "Y8  `8b     d8'  88  a8P_____88  `8b    d88b    d8'
-88  88       88   88    8PP"""""""  88           `8b   d8'   88  8PP"""""""   `8b  d8'`8b  d8'
-88  88       88   88,   "8b,   ,aa  88            `8b,d8'    88  "8b,   ,aa    `8bd8'  `8bd8'
-88  88       88   "Y888  `"Ybbd8"'  88              "8"      88   `"Ybbd8"'      YP      YP
+       db         88  88     8b           d8  88           88
+      d88b        88  88     `8b         d8'  ""           88
+     d8'`8b       88  88      `8b       d8'                88
+    d8'  `8b      88  88       `8b     d8'    88   ,adPPYb,88   ,adPPYba,   ,adPPYba,   ,adPPYba,
+   d8YaaaaY8b     88  88        `8b   d8'     88  a8"    `Y88  a8P_____88  a8"     "8a  I8[    ""
+  d8""""""""8b    88  88         `8b d8'      88  8b       88  8PP"""""""  8b       d8   `"Y8ba,
+ d8'        `8b   88  88          `888'       88  "8a,   ,d88  "8b,   ,aa  "8a,   ,a8"  aa    ]8I
+d8'          `8b  88  88           `8'        88   `"8bbdP"Y8   `"Ybbd8"'   `"YbbdP"'   `"YbbdP"'
 
 //========================================*/
 
@@ -296,6 +308,12 @@
 		width: 35%;
 		min-height: 75%;
 		@extend .green-bg;
+
+		@media (orientation: portrait) {
+			width: 70%;
+			height: 43%;
+			min-height: 0;
+		}
 
 		.quote {
 			font-size: 1.5em;
@@ -361,6 +379,11 @@
 		.v-chapter-number {
 			width: 3em;
 			font-size: 1.5rem;
+
+			@media (orientation: portrait) {
+				line-height: 1;
+				width: 2em;
+			}
 		}
 
 		.v-chapter-number, .v-chapter-title, .v-chapter-duration {
@@ -370,6 +393,16 @@
 			margin: 0;
 			font-family: Header;
 			color: white;
+
+			@media (orientation: portrait) {
+				height: auto;
+			}
+		}
+
+		.v-chapter-title {
+			@media (orientation: portrait) {
+				width: calc(100% - 7em);
+			}
 		}
 
 		.v-chapter-duration {
@@ -387,12 +420,30 @@
 		height: 70%;
 		@extend .blue-bg;
 
+		@media (orientation: portrait) {
+			bottom: 10%;
+			height: 50%;
+		}
+
 		.inner {
 			opacity: 1;
 			transition: opacity 0.5s;
 		}
 	}
 }
+
+/*==========================================
+
+888888888888
+     88
+     88
+     88   ,adPPYba,  ,adPPYYba,  88,dPYba,,adPYba,
+     88  a8P_____88  ""     `Y8  88P'   "88"    "8a
+     88  8PP"""""""  ,adPPPPP88  88      88      88
+     88  "8b,   ,aa  88,    ,88  88      88      88
+     88   `"Ybbd8"'  `"8bbdP"Y8  88      88      88
+
+//========================================*/
 
 main.team-vid {
 	#v-intro #v-contents {
@@ -417,19 +468,6 @@ main.team-vid {
 		}
 	}
 }
-
-/*==========================================
-
-888888888888
-     88
-     88
-     88   ,adPPYba,  ,adPPYYba,  88,dPYba,,adPYba,
-     88  a8P_____88  ""     `Y8  88P'   "88"    "8a
-     88  8PP"""""""  ,adPPPPP88  88      88      88
-     88  "8b,   ,aa  88,    ,88  88      88      88
-     88   `"Ybbd8"'  `"8bbdP"Y8  88      88      88
-
-//========================================*/
 
 #team-about {
 	position: fixed;

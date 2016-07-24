@@ -25,9 +25,27 @@ $(document).ready(function () {
 	var searching = false,
 		keyPlace = "",
 		key = "",
-		$entries = $("[class*='-entry']"),
-		hOffset = ['-2vw', '0', '2vw'],
-		vOffset = ['-2vw', '0', '2vw', '9vw', '16vw', '18vw'];
+		$entries = $("[class*='-entry']:not(.blank)"),
+		breakpoints = {phone: 480, tablet: 700, laptop: 1024, desktop: 1600},
+		hOffset,
+		vOffset;
+
+	if($(window).outerWidth() >= breakpoints.phone && $(window).outerWidth() < breakpoints.tablet) {
+		hOffset = ['-5vw', '-5vw', '0', '5vw', '5vw'];
+		vOffset = ['1vw', '2vw', '25vw', '50vw'];
+	}
+	else if($(window).outerWidth() >= breakpoints.tablet && $(window).outerWidth() < breakpoints.laptop) {
+		hOffset = ['-4vw', '0', '4vw', '4vw'];
+		vOffset = ['-6vw', '1vw', '6vw', '16vw', '30vw'];
+	}
+	else if($(window).outerWidth() >= breakpoints.laptop && $(window).outerWidth() < breakpoints.desktop) {
+		hOffset = ['-4vw', '0', '4vw', '4vw'];
+		vOffset = ['-4vw', '1vw', '4vw', '14vw', '26vw'];
+	}
+	else if($(window).outerWidth() >= breakpoints.desktop) {
+		hOffset = ['-2vw', '0', '2vw', '2vw'];
+		vOffset = ['-2vw', '1vw', '3vw', '9vw', '15vw'];
+	}
 	$("#search").focus();
 
 	function findWithAttr(array, attr, value) {
@@ -57,24 +75,31 @@ $(document).ready(function () {
 		GRID FUNCTION
 	** ================*/
 
-	$entries.each(function (index, value) {
-		$(this).css('left', hOffset[Math.floor(Math.random() * hOffset.length)]);
-		$(this).css('margin-top', vOffset[Math.floor(Math.random() * vOffset.length)]);
-		$(this).css('z-index', index + 1);
-		//Prevent consecutive overlaps.
-		if (index > 0) {
-			var oldMargin = $entries.get(index - 1).style.marginLeft;
-		}
-		$(".film-entry + .design-entry").css('left', getRandomInt(-4, 0).toFixed(1) + 'vw');
+	function offsetGrid() {
+		console.log("Orientation changed, window resized, or reloaded");
+		if($(window).outerWidth() >= breakpoints.phone) {
+			$entries.each(function (index, value) {
+				$(this).css('left', hOffset[Math.floor(Math.random() * hOffset.length)]);
+				$(this).css('margin-top', vOffset[Math.floor(Math.random() * vOffset.length)]);
+				$(this).css('z-index', index + 1);
+				//Prevent consecutive overlaps.
+				/*if (index > 0) {
+					var oldMargin = $entries.get(index - 1).style.marginLeft;
+				}
+				$(".film-entry + .design-entry").css('left', getRandomInt(-4, 0).toFixed(1) + 'vw');*/
 
-		var dict = {
-			0: "Up",
-			1: "Down",
-			2: "Left",
-			3: "Right"
-		};
-		$(this).attr('data-dir', dict[getRandomInt(0, 3)]);
-	});
+				var dict = { 0: "Up", 1: "Down", 2: "Left", 3: "Right" };
+				$(this).attr('data-dir', dict[getRandomInt(0, 3)]);
+			});
+		}
+	}
+
+	offsetGrid();
+
+	//TODO: orientation change is not working...
+	$(window).on('resize', offsetGrid());
+	$(window).on('orientationchange', offsetGrid());
+
 
 	/* =======================================================
 
@@ -138,7 +163,8 @@ $(document).ready(function () {
 		$("#d-filter").css({
 			'height': '1vw',
 			'width': '98vw',
-			'right': '1vw'
+			'right': '1vw',
+			'left': '1vw'
 		});
 		$(".design main").css({
 			'margin': '1vw',
@@ -157,7 +183,8 @@ $(document).ready(function () {
 		$("#d-filter").css({
 			'height': '6vw',
 			'width': '90vw',
-			'right': '5vw'
+			'right': '5vw',
+			'left': '5vw'
 		});
 		$('#search').removeClass("lSearch");
 		$("#d-filter span").removeClass("active");
@@ -204,9 +231,11 @@ $(document).ready(function () {
 			if (show && changed) {
 				$(this).animateCss('In');
 				$(this).removeClass("dHidden");
+				$(this).next('.blank').removeClass("dHidden");
 			} else if (!show && changed) {
 				$(this).animateCss('Out');
 				$(this).addClass("dHidden");
+				$(this).next('.blank').addClass("dHidden");
 			}
 		});
 
@@ -229,13 +258,13 @@ $(document).ready(function () {
 	}
 
 	/* =========================================
-		AUTOCOMPLETE / LIST FILTER
+		AUTOCOMPLETE SEARCH F'NALITY
 	** =======================================*/
 
 	$("#search").autocomplete({
 		source: function (request, response) {
 			var results = $.ui.autocomplete.filter(newArray, request.term);
-			if (request.term == 0) {
+			if (request.term === 0) {
 				var index = newArray.map(function (e) {
 					return e.category;
 				}).indexOf('Interviewees');
@@ -305,6 +334,7 @@ $(document).ready(function () {
 		EVENT LISTENERS
 	** =====================================================*/
 
+	//Clicked search close button.
 	$("#d-filter span").on("click", function (e) {
 		$("#search").val('');
 		requestAnimationFrame($filterResults);
@@ -323,7 +353,7 @@ $(document).ready(function () {
 
 	$("#searchForm").submit(function () {
 		$("#search").blur();
-		if ($("#search").val() != '') $("#d-filter span").addClass("hideActive");
+		if ($("#search").val() !== '') $("#d-filter span").addClass("hideActive");
 		return false;
 	});
 
@@ -335,20 +365,22 @@ $(document).ready(function () {
 		requestAnimationFrame($filterResults);
 	});
 
+	//You hit the enter key
 	$("#search").on("keyup", function (e) {
 		if (e.keyCode === 27) {
 			$(this).val("");
 			hideSearch();
 		} else {
-			if (searching == false) {
+			if (!searching) {
 				showSearch();
 			}
 			requestAnimationFrame($filterResults);
 		}
 	});
 
+	//Hit a number key
 	$(window).on("keyup", function (e) {
-		if (searching == false && e.keyCode >= 65 && e.keyCode <= 90) {
+		if (!searching && e.keyCode >= 65 && e.keyCode <= 90) {
 			key = String.fromCharCode(e.keyCode).toLowerCase();
 			$("#search").focus();
 			$("#search").val(key);

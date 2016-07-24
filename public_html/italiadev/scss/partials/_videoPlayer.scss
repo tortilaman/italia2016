@@ -1,3 +1,10 @@
+// =================================================================================
+//
+//	The video player and its controls and other stuff are styled here.
+//	It's a bit dissorganized, I'll fix it at some point.
+//
+// =================================================================================
+
 span.v-close-btn {
 	position: fixed;
 	top: 2vmin;
@@ -63,19 +70,19 @@ main.home #v-header {
 		}
 	}
 	@media (orientation: portrait) {
-		width: 86vw;
-		height: 36.86vw;
+		width: 86vw !important;
+		height: 36.86vw !important;
 	}
 }
 
 .v16-9 {
 	@media (orientation: landscape) {
-		height: calc(100vh - 14vw);
-		width: calc((100vh - 14vw)/9*16);
+		height: calc(100vh - 14vw) !important;
+		width: calc((100vh - 14vw)/9*16) !important;
 	}
 	@media (orientation: portrait) {
-		width: 86vw;
-		height: 48.375vw;
+		width: 86vw !important;
+		height: 48.375vw !important;
 	}
 }
 

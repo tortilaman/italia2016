@@ -1,6 +1,6 @@
 // =============================================
 //
-// 	All the utility stuff goes here such as variables, mixins,
+// 	All the sassy stuff goes here such as variables, maps, and mixins.
 //  and classes like clearfix that will be used all over the place.
 //
 // =============================================
@@ -31,48 +31,8 @@ $breakpoints: (
 	desktop: 1600px
 );
 
-.clearfix:after {
-	content: "";
-	display: block;
-	clear: both;
-}
-
 //Layout Variables
 $sUnit: 2vw;
-.bg {
-	&::after {
-		content: '';
-		position: absolute;
-		display: block;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		mix-blend-mode: multiply;
-		z-index: -1;
-	}
-}
-
-.green-bg {
-	@extend .bg;
-	&::after {
-		background: $color1;
-	}
-}
-
-.blue-bg {
-	@extend .bg;
-	&::after {
-		background: $color2;
-	}
-}
-
-.tan-bg {
-	@extend .bg;
-	&::after {
-		background: $color4;
-	}
-}
 
 // ==================================
 // 	RESPONSIVE TYPE MIXIN
@@ -108,5 +68,34 @@ $sUnit: 2vw;
 	}
 	@else {
 		font-size: $fs-font-size;
+	}
+}
+
+// ==================================
+// 	WIDTH BASED MEDIA QUERY MIXIN.
+// ==================================
+//
+//	NOTE: Maybe modify this to be more general
+//	or at least to have more parameters so it can check
+//	orientation and other things
+//
+// ==================================
+
+@mixin respond-to($breakpoint) {
+	// Retrieves the value from the key
+	$value: map-get($breakpoints, $breakpoint);
+
+	// If the key exists in the map
+	@if $value != null {
+		// Prints a media query based on the value
+		@media (min-width: $value) {
+			@content;
+		}
+	}
+
+	// If the key doesn't exist in the map
+	@else {
+		@warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
+			+ "Please make sure it is defined in `$breakpoints` map.";
 	}
 }
