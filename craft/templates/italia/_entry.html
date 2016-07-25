@@ -19,6 +19,20 @@ _#}
 	{% set portrait = entry.parent.intPortrait.first %}
 {% endif %}
 
+{% block head %}
+	{{ parent() }}
+	<meta property="og:site_name"	content="SFU italiaDesign field school" />
+	<meta property="og:url"			content="{{entry.url}}" />
+	<meta property="og:type"		content="video.other" />
+	{% if title is defined %}
+		<meta property="og:title"	content="{{title}}" />
+	{% endif %}
+	{% if entry.videDescription is defined %}
+		<meta property="og:description"	content="{{entry.videoDescription}}" />
+	{% endif %}
+	<meta property="og:image"		content="{{entry.videoThumbnail.first().url}}" />
+{% endblock %}
+
 {% block main %}
 	{# ============= INTRODUCTION ================ #}
 	<section id="v-intro" class="v-section is-scrollable {{entry.videoYear >= '2015' ? 'v21-9' : 'v16-9'}}">

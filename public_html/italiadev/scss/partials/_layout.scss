@@ -60,6 +60,7 @@ body {
 }
 
 #home-btn {
+	display: none;
 	position: fixed;
 	top: 1vh;
 	left: 1vh;
@@ -80,6 +81,7 @@ body {
 	}
 
 	@include respond-to(tablet) {
+		display: block;
 		height: 6vh;
 	}
 	@include respond-to(laptop) {
@@ -93,49 +95,64 @@ body {
 }
 
 header.header {
-	position: fixed;
+	position: absolute;
 	display: block;
 	top: 0;
-	left: 13vw;
-	width: 50vw;
+	left: 0;
+	width: 100%;
+	height: 12vw;
 	padding: 0;
+	background-color: white;
 	transform: rotate(0);
 	transform-origin: right top 0;
 	z-index: 201;
 	transition: opacity 0.5s;
 	text-align: left;
 
-	@include respond-to(phone) {
-		top: 1vw;
-	}
 	@include respond-to(laptop) {
+		position:fixed;
 		transform: rotate(270deg);
+		background: none;
 		top: 5vw;
 		left: auto;
 		right: calc(95vw + 3em);
 		width: calc(100vh - 10vw);
+		height: auto;
 		z-index: 1;
 		text-align: center;
 	}
 }
 
 nav {
-	display: inline-block;
+	display: block;
+	height: 100%;
+
+	@include respond-to(tablet){
+		display: inline-block;
+		height: auto;
+	}
 
 	ul {
 		list-style: none;
+		display: flex !important;
+		flex-wrap: nowrap;
+		justify-content: space-between;
+		align-items: center;
+		height: 100%;
+		margin: 0 2vw;
+
+		@include respond-to(tablet){
+			display: inline-block;
+		}
 
 		li {
 			display: inline-block;
-			margin-left: 0.5rem;
+			margin-left: 0;
 			line-height: 0.8;
 
-			@include respond-to(phone) {
-				margin-left: 2vw;
-				line-height: 1.8;
-			}
 			@include respond-to(laptop) {
 				margin-left: 10vh;
+				line-height: 1.8;
 			}
 		}
 	}
@@ -169,7 +186,7 @@ nav {
 
 main.design, main.team #flex-grid-team .inner {
 	position: relative;
-	margin: 6vw 5vw;
+	margin: 6vw 0 0 0;
 	padding: 0.25rem;
 	background-image: url(/assets/images/soft_wallpaper.png);
 	background-repeat: repeat;
@@ -177,11 +194,13 @@ main.design, main.team #flex-grid-team .inner {
 	background-color: $color4;
 	background-blend-mode: multiply;
 	min-height: 85vh;
-	width: 90vw;
+	width: 100%;
 	transition: all 0.5s;
 
 	@include respond-to(tablet) {
 		padding: 2rem;
+		width: 90vw;
+		margin: 6vw 5vw;
 	}
 }
 

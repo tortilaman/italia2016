@@ -13,6 +13,16 @@ _#}
 {% extends "_layouts/site" %}
 {% set bodyClass = "team" %}
 
+{% block head %}
+	{{ parent() }}
+	<meta property="og:site_name"	content="SFU italiaDesign field school" />
+	<meta property="og:url"			content="{{entry.url}}" />
+	{% if title is defined %}
+		<meta property="og:title"	content="{{title}}" />
+	{% endif %}
+	<meta property="og:description"	content="Dieci: 10 years of italiaDesign" />
+{% endblock %}
+
 {% block main %}
 	{# Find your entries #}
 	{% set entries = craft.entries.section('team').order('postDate desc') %}

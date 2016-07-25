@@ -10,78 +10,127 @@
 // 	SEARCH BAR
 // ==============================
 #d-filter {
-	position: fixed;
+	position: relative;
 	top: 0;
-	right: 5vw;
-	left: 5vw;
-	width: 90vw;
+	right: 2vw;
+	left: 2vw;
+	width: 96vw;
 	height: 6vw;
-	background: white;
+	background: none;
 	z-index: 200;
 	transition: height .5s;
+
+	@include respond-to(tablet) {
+		position: fixed;
+		background: white;
+		width: 90vw;
+		left: 5vw;
+		right: 5vw;
+	}
 
 	form {
 		position: absolute;
 		right: 0;
 		bottom: 0;
+		height: 1em;
 
 		@include respond-to(tablet) {
 			bottom: 0.3rem;
+			height: 3em;
+			width: 30vw;
 		}
 		@include respond-to(laptop) {
 			bottom: 0.55rem;
 		}
+
+		#search-btn {
+			display: inline-block;
+			vertical-align: middle;
+			height: 1em;
+			width: 1em;
+			margin-right: 0.5em;
+
+			&:hover {
+				cursor: pointer;
+			}
+
+			@include respond-to(tablet) {
+				height: 3em;
+				width: 3em;
+			}
+
+			svg {
+				height: 100%;
+				width: 100%;
+				fill: $color5;
+				stroke: none;
+			}
+		}
 	}
 	input {
 		position: relative;
+		display: none;
 		top: 0;
 		right: 0;
 		background: none;
 		border: none;
 		box-shadow: none;
-		border-bottom: .15rem solid $color3;
+		border-bottom: .15rem solid $color5;
 		font-size: 0.8rem;
-		line-height: 1.3;
+		line-height: 0.8;
 		outline: none;
-		width: 30vw;
+		width: calc(30vw - 2em);
 		color: $color5;
 		transition: all, .5s;
 		mix-blend-mode: multiply;
 
 		@include respond-to(tablet) {
+			display: inline-block;
 			font-size: 1.2em;
-			line-height: 1.8;
+			line-height: 1.2;
 			border-bottom: 0.3em solid $color3;
+			padding-bottom: 0.1em;
 		}
 		@include respond-to(laptop) {
-			font-size: 3rem;
+			font-size: 2em;
 			border-bottom: 0.5rem solid $color3;
 		}
 	}
 	.lSearch {
-		//		position: absolute;
+		position: fixed;
 		top: 25vh;
-		right: 20vw;
-		width: 50vw;
+		right: 35vw;
+		left:35vw;
+		width: 30vw;
 		background: none;
+
+		input {
+			display: inline-block !important;
+		}
 	}
 	span {
 		position: absolute;
+		display:inline-block;
+		vertical-align: middle;
 		right: .5rem;
 		bottom: 1rem;
-		font-size: 3rem;
+		font-size: 0.8em;
+		line-height: 0.8;
 		font-weight: bold;
 		color: $color3;
 		opacity: 0;
 		cursor: pointer;
 		transition: all .5s;
 		&.active {
-			right: 21vw;
-			top: 20vh;
 			opacity: 1;
 		}
-		&.hideActive {
-			opacity: 1;
+
+		@include respond-to(tablet) {
+			font-size: 1.2em;
+			line-height: 1.2;
+		}
+		@include respond-to(laptop) {
+			font-size: 2em;
 		}
 	}
 	#undo-search {
@@ -105,8 +154,8 @@
 
 ul.ui-autocomplete {
 	position: fixed;
-	top: calc(25vh + 1rem);
-	left: 25vw;
+	top: calc(25vh + 3rem);
+	left: calc(35vw + 3.25em);
 	background: none;
 	padding: .2rem;
 	box-shadow: none;
@@ -115,12 +164,11 @@ ul.ui-autocomplete {
 	li.ui-menu-item {
 		box-shadow: none;
 		border: none;
-		padding: .5rem;
-		font-size: 2.5rem;
+		padding: .25rem;
 		color: $color5;
 		list-style: none;
 		cursor: pointer;
-		text-shadow: .1rem .1rem .1rem rgba(55, 55, 55, 0.5);
+		line-height: 1;
 		mix-blend-mode: multiply;
 		font-family: header;
 		.highlight {
@@ -133,6 +181,10 @@ ul.ui-autocomplete {
 			mix-blend-mode: multiply;
 			font-family: subhead;
 			&:hover {}
+		}
+
+		@include respond-to(tablet) {
+			font-size: 2.5em;
 		}
 	}
 }
@@ -178,15 +230,22 @@ section[id^="flex-grid-"] {
 	display: flex;
 	flex-flow: row wrap;
 	justify-content: space-between;
-	width: 80vw;
-	margin: 2vh auto 3vh;
+	width: 96vw;
+	max-width:96%;
+	margin: 2vh 2vw;
 	padding-bottom: 2rem;
+
+	@include respond-to(tablet) {
+		width: 80vw;
+		max-width: 80%;
+		margin: 2vh auto 3vh;
+	}
 }
 
 #page-info {
 	background: white;
 	padding: 2em 2em 2em 5em;
-	width: 85vw;
+	width: 100%;
 	color: $color5;
 	z-index: 100;
 
@@ -275,33 +334,47 @@ h1[id*="year-title-"] {
 		transform: translateX(-50%);
 		width: auto;
 		height: 100%;
+		margin-top: 0;
 		mix-blend-mode: multiply;
-		//Because of the hover scaling, the centering couldn't happen on the image.
-		img {
-			position: relative;
-			display: block;
-			transform-origin: center center;
-			width: auto;
-			height: 100%;
-			transition: all .5s;
-		}
 	}
+	//Because of the hover scaling, the centering couldn't happen on the image.
+	img {
+		position: relative;
+		display: block;
+		transform-origin: center center;
+		width: auto;
+		height: 100%;
+		transition: all .5s;
+	}
+
 	.entry-title {
 		position: absolute;
-		top: 5%;
+		top: 50%;
 		left: 0;
 		right: 0;
+		transform: translateY(-50%);
 		text-align: center;
 		padding: 0 1vw .5em;
 		z-index: 50;
 		transition: all .5s;
 
 		h1 {
-			font-size: 1.3em;
+			font-size: 1.6em;
+
+			@include respond-to(tablet) {
+				font-size: 1.3em;
+			}
 		}
 
 		h2 {
 			font-size: 1.1em;
+		}
+
+		@include respond-to(tablet) {
+			top: 5%;
+			transform: none;
+			left: 0;
+			right: 0;
 		}
 	}
 
@@ -336,17 +409,36 @@ h1[id*="year-title-"] {
 // ========================================================
 .design-entry {
 	@extend .entry;
-	width: 80vw;
-	height: 120vw;
+	width: 100%;
+	height: 20vh;
+	margin-top: 1.5vh;
+
+	.entry-thumb-cont {
+		width: 80vw;
+		height: auto;
+		margin-top: -35vw;
+
+		@include respond-to(tablet) {
+			width: auto;
+			height: 100%;
+			margin-top: 0;
+		}
+	}
+
+	img {
+		width: 100%;
+		height: auto;
+
+		@include respond-to(tablet) {
+			width: auto;
+			height: 100%;
+		}
+	}
 
 	&:not(.blank) {
 		@extend .blue-bg;
 	}
 
-	@include respond-to(phone) {
-		width: 35vw;
-		height: 52.5vw;
-	}
 	@include respond-to(tablet) {
 		width: 22vw;
 		height: 33vw;
@@ -364,8 +456,9 @@ h1[id*="year-title-"] {
 .film-entry {
 	@extend .entry;
 	@extend .green-bg;
-	width: 80vw;
-	height: 53.33vw;
+	width: 100%;
+	height: 63.33vw;
+	margin-top: 1.5vh;
 
 	@include respond-to(tablet) {
 		width: 55vw;

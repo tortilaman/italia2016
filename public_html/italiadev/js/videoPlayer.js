@@ -336,38 +336,42 @@ $(document).ready(function () {
 
 	document.querySelector("#v-player").onended = function() {
 		//Show it
-		$(".v-ended").css('z-index', '5').removeClass("oHidden");
-		// Clear any previous transition
-		path.style.transition = path.style.WebkitTransition =
-			'none';
-		// Set up the starting positions
-		path.style.strokeDasharray = length + ' ' + length;
-		path.style.strokeDashoffset = length;
-		// Trigger a layout so styles are calculated & the browser
-		// picks up the starting position before animating
-		path.getBoundingClientRect();
-		// Define our transition
-		path.style.transition = path.style.WebkitTransition =
-			'stroke-dashoffset 5s ease-in-out';
-		// Go!
-		path.style.strokeDashoffset = '0';
-		var interval = setInterval(function() {
-			//Set text in middle
-			$('.v-ended-cd-num').text(cdTime - count);
-			//If cancel is clicked
-			$('.v-ended-cancel').one("click", function() {
-				clearInterval(interval);
-				$(".v-ended").addClass("oHidden").remove();
-				$(".v-suggestions").css('z-index', 5).removeClass("oHidden");
-			});
-			if (count == cdTime) {
-				$('.v-ended-cd-num').text('GO!');
-				clearInterval(interval);
-				window.location.href = $('.v-ended').attr('data-url');
-				return;
-			}
-			count++;
-		}, 1000);
+		if(!$("body").hasClass("team") && !$("body").hasClass("team-vid")) {
+			$(".v-ended").css('z-index', '5').removeClass("oHidden");
+			// Clear any previous transition
+			path.style.transition = path.style.WebkitTransition =
+				'none';
+			// Set up the starting positions
+			path.style.strokeDasharray = length + ' ' + length;
+			path.style.strokeDashoffset = length;
+			// Trigger a layout so styles are calculated & the browser
+			// picks up the starting position before animating
+			path.getBoundingClientRect();
+			// Define our transition
+			path.style.transition = path.style.WebkitTransition =
+				'stroke-dashoffset 5s ease-in-out';
+			// Go!
+			path.style.strokeDashoffset = '0';
+			var interval = setInterval(function() {
+				//Set text in middle
+				$('.v-ended-cd-num').text(cdTime - count);
+				//If cancel is clicked
+				$('.v-ended-cancel').one("click", function() {
+					clearInterval(interval);
+					$(".v-ended").addClass("oHidden").remove();
+					$(".v-suggestions").css('z-index', 5).removeClass("oHidden");
+				});
+				if (count == cdTime) {
+					$('.v-ended-cd-num').text('GO!');
+					clearInterval(interval);
+					window.location.href = $('.v-ended').attr('data-url');
+					return;
+				}
+				count++;
+			}, 1000);
+		} else {
+			$(".v-suggestions").css('z-index', 5).removeClass("oHidden");
+		}
 	};
 
 	/*=================================
