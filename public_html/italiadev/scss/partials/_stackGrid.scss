@@ -290,7 +290,6 @@ d8'          `8b  88  88           `8'        88   `"8bbdP"Y8   `"Ybbd8"'   `"Yb
 }*/
 
 #v-intro {
-	position: relative;
 	margin: 0 auto;
 	height: calc(100vh - 20vw);
 	width: 98vw;
@@ -302,6 +301,11 @@ d8'          `8b  88  88           `8'        88   `"8bbdP"Y8   `"Ybbd8"'   `"Yb
 		height: calc(100vh - 25vw);
 		margin: 10vw auto 0 auto;
 		width: auto;
+	}
+	@include respond-to(laptop) {
+		width:90vw;
+		height: calc(100vh - 12vw);
+		margin: 10vw auto 0 auto;
 	}
 
 	.v-portrait {
@@ -315,12 +319,12 @@ d8'          `8b  88  88           `8'        88   `"8bbdP"Y8   `"Ybbd8"'   `"Yb
 	#v-contents, #v-description {
 		width: 100%;
 		margin: 0;
-		left: 0;
 		height: 49%;
 	}
 
 	#v-contents {
 		position: absolute;
+		left: 0;
 		top: 0;
 		padding: 1.5em 3% 3% 3%;
 		@extend .green-bg;
@@ -329,6 +333,9 @@ d8'          `8b  88  88           `8'        88   `"8bbdP"Y8   `"Ybbd8"'   `"Yb
 			left: 5%;
 			width: 35%;
 			min-height: 75%;
+		}
+		@include respond-to(laptop) {
+			top: 6vh;
 		}
 
 		/*@media (orientation: portrait) {
@@ -440,6 +447,7 @@ d8'          `8b  88  88           `8'        88   `"8bbdP"Y8   `"Ybbd8"'   `"Yb
 
 	#v-description {
 		position: absolute;
+		right: 0;
 		bottom: 1vw;
 		padding: 4% 6%;
 		@extend .blue-bg;

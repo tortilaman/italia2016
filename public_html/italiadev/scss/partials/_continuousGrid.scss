@@ -237,9 +237,9 @@ section[id^="flex-grid-"] {
 	margin: 2vh 2vw;
 	padding-bottom: 2rem;
 
-	@include respond-to(tablet) {
-		width: 80vw;
-		max-width: 80%;
+	@include respond-to(phone) {
+		width: 90vw;
+		max-width: 90%;
 		margin: 2vh auto 3vh;
 	}
 }
@@ -261,7 +261,7 @@ section[id^="flex-grid-"] {
 		display: none;
 	}
 
-	@include respond-to(tablet) {
+	@include respond-to(phone) {
 		width: 55vw;
 	}
 	@include respond-to(laptop) {
@@ -356,7 +356,7 @@ h1[id*="year-title-"] {
 		right: 0;
 		transform: translateY(-50%);
 		text-align: center;
-		padding: 0 1vw .5em;
+		padding: 0 2em;
 		z-index: 50;
 		transition: all .5s;
 
@@ -420,7 +420,7 @@ h1[id*="year-title-"] {
 		height: auto;
 		margin-top: -35vw;
 
-		@include respond-to(tablet) {
+		@include respond-to(phone) {
 			width: auto;
 			height: 100%;
 			margin-top: 0;
@@ -431,7 +431,7 @@ h1[id*="year-title-"] {
 		width: 100%;
 		height: auto;
 
-		@include respond-to(tablet) {
+		@include respond-to(phone) {
 			width: auto;
 			height: 100%;
 		}
@@ -441,15 +441,20 @@ h1[id*="year-title-"] {
 		@extend .blue-bg;
 	}
 
+	@include respond-to(phone) {
+		width: 42vw;
+		height: 63vw;
+	}
 	@include respond-to(tablet) {
 		width: 22vw;
 		height: 33vw;
 	}
-	@include respond-to(laptop) {
+	/*@include respond-to(laptop) {
 		width: 18vw;
 		height: 28vw;
-	}
-	@include respond-to(desktop) {
+	}*/
+	@include respond-to(laptop) {
+//	@include respond-to(desktop) {
 		width: 12vw;
 		height: 18vw;
 	}
@@ -462,6 +467,10 @@ h1[id*="year-title-"] {
 	height: 63.33vw;
 	margin-top: 1.5vh;
 
+	@include respond-to(phone) {
+		width: 88vw;
+		height: 58.66vw;
+	}
 	@include respond-to(tablet) {
 		width: 55vw;
 		height: 36.66vw;

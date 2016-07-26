@@ -61,32 +61,34 @@ $(document).ready(function () {
 	** ================*/
 
 	function offsetGrid() {
+		var hoLast,
+			hoThis,
+			voLast,
+			voThis;
 		if($(window).outerWidth() >= breakpoints.phone) {
 			if($(window).outerWidth() >= breakpoints.phone && $(window).outerWidth() < breakpoints.tablet) {
-				hOffset = ['-5vw', '-5vw', '0', '5vw', '5vw'];
-				vOffset = ['1vw', '2vw', '25vw', '50vw'];
+				hOffset = ['-4vw', '0', '4vw'];
+				vOffset = ['2vw', '6vw', '30vw', '60vw'];
 			}
 			else if($(window).outerWidth() >= breakpoints.tablet && $(window).outerWidth() < breakpoints.laptop) {
-				hOffset = ['-4vw', '0', '4vw', '4vw'];
-				vOffset = ['-6vw', '1vw', '6vw', '16vw', '30vw'];
+				hOffset = ['-4vw', '0', '4vw'];
+				vOffset = ['2vw', '6vw', '16vw', '30vw'];
 			}
 			else if($(window).outerWidth() >= breakpoints.laptop && $(window).outerWidth() < breakpoints.desktop) {
-				hOffset = ['-4vw', '0', '4vw', '4vw'];
-				vOffset = ['-4vw', '1vw', '4vw', '14vw', '26vw'];
+				hOffset = ['-2vw', '0', '4vw'];
+				vOffset = ['2vw', '4vw', '14vw', '26vw'];
 			}
 			else if($(window).outerWidth() >= breakpoints.desktop) {
-				hOffset = ['-2vw', '0', '2vw', '2vw'];
-				vOffset = ['-2vw', '1vw', '3vw', '9vw', '15vw'];
+				hOffset = ['-2vw', '0', '2vw'];
+				vOffset = ['2vw', '3vw', '9vw', '15vw'];
 			}
 			$entries.each(function (index, value) {
-				$(this).css('left', hOffset[Math.floor(Math.random() * hOffset.length)]);
-				$(this).css('margin-top', vOffset[Math.floor(Math.random() * vOffset.length)]);
-//				$(this).css('z-index', index + 1);
-				//Prevent consecutive overlaps.
-				/*if (index > 0) {
-					var oldMargin = $entries.get(index - 1).style.marginLeft;
-				}
-				$(".film-entry + .design-entry").css('left', getRandomInt(-4, 0).toFixed(1) + 'vw');*/
+				while(hoThis == hoLast) hoThis = hOffset[Math.floor(Math.random() * hOffset.length)];
+				while(voThis == voLast) voThis = vOffset[Math.floor(Math.random() * vOffset.length)];
+				$(this).css('left', hoThis);
+				$(this).css('margin-top', voThis);
+				hoLast = hoThis;
+				voLast = voThis;
 
 				var dict = { 0: "Up", 1: "Down", 2: "Left", 3: "Right" };
 				$(this).attr('data-dir', dict[getRandomInt(0, 3)]);
