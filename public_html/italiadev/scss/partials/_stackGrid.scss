@@ -28,12 +28,17 @@
 }
 
 [class*='-section'] {
-	position: fixed;
+	position: relative;
 	top: 0;
 	left: 0;
 	margin: 0;
 	padding: 0;
 	box-shadow: 0.05rem 0.05rem 1rem rgba(50, 50, 50, 0.6);
+
+	@include respond-to(tablet) {
+		position: fixed;
+	}
+
 	.inner {
 		position: relative;
 		top: 0;
@@ -286,11 +291,18 @@ d8'          `8b  88  88           `8'        88   `"8bbdP"Y8   `"Ybbd8"'   `"Yb
 
 #v-intro {
 	position: relative;
-	margin: 10vw auto 0 auto;
-	height: calc(100vh - 25vw);
+	margin: 0 auto;
+	height: calc(100vh - 20vw);
+	width: 98vw;
 	box-shadow: none;
 	animation-delay: 0.75s;
 	animation-fill-mode: forwards;
+
+	@include respond-to(tablet) {
+		height: calc(100vh - 25vw);
+		margin: 10vw auto 0 auto;
+		width: auto;
+	}
 
 	.v-portrait {
 		position:absolute;
@@ -300,20 +312,30 @@ d8'          `8b  88  88           `8'        88   `"8bbdP"Y8   `"Ybbd8"'   `"Yb
 		width: auto;
 	}
 
+	#v-contents, #v-description {
+		width: 100%;
+		margin: 0;
+		left: 0;
+		height: 49%;
+	}
+
 	#v-contents {
 		position: absolute;
 		top: 0;
-		left: 5%;
 		padding: 1.5em 3% 3% 3%;
-		width: 35%;
-		min-height: 75%;
 		@extend .green-bg;
 
-		@media (orientation: portrait) {
+		@include respond-to(tablet) {
+			left: 5%;
+			width: 35%;
+			min-height: 75%;
+		}
+
+		/*@media (orientation: portrait) {
 			width: 70%;
 			height: 43%;
 			min-height: 0;
-		}
+		}*/
 
 		.quote {
 			font-size: 1.5em;
@@ -327,6 +349,7 @@ d8'          `8b  88  88           `8'        88   `"8bbdP"Y8   `"Ybbd8"'   `"Yb
 
 		#v-chapter-ind {
 			position: absolute;
+			display: none;
 			top: 0;
 			width: 125%;
 			height: 3em;
@@ -334,6 +357,10 @@ d8'          `8b  88  88           `8'        88   `"8bbdP"Y8   `"Ybbd8"'   `"Yb
 			//FIXME: This will for sure cause problems once the play button is added...
 			transition: margin-top 0.3s ease-in-out;
 			@extend .green-bg;
+
+			@include respond-to(tablet) {
+				display: block;
+			}
 
 			&::before {
 				content: '';
@@ -413,17 +440,21 @@ d8'          `8b  88  88           `8'        88   `"8bbdP"Y8   `"Ybbd8"'   `"Yb
 
 	#v-description {
 		position: absolute;
-		bottom: 0;
-		right: 5%;
+		bottom: 1vw;
 		padding: 4% 6%;
-		width: 57%;
-		height: 70%;
 		@extend .blue-bg;
 
-		@media (orientation: portrait) {
+		@include respond-to(tablet) {
+			right: 5%;
+			bottom: 0;
+			width: 57%;
+			height: 70%;
+		}
+
+		/*@media (orientation: portrait) {
 			bottom: 10%;
 			height: 50%;
-		}
+		}*/
 
 		.inner {
 			opacity: 1;

@@ -34,7 +34,7 @@ body {
 		width: 100%;
 		height: 100%;
 		mix-blend-mode: multiply;
-		z-index: -1;
+		z-index: 1;
 	}
 }
 
@@ -184,9 +184,9 @@ nav {
 	display: none !important;
 }
 
-main.design, main.team #flex-grid-team .inner {
+main.design, main.team #flex-grid-team .inner, main.v {
 	position: relative;
-	margin: 6vw 0 0 0;
+	margin: 12vw 0 0 0;
 	padding: 0.25rem;
 	background-image: url(/assets/images/soft_wallpaper.png);
 	background-repeat: repeat;

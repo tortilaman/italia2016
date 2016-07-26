@@ -37,7 +37,7 @@ span.v-close-btn {
 
 #v-header {
 	//Center it:
-	position: fixed;
+//	position: fixed;
 	display: block;
 	top: 0;
 	left: 0;
@@ -533,6 +533,7 @@ section#v-content {
 
 .v-overlay {
 	position:absolute;
+	display: none;
 	top: 0;
 	left: 0;
 	width: 100%;
@@ -543,6 +544,10 @@ section#v-content {
 	background-color: $color4;
 	background-blend-mode: multiply;
 	z-index: 6;
+
+	@include respond-to(tablet) {
+		display: block;
+	}
 }
 
 #v-info {

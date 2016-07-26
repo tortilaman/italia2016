@@ -43,16 +43,18 @@ $(document).ready(function () {
 		iterator = offset = totalHeight = 0;
 	}
 
-	//Delays implementation of scrolling on pages with lots of images.
-	if($("#v-context img").length) {
-		console.log("Found #v-context img");
-		$(window).on('load', function() {
-			console.log("Finished loading images");
+	//Delays implementation of scrolling on pages with lots of images, and avoids scrolling script on mobile.
+	if($(window).outerWidth(true) > 700) {
+		if($("#v-context img").length) {
+			console.log("Found #v-context img");
+			$(window).on('load', function() {
+				console.log("Finished loading images");
+				calcHeights();
+			});
+		} else {
+			console.log("Didn't find #v-context img");
 			calcHeights();
-		});
-	} else {
-		console.log("Didn't find #v-context img");
-		calcHeights();
+		}
 	}
 
 	//Makes it so you can see the transition from the TOC to the video when clicking the link.
