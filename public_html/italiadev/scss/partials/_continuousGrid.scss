@@ -55,6 +55,7 @@
 			}
 
 			@include respond-to(tablet) {
+				display: none;
 				height: 3em;
 				width: 3em;
 			}
