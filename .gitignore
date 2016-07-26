@@ -45,8 +45,12 @@ Thumbs.db
 ######################
 craft/config
 craft/plugins
+craft/app
+craft/storage
 public_html/italiadev/assets
 /public_html/italiadev/prepros.cfg
+web.config
+robots.txt
 
 # Minified Files #
 ######################
