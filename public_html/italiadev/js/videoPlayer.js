@@ -72,6 +72,16 @@ $(document).ready(function () {
 	});
 
 	/*=================================
+		iOS VIDEO HANDLING
+	**===============================*/
+
+	var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+	if (iOS) {
+		$("v-player").attr('controls', true);
+		$(".v-controls, .v-init-play, .v-ended, .v-suggestions").remove();
+	}
+
+	/*=================================
 		VIDEO RESIZING
 	**===============================*/
 
@@ -304,6 +314,7 @@ $(document).ready(function () {
 	if($("main").hasClass("autoplay")) {
 		if(!$("main").hasClass("home")) {
 			playButton.toggle();
+			showControls();
 		}
 		$(".v-init-play").remove();
 

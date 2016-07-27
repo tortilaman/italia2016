@@ -55,7 +55,9 @@ main.design, main.team #flex-grid-team .inner { position: relative; margin: 12vw
 
 @media (min-width: 700px) { main.design, main.team #flex-grid-team .inner { padding: 2rem; width: 90vw; margin: 6vw 5vw; } }
 
-main.team { margin-bottom: 0; }
+main.team { margin-bottom: 0; padding-top: 12vw; }
+
+@media (min-width: 700px) { main.team { padding-top: 0; } }
 
 main.team #flex-grid-team { width: 100vw; margin-bottom: 0; }
 
@@ -65,9 +67,9 @@ main.team #contact-info { position: relative; margin: 1vw 5vw; }
 
 main.team #contact-info h1, main.team #contact-info p { color: #3a4bc1; }
 
-main.v { margin-top: 12vw; }
+main.v, main.italia { margin-top: 12vw; }
 
-@media (min-width: 700px) { main.v { margin-top: 0; } }
+@media (min-width: 700px) { main.v, main.italia { margin-top: 0; } }
 
 body { font-family: 'karla', sans-serif; font-size: 0.8rem; line-height: 1.8; }
 
@@ -109,11 +111,15 @@ a:hover:before { visibility: visible; -webkit-transform: scaleX(1.1); -ms-transf
 
 [class*='-section'] [class^='button-'] { -webkit-transition: opacity 0.5s; transition: opacity 0.5s; }
 
-[class*='-section'] .v-title { position: absolute; top: 4rem; left: 2rem; z-index: 8; }
+[class*='-section'] .v-title { position: absolute; top: 0; left: 0; right: 0; bottom: 0; margin: auto; height: 1em; z-index: 8; text-align: center; }
+
+@media (min-width: 700px) { [class*='-section'] .v-title { margin: 0; top: 4rem; left: 2rem; text-align: left; } }
 
 [class*='-section'] .v-thumbnail { position: relative; width: 100%; height: auto; mix-blend-mode: multiply; z-index: 1; }
 
-[class*='-section'] .v-description { position: absolute; top: 7rem; left: 5rem; width: 50%; z-index: 8; }
+[class*='-section'] .v-description { display: none; top: 100%; z-index: 8; }
+
+@media (min-width: 700px) { [class*='-section'] .v-description { position: absolute; display: block; top: 7rem; left: 5rem; width: 50%; } }
 
 /*==========================================
 
@@ -179,9 +185,15 @@ a:hover:before { visibility: visible; -webkit-transform: scaleX(1.1); -ms-transf
 //========================================*/
 #italia-content { width: 80vw; }
 
-[id^='italia-'] { width: 60vw; height: 25.71vw; overflow: hidden; }
+[id^='italia-'] { width: 100vw; height: 42.86vw; margin-top: 1em; overflow: hidden; }
 
-#italia-intro { margin-top: 17vw; margin-left: 25vw; width: 30vw; height: 13.71vw; background: white; }
+@media (min-width: 700px) { [id^='italia-'] { width: 60vw; height: 25.71vw; } }
+
+[id^='italia-'] a { position: absolute; top: 0; left: 0; height: 100%; width: 100%; padding-top: 25%; z-index: 8; color: white; text-align: center; /*@include respond-to(tablet) { top: 60%; }*/ }
+
+#italia-intro { height: auto; margin-top: 12vw; }
+
+@media (min-width: 700px) { #italia-intro { margin-top: 17vw; margin-left: 25vw; width: 30vw; height: 13.71vw; background: white; } }
 
 #italia-intro .inner { padding: 1em; }
 
@@ -189,11 +201,11 @@ a:hover:before { visibility: visible; -webkit-transform: scaleX(1.1); -ms-transf
 
 #italia-intro .inner p { margin-left: 1em; }
 
-#italia-pace { margin-top: 5vw; margin-left: 5vw; }
+@media (min-width: 700px) { #italia-pace { margin-top: 5vw; margin-left: 5vw; } }
 
-#italia-workers { margin-top: 15vw; margin-left: 35vw; }
+@media (min-width: 700px) { #italia-workers { margin-top: 15vw; margin-left: 35vw; } }
 
-#italia-italy { margin-top: 25vw; margin-left: 20vw; margin-bottom: -webkit-calc(100vh - 50.71vw); margin-bottom: calc(100vh - 50.71vw); }
+@media (min-width: 700px) { #italia-italy { margin-top: 25vw; margin-left: 20vw; margin-bottom: -webkit-calc(100vh - 50.71vw); margin-bottom: calc(100vh - 50.71vw); } }
 
 /*==========================================
 
@@ -210,7 +222,7 @@ d8'          `8b  88  88           `8'        88   `"8bbdP"Y8   `"Ybbd8"'   `"Yb
 /*main:not([class*='child']) #v-intro {
 	opacity: 0;
 }*/
-#v-intro { margin: 0 auto; height: -webkit-calc(100vh - 20vw); height: calc(100vh - 20vw); width: 98vw; box-shadow: none; -webkit-animation-delay: 0.75s; animation-delay: 0.75s; -webkit-animation-fill-mode: forwards; animation-fill-mode: forwards; }
+#v-intro { margin: 0 auto; width: 98vw; box-shadow: none; -webkit-animation-delay: 0.75s; animation-delay: 0.75s; -webkit-animation-fill-mode: forwards; animation-fill-mode: forwards; }
 
 @media (min-width: 700px) { #v-intro { height: -webkit-calc(100vh - 25vw); height: calc(100vh - 25vw); margin: 10vw auto 0 auto; width: auto; } }
 
@@ -218,11 +230,11 @@ d8'          `8b  88  88           `8'        88   `"8bbdP"Y8   `"Ybbd8"'   `"Yb
 
 #v-intro .v-portrait { position: absolute; top: 0%; left: 10%; height: 75%; width: auto; }
 
-#v-intro #v-contents, #v-intro #v-description { width: 100%; margin: 0; height: 49%; }
+#v-intro #v-contents, #v-intro #v-description { position: relative; width: 100%; margin: 0; min-height: 49%; }
 
-#v-intro #v-contents { position: absolute; left: 0; top: 0; padding: 1.5em 3% 3% 3%; /*@media (orientation: portrait) { width: 70%; height: 43%; min-height: 0; }*/ }
+#v-intro #v-contents { left: 0; top: 0; padding: 1.5em 3% 3% 3%; /*@media (orientation: portrait) { width: 70%; height: 43%; min-height: 0; }*/ }
 
-@media (min-width: 700px) { #v-intro #v-contents { left: 5%; width: 35%; min-height: 75%; } }
+@media (min-width: 700px) { #v-intro #v-contents { position: absolute; left: 5%; width: 35%; min-height: 75%; } }
 
 #v-intro #v-contents .quote { font-size: 1.5em; padding-left: 30%; margin-top: 2%; }
 
@@ -256,9 +268,9 @@ d8'          `8b  88  88           `8'        88   `"8bbdP"Y8   `"Ybbd8"'   `"Yb
 
 #v-intro .v-chapter .v-chapter-duration { float: right; font-family: body; }
 
-#v-intro #v-description { position: absolute; right: 0; bottom: 1vw; padding: 4% 6%; /*@media (orientation: portrait) { bottom: 10%; height: 50%; }*/ }
+#v-intro #v-description { margin-top: 1vh; right: 0; padding: 4% 6%; /*@media (orientation: portrait) { bottom: 10%; height: 50%; }*/ }
 
-@media (min-width: 700px) { #v-intro #v-description { right: 5%; bottom: 0; width: 57%; height: 70%; } }
+@media (min-width: 700px) { #v-intro #v-description { margin-top: 0; position: absolute; right: 5%; bottom: 0; width: 57%; height: 70%; } }
 
 #v-intro #v-description .inner { opacity: 1; -webkit-transition: opacity 0.5s; transition: opacity 0.5s; }
 
@@ -543,6 +555,11 @@ main.home #v-header { -webkit-animation-delay: 0.75s; animation-delay: 0.75s; }
 #v-container:-webkit-full-screen video { top: 0 !important; width: 100% !important; height: 100% !important; }
 
 /*====================
+	iOS modifications
+**==================*/
+.iOS { /*	.v-controls { display: none !important; } .v-init-play { display: none !important; }*/ }
+
+/*====================
 	INTERFACE
 **==================*/
 .v-ui-top { position: absolute; display: block; top: 0; left: 0; width: 100%; height: 7rem; background: -webkit-linear-gradient(bottom, transparent 0%, rgba(0, 0, 0, 0.05) 20%, rgba(0, 0, 0, 0.45) 90%); background: linear-gradient(to top, transparent 0%, rgba(0, 0, 0, 0.05) 20%, rgba(0, 0, 0, 0.45) 90%); }
@@ -607,7 +624,7 @@ a.v-prev-link { position: absolute; top: 1em; right: 3em; z-index: 5; color: whi
 
 .is-scrollable #v-ui { opacity: 1; }
 
-.v-controls { position: absolute; display: none; bottom: 0; left: 0; width: 100%; height: 7rem; padding: 4.25rem 0.75rem 0.75rem 0.25rem; margin: 0; z-index: 2; -webkit-transition: opacity 0.5s; transition: opacity 0.5s; background: -webkit-linear-gradient(top, transparent 0%, rgba(0, 0, 0, 0.25) 50%, rgba(0, 0, 0, 0.65) 80%); background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.25) 50%, rgba(0, 0, 0, 0.65) 80%); }
+.v-controls { position: absolute; bottom: 0; left: 0; width: 100%; height: 7rem; padding: 4.25rem 0.75rem 0.75rem 0.25rem; margin: 0; z-index: 2; -webkit-transition: opacity 0.5s; transition: opacity 0.5s; background: -webkit-linear-gradient(top, transparent 0%, rgba(0, 0, 0, 0.25) 50%, rgba(0, 0, 0, 0.65) 80%); background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.25) 50%, rgba(0, 0, 0, 0.65) 80%); }
 
 @media (min-width: 700px) { .v-controls { display: block; } }
 

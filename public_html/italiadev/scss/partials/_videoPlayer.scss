@@ -131,6 +131,19 @@ main.home #v-header {
 }
 
 /*====================
+	iOS modifications
+**==================*/
+
+.iOS {
+/*	.v-controls {
+		display: none !important;
+	}
+	.v-init-play {
+		display: none !important;
+	}*/
+}
+
+/*====================
 	INTERFACE
 **==================*/
 
@@ -378,7 +391,6 @@ a.v-prev-link {
 
 .v-controls {
 	position: absolute;
-	display: none;
 	bottom: 0;
 	left: 0;
 	width: 100%;

@@ -206,6 +206,11 @@ main.design, main.team #flex-grid-team .inner {
 
 main.team {
 	margin-bottom: 0;
+	padding-top: 12vw;
+
+	@include respond-to(tablet) {
+		padding-top: 0;
+	}
 
 	#flex-grid-team {
 		width: 100vw;
@@ -228,7 +233,7 @@ main.team {
 	}
 }
 
-main.v {
+main.v, main.italia {
 	margin-top: 12vw;
 
 	@include respond-to(tablet) {

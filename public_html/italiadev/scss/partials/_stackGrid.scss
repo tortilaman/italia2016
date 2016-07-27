@@ -60,9 +60,17 @@
 	}
 	.v-title {
 		position: absolute;
-		top: 4rem;
-		left: 2rem;
+		top: 0; left: 0; right: 0; bottom: 0;
+		margin: auto;
+		height: 1em;
 		z-index: 8;
+		text-align: center;
+		@include respond-to(tablet) {
+			margin: 0;
+			top: 4rem;
+			left: 2rem;
+			text-align: left;
+		}
 	}
 	.v-thumbnail {
 		position: relative;
@@ -72,10 +80,15 @@
 		z-index: 1;
 	}
 	.v-description {
-		position: absolute;
-		top: 7rem;
-		left: 5rem;
-		width: 50%;
+		display: none;
+		top: 100%;
+		@include respond-to(tablet) {
+			position: absolute;
+			display: block;
+			top: 7rem;
+			left: 5rem;
+			width: 50%;
+		}
 		z-index: 8;
 	}
 }
@@ -230,17 +243,42 @@
 }
 
 [id^='italia-'] {
-	width: 60vw;
-	height: 25.71vw;
-	overflow: hidden;
+	width: 100vw;
+	height: 42.86vw;
+	margin-top: 1em;
+	overflow:hidden;
+
+	@include respond-to(tablet) {
+		width: 60vw;
+		height: 25.71vw;
+	}
+
+	a {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		padding-top: 25%;
+		z-index: 8;
+		color: white;
+		text-align: center;
+		/*@include respond-to(tablet) {
+			top: 60%;
+		}*/
+	}
 }
 
 #italia-intro {
-	margin-top: 17vw;
-	margin-left: 25vw;
-	width: 30vw;
-	height: 13.71vw;
-	background: white;
+	height: auto;
+	margin-top: 12vw;
+	@include respond-to(tablet) {
+		margin-top: 17vw;
+		margin-left: 25vw;
+		width: 30vw;
+		height: 13.71vw;
+		background: white;
+	}
 	.inner {
 		padding: 1em;
 		h2,
@@ -257,21 +295,27 @@
 
 #italia-pace {
 	@extend .green-bg;
-	margin-top: 5vw;
-	margin-left: 5vw;
+	@include respond-to(tablet) {
+		margin-top: 5vw;
+		margin-left: 5vw;
+	}
 }
 
 #italia-workers {
 	@extend .blue-bg;
-	margin-top: 15vw;
-	margin-left: 35vw;
+	@include respond-to(tablet) {
+		margin-top: 15vw;
+		margin-left: 35vw;
+	}
 }
 
 #italia-italy {
 	@extend .tan-bg;
-	margin-top: 25vw;
-	margin-left: 20vw;
-	margin-bottom: calc(100vh - 50.71vw);
+	@include respond-to(tablet) {
+		margin-top: 25vw;
+		margin-left: 20vw;
+		margin-bottom: calc(100vh - 50.71vw);
+	}
 }
 
 /*==========================================
@@ -293,7 +337,6 @@ d8'          `8b  88  88           `8'        88   `"8bbdP"Y8   `"Ybbd8"'   `"Yb
 
 #v-intro {
 	margin: 0 auto;
-	height: calc(100vh - 20vw);
 	width: 98vw;
 	box-shadow: none;
 	animation-delay: 0.75s;
@@ -319,19 +362,20 @@ d8'          `8b  88  88           `8'        88   `"8bbdP"Y8   `"Ybbd8"'   `"Yb
 	}
 
 	#v-contents, #v-description {
+		position: relative;
 		width: 100%;
 		margin: 0;
-		height: 49%;
+		min-height: 49%;
 	}
 
 	#v-contents {
-		position: absolute;
 		left: 0;
 		top: 0;
 		padding: 1.5em 3% 3% 3%;
 		@extend .green-bg;
 
 		@include respond-to(tablet) {
+			position: absolute;
 			left: 5%;
 			width: 35%;
 			min-height: 75%;
@@ -447,13 +491,14 @@ d8'          `8b  88  88           `8'        88   `"8bbdP"Y8   `"Ybbd8"'   `"Yb
 	}
 
 	#v-description {
-		position: absolute;
+		margin-top: 1vh;
 		right: 0;
-		bottom: 1vw;
 		padding: 4% 6%;
 		@extend .blue-bg;
 
 		@include respond-to(tablet) {
+			margin-top: 0;
+			position: absolute;
 			right: 5%;
 			bottom: 0;
 			width: 57%;

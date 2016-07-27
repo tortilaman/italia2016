@@ -1,0 +1,38 @@
+{#
+# Italia Index template
+# _________________________
+#
+# This template gets loaded whenever the Italia index is requested, because
+# the Italia Index single_entry section's Template setting is set to
+# "italia/_index".
+#
+# An `entry` variable will be automatically passed to this template, which will
+# be set to the Italia Index entry. _
+#}
+
+{% extends "_layouts/site" %}
+{% set title = entry.title %}
+
+{% block main %}
+{% set index = 1 %}
+
+<section id="italia-intro" class="italia-section is-scrollable">
+	<div class="inner">
+		{{entry.body}}
+	</div>
+</section>
+{% for entry in craft.entries.section('italia') %}
+	<section id="italia-{{entry.slug}}" class="italia-section">
+		<div class="inner">
+			<h2 class="v-title">{{entry}}</h2>
+			<img class="v-thumbnail" src="{{entry.videoThumbnail.first().url}}" alt="{{entry}}">
+			<p class="v-description">{{entry.videoDescription}}</p>
+			<a href="{{entry.url}}" class="v-play">play film</a>
+		</div>
+	</section>
+	{% set index = index + 1 %}
+{% endfor %}
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script src="/js/entryIndex.js"></script>
+{% endblock %}
