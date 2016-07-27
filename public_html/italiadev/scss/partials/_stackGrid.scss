@@ -114,7 +114,7 @@
 	width: 72vw;
 	height: calc(100vh - 18vw);
 	background-color: $color1;
-	background-image: url("/assets/images/team_pic_small.png");
+	background-image: url("/assets/images/working.jpg");
 	background-position: left;
 	background-size: contain;
 	background-repeat: no-repeat;
@@ -134,6 +134,7 @@
 		h1,
 		p {
 			text-align: left;
+			margin: 0 0 0 20%;
 		}
 		p {
 			margin: 3em 0 0 20%;
@@ -167,7 +168,7 @@
 			text-align: left;
 		}
 		h1 {
-			margin-left: 4vw;
+			margin-left: 6vw;
 		}
 		p {
 			margin-left: 6vw;
@@ -187,12 +188,12 @@
 		@extend .blue-bg;
 		h1 {
 			margin-top: 3vw;
-			margin-left: 7vw;
+			margin-left: 6vw;
 			text-align: left;
 		}
 		p {
 			margin-top: 1vw;
-			margin-left: 9vw;
+			margin-left: 6vw;
 			text-align: left;
 		}
 		&::after {
