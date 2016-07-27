@@ -184,7 +184,7 @@ nav {
 	display: none !important;
 }
 
-main.design, main.team #flex-grid-team .inner, main.v {
+main.design, main.team #flex-grid-team .inner {
 	position: relative;
 	margin: 12vw 0 0 0;
 	padding: 0.25rem;
@@ -225,5 +225,13 @@ main.team {
 		h1, p {
 			color: $color5
 		}
+	}
+}
+
+main.v {
+	margin-top: 12vw;
+
+	@include respond-to(tablet) {
+		margin-top: 0;
 	}
 }

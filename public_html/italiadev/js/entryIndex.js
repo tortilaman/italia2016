@@ -32,11 +32,9 @@ $(document).ready(function () {
 	function calcHeights() {
 		$entries.each(function () {
 			$(this).attr('data-offset', offset);
-			console.log($(this).attr('id')+": data-offset is: "+offset);
 			var $height = $(this).is($entries.first()) ? $(this).outerHeight() : $(this).outerHeight(true);
 			offset += $(this).outerHeight(true);
 			$(this).attr('data-height', $(this).outerHeight(true));
-			console.log($(this).attr('id')+": height is "+$(this).attr('data-height'));
 			$('body').css('height', totalHeight += $height);
 			$(this).css('z-index', $entries.length - iterator++);
 		});
@@ -46,13 +44,10 @@ $(document).ready(function () {
 	//Delays implementation of scrolling on pages with lots of images, and avoids scrolling script on mobile.
 	if($(window).outerWidth(true) > 700) {
 		if($("#v-context img").length) {
-			console.log("Found #v-context img");
 			$(window).on('load', function() {
-				console.log("Finished loading images");
 				calcHeights();
 			});
 		} else {
-			console.log("Didn't find #v-context img");
 			calcHeights();
 		}
 	}

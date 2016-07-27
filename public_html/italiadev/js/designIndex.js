@@ -74,12 +74,8 @@ $(document).ready(function () {
 				hOffset = ['-4vw', '0', '4vw'];
 				vOffset = ['2vw', '6vw', '16vw', '30vw'];
 			}
-			else if($(window).outerWidth() >= breakpoints.laptop && $(window).outerWidth() < breakpoints.desktop) {
-				hOffset = ['-2vw', '0', '4vw'];
-				vOffset = ['2vw', '4vw', '14vw', '26vw'];
-			}
-			else if($(window).outerWidth() >= breakpoints.desktop) {
-				hOffset = ['-2vw', '0', '2vw'];
+			else if($(window).outerWidth() >= breakpoints.laptop) {
+				hOffset = ['-1.5vw', '0', '2vw'];
 				vOffset = ['2vw', '3vw', '9vw', '15vw'];
 			}
 			$entries.each(function (index, value) {
@@ -256,6 +252,13 @@ $(document).ready(function () {
 			} else {
 				$("#year-title-" + year).show("fast");
 			}
+		}
+
+		//Hide the interviews explanation box
+		if($("article[data-title]").hasClass("dHidden")) {
+			$("#page-info").addClass("dHidden");
+		} else {
+			$("#page-info").removeClass("dHidden");
 		}
 
 		//Empty search results. Let's make this interesting!
