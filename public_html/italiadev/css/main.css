@@ -1303,7 +1303,7 @@ h1[id*="year-title-"] {
   top: 50%;
   left: 0;
   right: 0;
-  transform: translateY(-50%);
+  transform: translateY(-30%);
   text-align: center;
   padding: 0 1vw .5em;
   z-index: 50;
@@ -1321,7 +1321,7 @@ h1[id*="year-title-"] {
 }
 
 .entry .entry-title h2, .design-entry .entry-title h2, .film-entry .entry-title h2 {
-  font-size: 1.1em;
+  font-size: 0.9em;
 }
 
 @media (min-width: 700px) {
