@@ -101,6 +101,8 @@ a:hover:before { visibility: visible; -webkit-transform: scaleX(1.1); -ms-transf
 
 .is-scrollable { position: relative !important; }
 
+.top-lock { top: -80vh !important; }
+
 @media (min-width: 700px) { .scrollHide { opacity: 0; -webkit-transition: opacity 0.1s; transition: opacity 0.1s; } }
 
 [class*='-section'] { position: relative; top: 0; left: 0; right: 0; margin: 0; padding: 0; box-shadow: 0.05rem 0.05rem 1rem rgba(50, 50, 50, 0.6); }

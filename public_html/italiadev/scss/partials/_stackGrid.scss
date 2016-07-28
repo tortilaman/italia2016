@@ -27,6 +27,10 @@
 	position: relative !important;
 }
 
+.top-lock {
+	top: -80vh !important;
+}
+
 .scrollHide {
 	@include respond-to(tablet) {
 		opacity: 0;

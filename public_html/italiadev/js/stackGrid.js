@@ -104,7 +104,6 @@ $(document).ready(function () {
 				$opacity = 1;
 			}
 			$entries.eq(ind).find(".scrollHide").css('opacity', $opacity);
-			console.log("Changing opacity of "+$(this).attr('id')+" to "+$opacity);
 		});
 	}
 
@@ -116,7 +115,21 @@ $(document).ready(function () {
 		requestAnimationFrame(function () {
 			scrollPos = window.pageYOffset;
 			$entries.each(function () {
-				$(this).toggleClass('is-scrollable', scrollPos > $(this).attr('data-offset'));
+				var top = (parseFloat($(this).attr('data-offset')) + (parseFloat($(this).attr('data-height')) * 0.9));
+				if(scrollPos < $(this).attr('data-offset')){
+					$(this).removeClass('is-scrollable');
+					$(this).css('top', 0);
+				} else if(scrollPos > $(this).attr('data-offset') && scrollPos < top) {
+					$(this).addClass('is-scrollable');
+					$(this).removeClass('top-lock');
+					$(this).css('top', $(this).attr('data-offset')+'px');
+				} else if (scrollPos > top) {
+					console.log("Supposed to remove the class");
+					$(this).removeClass('is-scrollable');
+					$(this).addClass('top-lock');
+				}
+				//Original implementation if the bugs become a problem.
+//				$(this).toggleClass('is-scrollable', scrollPos > $(this).attr('data-offset'))
 			});
 			parallax();
 			showOnScroll();

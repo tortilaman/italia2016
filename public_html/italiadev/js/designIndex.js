@@ -173,7 +173,6 @@ $(document).ready(function () {
 				'right': '1vw',
 				'left': '1vw'
 			});
-			console.log("width > 480px");
 			$(".design main").css({
 				'margin': '1vw',
 				'padding': '5vw 4vw'
