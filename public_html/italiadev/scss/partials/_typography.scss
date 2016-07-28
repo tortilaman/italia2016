@@ -54,6 +54,7 @@ a {
 	font-family    : 'SubHead';
 	color          : $color5;
 	text-decoration: none;
+	letter-spacing: 0.2em;
 	&::before {
 		content         : '';
 		position        : absolute;

@@ -290,6 +290,7 @@ a {
   font-family: 'SubHead';
   color: #3a4bc1;
   text-decoration: none;
+  letter-spacing: 0.2em;
 }
 
 a::before {
