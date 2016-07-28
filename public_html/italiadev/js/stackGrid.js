@@ -85,30 +85,23 @@ $(document).ready(function () {
 	**===============================*/
 
 	function showOnScroll() {
-		var startOff,
-			endOff,
+		var page = $("body").attr('class').split(" ")[0],
 			offsets = {
 				home: [0.5, 0.75],
-				italia: [0.25, 0.5]
+				italiaIndex: [0, 0.5]
 			};
-		if($(window).hasClass("home")){
-			startOff = 0.5;
-			endOff = 0.75;
-		} else if($(window).hasClass("italia")) {
-			startOff = 0.25;
-			endOff = 0.5;
-		}
+
 		$entries.each(function(ind, el) {
 			var $entry = ind !== 0 ? $entries.eq(ind - 1) : $entries.eq(0),
-				$scrollStart = ind !== 0 ? parseFloat($entry.attr('data-offset')) + (parseFloat($entry.attr('data-height')) * startOff) : 0,
-				$scrollEnd = ind !== 0 ? parseFloat($entry.attr('data-offset')) + (parseFloat($entry.attr('data-height')) * endOff) : 0,
+				$scrollStart = ind !== 0 ? parseFloat($entry.attr('data-offset')) + (parseFloat($entry.attr('data-height')) * offsets[page][0]) : 0,
+				$scrollEnd = ind !== 0 ? parseFloat($entry.attr('data-offset')) + (parseFloat($entry.attr('data-height')) * offsets[page][1]) : 0,
 				$opacity;
-			if(scrollPos <= $scrollStart) {
+			if(scrollPos > $scrollStart && scrollPos < $scrollEnd) {
+				$opacity = ((scrollPos - $scrollStart) / ($scrollEnd - $scrollStart)).toFixed(2);
+			} else if(scrollPos <= $scrollStart) {
 				$opacity = 0;
 			} else if(scrollPos >= $scrollEnd) {
 				$opacity = 1;
-			} else if(scrollPos > $scrollStart && scrollPos < $scrollEnd) {
-				$opacity = ((scrollPos - $scrollStart) / ($scrollEnd - $scrollStart)).toFixed(2);
 			}
 			$entries.eq(ind).find(".scrollHide").css('opacity', $opacity);
 			console.log("Changing opacity of "+$(this).attr('id')+" to "+$opacity);
