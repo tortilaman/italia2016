@@ -429,9 +429,9 @@ a:hover:before {
 }
 
 #home-about {
-  margin-top: 13vw;
+  margin-top: 13.5vw;
   margin-left: 21.5vw;
-  width: 72vw;
+  width: 73vw;
   height: calc(100vh - 18vw);
   background-color: #4cb884;
   background-image: url("/assets/images/working.jpg");
@@ -467,8 +467,8 @@ a:hover:before {
 }
 
 #home-videos {
-  margin-top: 6vw;
-  margin-left: 7vw;
+  margin-top: 7vw;
+  margin-left: 6.5vw;
   width: 80%;
   height: calc(100vh - 14vw);
   box-shadow: none;
