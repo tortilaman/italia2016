@@ -36,7 +36,8 @@ $(document).ready(function () {
 			offset += $(this).outerHeight(true);
 			$(this).attr('data-height', $(this).outerHeight(true));
 			$('body').css('height', totalHeight += $height);
-			$(this).css('z-index', $entries.length - iterator++);
+			$(this).css('z-index', $entries.length - iterator);
+			$(this).find(".scrollHide").css('z-index', $entries.length - iterator++);
 		});
 		iterator = offset = totalHeight = 0;
 	}
@@ -52,7 +53,10 @@ $(document).ready(function () {
 		}
 	}
 
-	//Makes it so you can see the transition from the TOC to the video when clicking the link.
+	/*=================================
+		AUTOPLAY ANIMATE IN
+	**===============================*/
+
 	if($("main").hasClass("autoplay") && !$("main").hasClass("home")) {
 		$('html, body').animate({
 			scrollTop: $("#v-header").outerHeight(true)
@@ -76,13 +80,53 @@ $(document).ready(function () {
 		}
 	}
 
+	/*=================================
+		SHOW CONTENTS ON SCROLL
+	**===============================*/
+
+	function showOnScroll() {
+		var startOff,
+			endOff,
+			offsets = {
+				home: [0.5, 0.75],
+				italia: [0.25, 0.5]
+			};
+		if($(window).hasClass("home")){
+			startOff = 0.5;
+			endOff = 0.75;
+		} else if($(window).hasClass("italia")) {
+			startOff = 0.25;
+			endOff = 0.5;
+		}
+		$entries.each(function(ind, el) {
+			var $entry = ind !== 0 ? $entries.eq(ind - 1) : $entries.eq(0),
+				$scrollStart = ind !== 0 ? parseFloat($entry.attr('data-offset')) + (parseFloat($entry.attr('data-height')) * startOff) : 0,
+				$scrollEnd = ind !== 0 ? parseFloat($entry.attr('data-offset')) + (parseFloat($entry.attr('data-height')) * endOff) : 0,
+				$opacity;
+			if(scrollPos <= $scrollStart) {
+				$opacity = 0;
+			} else if(scrollPos >= $scrollEnd) {
+				$opacity = 1;
+			} else if(scrollPos > $scrollStart && scrollPos < $scrollEnd) {
+				$opacity = ((scrollPos - $scrollStart) / ($scrollEnd - $scrollStart)).toFixed(2);
+			}
+			$entries.eq(ind).find(".scrollHide").css('opacity', $opacity);
+			console.log("Changing opacity of "+$(this).attr('id')+" to "+$opacity);
+		});
+	}
+
+	/*=================================
+		EVENT LISTENERS
+	**===============================*/
+
 	window.addEventListener('scroll', function () {
 		requestAnimationFrame(function () {
 			scrollPos = window.pageYOffset;
 			$entries.each(function () {
-					$(this).toggleClass('is-scrollable', scrollPos > $(this).attr('data-offset'));
+				$(this).toggleClass('is-scrollable', scrollPos > $(this).attr('data-offset'));
 			});
 			parallax();
+			showOnScroll();
 		});
 	});
 

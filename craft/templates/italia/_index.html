@@ -14,7 +14,6 @@
 {% set title = entry.title %}
 
 {% block main %}
-{% set index = 1 %}
 
 <section id="italia-intro" class="italia-section is-scrollable">
 	<div class="inner">
@@ -23,16 +22,15 @@
 </section>
 {% for entry in craft.entries.section('italia') %}
 	<section id="italia-{{entry.slug}}" class="italia-section">
-		<div class="inner">
+		<div class="inner scrollHide">
 			<h2 class="v-title">{{entry}}</h2>
 			<img class="v-thumbnail" src="{{entry.videoThumbnail.first().url}}" alt="{{entry}}">
 			<p class="v-description">{{entry.videoDescription}}</p>
 			<a href="{{entry.url}}" class="v-play">play film</a>
 		</div>
 	</section>
-	{% set index = index + 1 %}
 {% endfor %}
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-<script src="/js/entryIndex.js"></script>
+<script src="/js/stackGrid.js"></script>
 {% endblock %}

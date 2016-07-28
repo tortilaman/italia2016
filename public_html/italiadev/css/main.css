@@ -101,6 +101,8 @@ a:hover:before { visibility: visible; -webkit-transform: scaleX(1.1); -ms-transf
 
 .is-scrollable { position: relative !important; }
 
+.scrollHide { opacity: 0; -webkit-transition: opacity 0.1s; transition: opacity 0.1s; }
+
 [class*='-section'] { position: relative; top: 0; left: 0; right: 0; margin: 0; padding: 0; box-shadow: 0.05rem 0.05rem 1rem rgba(50, 50, 50, 0.6); }
 
 @media (min-width: 700px) { [class*='-section'] { position: fixed; } }
@@ -189,7 +191,9 @@ a:hover:before { visibility: visible; -webkit-transform: scaleX(1.1); -ms-transf
 
 @media (min-width: 700px) { [id^='italia-'] { width: 60vw; height: 25.71vw; } }
 
-[id^='italia-'] a { position: absolute; top: 0; left: 0; height: 100%; width: 100%; padding-top: 25%; z-index: 8; color: white; text-align: center; /*@include respond-to(tablet) { top: 60%; }*/ }
+[id^='italia-'] a { position: absolute; top: 0; left: 0; height: 100%; width: 100%; padding-top: 25%; z-index: 8; color: white; text-align: center; }
+
+@media (min-width: 700px) { [id^='italia-'] a { text-align: left; top: 75%; left: 5rem; height: auto; width: auto; padding-top: 0; } }
 
 #italia-intro { height: auto; margin-top: 12vw; }
 

@@ -27,6 +27,11 @@
 	position: relative !important;
 }
 
+.scrollHide {
+	opacity: 0;
+	transition: opacity 0.1s;
+}
+
 [class*='-section'] {
 	position: relative;
 	top: 0;
@@ -263,9 +268,14 @@
 		z-index: 8;
 		color: white;
 		text-align: center;
-		/*@include respond-to(tablet) {
-			top: 60%;
-		}*/
+		@include respond-to(tablet) {
+			text-align: left;
+			top: 75%;
+			left: 5rem;
+			height: auto;
+			width: auto;
+			padding-top: 0;
+		}
 	}
 }
 
