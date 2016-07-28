@@ -89,6 +89,10 @@ body {
 	}
 }
 
+	.home #home-btn { 
+		display: none;
+	}
+
 .design #home-btn, .team #home-btn, .team-vid #home-btn, .italia #home-btn {
 	z-index:201;
 	clip-path: polygon(0 0, 100% 0, 100% 72%, 37% 72%, 37% 100%, 0 100%);
@@ -115,7 +119,7 @@ header.header {
 		background: none;
 		top: 5vw;
 		left: auto;
-		right: calc(95vw + 3em);
+		right: calc(94vw + 3em);
 		width: calc(100vh - 10vw);
 		height: auto;
 		z-index: 1;
@@ -151,14 +155,14 @@ nav {
 			line-height: 0.8;
 
 			@include respond-to(laptop) {
-				margin-left: 10vh;
+				margin-left: 12vh;
 				line-height: 1.8;
 			}
 		}
 	}
 	a {
 		color: $color5;
-		font-size: 1.4em;
+		font-size: 1.2em;
 
 		&.sel {
 			color: $color1;

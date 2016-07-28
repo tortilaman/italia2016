@@ -40,24 +40,31 @@ Thumbs.db
 ##############
 .sass-cache/
 *.css.map
+public_html/italiadev/css/main.css
+public_html/italiadev/css/main.min.css
+public_html/italiadev/css/animate.css
+main.css
 
 # Non code files #
-######################
+##################
 craft/config
 craft/plugins
 craft/app
 craft/storage
 public_html/italiadev/assets
-/public_html/italiadev/prepros.cfg
 *.htaccess
 .htaccess
 *..htaccess
-web.config
-robots.txt
+public_html/italiadev/htaccess
+public_html/italiadev/Prepros Build/
 
 # Minified Files #
-######################
+##################
 *-min.*
-/public_html/italiadev/Prepros Build/
-/public_html/italiadev/css/main.css
-/public_html/italiadev/htaccess
+*.min.*
+
+# Irrelevant Files #
+####################
+public_html/italiadev/prepros.cfg
+web.config
+robots.txt
