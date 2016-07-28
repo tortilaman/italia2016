@@ -226,10 +226,8 @@ $(document).ready(function () {
 	}
 
 	$vProgBarCont.click(function (e) {
-		if(!vPlayer.paused && !vPlayer.ended){
-			var newTime = (((e.pageX - $vProgBarCont.offset().left) / $vProgBarCont.outerWidth()) * vPlayer.duration);
-			vPlayer.currentTime = newTime;
-		}
+		var newTime = (((e.pageX - $vProgBarCont.offset().left) / $vProgBarCont.outerWidth()) * vPlayer.duration);
+		vPlayer.currentTime = newTime;
 	});
 
 	/*=================================

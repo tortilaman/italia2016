@@ -13,7 +13,7 @@ body { -webkit-transition: color 0.5s; transition: color 0.5s; }
 
 .tan-bg::after, #italia-italy::after { background: #fffaf3; }
 
-#home-btn { display: none; position: fixed; top: 1vh; left: 1vh; height: 6vmin; width: auto; z-index: 2; }
+#home-btn { display: none; position: fixed; top: 1vh; left: 1vh; height: 6vmin; width: auto; z-index: 10; }
 
 #home-btn img { height: 100%; width: auto; }
 
@@ -101,7 +101,7 @@ a:hover:before { visibility: visible; -webkit-transform: scaleX(1.1); -ms-transf
 
 .is-scrollable { position: relative !important; }
 
-.scrollHide { opacity: 0; -webkit-transition: opacity 0.1s; transition: opacity 0.1s; }
+@media (min-width: 700px) { .scrollHide { opacity: 0; -webkit-transition: opacity 0.1s; transition: opacity 0.1s; } }
 
 [class*='-section'] { position: relative; top: 0; left: 0; right: 0; margin: 0; padding: 0; box-shadow: 0.05rem 0.05rem 1rem rgba(50, 50, 50, 0.6); }
 
@@ -459,7 +459,7 @@ h1[id*="year-title-"] { position: relative; margin-left: 5vw; color: #9ab6f4; fo
 
 #year-links ul { opacity: 0; -webkit-transform-origin: top center; -ms-transform-origin: top center; transform-origin: top center; -webkit-transform: scaleY(0); -ms-transform: scaleY(0); transform: scaleY(0); list-style: none; -webkit-transition: all 0.5s; transition: all 0.5s; }
 
-#year-links ul.open { -webkit-transform: scaleY(1); -ms-transform: scaleY(1); transform: scaleY(1); opacity: 1; -webkit-transition: all 0.5s; transition: all 0.5s; }
+#year-links ul.open { -webkit-transform: scaleY(1); -ms-transform: scaleY(1); transform: scaleY(1); opacity: 1; }
 
 @media (min-width: 700px) { #year-links ul { -webkit-transform: scaleY(100%); -ms-transform: scaleY(100%); transform: scaleY(100%); } }
 

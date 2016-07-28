@@ -85,9 +85,13 @@ $(document).ready(function () {
 				$(this).css('margin-top', voThis);
 				hoLast = hoThis;
 				voLast = voThis;
-
 				var dict = { 0: "Up", 1: "Down", 2: "Left", 3: "Right" };
 				$(this).attr('data-dir', dict[getRandomInt(0, 3)]);
+			});
+		} else {
+			$entries.each(function() {
+				var dict = { 0: "Up", 1: "Down"};
+				$(this).attr('data-dir', dict[getRandomInt(0, 1)]);
 			});
 		}
 	}
@@ -254,7 +258,7 @@ $(document).ready(function () {
 		});
 
 		//Year Titles
-		for (var year = 2012; year < 2016; year++) {
+		for (var year = 2012; year <= 2016; year++) {
 			//All articles are hidden
 			if (!$("#flex-grid-" + year + " article").not(".dHidden").length) {
 				$("#year-title-" + year).hide("fast");

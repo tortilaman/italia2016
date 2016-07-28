@@ -28,8 +28,10 @@
 }
 
 .scrollHide {
-	opacity: 0;
-	transition: opacity 0.1s;
+	@include respond-to(tablet) {
+		opacity: 0;
+		transition: opacity 0.1s;
+	}
 }
 
 [class*='-section'] {

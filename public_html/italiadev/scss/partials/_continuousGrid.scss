@@ -340,7 +340,7 @@ h1[id*="year-title-"] {
 		&.open {
 			transform: scaleY(1);
 			opacity: 1;
-			transition: all 0.5s;
+//			transition: all 0.5s;
 		}
 
 		@include respond-to(tablet) {
