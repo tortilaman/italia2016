@@ -72,6 +72,10 @@ body {
   }
 }
 
+.home #home-btn {
+  display: none;
+}
+
 .design #home-btn, .team #home-btn, .team-vid #home-btn, .italia #home-btn {
   z-index: 201;
   clip-path: polygon(0 0, 100% 0, 100% 72%, 37% 72%, 37% 100%, 0 100%);
@@ -151,7 +155,7 @@ nav ul li {
 
 nav a {
   color: #3a4bc1;
-  font-size: 1.4em;
+  font-size: 1.2em;
 }
 
 nav a.sel {
@@ -227,7 +231,7 @@ main.team #contact-info h1, main.team #contact-info p {
 
 body {
   font-family: 'karla', sans-serif;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   line-height: 1.8;
 }
 
@@ -240,14 +244,14 @@ body {
 
 @media screen and (min-width: 1024px) {
   body {
-    font-size: 1rem;
+    font-size: 0.9rem;
     line-height: 1.8;
   }
 }
 
 @media screen and (min-width: 1600px) {
   body {
-    font-size: 1.2rem;
+    font-size: 1 rem;
     line-height: 1.8;
   }
 }
@@ -262,14 +266,14 @@ h6 {
   font-size: 2.4rem;
   margin: 0 0 .5rem 0;
   padding: 0;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.2em;
   line-height: 1.05;
   color: white;
 }
 
 h1 {
   font-family: 'Header';
-  font-size: 1.5em;
+  font-size: 1.6em;
 }
 
 h2 {
@@ -402,7 +406,7 @@ a:hover:before {
 
 //========================================*/
 #home-play {
-  margin: 7vw 0 0 7vw;
+  margin: 8vw 0 0 8vw;
   width: 86vw;
   height: calc(100vh - 14vw);
   background-color: #fffaf3;
@@ -446,8 +450,8 @@ a:hover:before {
 #home-about .inner {
   float: right;
   margin-top: 8%;
-  margin-right: 2vw;
-  width: 34vw;
+  margin-right: 6vw;
+  width: 36vw;
   height: 100%;
   text-align: center;
 }
@@ -455,16 +459,16 @@ a:hover:before {
 #home-about .inner h1,
 #home-about .inner p {
   text-align: left;
-  margin: 0 0 0 20%;
+  margin: 0 0 0 0%;
 }
 
 #home-about .inner p {
-  margin: 3em 0 0 20%;
+  margin: 2em 0 0 0%;
 }
 
 #home-videos {
-  margin-top: 6vw;
-  margin-left: 5vw;
+  margin-top: 4vw;
+  margin-left: 6vw;
   width: 80%;
   height: calc(100vh - 14vw);
   box-shadow: none;
@@ -476,26 +480,21 @@ a:hover:before {
 #home-videos #home-interviews {
   position: relative;
   padding: 3vw;
-  width: 45vw;
-  box-shadow: 0.05rem 0.05rem 0.1rem rgba(50, 50, 50, 0.2);
+  width: 40vw;
+  box-shadow: 0.01rem 0.01rem 0.1rem rgba(50, 50, 50, 0.2);
   text-align: center;
 }
 
-#home-videos #home-interviews h1,
-#home-videos #home-interviews p {
-  position: relative;
-  display: block;
-  margin-top: 2vw;
-  color: white;
+#home-videos #home-interviews h1 {
+  margin-top: 3vw;
+  margin-left: 6vw;
   text-align: left;
 }
 
-#home-videos #home-interviews h1 {
-  margin-left: 6vw;
-}
-
 #home-videos #home-interviews p {
+  margin-top: 2vw;
   margin-left: 6vw;
+  text-align: left;
 }
 
 #home-videos #home-interviews .inner {
@@ -506,9 +505,9 @@ a:hover:before {
 #home-videos #home-films {
   position: absolute;
   top: 12vw;
-  left: 30vw;
+  left: 35vw;
   padding: 3vw;
-  width: 45vw;
+  width: 40vw;
   text-align: center;
 }
 
@@ -519,7 +518,7 @@ a:hover:before {
 }
 
 #home-videos #home-films p {
-  margin-top: 1vw;
+  margin-top: 2vw;
   margin-left: 6vw;
   text-align: left;
 }

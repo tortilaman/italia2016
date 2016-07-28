@@ -5,11 +5,18 @@
 // =================================================================================
 
 $body-font-sizes: (
-	null: (0.8rem, 1.8),
+	null: (0.7rem, 1.8),
 	tablet: (0.9rem, 1.8),
-	laptop: (1.0rem, 1.8),
-	desktop: (1.2rem, 1.8)
+	laptop: (0.9rem, 1.8),
+	desktop: (1.0 rem, 1.8)
 );
+
+// $body-font-sizes: (
+// 	null: (0.8rem, 1.8),
+// 	tablet: (0.9rem, 1.8),
+// 	laptop: (1.0 rem, 1.8),
+// 	desktop: (1.2 rem, 1.8)
+// );
 
 body {
 	font-family: 'karla', sans-serif;
@@ -25,13 +32,13 @@ h6 {
 	font-size: 2.4rem;
 	margin: 0 0 .5rem 0;
 	padding: 0;
-	letter-spacing: 0.1em;
+	letter-spacing: 0.2em;
 	line-height: 1.05;
 	color: white;
 }
 h1 {
 	font-family: 'Header';
-	font-size: 1.5em;
+	font-size: 1.6em;
 }
 h2 {
 	font-size: 1.5em;

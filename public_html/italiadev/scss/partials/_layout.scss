@@ -89,6 +89,10 @@ body {
 	}
 }
 
+	.home #home-btn { 
+		display: none;
+	}
+
 .design #home-btn, .team #home-btn, .team-vid #home-btn, .italia #home-btn {
 	z-index:201;
 	clip-path: polygon(0 0, 100% 0, 100% 72%, 37% 72%, 37% 100%, 0 100%);
@@ -158,7 +162,7 @@ nav {
 	}
 	a {
 		color: $color5;
-		font-size: 1.4em;
+		font-size: 1.2em;
 
 		&.sel {
 			color: $color1;
