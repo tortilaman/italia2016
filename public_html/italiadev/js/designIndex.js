@@ -108,6 +108,10 @@ $(document).ready(function () {
 
 	** =====================================================*/
 
+	/* ==============================
+		CREATING AUTOCOMPLETE DATA
+	** ============================*/
+
 	var $rawData = $("[data-title]"),
 		newArray =[],
 		tagsArr = [],
@@ -123,7 +127,7 @@ $(document).ready(function () {
 			if ($.inArray(element, tagsArr) === -1 && element !== "") {
 				newArray.push({
 					label: element,
-					category: "Disciplines"
+					category: "Category"
 				});
 				tagsArr.push(element);
 			}
@@ -132,9 +136,9 @@ $(document).ready(function () {
 
 	//Sort first by category and then alphabetically.
 	newArray.sort(function (a, b) {
-		if (a.category == "Disciplines" && b.category == "Interviewees") {
+		if (a.category == "Category" && b.category == "Interviewees") {
 			return -1;
-		} else if (a.category == "Interviewees" && b.category == "Disciplines") {
+		} else if (a.category == "Interviewees" && b.category == "Category") {
 			return 1;
 		} else if (a.category == "Interviewees" && b.category == "Interviewees") {
 			var aName = a.label.split(' ');
@@ -142,25 +146,30 @@ $(document).ready(function () {
 			if (aName[aName.length - 1] < bName[bName.length - 1]) return -1;
 			if (aName[aName.length - 1] > bName[bName.length - 1]) return 1;
 			return 0;
-		} else if (a.category == "Disciplines" && b.category == "Disciplines") {
+		} else if (a.category == "Category" && b.category == "Category") {
 			if (a.label < b.label) return -1;
 			if (a.label > b.label) return 1;
 			return 0;
 		}
 	});
 
+	/* ==============================
+		SHOW & HIDE SEARCH F'NS
+	** ============================*/
+
 	function showSearch() {
 		searching = true;
 		$("article img, article .entry-title, #page-info h1, #page-info p, [id*='year-title-']").addClass("oHidden");
 		$("#d-filter form").addClass("lSearch");
 		$("#search").focus();
-		if(window.matchMedia("(min-width: "+breakpoints.phone+"px)")) {
+		if($(window).outerWidth() > breakpoints.phone) {
 			$("#d-filter").css({
 				'height': '1vw',
 				'width': '98vw',
 				'right': '1vw',
 				'left': '1vw'
 			});
+			console.log("width > 480px");
 			$(".design main").css({
 				'margin': '1vw',
 				'padding': '5vw 4vw'
@@ -171,7 +180,7 @@ $(document).ready(function () {
 
 	function hideSearch() {
 		$("article img, article .entry-title, #page-info h1, #page-info p, [id*='year-title-']").removeClass("oHidden");
-		if(window.matchMedia("(min-width: "+breakpoints.phone+"px)")) {
+		if($(window).outerWidth() > breakpoints.phone) {
 			$("#d-filter").css({
 				'height': '6vw',
 				'width': '90vw',
@@ -184,10 +193,10 @@ $(document).ready(function () {
 			});
 		} else {
 			$("#d-filter").css({
-				'height': '6vw',
-				'width': '96vw',
-				'right': '2vw',
-				'left': '2vw'
+				'height': '12vmin',
+				'width': '90%',
+				'right': '8%',
+				'left': '2%'
 			});
 		}
 		$("#d-filter form").removeClass("lSearch");
@@ -270,16 +279,18 @@ $(document).ready(function () {
 	}
 
 	/* =========================================
-		AUTOCOMPLETE SEARCH F'NALITY
+		AUTOCOMPLETE SEARCH F'N
 	** =======================================*/
 
 	$("#search").autocomplete({
 		source: function (request, response) {
 			var results = $.ui.autocomplete.filter(newArray, request.term);
-			if (request.term === 0) {
+			//If search is empty, give list of categories by default.
+			if (request.term === "") {
+				//creates a new array of just category data
 				var index = newArray.map(function (e) {
 					return e.category;
-				}).indexOf('Interviewees');
+				}).indexOf('Interviewees'); //find first instance of Interviewees (end of categories)
 				results = newArray.slice(0, index);
 			}
 
@@ -345,6 +356,15 @@ $(document).ready(function () {
 	/* =======================================================
 		EVENT LISTENERS
 	** =====================================================*/
+
+	//Mobile year menu
+	$(".mobile-year-menu").on('click', function(e) {
+		$("#year-links ul").toggleClass("open");
+	});
+
+	$("#year-links a").on('click', function(e) {
+		$("#year-links ul").removeClass("open");
+	});
 
 	//Reflow grid on window resize or orientation change
 	$(window).on('resize', offsetGrid());

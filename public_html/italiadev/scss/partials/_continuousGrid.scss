@@ -12,16 +12,17 @@
 #d-filter {
 	position: relative;
 	top: 0;
-	right: 2vw;
-	left: 2vw;
-	width: 96vw;
-	height: 6vw;
+	right: 8%;
+	left: 2%;
+	width: 90%;
+	height: 12vmin;
 	background: none;
 	z-index: 200;
 	transition: height .5s;
 
 	@include respond-to(tablet) {
 		position: fixed;
+		height: 6vw;
 		background: white;
 		width: 90vw;
 		left: 5vw;
@@ -30,7 +31,7 @@
 
 	form {
 		position: absolute;
-		top: 2em;
+		top: 0;
 		right: 5vw;
 		bottom: 0;
 		height: 1em;
@@ -82,7 +83,7 @@
 		font-size: 0.8rem;
 		line-height: 0.8;
 		outline: none;
-		width: calc(30vw - 2em);
+		width: calc(40vw - 2em);
 		color: $color5;
 		transition: all, .5s;
 		mix-blend-mode: multiply;
@@ -102,14 +103,21 @@
 	}
 	.lSearch {
 		position: fixed;
-		top: 25vh;
-		right: 35vw;
-		left:35vw;
-		width: 30vw;
+		top: 20vh;
+		right: 30vw;
+		left:30vw;
+		width: 40vw;
 		background: none;
 
 		input {
 			display: inline-block !important;
+		}
+
+		@include respond-to(tablet) {
+			top: 25vh;
+			right: 35vw;
+			left:35vw;
+			width: 30vw;
 		}
 	}
 	span {
@@ -117,7 +125,7 @@
 		display:inline-block;
 		vertical-align: middle;
 		right: .5rem;
-		bottom: 1rem;
+		bottom: 0;
 		font-size: 0.8em;
 		line-height: 0.8;
 		font-weight: bold;
@@ -130,6 +138,7 @@
 		}
 
 		@include respond-to(tablet) {
+			bottom: 1rem;
 			font-size: 1.2em;
 			line-height: 1.2;
 		}
@@ -158,17 +167,22 @@
 
 ul.ui-autocomplete {
 	position: fixed;
-	top: calc(25vh + 3rem);
-	left: calc(35vw + 3.25em);
+	top: calc(20vh + 1rem);
+	left: calc(30vw + 1.75em);
 	background: none;
-	padding: .2rem;
+	padding: 0.25rem 0;
 	box-shadow: none;
 	border: none;
 	z-index: 200;
+
+	@include respond-to(tablet) {
+		top: calc(25vh + 3rem);
+		left: 35vw;
+	}
 	li.ui-menu-item {
 		box-shadow: none;
 		border: none;
-		padding: .25rem;
+		padding: .25rem 0;
 		color: $color5;
 		list-style: none;
 		cursor: pointer;
@@ -288,15 +302,56 @@ h1[id*="year-title-"] {
 }
 
 #year-links {
-	position: fixed;
-	top: 7vw;
+	position: absolute;
+	top: 1.5vw;
 	right: 4.5vw;
+
+	@include respond-to(tablet) {
+		position: fixed;
+		top: 7vw;
+	}
+
+	.mobile-year-menu {
+		display: inline-block;
+		vertical-align: middle;
+
+		@include respond-to(tablet) {
+			display: none;
+		}
+
+		.arrow-down {
+			display: inline-block;
+			vertical-align: middle;
+			margin-left: 0.25em;
+			width: 0;
+			height: 0;
+			border-left: 0.3em solid transparent;
+			border-right: 0.3em solid transparent;
+			border-top: 0.3em solid $color5;
+		}
+	}
 	ul {
+		opacity: 0;
+		transform-origin: top center;
+		transform: scaleY(0);
 		list-style: none;
+		transition: all 0.5s;
+
+		&.open {
+			transform: scaleY(1);
+			opacity: 1;
+			transition: all 0.5s;
+		}
+
+		@include respond-to(tablet) {
+			transform: scaleY(100%);
+		}
 	}
 	li {
 		list-style: none;
-		margin-bottom: 2rem;
+		@include respond-to(tablet) {
+			margin-bottom: 2rem;
+		}
 	}
 	a {
 		color: $color3;

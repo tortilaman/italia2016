@@ -371,11 +371,11 @@ ALIGNMENT
 	float: right;
 	margin-right: 0;
 }*/
-#d-filter { position: relative; top: 0; right: 2vw; left: 2vw; width: 96vw; height: 6vw; background: none; z-index: 200; -webkit-transition: height 0.5s; transition: height 0.5s; }
+#d-filter { position: relative; top: 0; right: 8%; left: 2%; width: 90%; height: 12vmin; background: none; z-index: 200; -webkit-transition: height 0.5s; transition: height 0.5s; }
 
-@media (min-width: 700px) { #d-filter { position: fixed; background: white; width: 90vw; left: 5vw; right: 5vw; } }
+@media (min-width: 700px) { #d-filter { position: fixed; height: 6vw; background: white; width: 90vw; left: 5vw; right: 5vw; } }
 
-#d-filter form { position: absolute; top: 2em; right: 5vw; bottom: 0; height: 1em; }
+#d-filter form { position: absolute; top: 0; right: 5vw; bottom: 0; height: 1em; }
 
 @media (min-width: 700px) { #d-filter form { bottom: 0.3rem; height: 3em; width: 30vw; right: 0; } }
 
@@ -389,29 +389,33 @@ ALIGNMENT
 
 #d-filter form #search-btn svg { height: 100%; width: 100%; fill: #3a4bc1; stroke: none; }
 
-#d-filter input { position: relative; display: none; top: 0; right: 0; background: none; border: none; box-shadow: none; border-bottom: 0.15rem solid #3a4bc1; font-size: 0.8rem; line-height: 0.8; outline: none; width: -webkit-calc(30vw - 2em); width: calc(30vw - 2em); color: #3a4bc1; -webkit-transition: all, 0.5s; transition: all, 0.5s; mix-blend-mode: multiply; }
+#d-filter input { position: relative; display: none; top: 0; right: 0; background: none; border: none; box-shadow: none; border-bottom: 0.15rem solid #3a4bc1; font-size: 0.8rem; line-height: 0.8; outline: none; width: -webkit-calc(40vw - 2em); width: calc(40vw - 2em); color: #3a4bc1; -webkit-transition: all, 0.5s; transition: all, 0.5s; mix-blend-mode: multiply; }
 
 @media (min-width: 700px) { #d-filter input { display: inline-block; font-size: 1.2em; line-height: 1.2; border-bottom: 0.3em solid #9ab6f4; padding-bottom: 0.1em; width: 30vw; } }
 
 @media (min-width: 1024px) { #d-filter input { font-size: 2em; border-bottom: 0.5rem solid #9ab6f4; } }
 
-#d-filter .lSearch { position: fixed; top: 25vh; right: 35vw; left: 35vw; width: 30vw; background: none; }
+#d-filter .lSearch { position: fixed; top: 20vh; right: 30vw; left: 30vw; width: 40vw; background: none; }
 
 #d-filter .lSearch input { display: inline-block !important; }
 
-#d-filter span { position: absolute; display: inline-block; vertical-align: middle; right: .5rem; bottom: 1rem; font-size: 0.8em; line-height: 0.8; font-weight: bold; color: #9ab6f4; opacity: 0; cursor: pointer; -webkit-transition: all 0.5s; transition: all 0.5s; }
+@media (min-width: 700px) { #d-filter .lSearch { top: 25vh; right: 35vw; left: 35vw; width: 30vw; } }
+
+#d-filter span { position: absolute; display: inline-block; vertical-align: middle; right: .5rem; bottom: 0; font-size: 0.8em; line-height: 0.8; font-weight: bold; color: #9ab6f4; opacity: 0; cursor: pointer; -webkit-transition: all 0.5s; transition: all 0.5s; }
 
 #d-filter span.active { opacity: 1; }
 
-@media (min-width: 700px) { #d-filter span { font-size: 1.2em; line-height: 1.2; } }
+@media (min-width: 700px) { #d-filter span { bottom: 1rem; font-size: 1.2em; line-height: 1.2; } }
 
 @media (min-width: 1024px) { #d-filter span { font-size: 2em; } }
 
 #d-filter #undo-search { position: absolute; right: .25rem; top: 1rem; font-size: 3rem; font-weight: bold; color: #9ab6f4; z-index: 50; }
 
-ul.ui-autocomplete { position: fixed; top: -webkit-calc(25vh + 3rem); top: calc(25vh + 3rem); left: -webkit-calc(35vw + 3.25em); left: calc(35vw + 3.25em); background: none; padding: .2rem; box-shadow: none; border: none; z-index: 200; }
+ul.ui-autocomplete { position: fixed; top: -webkit-calc(20vh + 1rem); top: calc(20vh + 1rem); left: -webkit-calc(30vw + 1.75em); left: calc(30vw + 1.75em); background: none; padding: 0.25rem 0; box-shadow: none; border: none; z-index: 200; }
 
-ul.ui-autocomplete li.ui-menu-item { box-shadow: none; border: none; padding: .25rem; color: #3a4bc1; list-style: none; cursor: pointer; line-height: 1; mix-blend-mode: multiply; font-family: header; }
+@media (min-width: 700px) { ul.ui-autocomplete { top: -webkit-calc(25vh + 3rem); top: calc(25vh + 3rem); left: 35vw; } }
+
+ul.ui-autocomplete li.ui-menu-item { box-shadow: none; border: none; padding: .25rem 0; color: #3a4bc1; list-style: none; cursor: pointer; line-height: 1; mix-blend-mode: multiply; font-family: header; }
 
 ul.ui-autocomplete li.ui-menu-item .highlight { color: #4cb884; text-decoration: none; mix-blend-mode: multiply; }
 
@@ -443,11 +447,25 @@ h1[id*="year-title-"] { position: relative; margin-left: 5vw; color: #9ab6f4; fo
 
 @media (min-width: 480px) { h1[id*="year-title-"] { font-size: 8rem; } }
 
-#year-links { position: fixed; top: 7vw; right: 4.5vw; }
+#year-links { position: absolute; top: 1.5vw; right: 4.5vw; }
 
-#year-links ul { list-style: none; }
+@media (min-width: 700px) { #year-links { position: fixed; top: 7vw; } }
 
-#year-links li { list-style: none; margin-bottom: 2rem; }
+#year-links .mobile-year-menu { display: inline-block; vertical-align: middle; }
+
+@media (min-width: 700px) { #year-links .mobile-year-menu { display: none; } }
+
+#year-links .mobile-year-menu .arrow-down { display: inline-block; vertical-align: middle; margin-left: 0.25em; width: 0; height: 0; border-left: 0.3em solid transparent; border-right: 0.3em solid transparent; border-top: 0.3em solid #3a4bc1; }
+
+#year-links ul { opacity: 0; -webkit-transform-origin: top center; -ms-transform-origin: top center; transform-origin: top center; -webkit-transform: scaleY(0); -ms-transform: scaleY(0); transform: scaleY(0); list-style: none; -webkit-transition: all 0.5s; transition: all 0.5s; }
+
+#year-links ul.open { -webkit-transform: scaleY(1); -ms-transform: scaleY(1); transform: scaleY(1); opacity: 1; -webkit-transition: all 0.5s; transition: all 0.5s; }
+
+@media (min-width: 700px) { #year-links ul { -webkit-transform: scaleY(100%); -ms-transform: scaleY(100%); transform: scaleY(100%); } }
+
+#year-links li { list-style: none; }
+
+@media (min-width: 700px) { #year-links li { margin-bottom: 2rem; } }
 
 #year-links a { color: #9ab6f4; font-family: subhead; }
 
