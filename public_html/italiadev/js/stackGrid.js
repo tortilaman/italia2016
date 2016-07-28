@@ -114,25 +114,37 @@ $(document).ready(function () {
 	window.addEventListener('scroll', function () {
 		requestAnimationFrame(function () {
 			scrollPos = window.pageYOffset;
-			$entries.each(function () {
+			$entries.each(function (ind, el) {
 				var top = (parseFloat($(this).attr('data-offset')) + (parseFloat($(this).attr('data-height')) * 0.9));
 				if(scrollPos < $(this).attr('data-offset')){
 					$(this).removeClass('is-scrollable');
 					$(this).css('top', 0);
 				} else if(scrollPos > $(this).attr('data-offset') && scrollPos < top) {
 					$(this).addClass('is-scrollable');
-					$(this).removeClass('top-lock');
-					$(this).css('top', $(this).attr('data-offset')+'px');
+//					$(this).removeClass('top-lock');
+//					if(ind !== $entries.length - 2) {
+						$(this).css({
+							'top': $(this).attr('data-offset')+'px',
+							'position': null
+						});
+//					}
 				} else if (scrollPos > top) {
-					console.log("Supposed to remove the class");
-					$(this).removeClass('is-scrollable');
-					$(this).addClass('top-lock');
+					if($(this).attr('data-offset') !== 0) {
+						if(ind === $entries.length - 2 && $entries.length >2) {}
+						else {
+							$(this).css({
+								'top': '-'+ (parseFloat($(this).attr('data-height') * 0.9) + 'px'),
+								'position': 'fixed !important'
+							});
+							$(this).removeClass('is-scrollable');
+						}
+					}
 				}
 				//Original implementation if the bugs become a problem.
 //				$(this).toggleClass('is-scrollable', scrollPos > $(this).attr('data-offset'))
 			});
 			parallax();
-			showOnScroll();
+			if(!$('body').hasClass("team")) showOnScroll();
 		});
 	});
 
