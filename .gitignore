@@ -40,7 +40,10 @@ Thumbs.db
 ##############
 .sass-cache/
 *.css.map
-/public_html/italiadev/css/main.css
+public_html/italiadev/css/main.css
+public_html/italiadev/css/main.min.css
+public_html/italiadev/css/animate.css
+main.css
 
 # Non code files #
 ##################
@@ -61,4 +64,3 @@ public_html/italiadev/assets
 /public_html/italiadev/prepros.cfg
 web.config
 robots.txt
-
