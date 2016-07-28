@@ -33,7 +33,7 @@
 	left: 0;
 	margin: 0;
 	padding: 0;
-	box-shadow: 0.05rem 0.05rem 1rem rgba(50, 50, 50, 0.6);
+	box-shadow: 0.01rem 0.01rem 1rem rgba(50, 50, 50, 0.2);
 	.inner {
 		position: relative;
 		top: 0;
@@ -92,7 +92,7 @@
 	width: 86vw;
 	height: calc(100vh - 14vw);
 	background-color: $color4;
-	background-image: url("/assets/images/soft_wallpaper.png");
+	// background-image: url("/assets/images/soft_wallpaper.png");
 	background-position: top left;
 	background-repeat: repeat;
 	animation-delay: 0.75s;
@@ -143,8 +143,8 @@
 }
 
 #home-videos {
-	margin-top: 4vw;
-	margin-left: 6vw;
+	margin-top: 6vw;
+	margin-left: 7vw;
 	width: 80%;
 	height: calc(100vh - 14vw);
 	box-shadow: none;

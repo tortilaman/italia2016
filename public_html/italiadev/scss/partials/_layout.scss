@@ -119,7 +119,7 @@ header.header {
 		background: none;
 		top: 5vw;
 		left: auto;
-		right: calc(95vw + 3em);
+		right: calc(94vw + 3em);
 		width: calc(100vh - 10vw);
 		height: auto;
 		z-index: 1;
@@ -155,7 +155,7 @@ nav {
 			line-height: 0.8;
 
 			@include respond-to(laptop) {
-				margin-left: 10vh;
+				margin-left: 12vh;
 				line-height: 1.8;
 			}
 		}
