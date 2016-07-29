@@ -70,7 +70,7 @@
 	input {
 		position: relative;
 		display: none;
-		top: 0;
+		top: 0.3em;
 		right: 0;
 		background: none;
 		border: none;
@@ -273,6 +273,7 @@ h1[id*="year-title-"] {
 	color: $color2;
 	font-size: 4rem;
 	margin: 0 3vw;
+	letter-spacing: 0em;
 	padding-top: 0.5em;
 	transform: translateY(-5vw);
 	z-index: 100;

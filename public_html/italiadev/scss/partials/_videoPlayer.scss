@@ -141,21 +141,23 @@ main.home #v-header {
 
 #v-interviewee {
 	position: absolute;
-	top: 0;
-	left: 1%;
+	top: 1em;
+	left: 3%;
 	z-index: 5;
 	color: white;
+	font-size: 1.4em;
 	opacity: 1;
 	transition: all 1s
 }
 
 #v-title {
 	position: absolute;
-	top: 2.4em;
+	top: 3.5em;
 	left: 3%;
 	z-index: 5;
 	color: white;
 	opacity: 1;
+	font-size: 0.8em;
 	transition: all 1s
 }
 
