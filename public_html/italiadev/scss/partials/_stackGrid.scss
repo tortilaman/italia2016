@@ -117,16 +117,33 @@
 
 //========================================*/
 
+.home main {
+	width: 100%;
+	padding: 0 5vw;
+
+	@include respond-to(tablet) {
+		width: auto;
+		padding: 0;
+	}
+}
+
+[id^='home-'] {
+	margin: 0 0 2vw 0;
+	width: 100%;
+}
+
 #home-play {
-	margin: 8vw 0 0 8vw;
-	width: 86vw;
-	height: calc(100vh - 14vw);
+	margin-top: 12vmin;
+	height: 90vw;
 	background-color: $color4;
-	// background-image: url("/assets/images/soft_wallpaper.png");
-	background-position: top left;
-	background-repeat: repeat;
 	animation-delay: 0.75s;
-	background-blend-mode: multiply;
+
+	@include respond-to(tablet) {
+		margin: 8vw 0 0 8vw;
+		width: 86vw;
+		height: calc(100vh - 14vw);
+	}
+
 	.inner {
 		display: flex;
 		height: 100%;
@@ -139,10 +156,6 @@
 }
 
 #home-about {
-	margin-top: 13.5vw;
-	margin-left: 21.5vw;
-	width: 73vw;
-	height: calc(100vh - 18vw);
 	background-color: $color1;
 	background-image: url("/assets/images/working.jpg");
 	background-position: left;
@@ -150,17 +163,30 @@
 	background-repeat: no-repeat;
 	animation-delay: 0.5s;
 	background-blend-mode: multiply;
+
+	@include respond-to(tablet) {
+		margin-top: 13.5vw;
+		margin-left: 21.5vw;
+		width: 73vw;
+		height: calc(100vh - 18vw);
+	}
+
 	&.bgHidden {
 		background-color: $color1;
 		background-image: url("");
 	}
 	.inner {
-		float: right;
-		margin-top: 8%;
-		margin-right: 6vw;
-		width: 36vw;
-		height: 100%;
+		padding: 3vw;
 		text-align: center;
+
+		@include respond-to(tablet) {
+			float: right;
+			margin-top: 8%;
+			margin-right: 6vw;
+			width: 36vw;
+			height: 100%;
+		}
+
 		h1,
 		p {
 			text-align: left;
@@ -173,22 +199,29 @@
 }
 
 #home-videos {
-	margin-top: 7vw;
-	margin-left: 6.5vw;
-	width: 80%;
-	height: calc(100vh - 14vw);
 	box-shadow: none;
 	color: white;
 	animation-delay: 0.25s;
 	animation-fill-mode: forwards;
 
+	@include respond-to(tablet) {
+		margin-top: 7vw;
+		margin-left: 6.5vw;
+		width: 80%;
+		height: calc(100vh - 14vw);
+	}
+
 	#home-interviews {
-		position: relative; //		height: 100%;
-		padding: 3vw;
-		width: 40vw;
-		box-shadow: 0.01rem 0.01rem 0.1rem $shadow;
+		position: relative;
+		padding: 1vw;
 		text-align: center;
 		@extend .blue-bg;
+
+		@include respond-to(tablet) {
+			padding: 3vw;
+			width: 40vw;
+			box-shadow: 0.01rem 0.01rem 0.1rem $shadow;
+		}
 		h1 {
 			margin-top: 3vw;
 			margin-left: 6vw;
@@ -205,13 +238,18 @@
 		}
 	}
 	#home-films {
-		position: absolute;
-		top: 12vw;
-		left: 35vw; //		height: 50%;
+		position: relative;
 		padding: 3vw;
-		width: 40vw;
 		text-align: center;
 		@extend .blue-bg;
+
+		@include respond-to(tablet) {
+			position: absolute;
+			top: 12vw;
+			left: 35vw; //		height: 50%;
+			padding: 3vw;
+			width: 40vw;
+		}
 		h1 {
 			margin-top: 3vw;
 			margin-left: 6vw;

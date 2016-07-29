@@ -36,18 +36,20 @@ span.v-close-btn {
 **=====================================================================*/
 
 #v-header {
-	//Center it:
-//	position: fixed;
 	display: block;
 	top: 0;
 	left: 0;
-//	height: calc(100vh - 7vw);
-//	margin: 0 0 7vw 5vw;
-	margin: 0 0 0 5vw;
-	padding-top: 7vw;
-	width: 90vw;
-	max-width: 100%;
-	box-shadow: none;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+
+	@include respond-to(tablet) {
+		margin: 0 0 0 6vw;
+		padding-top: 8vw;
+		width: 90vw;
+		max-width: 100%;
+		box-shadow: none;
+	}
 
 	@media (orientation: landscape) {
 		height: calc(100vh - 7vw);
