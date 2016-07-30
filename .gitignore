@@ -51,8 +51,12 @@ craft/config
 craft/plugins
 craft/app
 craft/storage
-public_html/italiadev/Prepros Build/
 public_html/italiadev/assets
+*.htaccess
+.htaccess
+*..htaccess
+public_html/italiadev/htaccess
+public_html/italiadev/Prepros Build/
 
 # Minified Files #
 ##################
@@ -61,6 +65,6 @@ public_html/italiadev/assets
 
 # Irrelevant Files #
 ####################
-/public_html/italiadev/prepros.cfg
+public_html/italiadev/prepros.cfg
 web.config
 robots.txt

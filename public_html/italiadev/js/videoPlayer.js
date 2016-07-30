@@ -72,6 +72,16 @@ $(document).ready(function () {
 	});
 
 	/*=================================
+		iOS VIDEO HANDLING
+	**===============================*/
+
+	var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+	if (iOS) {
+		$("v-player").attr('controls', true);
+		$(".v-controls, .v-init-play, .v-ended, .v-suggestions").remove();
+	}
+
+	/*=================================
 		VIDEO RESIZING
 	**===============================*/
 
@@ -82,7 +92,7 @@ $(document).ready(function () {
 			$vScrollStart = parseInt($entries.eq(vidIndex - 1).attr('data-offset')),
 			$zVal = 0,
 			pos = parseFloat(sPos).toFixed(2),
-			totalHeight = parseFloat($('#v-header').attr('data-offset') + $('#v-header').attr('data-height')).toFixed(2),
+			totalHeight = parseFloat($('#v-header').attr('data-offset')),
 			scrollPercent = ((pos - $vScrollStart) / (totalHeight - $vScrollStart)).toFixed(2);
 
 		if (pos > $vScrollStart) {
@@ -99,7 +109,7 @@ $(document).ready(function () {
 				opacityValue = 0;
 				$zVal = 6;
 			} else {
-				opacityValue = parseFloat(scrollPercent); //.map(0,1,0,1).toFixed(2);
+				opacityValue = parseFloat(scrollPercent);
 				$zVal = 6;
 			}
 			$vControls.css('opacity', opacityValue);
@@ -216,10 +226,8 @@ $(document).ready(function () {
 	}
 
 	$vProgBarCont.click(function (e) {
-		if(!vPlayer.paused && !vPlayer.ended){
-			var newTime = (((e.pageX - $vProgBarCont.offset().left) / $vProgBarCont.outerWidth()) * vPlayer.duration);
-			vPlayer.currentTime = newTime;
-		}
+		var newTime = (((e.pageX - $vProgBarCont.offset().left) / $vProgBarCont.outerWidth()) * vPlayer.duration);
+		vPlayer.currentTime = newTime;
 	});
 
 	/*=================================
@@ -304,6 +312,7 @@ $(document).ready(function () {
 	if($("main").hasClass("autoplay")) {
 		if(!$("main").hasClass("home")) {
 			playButton.toggle();
+			showControls();
 		}
 		$(".v-init-play").remove();
 
