@@ -37,7 +37,7 @@ body {
 }
 
 .tan-bg::after, #italia-italy::after {
-  background: #fffaf3;
+  background: #f6eee2;
 }
 
 #home-btn {
@@ -186,10 +186,9 @@ main.design, main.team #flex-grid-team .inner {
   position: relative;
   margin: 6vw 0 0 0;
   padding: 0.25rem;
-  background-image: url(/assets/images/soft_wallpaper.png);
   background-repeat: repeat;
   background-position: top left;
-  background-color: #fffaf3;
+  background-color: #f6eee2;
   background-blend-mode: multiply;
   min-height: 85vh;
   width: 100%;
@@ -199,8 +198,8 @@ main.design, main.team #flex-grid-team .inner {
 @media (min-width: 700px) {
   main.design, main.team #flex-grid-team .inner {
     padding: 2rem;
-    width: 90vw;
-    margin: 6vw 5vw;
+    width: 88vw;
+    margin: 6.5vw 6.5vw;
   }
 }
 
@@ -298,7 +297,7 @@ a::before {
   position: absolute;
   width: 100%;
   height: .15em;
-  top: 100%;
+  top: 40%;
   left: -5%;
   background-color: #4cb884;
   visibility: hidden;
@@ -410,7 +409,7 @@ a:hover:before {
   margin: 8vw 0 0 8vw;
   width: 86vw;
   height: calc(100vh - 14vw);
-  background-color: #fffaf3;
+  background-color: #f6eee2;
   background-position: top left;
   background-repeat: repeat;
   animation-delay: 0.75s;
@@ -1022,7 +1021,7 @@ ALIGNMENT
 #d-filter input {
   position: relative;
   display: none;
-  top: 0;
+  top: 0.3em;
   right: 0;
   background: none;
   border: none;
@@ -1224,6 +1223,7 @@ h1[id*="year-title-"] {
   color: #9ab6f4;
   font-size: 4rem;
   margin: 0 3vw;
+  letter-spacing: 0em;
   padding-top: 0.5em;
   transform: translateY(-5vw);
   z-index: 100;
@@ -1592,21 +1592,23 @@ main.home #v-header {
 
 #v-interviewee {
   position: absolute;
-  top: 0;
-  left: 1%;
+  top: 1em;
+  left: 3%;
   z-index: 5;
   color: white;
+  font-size: 1.4em;
   opacity: 1;
   transition: all 1s;
 }
 
 #v-title {
   position: absolute;
-  top: 2.4em;
+  top: 3.5em;
   left: 3%;
   z-index: 5;
   color: white;
   opacity: 1;
+  font-size: 0.8em;
   transition: all 1s;
 }
 
@@ -1975,7 +1977,7 @@ section#v-content {
   background-image: url(/assets/images/soft_wallpaper.png);
   background-repeat: repeat;
   background-position: top left;
-  background-color: #fffaf3;
+  background-color: #f6eee2;
   background-blend-mode: multiply;
   z-index: 6;
 }
