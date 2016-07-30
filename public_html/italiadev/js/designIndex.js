@@ -20,7 +20,7 @@ function getParameterByName(name, url) {
 88      `8b  `"Ybbd8"'  `"8bbdP"Y8   `"8bbdP"Y8      Y88'
 													 d8'
 													d8'
-
+ testing 123
 ** ==========================================================*/
 $(document).ready(function () {
 	var searching = false,
@@ -61,35 +61,37 @@ $(document).ready(function () {
 	** ================*/
 
 	function offsetGrid() {
+		var hoLast,
+			hoThis,
+			voLast,
+			voThis;
 		if($(window).outerWidth() >= breakpoints.phone) {
 			if($(window).outerWidth() >= breakpoints.phone && $(window).outerWidth() < breakpoints.tablet) {
-				hOffset = ['-5vw', '-5vw', '0', '5vw', '5vw'];
-				vOffset = ['1vw', '2vw', '25vw', '50vw'];
+				hOffset = ['-4vw', '0', '4vw'];
+				vOffset = ['2vw', '6vw', '30vw', '60vw'];
 			}
 			else if($(window).outerWidth() >= breakpoints.tablet && $(window).outerWidth() < breakpoints.laptop) {
-				hOffset = ['-4vw', '0', '4vw', '4vw'];
-				vOffset = ['-6vw', '1vw', '6vw', '16vw', '30vw'];
+				hOffset = ['-4vw', '0', '4vw'];
+				vOffset = ['2vw', '6vw', '16vw', '30vw'];
 			}
-			else if($(window).outerWidth() >= breakpoints.laptop && $(window).outerWidth() < breakpoints.desktop) {
-				hOffset = ['-4vw', '0', '4vw', '4vw'];
-				vOffset = ['-4vw', '1vw', '4vw', '14vw', '26vw'];
-			}
-			else if($(window).outerWidth() >= breakpoints.desktop) {
-				hOffset = ['-2vw', '0', '2vw', '2vw'];
-				vOffset = ['-2vw', '1vw', '3vw', '9vw', '15vw'];
+			else if($(window).outerWidth() >= breakpoints.laptop) {
+				hOffset = ['-1.5vw', '0', '2vw'];
+				vOffset = ['2vw', '3vw', '9vw', '15vw'];
 			}
 			$entries.each(function (index, value) {
-				$(this).css('left', hOffset[Math.floor(Math.random() * hOffset.length)]);
-				$(this).css('margin-top', vOffset[Math.floor(Math.random() * vOffset.length)]);
-				$(this).css('z-index', index + 1);
-				//Prevent consecutive overlaps.
-				/*if (index > 0) {
-					var oldMargin = $entries.get(index - 1).style.marginLeft;
-				}
-				$(".film-entry + .design-entry").css('left', getRandomInt(-4, 0).toFixed(1) + 'vw');*/
-
+				while(hoThis == hoLast) hoThis = hOffset[Math.floor(Math.random() * hOffset.length)];
+				while(voThis == voLast) voThis = vOffset[Math.floor(Math.random() * vOffset.length)];
+				$(this).css('left', hoThis);
+				$(this).css('margin-top', voThis);
+				hoLast = hoThis;
+				voLast = voThis;
 				var dict = { 0: "Up", 1: "Down", 2: "Left", 3: "Right" };
 				$(this).attr('data-dir', dict[getRandomInt(0, 3)]);
+			});
+		} else {
+			$entries.each(function() {
+				var dict = { 0: "Up", 1: "Down"};
+				$(this).attr('data-dir', dict[getRandomInt(0, 1)]);
 			});
 		}
 	}
@@ -110,6 +112,10 @@ $(document).ready(function () {
 
 	** =====================================================*/
 
+	/* ==============================
+		CREATING AUTOCOMPLETE DATA
+	** ============================*/
+
 	var $rawData = $("[data-title]"),
 		newArray =[],
 		tagsArr = [],
@@ -125,7 +131,7 @@ $(document).ready(function () {
 			if ($.inArray(element, tagsArr) === -1 && element !== "") {
 				newArray.push({
 					label: element,
-					category: "Disciplines"
+					category: "Category"
 				});
 				tagsArr.push(element);
 			}
@@ -134,9 +140,9 @@ $(document).ready(function () {
 
 	//Sort first by category and then alphabetically.
 	newArray.sort(function (a, b) {
-		if (a.category == "Disciplines" && b.category == "Interviewees") {
+		if (a.category == "Category" && b.category == "Interviewees") {
 			return -1;
-		} else if (a.category == "Interviewees" && b.category == "Disciplines") {
+		} else if (a.category == "Interviewees" && b.category == "Category") {
 			return 1;
 		} else if (a.category == "Interviewees" && b.category == "Interviewees") {
 			var aName = a.label.split(' ');
@@ -144,19 +150,23 @@ $(document).ready(function () {
 			if (aName[aName.length - 1] < bName[bName.length - 1]) return -1;
 			if (aName[aName.length - 1] > bName[bName.length - 1]) return 1;
 			return 0;
-		} else if (a.category == "Disciplines" && b.category == "Disciplines") {
+		} else if (a.category == "Category" && b.category == "Category") {
 			if (a.label < b.label) return -1;
 			if (a.label > b.label) return 1;
 			return 0;
 		}
 	});
 
+	/* ==============================
+		SHOW & HIDE SEARCH F'NS
+	** ============================*/
+
 	function showSearch() {
 		searching = true;
-		$('article img').addClass("oHidden");
-		$('article .entry-title').addClass("oHidden");
+		$("article img, article .entry-title, #page-info h1, #page-info p, [id*='year-title-']").addClass("oHidden");
 		$("#d-filter form").addClass("lSearch");
-		if(window.matchMedia("(min-width: "+breakpoints.phone+"px)")) {
+		$("#search").focus();
+		if($(window).outerWidth() > breakpoints.phone) {
 			$("#d-filter").css({
 				'height': '1vw',
 				'width': '98vw',
@@ -172,9 +182,8 @@ $(document).ready(function () {
 	}
 
 	function hideSearch() {
-		$('article img').removeClass("oHidden");
-		$('article .entry-title').removeClass("oHidden");
-		if(window.matchMedia("(min-width: "+breakpoints.phone+"px)")) {
+		$("article img, article .entry-title, #page-info h1, #page-info p, [id*='year-title-']").removeClass("oHidden");
+		if($(window).outerWidth() > breakpoints.phone) {
 			$("#d-filter").css({
 				'height': '6vw',
 				'width': '90vw',
@@ -187,14 +196,15 @@ $(document).ready(function () {
 			});
 		} else {
 			$("#d-filter").css({
-				'height': '6vw',
-				'width': '96vw',
-				'right': '2vw',
-				'left': '2vw'
+				'height': '12vmin',
+				'width': '90%',
+				'right': '8%',
+				'left': '2%'
 			});
 		}
 		$("#d-filter form").removeClass("lSearch");
 		$("#d-filter span").removeClass("active");
+		$(window).focus();
 		searching = false;
 	}
 
@@ -247,13 +257,20 @@ $(document).ready(function () {
 		});
 
 		//Year Titles
-		for (var year = 2012; year < 2016; year++) {
+		for (var year = 2012; year <= 2016; year++) {
 			//All articles are hidden
 			if (!$("#flex-grid-" + year + " article").not(".dHidden").length) {
 				$("#year-title-" + year).hide("fast");
 			} else {
 				$("#year-title-" + year).show("fast");
 			}
+		}
+
+		//Hide the interviews explanation box
+		if($("article[data-title]").hasClass("dHidden")) {
+			$("#page-info").addClass("dHidden");
+		} else {
+			$("#page-info").removeClass("dHidden");
 		}
 
 		//Empty search results. Let's make this interesting!
@@ -265,16 +282,18 @@ $(document).ready(function () {
 	}
 
 	/* =========================================
-		AUTOCOMPLETE SEARCH F'NALITY
+		AUTOCOMPLETE SEARCH F'N
 	** =======================================*/
 
 	$("#search").autocomplete({
 		source: function (request, response) {
 			var results = $.ui.autocomplete.filter(newArray, request.term);
-			if (request.term === 0) {
+			//If search is empty, give list of categories by default.
+			if (request.term === "") {
+				//creates a new array of just category data
 				var index = newArray.map(function (e) {
 					return e.category;
-				}).indexOf('Interviewees');
+				}).indexOf('Interviewees'); //find first instance of Interviewees (end of categories)
 				results = newArray.slice(0, index);
 			}
 
@@ -341,16 +360,25 @@ $(document).ready(function () {
 		EVENT LISTENERS
 	** =====================================================*/
 
+	//Mobile year menu
+	$(".mobile-year-menu").on('click', function(e) {
+		$("#year-links ul").toggleClass("open");
+	});
+
+	$("#year-links a").on('click', function(e) {
+		$("#year-links ul").removeClass("open");
+	});
+
 	//Reflow grid on window resize or orientation change
 	$(window).on('resize', offsetGrid());
 	var orientationCheck = window.matchMedia("(orientation: portrait)");
 	orientationCheck.addListener(offsetGrid);
 
 	//Clicked search close button.
-	$("#d-filter span").on("click", function (e) {
+	$("#searchForm > span").on("click", function (e) {
 		$("#search").val('');
 		requestAnimationFrame($filterResults);
-		if ($("#search").hasClass('lsearch')) hideSearch();
+		if ($("#searchForm").hasClass('lSearch')) hideSearch();
 		$(this).removeClass("active");
 	});
 

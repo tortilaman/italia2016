@@ -34,7 +34,7 @@ body {
 		width: 100%;
 		height: 100%;
 		mix-blend-mode: multiply;
-		z-index: -1;
+		z-index: 1;
 	}
 }
 
@@ -66,7 +66,7 @@ body {
 	left: 1vh;
 	height: 6vmin;
 	width: auto;
-	z-index:2;
+	z-index:10;
 
 	img {
 		height: 100%;
@@ -88,6 +88,10 @@ body {
 		height: 13vh;
 	}
 }
+
+	.home #home-btn { 
+		display: none;
+	}
 
 .design #home-btn, .team #home-btn, .team-vid #home-btn, .italia #home-btn {
 	z-index:201;
@@ -115,7 +119,7 @@ header.header {
 		background: none;
 		top: 5vw;
 		left: auto;
-		right: calc(95vw + 3em);
+		right: calc(94vw + 3em);
 		width: calc(100vh - 10vw);
 		height: auto;
 		z-index: 1;
@@ -151,14 +155,14 @@ nav {
 			line-height: 0.8;
 
 			@include respond-to(laptop) {
-				margin-left: 10vh;
+				margin-left: 12vh;
 				line-height: 1.8;
 			}
 		}
 	}
 	a {
 		color: $color5;
-		font-size: 1.4em;
+		font-size: 1.2em;
 
 		&.sel {
 			color: $color1;
@@ -186,7 +190,7 @@ nav {
 
 main.design, main.team #flex-grid-team .inner {
 	position: relative;
-	margin: 6vw 0 0 0;
+	margin: 12vw 0 0 0;
 	padding: 0.25rem;
 	background-image: url(/assets/images/soft_wallpaper.png);
 	background-repeat: repeat;
@@ -206,6 +210,11 @@ main.design, main.team #flex-grid-team .inner {
 
 main.team {
 	margin-bottom: 0;
+	padding-top: 12vw;
+
+	@include respond-to(tablet) {
+		padding-top: 0;
+	}
 
 	#flex-grid-team {
 		width: 100vw;
@@ -214,7 +223,7 @@ main.team {
 		.inner {
 			min-height: none;
 			transition: none;
-			margin: 6vw 0 0 0;
+			margin: 0;
 			padding: 2rem 3vw;
 		}
 	}
@@ -225,5 +234,13 @@ main.team {
 		h1, p {
 			color: $color5
 		}
+	}
+}
+
+main.v, main.italia {
+	margin-top: 12vw;
+
+	@include respond-to(tablet) {
+		margin-top: 0;
 	}
 }

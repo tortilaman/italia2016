@@ -35,7 +35,7 @@ _#}
 
 {% block main %}
 	{# ============= INTRODUCTION ================ #}
-	<section id="v-intro" class="v-section is-scrollable {{entry.videoYear >= '2015' ? 'v21-9' : 'v16-9'}}">
+	<section id="v-intro" class="v-section is-scrollable">
 		<div id="v-contents">
 			<h1 class="v-contents-title">This is Italy</h1>
 			<div class="v-chapter-container">
@@ -67,7 +67,7 @@ _#}
 	{% include "_includes/matrix_body" %}
 	<script src="http://d3js.org/d3.v3.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-	<script src="/js/entryIndex.js"></script>
+	<script src="/js/stackGrid.js"></script>
 	<script src="/js/videoPlayer.js"></script>
 	<script src="/js/interview.js"></script>
 {% endblock %}
