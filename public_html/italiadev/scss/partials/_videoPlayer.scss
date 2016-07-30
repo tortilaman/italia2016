@@ -36,17 +36,25 @@ span.v-close-btn {
 **=====================================================================*/
 
 #v-header {
-	//Center it:
-	position: fixed;
 	display: block;
 	top: 0;
 	left: 0;
-	height: calc(100vh - 7vw);
-	margin: 0 0 7vw 5vw;
-	padding-top: 7vw;
-	width: 90vw;
-	max-width: 100%;
-	box-shadow: none;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+
+	@include respond-to(tablet) {
+		margin: 0 0 0 6vw;
+		padding-top: 8vw;
+		width: 90vw;
+		max-width: 100%;
+		box-shadow: none;
+	}
+
+	@media (orientation: landscape) {
+		height: calc(100vh - 7vw);
+		margin-bottom: 7vw;
+	}
 
 }
 
@@ -122,6 +130,19 @@ main.home #v-header {
 			height: 100% !important;
 		}
 	}
+}
+
+/*====================
+	iOS modifications
+**==================*/
+
+.iOS {
+/*	.v-controls {
+		display: none !important;
+	}
+	.v-init-play {
+		display: none !important;
+	}*/
 }
 
 /*====================
@@ -374,7 +395,6 @@ a.v-prev-link {
 
 .v-controls {
 	position: absolute;
-	display: block;
 	bottom: 0;
 	left: 0;
 	width: 100%;
@@ -384,6 +404,10 @@ a.v-prev-link {
 	z-index: 2;
 	transition: opacity 0.5s;
 	background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.25) 50%, rgba(0, 0, 0, 0.65) 80%);
+
+	@include respond-to(tablet) {
+		display: block;
+	}
 }
 
 //Standard for buttons
@@ -530,17 +554,22 @@ section#v-content {
 }
 
 .v-overlay {
-	position:absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-image: url(/assets/images/soft_wallpaper.png);
-	background-repeat: repeat;
-	background-position: top left;
-	background-color: $color4;
-	background-blend-mode: multiply;
-	z-index: 6;
+	display: none;
+
+	@include respond-to(tablet) {
+		position:absolute;
+		display: block;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-image: url(/assets/images/soft_wallpaper.png);
+		background-repeat: repeat;
+		background-position: top left;
+		background-color: $color4;
+		background-blend-mode: multiply;
+		z-index: 6;
+	}
 }
 
 #v-info {

@@ -12,16 +12,17 @@
 #d-filter {
 	position: relative;
 	top: 0;
-	right: 2vw;
-	left: 2vw;
-	width: 96vw;
-	height: 6vw;
+	right: 8%;
+	left: 2%;
+	width: 90%;
+	height: 12vmin;
 	background: none;
 	z-index: 200;
 	transition: height .5s;
 
 	@include respond-to(tablet) {
 		position: fixed;
+		height: 6vw;
 		background: white;
 		width: 90vw;
 		left: 5vw;
@@ -30,7 +31,8 @@
 
 	form {
 		position: absolute;
-		right: 0;
+		top: 0;
+		right: 5vw;
 		bottom: 0;
 		height: 1em;
 
@@ -38,6 +40,7 @@
 			bottom: 0.3rem;
 			height: 3em;
 			width: 30vw;
+			right: 0;
 		}
 		@include respond-to(laptop) {
 			bottom: 0.55rem;
@@ -55,6 +58,7 @@
 			}
 
 			@include respond-to(tablet) {
+				display: none;
 				height: 3em;
 				width: 3em;
 			}
@@ -79,7 +83,7 @@
 		font-size: 0.8rem;
 		line-height: 0.8;
 		outline: none;
-		width: calc(30vw - 2em);
+		width: calc(40vw - 2em);
 		color: $color5;
 		transition: all, .5s;
 		mix-blend-mode: multiply;
@@ -90,6 +94,7 @@
 			line-height: 1.2;
 			border-bottom: 0.3em solid $color3;
 			padding-bottom: 0.1em;
+			width: 30vw;
 		}
 		@include respond-to(laptop) {
 			font-size: 2em;
@@ -98,14 +103,21 @@
 	}
 	.lSearch {
 		position: fixed;
-		top: 25vh;
-		right: 35vw;
-		left:35vw;
-		width: 30vw;
+		top: 20vh;
+		right: 30vw;
+		left:30vw;
+		width: 40vw;
 		background: none;
 
 		input {
 			display: inline-block !important;
+		}
+
+		@include respond-to(tablet) {
+			top: 25vh;
+			right: 35vw;
+			left:35vw;
+			width: 30vw;
 		}
 	}
 	span {
@@ -113,7 +125,7 @@
 		display:inline-block;
 		vertical-align: middle;
 		right: .5rem;
-		bottom: 1rem;
+		bottom: 0;
 		font-size: 0.8em;
 		line-height: 0.8;
 		font-weight: bold;
@@ -126,6 +138,7 @@
 		}
 
 		@include respond-to(tablet) {
+			bottom: 1rem;
 			font-size: 1.2em;
 			line-height: 1.2;
 		}
@@ -154,17 +167,22 @@
 
 ul.ui-autocomplete {
 	position: fixed;
-	top: calc(25vh + 3rem);
-	left: calc(35vw + 3.25em);
+	top: calc(20vh + 1rem);
+	left: calc(30vw + 1.75em);
 	background: none;
-	padding: .2rem;
+	padding: 0.25rem 0;
 	box-shadow: none;
 	border: none;
 	z-index: 200;
+
+	@include respond-to(tablet) {
+		top: calc(25vh + 3rem);
+		left: 35vw;
+	}
 	li.ui-menu-item {
 		box-shadow: none;
 		border: none;
-		padding: .25rem;
+		padding: .25rem 0;
 		color: $color5;
 		list-style: none;
 		cursor: pointer;
@@ -235,9 +253,9 @@ section[id^="flex-grid-"] {
 	margin: 2vh 2vw;
 	padding-bottom: 2rem;
 
-	@include respond-to(tablet) {
-		width: 80vw;
-		max-width: 80%;
+	@include respond-to(phone) {
+		width: 90vw;
+		max-width: 90%;
 		margin: 2vh auto 3vh;
 	}
 }
@@ -259,7 +277,7 @@ section[id^="flex-grid-"] {
 		display: none;
 	}
 
-	@include respond-to(tablet) {
+	@include respond-to(phone) {
 		width: 55vw;
 	}
 	@include respond-to(laptop) {
@@ -285,15 +303,56 @@ h1[id*="year-title-"] {
 }
 
 #year-links {
-	position: fixed;
-	top: 7vw;
+	position: absolute;
+	top: 1.5vw;
 	right: 4.5vw;
+
+	@include respond-to(tablet) {
+		position: fixed;
+		top: 7vw;
+	}
+
+	.mobile-year-menu {
+		display: inline-block;
+		vertical-align: middle;
+
+		@include respond-to(tablet) {
+			display: none;
+		}
+
+		.arrow-down {
+			display: inline-block;
+			vertical-align: middle;
+			margin-left: 0.25em;
+			width: 0;
+			height: 0;
+			border-left: 0.3em solid transparent;
+			border-right: 0.3em solid transparent;
+			border-top: 0.3em solid $color5;
+		}
+	}
 	ul {
+		opacity: 0;
+		transform-origin: top center;
+		transform: scaleY(0);
 		list-style: none;
+		transition: all 0.5s;
+
+		&.open {
+			transform: scaleY(1);
+			opacity: 1;
+//			transition: all 0.5s;
+		}
+
+		@include respond-to(tablet) {
+			transform: scaleY(100%);
+		}
 	}
 	li {
 		list-style: none;
-		margin-bottom: 2rem;
+		@include respond-to(tablet) {
+			margin-bottom: 2rem;
+		}
 	}
 	a {
 		color: $color3;
@@ -355,7 +414,7 @@ h1[id*="year-title-"] {
 		right: 0;
 		transform: translateY(-30%);
 		text-align: center;
-		padding: 0 1vw .5em;
+		padding: 0 2em;
 		z-index: 50;
 		transition: all .5s;
 
@@ -419,7 +478,7 @@ h1[id*="year-title-"] {
 		height: auto;
 		margin-top: -35vw;
 
-		@include respond-to(tablet) {
+		@include respond-to(phone) {
 			width: auto;
 			height: 100%;
 			margin-top: 0;
@@ -430,7 +489,7 @@ h1[id*="year-title-"] {
 		width: 100%;
 		height: auto;
 
-		@include respond-to(tablet) {
+		@include respond-to(phone) {
 			width: auto;
 			height: 100%;
 		}
@@ -440,15 +499,20 @@ h1[id*="year-title-"] {
 		@extend .blue-bg;
 	}
 
+	@include respond-to(phone) {
+		width: 42vw;
+		height: 63vw;
+	}
 	@include respond-to(tablet) {
 		width: 22vw;
 		height: 33vw;
 	}
-	@include respond-to(laptop) {
+	/*@include respond-to(laptop) {
 		width: 18vw;
 		height: 28vw;
-	}
-	@include respond-to(desktop) {
+	}*/
+	@include respond-to(laptop) {
+//	@include respond-to(desktop) {
 		width: 12vw;
 		height: 18vw;
 	}
@@ -461,6 +525,10 @@ h1[id*="year-title-"] {
 	height: 63.33vw;
 	margin-top: 1.5vh;
 
+	@include respond-to(phone) {
+		width: 88vw;
+		height: 58.66vw;
+	}
 	@include respond-to(tablet) {
 		width: 55vw;
 		height: 36.66vw;
