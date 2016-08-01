@@ -8,7 +8,7 @@
 
 // =================================================================================
 //
-//	 88888888888                                   88
+//	88888888888                                   88
 // 	88                         ,d                 ""
 // 	88                         88
 // 	88aaaaa      8b,dPPYba,  MM88MMM  8b,dPPYba,  88   ,adPPYba,  ,adPPYba,
@@ -50,7 +50,7 @@
 	@include respond-to(tablet) {
 		position: fixed;
 	}
-	
+
 	.inner {
 		position: relative;
 		top: 0;
@@ -308,6 +308,11 @@
 		z-index: 8;
 		color: white;
 		text-align: center;
+
+		&:hover::before {
+			display: none;
+		}
+
 		@include respond-to(tablet) {
 			text-align: left;
 			top: 75%;
@@ -370,10 +375,10 @@
 
 /*==========================================
 
-       db         88  88     8b           d8  88           88
-      d88b        88  88     `8b         d8'  ""           88
-     d8'`8b       88  88      `8b       d8'                88
-    d8'  `8b      88  88       `8b     d8'    88   ,adPPYb,88   ,adPPYba,   ,adPPYba,   ,adPPYba,
+	   db         88  88     8b           d8  88           88
+	  d88b        88  88     `8b         d8'  ""           88
+	 d8'`8b       88  88      `8b       d8'                88
+	d8'  `8b      88  88       `8b     d8'    88   ,adPPYb,88   ,adPPYba,   ,adPPYba,   ,adPPYba,
    d8YaaaaY8b     88  88        `8b   d8'     88  a8"    `Y88  a8P_____88  a8"     "8a  I8[    ""
   d8""""""""8b    88  88         `8b d8'      88  8b       88  8PP"""""""  8b       d8   `"Y8ba,
  d8'        `8b   88  88          `888'       88  "8a,   ,d88  "8b,   ,aa  "8a,   ,a8"  aa    ]8I
@@ -507,7 +512,6 @@ d8'          `8b  88  88           `8'        88   `"8bbdP"Y8   `"Ybbd8"'   `"Yb
 
 		.v-chapter-number {
 			width: 3em;
-			font-size: 1.5rem;
 
 			@media (orientation: portrait) {
 				line-height: 1;
@@ -518,7 +522,7 @@ d8'          `8b  88  88           `8'        88   `"8bbdP"Y8   `"Ybbd8"'   `"Yb
 		.v-chapter-number, .v-chapter-title, .v-chapter-duration {
 			position: relative;
 			display: inline-block;
-			height: 1em;
+			height: 1.5em;
 			margin: 0;
 			font-family: Header;
 			color: white;
@@ -535,8 +539,8 @@ d8'          `8b  88  88           `8'        88   `"8bbdP"Y8   `"Ybbd8"'   `"Yb
 		}
 
 		.v-chapter-duration {
-			float: right;
-			font-family: body;
+			position: absolute;
+			right: 0;
 		}
 	}
 
@@ -570,13 +574,13 @@ d8'          `8b  88  88           `8'        88   `"8bbdP"Y8   `"Ybbd8"'   `"Yb
 /*==========================================
 
 888888888888
-     88
-     88
-     88   ,adPPYba,  ,adPPYYba,  88,dPYba,,adPYba,
-     88  a8P_____88  ""     `Y8  88P'   "88"    "8a
-     88  8PP"""""""  ,adPPPPP88  88      88      88
-     88  "8b,   ,aa  88,    ,88  88      88      88
-     88   `"Ybbd8"'  `"8bbdP"Y8  88      88      88
+	 88
+	 88
+	 88   ,adPPYba,  ,adPPYYba,  88,dPYba,,adPYba,
+	 88  a8P_____88  ""     `Y8  88P'   "88"    "8a
+	 88  8PP"""""""  ,adPPPPP88  88      88      88
+	 88  "8b,   ,aa  88,    ,88  88      88      88
+	 88   `"Ybbd8"'  `"8bbdP"Y8  88      88      88
 
 //========================================*/
 
@@ -605,11 +609,11 @@ main.team-vid {
 }
 
 #team-about {
-	position: fixed;
-	margin-top: 15vw;
-	margin-left: 15vw;
-	width: 60vw;
-	height: 50vh;
+	position: relative;
+	margin-top: 2vw;
+	margin-left: 5vw;
+	width: 90vw;
+	height: auto;
 	padding: 2em;
 	background-color: $color1;
 	background-image: url("/assets/images/team_pic_small.png");
@@ -618,13 +622,36 @@ main.team-vid {
 	background-repeat: no-repeat;
 	animation-delay: 0.5s;
 	background-blend-mode: multiply;
+
+	@include respond-to(tablet) {
+		position: fixed;
+		margin-top: 15vw;
+		margin-left: 15vw;
+		width: 60vw;
+		height: 50vh;
+		padding: 2em;
+		background-color: $color1;
+		background-image: url("/assets/images/team_pic_small.png");
+		background-position: left;
+		background-size: contain;
+		background-repeat: no-repeat;
+		animation-delay: 0.5s;
+		background-blend-mode: multiply;
+	}
 }
 
 main.team #flex-grid-team {
-	position: fixed;
-	margin: 6vw 5vw 0 5vw;
+	position: relative;
+	margin: 2vw 5vw 0 5vw;
 	width: 90vw;
 	box-shadow: none;
+
+	@include respond-to(tablet) {
+		position: fixed;
+		margin: 6vw 5vw 0 5vw;
+		width: 90vw;
+		box-shadow: none;
+	}
 }
 
 /*=======================================================================

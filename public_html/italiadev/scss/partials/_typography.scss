@@ -58,9 +58,9 @@ a {
 	&::before {
 		content         : '';
 		position        : absolute;
-		width           : 100%;
+		width           : 110%;
 		height          : .15em;
-		top             : 40%;
+		top             : 100%;
 		left            : -5%;
 		background-color: $color1;
 		visibility      : hidden;
