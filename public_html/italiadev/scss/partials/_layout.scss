@@ -1,0 +1,248 @@
+
+// ==============================
+//
+//	Things that appear on most pages and aren't
+//	general typography are here.
+//
+// ==============================
+
+*, *::before, *::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	border: none;
+}
+html {
+}
+
+body {
+	transition: color 0.5s;
+}
+
+.clearfix:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+.bg {
+	&::after {
+		content: '';
+		position: absolute;
+		display: block;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		mix-blend-mode: multiply;
+		z-index: 1;
+	}
+}
+
+.green-bg {
+	@extend .bg;
+	&::after {
+		background: $color1;
+	}
+}
+
+.blue-bg {
+	@extend .bg;
+	&::after {
+		background: $color2;
+	}
+}
+
+.tan-bg {
+	@extend .bg;
+	&::after {
+		background: $color4;
+	}
+}
+
+#home-btn {
+	display: none;
+	position: fixed;
+	top: 1vh;
+	left: 1vh;
+	height: 6vmin;
+	width: auto;
+	z-index:10;
+
+	img {
+		height: 100%;
+		width: auto;
+	}
+
+	&:hover {
+
+		&::before {
+			display: none;
+		}
+	}
+
+	@include respond-to(tablet) {
+		display: block;
+		height: 6vh;
+	}
+	@include respond-to(laptop) {
+		height: 13vh;
+	}
+}
+
+	.home #home-btn { 
+		display: none;
+	}
+
+.design #home-btn, .team #home-btn, .team-vid #home-btn, .italia #home-btn {
+	z-index:201;
+	clip-path: polygon(0 0, 100% 0, 100% 72%, 37% 72%, 37% 100%, 0 100%);
+}
+
+header.header {
+	position: absolute;
+	display: block;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 12vw;
+	padding: 0;
+	background-color: white;
+	transform: rotate(0);
+	transform-origin: right top 0;
+	z-index: 201;
+	transition: opacity 0.5s;
+	text-align: left;
+
+	@include respond-to(laptop) {
+		position:fixed;
+		transform: rotate(270deg);
+		background: none;
+		top: 5vw;
+		left: auto;
+		right: calc(94vw + 3em);
+		width: calc(100vh - 10vw);
+		height: auto;
+		z-index: 1;
+		text-align: center;
+	}
+}
+
+nav {
+	display: block;
+	height: 100%;
+
+	@include respond-to(tablet){
+		display: inline-block;
+		height: auto;
+	}
+
+	ul {
+		list-style: none;
+		display: flex !important;
+		flex-wrap: nowrap;
+		justify-content: space-between;
+		align-items: center;
+		height: 100%;
+		margin: 0 2vw;
+
+		@include respond-to(tablet){
+			display: inline-block;
+		}
+
+		li {
+			display: inline-block;
+			margin-left: 0;
+			line-height: 0.8;
+
+			@include respond-to(laptop) {
+				margin-left: 12vh;
+				line-height: 1.8;
+			}
+		}
+	}
+	a {
+		color: $color5;
+		font-size: 1.2em;
+
+		&.sel {
+			color: $color1;
+		}
+	}
+}
+
+//Visually hide content but leave accessible to screen readers
+.aHidden {
+	position: absolute !important;
+	clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+	clip: rect(1px, 1px, 1px, 1px);
+	padding: 0 !important;
+	border: 0 !important;
+	height: 1px !important;
+	width: 1px !important;
+	overflow: hidden;
+}
+.oHidden {
+	opacity: 0 !important;
+}
+.dHidden {
+	display: none !important;
+}
+
+main.design, main.team #flex-grid-team .inner {
+	position: relative;
+	margin: 12vw 0 0 0;
+	padding: 0.25rem;
+	background-image: url(/assets/images/soft_wallpaper.png);
+	background-repeat: repeat;
+	background-position: top left;
+	background-color: $color4;
+	background-blend-mode: multiply;
+	min-height: 85vh;
+	width: 100%;
+	transition: all 0.5s;
+
+	@include respond-to(tablet) {
+		padding: 2rem;
+		left: 1.5em;
+		width: 87vw;
+		margin: 6vw 5vw;
+	}
+}
+
+main.team {
+	margin-bottom: 0;
+	padding-top: 12vw;
+
+	@include respond-to(tablet) {
+		padding-top: 0;
+	}
+
+	#flex-grid-team {
+		width: 100vw;
+		margin-bottom: 0;
+
+		.inner {
+			min-height: none;
+			transition: none;
+			margin: 0;
+			padding: 2rem 3vw;
+		}
+	}
+
+	#contact-info {
+		position: relative;
+		margin: 1vw 5vw;
+		h1, p {
+			color: $color5
+		}
+	}
+}
+
+main.v, main.italia {
+	margin-top: 12vw;
+
+	@include respond-to(tablet) {
+		margin-top: 0;
+	}
+}
