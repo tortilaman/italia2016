@@ -1,3 +1,4 @@
+
 // ==============================
 //
 //	Things that appear on most pages and aren't
@@ -195,7 +196,7 @@ main.design, main.team #flex-grid-team .inner {
 	justify-content: space-between;
 	margin: 12vw 0 0 0;
 	padding: 0.25rem;
-	// background-image: url(/assets/images/soft_wallpaper.png);
+	background-image: url(/assets/images/soft_wallpaper.png);
 	background-repeat: repeat;
 	background-position: top left;
 	background-color: $color4;
@@ -206,8 +207,9 @@ main.design, main.team #flex-grid-team .inner {
 
 	@include respond-to(tablet) {
 		padding: 2rem;
-		width: 88vw;
-		margin: 6.5vw 6.5vw;
+		left: 1.5em;
+		width: 87vw;
+		margin: 6vw 5vw;
 	}
 }
 
