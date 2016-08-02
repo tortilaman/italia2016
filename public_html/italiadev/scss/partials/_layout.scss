@@ -207,9 +207,8 @@ main.design, main.team #flex-grid-team .inner {
 
 	@include respond-to(tablet) {
 		padding: 2rem;
-		left: 1.5em;
-		width: 87vw;
-		margin: 6vw 5vw;
+		width: 88vw;
+		margin: 6vw;
 	}
 }
 
