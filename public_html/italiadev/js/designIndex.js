@@ -186,12 +186,12 @@ $(document).ready(function () {
 		if($(window).outerWidth() > breakpoints.phone) {
 			$("#d-filter").css({
 				'height': '6vw',
-				'width': '90vw',
-				'right': '5vw',
-				'left': '5vw'
+				'width': '88vw',
+				'right': '6vw',
+				'left': '6vw'
 			});
 			$(".design main").css({
-				'margin': '6vw 5vw',
+				'margin': '6vw',
 				'padding': '0.25em'
 			});
 		} else {
