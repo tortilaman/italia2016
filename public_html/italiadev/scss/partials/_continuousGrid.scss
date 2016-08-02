@@ -245,7 +245,36 @@ span[role="status"] {
 //
 // ===================================================================================================
 
-section[id^="flex-grid-"] {
+main.team {
+	margin-bottom: 0;
+	padding-top: 12vw;
+
+	@include respond-to(tablet) {
+		padding-top: 0;
+	}
+
+	#flex-grid-team {
+		width: 100vw;
+		margin-bottom: 0;
+
+		.inner {
+			min-height: none;
+			transition: none;
+			margin: 0;
+			padding: 2rem 3vw;
+		}
+	}
+
+	#contact-info {
+		position: relative;
+		margin: 1vw 5vw;
+		h1, p {
+			color: $color5
+		}
+	}
+}
+
+section[id^="flex-grid-"]{
 	position: relative;
 	display: flex;
 	flex-flow: row wrap;

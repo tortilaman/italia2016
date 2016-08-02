@@ -112,38 +112,42 @@ $(document).ready(function () {
 	**===============================*/
 
 	window.addEventListener('scroll', function () {
-		requestAnimationFrame(function () {
+		this.requestAnimationFrame(function () {//NOTE: "this" might fuck this up... jsHint had to make things complicated.
 			scrollPos = window.pageYOffset;
-			$entries.each(function (ind, el) {
-				var top = (parseFloat($(this).attr('data-offset')) + (parseFloat($(this).attr('data-height')) * 0.9));
-				if(scrollPos < $(this).attr('data-offset')){
-					$(this).removeClass('is-scrollable');
-					$(this).css('top', 0);
-				} else if(scrollPos > $(this).attr('data-offset') && scrollPos < top) {
-					$(this).addClass('is-scrollable');
-//					$(this).removeClass('top-lock');
-//					if(ind !== $entries.length - 2) {
+			if($(window).outerWidth() > 480) {
+				$entries.each(function (ind, el) {
+					//Keep cards at top of page / Control is-scrollable scrolling
+					var top = (parseFloat($(this).attr('data-offset')) + (parseFloat($(this).attr('data-height')) * 0.9));
+					if(scrollPos < $(this).attr('data-offset')){//Fixed
+						$(this).removeClass('is-scrollable');
+						$(this).css('top', 0);
+					} else if(scrollPos > $(this).attr('data-offset') && scrollPos < top) {//Scroll
+						$(this).addClass('is-scrollable');
+						//					$(this).removeClass('top-lock');
+						//					if(ind !== $entries.length - 2) {
 						$(this).css({
 							'top': $(this).attr('data-offset')+'px',
 							'position': null
 						});
-//					}
-				} else if (scrollPos > top) {
-					if($(this).attr('data-offset') !== 0) {
-						if(ind === $entries.length - 2 && $entries.length >2) {}
-						else {
-							$(this).css({
-								'top': '-'+ (parseFloat($(this).attr('data-height') * 0.9) + 'px'),
-								'position': 'fixed !important'
-							});
-							$(this).removeClass('is-scrollable');
+						//					}
+					} else if (scrollPos > top) {//Stick-to-top
+						if($(this).attr('data-offset') !== 0) {
+							if(ind === $entries.length - 2 && $entries.length >2) {}
+							else {
+								$(this).css({
+									'top': '-'+ (parseFloat($(this).attr('data-height') * 0.9) + 'px'),
+									'position': 'fixed !important'
+								});
+								$(this).removeClass('is-scrollable');
+							}
 						}
 					}
-				}
-				//Original implementation if the bugs become a problem.
-//				$(this).toggleClass('is-scrollable', scrollPos > $(this).attr('data-offset'))
-			});
+					//Original implementation if the bugs become a problem.
+					//$(this).toggleClass('is-scrollable', scrollPos > $(this).attr('data-offset'))
+				});
+			}
 			parallax();
+			//Don't show on scroll on team page.
 			if(!$('body').hasClass("team")) showOnScroll();
 		});
 	});

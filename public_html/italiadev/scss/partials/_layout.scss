@@ -89,7 +89,7 @@ body {
 	}
 }
 
-	.home #home-btn { 
+	.home #home-btn {
 		display: none;
 	}
 
@@ -190,6 +190,9 @@ nav {
 
 main.design, main.team #flex-grid-team .inner {
 	position: relative;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-between;
 	margin: 12vw 0 0 0;
 	padding: 0.25rem;
 	// background-image: url(/assets/images/soft_wallpaper.png);
@@ -205,35 +208,6 @@ main.design, main.team #flex-grid-team .inner {
 		padding: 2rem;
 		width: 88vw;
 		margin: 6.5vw 6.5vw;
-	}
-}
-
-main.team {
-	margin-bottom: 0;
-	padding-top: 12vw;
-
-	@include respond-to(tablet) {
-		padding-top: 0;
-	}
-
-	#flex-grid-team {
-		width: 100vw;
-		margin-bottom: 0;
-
-		.inner {
-			min-height: none;
-			transition: none;
-			margin: 0;
-			padding: 2rem 3vw;
-		}
-	}
-
-	#contact-info {
-		position: relative;
-		margin: 1vw 5vw;
-		h1, p {
-			color: $color5
-		}
 	}
 }
 
