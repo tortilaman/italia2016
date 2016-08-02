@@ -59,7 +59,7 @@ a {
 		content         : '';
 		position        : absolute;
 		width           : 100%;
-		height          : .15em;
+		height          : .12em;
 		top             : 100%;
 		left            : -5%;
 		background-color: $color1;
@@ -87,8 +87,8 @@ a {
 }
 @font-face {
 	font-family: 'SubHead';
-	src        : url('../assets/fonts/N_Demi.eot');
-	src        : local('☺'), url('../assets/fonts/N_Demi.woff') format('woff'), url('../assets/fonts/N_Demi.ttf') format('truetype'), url('../assets/fonts/N_Demi.svg') format('svg');
+	src        : url('../assets/fonts/N_book.eot');
+	src        : local('☺'), url('../assets/fonts/N_book.woff') format('woff'), url('../assets/fonts/N_book.ttf') format('truetype'), url('../assets/fonts/N_book.svg') format('svg');
 	font-weight: normal;
 	font-style : normal;
 }
