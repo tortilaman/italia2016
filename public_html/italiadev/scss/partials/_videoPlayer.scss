@@ -263,6 +263,11 @@ a.v-prev-link {
 	z-index: 5;
 	transition: opacity 0.5;
 
+	@include respond-to(tablet) {
+		height: 11em;
+		width: 13em;
+	}
+
 	.v-init-play-btn {
 		position: relative;
 		display: inline-block;
@@ -271,7 +276,7 @@ a.v-prev-link {
 		height: 0;
 		z-index: 5;
 		border-top: 2em solid transparent;
-		border-left: 4em solid white;
+		border-left: 4em solid $color1;
 		border-bottom: 2em solid transparent;
 		transition: border 0.2s;
 	}
@@ -280,7 +285,7 @@ a.v-prev-link {
 		position: relative;
 		display: inline-block;
 		margin: 0.25em auto;
-		color: white;
+		color: $color1;
 	}
 
 	a {

@@ -108,6 +108,9 @@ $(document).ready(function () {
 				scrollPercent = 0;
 				opacityValue = 0;
 				$zVal = 6;
+				if(!vPlayer.paused) {
+					playButton.toggle();
+				}
 			} else {
 				opacityValue = parseFloat(scrollPercent);
 				$zVal = 6;

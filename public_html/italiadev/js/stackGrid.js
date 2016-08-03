@@ -77,6 +77,10 @@ $(document).ready(function () {
 				outMax = $(window).outerHeight() * 0.8,
 				newVal = -scrolled.map(inMin, inMax, outMin, outMax) + 'px';
 			$('#home-films').css('margin-top', newVal);
+		} else if (scrolled > $("#v-header").attr('data-offset')) {
+			$('#home-films').css('margin-top', $(window).outerHeight() * 0.8);
+		} else if (scrolled < $('#home-videos').attr('data-offset')) {
+			$('#home-films').css('margin-top', 0);
 		}
 	}
 
@@ -114,7 +118,7 @@ $(document).ready(function () {
 	window.addEventListener('scroll', function () {
 		this.requestAnimationFrame(function () {//NOTE: "this" might fuck this up... jsHint had to make things complicated.
 			scrollPos = window.pageYOffset;
-			if($(window).outerWidth() > 480) {
+			if($(window).outerWidth() > 480 && $entries.length > 2) {
 				$entries.each(function (ind, el) {
 					//Keep cards at top of page / Control is-scrollable scrolling
 					var top = (parseFloat($(this).attr('data-offset')) + (parseFloat($(this).attr('data-height')) * 0.9));
@@ -132,7 +136,7 @@ $(document).ready(function () {
 						//					}
 					} else if (scrollPos > top) {//Stick-to-top
 						if($(this).attr('data-offset') !== 0) {
-							if(ind === $entries.length - 2 && $entries.length >2) {}
+							if(ind === $entries.length - 2) {}
 							else {
 								$(this).css({
 									'top': '-'+ (parseFloat($(this).attr('data-height') * 0.9) + 'px'),
