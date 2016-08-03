@@ -178,7 +178,7 @@ main.home #v-header {
 	z-index: 5;
 	color: white;
 	opacity: 1;
-	text-decoration: none;
+	text-decoration: none !important;
 	font-size: 0.9em;
 	transition: all 1s
 }
@@ -189,7 +189,7 @@ a.v-prev-link {
 	right: 4em;
 	z-index: 5;
 	color: white;
-	text-decoration: bold;
+	text-decoration: none; 
 	font-size: 0.9em;
 	transition: opacity 1s;
 }

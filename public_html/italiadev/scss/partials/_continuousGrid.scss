@@ -134,7 +134,7 @@
 		font-size: 0.8em;
 		line-height: 0.8;
 		font-weight: bold;
-		color: $color3;
+		color: $color5;
 		opacity: 0;
 		cursor: pointer;
 		transition: all .5s;
@@ -195,7 +195,7 @@ ul.ui-autocomplete {
 		mix-blend-mode: multiply;
 		font-family: header;
 		.highlight {
-			color: $color1;
+			color: $color5;
 			text-decoration: none;
 			mix-blend-mode: multiply;
 		}
@@ -322,7 +322,7 @@ section[id^="flex-grid-"]{
 h1[id*="year-title-"] {
 	position: relative;
 	margin-left: 5vw;
-	color: $color2;
+	color: $color5;
 	font-size: 4rem;
 	margin: 0 3vw;
 	letter-spacing: 0em;
@@ -338,13 +338,13 @@ h1[id*="year-title-"] {
 
 #year-links {
 	position: absolute;
-	top: 1.5vw;
-	right: 4.5vw;
+	top: 5vw;
+	right: 5.5vw;
 
 	@include respond-to(tablet) {
 		position: fixed;
-		top: 7vw;
-		right: 3vw;
+		top: 15vw;
+		right: 4vw;
 	}
 
 	.mobile-year-menu {
@@ -391,7 +391,7 @@ h1[id*="year-title-"] {
 		}
 	}
 	a {
-		color: $color3;
+		color: $color5;
 		font-family: subhead;
 	}
 }

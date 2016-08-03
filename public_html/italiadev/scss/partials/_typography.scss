@@ -59,10 +59,10 @@ a {
 		content         : '';
 		position        : absolute;
 		width           : 100%;
-		height          : .12em;
-		top             : 100%;
-		left            : -5%;
-		background-color: $color1;
+		height          : .10em;
+		top             : 1em;
+		left            : -7%;
+		background-color: $color5;
 		visibility      : hidden;
 		mix-blend-mode  : multiply;
 		transform-origin: left;
