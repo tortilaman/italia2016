@@ -79,7 +79,7 @@
 		@include respond-to(tablet) {
 			margin: 0;
 			top: 4rem;
-			left: 2rem;
+			left: 5rem;
 			text-align: left;
 		}
 	}
@@ -181,7 +181,7 @@
 
 		@include respond-to(tablet) {
 			float: right;
-			margin-top: 8%;
+			margin-top: %;
 			margin-right: 6vw;
 			width: 36vw;
 			height: 100%;
@@ -291,6 +291,7 @@
 	width: 100%;
 	height: 42.86vw;
 	margin-top: 1em;
+	left: 1.8em;
 	overflow:hidden;
 
 	@include respond-to(tablet) {
@@ -328,14 +329,14 @@
 	height: auto;
 	margin-top: 12vw;
 	@include respond-to(tablet) {
-		margin-top: 17vw;
+		margin-top: 18vw;
 		margin-left: 25vw;
 		width: 30vw;
-		height: 13.71vw;
+		height: 20vw;
 		background: white;
 	}
 	.inner {
-		padding: 1em;
+		padding: 2em;
 		h2,
 		p {
 			position: relative;
@@ -343,7 +344,7 @@
 			margin-top: 0.5em;
 		}
 		p {
-			margin-left: 1em;
+			margin-left: 0em;
 		}
 	}
 }
@@ -351,8 +352,8 @@
 #italia-pace {
 	@extend .green-bg;
 	@include respond-to(tablet) {
-		margin-top: 5vw;
-		margin-left: 5vw;
+		margin-top: 10vw;
+		margin-left: 15vw;
 	}
 }
 
@@ -360,14 +361,14 @@
 	@extend .blue-bg;
 	@include respond-to(tablet) {
 		margin-top: 15vw;
-		margin-left: 35vw;
+		margin-left: 28vw;
 	}
 }
 
 #italia-italy {
 	@extend .tan-bg;
 	@include respond-to(tablet) {
-		margin-top: 25vw;
+		margin-top: 20vw;
 		margin-left: 20vw;
 		margin-bottom: calc(100vh - 50.71vw);
 	}

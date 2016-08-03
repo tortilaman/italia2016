@@ -37,12 +37,21 @@
 		height: 1em;
 
 		@include respond-to(tablet) {
+			bottom: 0.3rem;
+			height: 3em;
+			width: 30vw;
+			right: 0;
+		}
+		@include respond-to(laptop) {
+			bottom: 0.55rem;
+		
 			top: auto;
 			bottom: -0.1rem;
 			height: auto;
 			width: 30vw;
 			right: 0;
 		}
+
 
 		#search-btn {
 			display: inline-block;
@@ -77,7 +86,7 @@
 		background: none;
 		border: none;
 		box-shadow: none;
-		border-bottom: .1rem solid $color5;
+		border-bottom: .13rem solid $color5;
 		font-size: 0.8rem;
 		line-height: 0.8;
 		outline: none;
@@ -125,7 +134,7 @@
 		font-size: 0.8em;
 		line-height: 0.8;
 		font-weight: bold;
-		color: $color3;
+		color: $color5;
 		opacity: 0;
 		cursor: pointer;
 		transition: all .5s;
@@ -186,7 +195,7 @@ ul.ui-autocomplete {
 		mix-blend-mode: multiply;
 		font-family: header;
 		.highlight {
-			color: $color1;
+			color: $color5;
 			text-decoration: none;
 			mix-blend-mode: multiply;
 		}
@@ -329,13 +338,13 @@ h1[id*="year-title-"] {
 
 #year-links {
 	position: absolute;
-	top: 1.5vw;
-	right: 4.5vw;
+	top: 5vw;
+	right: 5.5vw;
 
 	@include respond-to(tablet) {
 		position: fixed;
-		top: 7vw;
-		right: 3vw;
+		top: 15vw;
+		right: 4vw;
 	}
 
 	.mobile-year-menu {
@@ -382,7 +391,7 @@ h1[id*="year-title-"] {
 		}
 	}
 	a {
-		color: $color3;
+		color: $color5;
 		font-family: subhead;
 	}
 }
