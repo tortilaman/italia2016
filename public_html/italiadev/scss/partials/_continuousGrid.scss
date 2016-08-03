@@ -329,7 +329,7 @@ h1[id*="year-title-"] {
 	letter-spacing: 0em;
 	padding-top: 0.5em;
 	transform: translateY(-5vw);
-	z-index: 100;
+	z-index: 200;
 	mix-blend-mode: multiply;
 
 	@include respond-to(phone) {
@@ -407,7 +407,7 @@ h1[id*="year-title-"] {
 	display: block;
 	margin: 1vw 0 0 0;
 	padding: 0;
-	z-index: 5;
+	z-index: 200;
 	mix-blend-mode: normal;
 	//The link hides the overflow
 	a {
