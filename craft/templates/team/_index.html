@@ -27,7 +27,7 @@ _#}
 	{# Find your entries #}
 	{% set entries = craft.entries.section('team').order('postDate desc') %}
 {# =========================== Display Entries =========================== #}
-	<section id="team-about" class="team-section bghidden animated bounceInUp is-scrollable">
+	<section id="team-about" class="team-section bghidden is-scrollable">
 		<div class="inner hide ">
 			<h1>what is italiaDesign?</h1>
 			<p>We are dieci, the tenth year of an on-going research program offered by the School of Interactive Arts and Technology at Simon Fraser University. We travelled to Italy to build on the foundation of the past 10 years of research on italian designers and culture.</p>
@@ -37,7 +37,7 @@ _#}
 		</div>
 	</section>
 	{% if entries | length %}
-		<section id="flex-grid-team" class="flexbox-grid team-section clearfix animated bounceInUp">
+		<section id="flex-grid-team" class="flexbox-grid team-section clearfix">
 			<section class="inner">
 				<article id="page-info">
 					<h1>we are dieci</h1>

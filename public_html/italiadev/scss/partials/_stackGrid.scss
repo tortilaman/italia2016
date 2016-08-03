@@ -27,8 +27,11 @@
 	position: relative !important;
 }
 
-.top-lock {
+.fixedTop {
 	position: fixed;
+	top: auto !important;
+	bottom: 100vh !important;
+	z-index: 1 !important;
 }
 
 .scrollHide {
@@ -49,6 +52,7 @@
 
 	@include respond-to(tablet) {
 		position: fixed;
+		transform: translateY(2em);
 	}
 
 	.inner {
@@ -128,7 +132,7 @@
 }
 
 [id^='home-'] {
-	margin: 0 0 2vw 0;
+//	margin: 0 0 2vw 0;
 	width: 100%;
 }
 
@@ -139,7 +143,7 @@
 	animation-delay: 0.75s;
 
 	@include respond-to(tablet) {
-		margin: 8vw 0 0 8vw;
+		margin: 8vw auto auto 8vw;
 		width: 86vw;
 		height: calc(100vh - 14vw);
 	}

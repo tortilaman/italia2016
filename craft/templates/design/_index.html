@@ -97,16 +97,10 @@ _#}
 						{% else %}
 							{% set image = entry.intPortrait.first %}
 						{% endif %}
-						<a href="{{ entry.url }}">
-							{% if image %}
-								<div class="entry-thumb-cont">
-									<img src="{{ image.url }}" alt="{{ image.title }}">
-								</div>
-							{% else %}
-								<div class="entry-thumb-cont">
-									<img src="http://dev.sfuitaliadesign.com/assets/images/portraits/placeholder-image.jpg" alt="Placeholder image">
-								</div>
-							{% endif %}
+						<a href="{{ entry.url }}" class="clearfix">
+							<div class="entry-thumb-cont">
+								<img src="{{ image.url }}" alt="{{ image.title }}">
+							</div>
 							<div class="entry-title">
 								<h1>{{ entry }}</h1>
 								<h2>{{entry.type != 'shortFilm'?entry.companyField}}</h2>

@@ -26,7 +26,7 @@ $(document).ready(function () {
 		$entries = $("section[class*='-section']");
 
 	/*=================================
-		SCROLLING IMPLEMENTATION
+		SCROLLING F'NS
 	**===============================*/
 
 	function calcHeights() {
@@ -51,16 +51,6 @@ $(document).ready(function () {
 		} else {
 			calcHeights();
 		}
-	}
-
-	/*=================================
-		AUTOPLAY ANIMATE IN
-	**===============================*/
-
-	if($("main").hasClass("autoplay") && !$("main").hasClass("home")) {
-		$('html, body').animate({
-			scrollTop: $("#v-header").outerHeight(true)
-		}, 200);
 	}
 
 	/*=================================
@@ -95,56 +85,61 @@ $(document).ready(function () {
 				italiaIndex: [0, 0.5]
 			};
 
-		$entries.each(function(ind, el) {
-			var $entry = ind !== 0 ? $entries.eq(ind - 1) : $entries.eq(0),
-				$scrollStart = ind !== 0 ? parseFloat($entry.attr('data-offset')) + (parseFloat($entry.attr('data-height')) * offsets[page][0]) : 0,
-				$scrollEnd = ind !== 0 ? parseFloat($entry.attr('data-offset')) + (parseFloat($entry.attr('data-height')) * offsets[page][1]) : 0,
-				$opacity;
-			if(scrollPos > $scrollStart && scrollPos < $scrollEnd) {
-				$opacity = ((scrollPos - $scrollStart) / ($scrollEnd - $scrollStart)).toFixed(2);
-			} else if(scrollPos <= $scrollStart) {
-				$opacity = 0;
-			} else if(scrollPos >= $scrollEnd) {
-				$opacity = 1;
-			}
-			$entries.eq(ind).find(".scrollHide").css('opacity', $opacity);
-		});
+		if(offsets[page].length) {
+			$entries.each(function(ind, el) {
+				var $entry = ind !== 0 ? $entries.eq(ind - 1) : $entries.eq(0),
+					$scrollStart = ind !== 0 ? parseFloat($entry.attr('data-offset')) + (parseFloat($entry.attr('data-height')) * offsets[page][0]) : 0,
+					$scrollEnd = ind !== 0 ? parseFloat($entry.attr('data-offset')) + (parseFloat($entry.attr('data-height')) * offsets[page][1]) : 0,
+					$opacity;
+				if(scrollPos > $scrollStart && scrollPos < $scrollEnd) {
+					$opacity = ((scrollPos - $scrollStart) / ($scrollEnd - $scrollStart)).toFixed(2);
+				} else if(scrollPos <= $scrollStart) {
+					$opacity = 0;
+				} else if(scrollPos >= $scrollEnd) {
+					$opacity = 1;
+				}
+				$entries.eq(ind).find(".scrollHide").css('opacity', $opacity);
+			});
+		}
+	}
+
+	/*=================================
+		AUTOPLAY ANIMATE IN
+	**===============================*/
+
+	if($("main").hasClass("autoplay") && !$("main").hasClass("home")) {
+		$('html, body').animate({
+			scrollTop: $("#v-header").outerHeight(true)
+		}, 200);
 	}
 
 	/*=================================
 		EVENT LISTENERS
 	**===============================*/
 
+	//Keep cards at top of page / Control is-scrollable scrolling
 	window.addEventListener('scroll', function () {
-		this.requestAnimationFrame(function () {//NOTE: "this" might fuck this up... jsHint had to make things complicated.
+		this.requestAnimationFrame(function () {
 			scrollPos = window.pageYOffset;
-			if($(window).outerWidth() > 480 && $entries.length > 2) {
+			//If we're not on mobile
+			if($(window).outerWidth() > 480) {
 				$entries.each(function (ind, el) {
-					//Keep cards at top of page / Control is-scrollable scrolling
-					var top = (parseFloat($(this).attr('data-offset')) + (parseFloat($(this).attr('data-height')) * 0.9));
+					var top = parseFloat($(this).attr('data-offset')) + parseFloat($(this).attr('data-height'));
+
 					if(scrollPos < $(this).attr('data-offset')){//Fixed
 						$(this).removeClass('is-scrollable');
+						$(this).removeClass('fixedTop');
 						$(this).css('top', 0);
 					} else if(scrollPos > $(this).attr('data-offset') && scrollPos < top) {//Scroll
 						$(this).addClass('is-scrollable');
-						//					$(this).removeClass('top-lock');
-						//					if(ind !== $entries.length - 2) {
+						$(this).removeClass('fixedTop');
 						$(this).css({
 							'top': $(this).attr('data-offset')+'px',
-							'position': null
+							'position': null//Remove any js position
 						});
-						//					}
 					} else if (scrollPos > top) {//Stick-to-top
-						if($(this).attr('data-offset') !== 0) {
-							if(ind === $entries.length - 2) {}
-							else {
-								$(this).css({
-									'top': '-'+ (parseFloat($(this).attr('data-height') * 0.9) + 'px'),
-									'position': 'fixed !important'
-								});
-								$(this).removeClass('is-scrollable');
-							}
-						}
+						$(this).removeClass('is-scrollable');
+						$(this).addClass('fixedTop');
 					}
 					//Original implementation if the bugs become a problem.
 					//$(this).toggleClass('is-scrollable', scrollPos > $(this).attr('data-offset'))

@@ -419,8 +419,20 @@ h1[id*="year-title-"] {
 		width: 100%;
 		overflow: hidden;
 
-		&:hover::before {
+		&::before {
 			display: none;
+		}
+
+		&:hover {
+
+			img {
+				transform: scale(1.2);
+				transition: transform 8s;
+			}
+
+			&::before {
+				display: none;
+			}
 		}
 	}
 	//Images that are bigger than the container will be centered by this element
@@ -490,11 +502,6 @@ h1[id*="year-title-"] {
 	&:hover {
 		z-index: 100 !important;
 		mix-blend-mode: normal;
-
-		img {
-			transform: scale(1.2);
-			transition: transform 8s;
-		}
 	}
 }
 

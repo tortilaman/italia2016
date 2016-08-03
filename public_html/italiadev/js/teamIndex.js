@@ -22,7 +22,7 @@ $(document).ready(function () {
 	}
 
 	//ANIMATE.CSS JQUERY FUNCTION
-	$.fn.extend({
+	/*$.fn.extend({
 		animateCss: function (fadeDirection) {
 			var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
 			var animationName = "fade" + fadeDirection + $(this).attr('data-dir');
@@ -30,7 +30,7 @@ $(document).ready(function () {
 				$(this).removeClass('animated ' + animationName);
 			});
 		}
-	});
+	});*/
 
 	/* ==================
 		GRID FUNCTION
@@ -46,12 +46,12 @@ $(document).ready(function () {
 		}
 		$(".film-entry + .design-entry").css('left', getRandomInt(-4, 0).toFixed(1) + 'vw');
 
-		var dict = {
+		/*var dict = {
 			0: "Up",
 			1: "Down",
 			2: "Left",
 			3: "Right"
 		};
-		$(this).attr('data-dir', dict[getRandomInt(0, 3)]);
+		$(this).attr('data-dir', dict[getRandomInt(0, 3)]);*/
 	});
 });
