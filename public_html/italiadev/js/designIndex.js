@@ -175,7 +175,8 @@ $(document).ready(function () {
 			});
 			$(".design main").css({
 				'margin': '1vw',
-				'padding': '5vw 4vw'
+				'padding': '5vw 4vw',
+				'width': '98vw'
 			});
 		}
 		$("#d-filter span").addClass("active");
@@ -192,7 +193,8 @@ $(document).ready(function () {
 			});
 			$(".design main").css({
 				'margin': '6vw',
-				'padding': '0.25em'
+				'padding': '0.25em',
+				'width': '88vw'
 			});
 		} else {
 			$("#d-filter").css({
@@ -256,21 +258,23 @@ $(document).ready(function () {
 			}
 		});
 
-		//Year Titles
-		for (var year = 2012; year <= 2016; year++) {
-			//All articles are hidden
-			if (!$("#flex-grid-" + year + " article").not(".dHidden").length) {
-				$("#year-title-" + year).hide("fast");
-			} else {
-				$("#year-title-" + year).show("fast");
-			}
-		}
-
 		//Hide the interviews explanation box
 		if($("article[data-title]").hasClass("dHidden")) {
 			$("#page-info").addClass("dHidden");
 		} else {
 			$("#page-info").removeClass("dHidden");
+		}
+
+		//Year Titles
+		for (var year = 2012; year <= 2016; year++) {
+			//All articles are hidden
+			if (!$("#flex-grid-" + year + " article").not(".dHidden").length) {
+				$("#year-title-" + year).hide("fast");
+				$("#flex-grid-"+year).hide("fast");
+			} else {
+				$("#flex-grid-"+year).show("fast");
+				$("#year-title-" + year).show("fast");
+			}
 		}
 
 		//Empty search results. Let's make this interesting!

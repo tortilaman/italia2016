@@ -22,9 +22,9 @@
 </section>
 {% for entry in craft.entries.section('italia') %}
 	<section id="italia-{{entry.slug}}" class="italia-section">
+		<img class="v-thumbnail scrollHide" src="{{entry.videoThumbnail.first().url}}" alt="{{entry}}">
 		<div class="inner scrollHide">
 			<h2 class="v-title">{{entry}}</h2>
-			<img class="v-thumbnail" src="{{entry.videoThumbnail.first().url}}" alt="{{entry}}">
 			<p class="v-description">{{entry.videoDescription}}</p>
 			<a href="{{entry.url}}" class="v-play">play film</a>
 		</div>

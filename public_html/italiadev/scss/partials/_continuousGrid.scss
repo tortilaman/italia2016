@@ -24,9 +24,9 @@
 		position: fixed;
 		height: 6vw;
 		background: white;
-		width: 86vw;
-		left: 5vw;
-		right: 5vw;
+		width: 88vw;
+		left: 6vw;
+		right: 6vw;
 	}
 
 	form {
@@ -44,7 +44,7 @@
 		}
 		@include respond-to(laptop) {
 			bottom: 0.55rem;
-		
+
 			top: auto;
 			bottom: -0.1rem;
 			height: auto;
@@ -143,7 +143,8 @@
 		}
 
 		@include respond-to(tablet) {
-			bottom: 1rem;
+			top: 0.5rem;
+			bottom: auto;
 			font-size: 1.2em;
 			line-height: 1.2;
 		}
@@ -338,7 +339,7 @@ h1[id*="year-title-"] {
 
 #year-links {
 	position: absolute;
-	top: 5vw;
+	top: 2vw;
 	right: 5.5vw;
 
 	@include respond-to(tablet) {
