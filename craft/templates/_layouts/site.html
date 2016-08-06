@@ -18,6 +18,7 @@
 
 {# Define the site navigation #}
 {% set nav = {
+"" : 		{ title: "home"},
 team: 	{ title: "about"},
 italia: { title: "film"},
 design: { title: "interviews"}
@@ -37,7 +38,11 @@ or the first URI segment (this is used by the parent template) #}
 
 {% block body %}
 	{% block nav %}
-		<a id="home-btn" rel="home" href="{{siteUrl}}"><img src="/assets/images/Logo.png"></a>
+		<button type="button" class="tcon tcon-menu--xcross" aria-label="toggle menu">
+					<span class="tcon-menu__lines" aria-hidden="true"></span>
+					<span class="tcon-visuallyhidden">toggle menu</span>
+		</button>
+		<a class="home-btn" rel="home" href="{{siteUrl}}"><img src="/assets/images/logo.png"></a>
 		<header class="header">
 			<nav>
 				<ul>
@@ -61,4 +66,6 @@ or the first URI segment (this is used by the parent template) #}
 	<footer id="footer">
 	{# NOTE: Not sure if there will be a footer yet... #}
 	</footer>
+	<script src="/js/mobileNav.js"></script>
+	<script>transformicons.add('.tcon')</script>
 {% endblock %}

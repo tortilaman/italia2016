@@ -85,7 +85,7 @@ $(document).ready(function () {
 				italiaIndex: [0, 0.5]
 			};
 
-		if(offsets[page].length) {
+		if(offsets[page].length >= 1) {
 			$entries.each(function(ind, el) {
 				var $entry = ind !== 0 ? $entries.eq(ind - 1) : $entries.eq(0),
 					$scrollStart = ind !== 0 ? parseFloat($entry.attr('data-offset')) + (parseFloat($entry.attr('data-height')) * offsets[page][0]) : 0,
