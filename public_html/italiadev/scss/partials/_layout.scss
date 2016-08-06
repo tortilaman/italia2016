@@ -143,12 +143,14 @@ nav {
 		list-style: none;
 		display: flex !important;
 		flex-wrap: wrap;
+		flex-direction: row;
 		justify-content: space-between;
 		align-items: center;
 		height: auto;
 		margin: 0 2vw;
 
 		@include respond-to(tablet){
+			flex-direction: row-reverse;
 			flex-wrap: nowrap;
 			display: inline-block;
 			height: 100%;
@@ -160,29 +162,46 @@ nav {
 			width: 100%;
 			line-height: 4;
 			text-align: center;
-			height: 25vh;
+			height: calc(24vh - 3vmin);
+			margin: 0.5vh 0;
+			background: $color4;
 
 			&:first-of-type {
-				@include respond-to(tablet) {
-					display: none;
-				}
+				@include respond-to(tablet) {display: none;}
+			}
+			&:last-of-type {
+				@include respond-to(tablet) {margin: 0;}
 			}
 
 			@include respond-to(laptop) {
 				display: inline-block;
-				margin-left: 12vh;
+				margin: 0 0 0 12vh;
 				line-height: 1.8;
+				height: auto;
 				width: auto;
 				text-align: left;
+				background: none;
 			}
 		}
 	}
 	a {
 		color: $color5;
-		font-size: 1.2em;
+		font-size: 4em;
+		font-family: "Header";
+		//Vertical Centering hack...
+		height: calc(25vh - 3vmin);
+		line-height: calc(25vh - 3vmin);
+
+		@include respond-to(tablet) {
+			color: $color5;
+			font-size: 1.2em;
+			font-family: "SubHead";
+			height: auto;
+			line-height: 1;
+		}
 
 		&.sel {
-			color: $color5;
+			color: $color1;
 			
 		}
 	}
