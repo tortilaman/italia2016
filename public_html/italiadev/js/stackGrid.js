@@ -65,7 +65,6 @@ $(document).ready(function () {
 			$scrollRefDiv 	= $(parentDiv + ' + section' );
 
 		if (scrolled > $parent.attr('data-offset') && scrolled < $scrollRefDiv.attr('data-offset')) {
-			console.log("The parallaxing should be happening");
 			var oldTop 	= parseInt($dynDiv.css('top').replace('px', '')),
 				inMin 	= $parent.attr('data-offset'),
 				inMax 	= parseFloat(inMin) + parseFloat($parent.outerHeight()),

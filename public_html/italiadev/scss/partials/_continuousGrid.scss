@@ -87,6 +87,7 @@
 		border: none;
 		box-shadow: none;
 		border-bottom: .13rem solid $color5;
+		font-family: "SubHead";
 		font-size: 0.8rem;
 		line-height: 0.8;
 		outline: none;
@@ -106,6 +107,18 @@
 			font-size: 2em;
 		}
 	}
+
+	input::-webkit-input-placeholder {
+		color: $color5;
+	}
+	input::-moz-placeholder {
+		color: $color5;
+		opacity: 1;
+	}
+	input:-ms-input-placeholder {
+		color: $color5;
+	}
+
 	.lSearch {
 		position: absolute;
 		top: 20vh;

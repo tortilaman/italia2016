@@ -338,13 +338,10 @@ a.v-prev-link {
 .v-ended {
 	position: absolute;
 	display: block;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	margin: auto;
-	height: 10em;
-	width: 8em;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	min-width: 65%;
 	text-align: center;
 	z-index: 1;
 	color: white;
@@ -353,42 +350,23 @@ a.v-prev-link {
 		color: white;
 		display: block;
 		text-align: center;
+		font-size: 1.5em;
+		font-family: "Header";
 	}
 
-	.v-ended-cd-cont {
-		position: relative;
-		display: table-cell;
-		vertical-align: middle;
-		height: 8em;
-		width: 8em;
-
-		svg {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 8em;
-			height: 8em;
-		}
+	.v-ended-nextTitle {
+		font-size: 4em;
+		line-height: 1.3;
 	}
 
-	.tProgBar {
-		position: absolute;
-		top: 0;
-		left: 0;
-		stroke: $color1;
-		stroke-width: 8;
-		fill: none;
-		height: 100%;
-		width: 100%;
+	.v-ended-cd-num {
+		font-size: 3em;
+		font-family: "Header";
 	}
 }
 
 .v-suggestions {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
+	position: relative;
 	margin: auto;
 	height: 6em;
 	z-index: 3;

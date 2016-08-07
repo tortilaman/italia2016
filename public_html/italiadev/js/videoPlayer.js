@@ -338,40 +338,20 @@ $(document).ready(function () {
 		NEXT VIDEO F'N
 	**===============================*/
 
-	var cdTime = 5,
-		path = document.querySelector(".tProgBar");
-	var length = path.getTotalLength(),
+	var cdTime = 10,
 		count = 1;
 
-	/* Need initial run as interval hasn't yet occured... */
-//	$('.circle-animation').css('stroke-dashoffset', initOffset-(1*(initOffset/cdTime)));
-
 	document.querySelector("#v-player").onended = function() {
-		//Show it
+		//Show end of video UI everywhere but about / bio pages
 		if(!$("body").hasClass("team") && !$("body").hasClass("team-vid")) {
 			$(".v-ended").css('z-index', '5').removeClass("oHidden");
-			// Clear any previous transition
-			path.style.transition = path.style.WebkitTransition =
-				'none';
-			// Set up the starting positions
-			path.style.strokeDasharray = length + ' ' + length;
-			path.style.strokeDashoffset = length;
-			// Trigger a layout so styles are calculated & the browser
-			// picks up the starting position before animating
-			path.getBoundingClientRect();
-			// Define our transition
-			path.style.transition = path.style.WebkitTransition =
-				'stroke-dashoffset 5s ease-in-out';
-			// Go!
-			path.style.strokeDashoffset = '0';
 			var interval = setInterval(function() {
 				//Set text in middle
 				$('.v-ended-cd-num').text(cdTime - count);
 				//If cancel is clicked
-				$('.v-ended-cancel').one("click", function() {
+				$('.v-ended-cd-cancel').one("click", function() {
 					clearInterval(interval);
-					$(".v-ended").addClass("oHidden").remove();
-					$(".v-suggestions").css('z-index', 5).removeClass("oHidden");
+					$(".v-ended span, [class^='v-ended-']").addClass("oHidden");
 				});
 				if (count == cdTime) {
 					$('.v-ended-cd-num').text('GO!');
@@ -382,7 +362,7 @@ $(document).ready(function () {
 				count++;
 			}, 1000);
 		} else {
-			$(".v-suggestions").css('z-index', 5).removeClass("oHidden");
+			$(".v-ended span, .v-ended-nextTitle, .v-ended-cd-num, .v-ended-cd-cancel").css('z-index', 5).addClass("oHidden");
 		}
 	};
 

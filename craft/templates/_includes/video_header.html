@@ -10,24 +10,32 @@
 
 {# All to find which video in the playlist we're on... #}
 {% set next = false %}
+{% set tag = entry.secondaryTags|length ? entry.secondaryTags|merge(entry.disciplines).order('RAND()').first() : entry.disciplines.order('RAND()').first() %}
+{% set relatedEntries = craft.entries.section('design').type('interviewVideo').relatedTo(tag).order('score').limit(2) %}
 {% if entry.type == 'designer' and entry.hasDescendants() %}
 	{% set siblings = [entry]|merge(entry.children) %}
-	{% set next = entry.children.first() %}
+	{#{% set relatedEntries = craft.entries.section('design').type('interviewVideo').relatedTo(entry.title).limit(2) %}#}
 {% elseif entry.type == 'designer' and not entry.hasDescendants() %}
 	{% set siblings = false %}
+	{#{% set relatedEntries = craft.entries.section('design').type('interviewVideo').relatedTo(entrytitle).limit(2) %}#}
 {% elseif entry.type == 'interviewVideo' %}
 	{% set siblings = [entry.parent]|merge(entry.parent.children) %}
-	{% set next = entry.nextSibling() %}
+	{#{% set relatedEntries = craft.entries.section('design').type('interviewVideo').relatedTo(entry.title).limit(2) %}#}
 {% elseif entry.section == 'italia' %}
 	{% set siblings  = craft.entries.section.italia %}
+	{#{% set relatedEntries = craft.entries.relatedTo(entry).limit(2) %}#}
 {% elseif entry.section == 'team' %}
 	{% set siblings  = craft.entries.section.team %}
+	{#{% set relatedEntries = craft.entries.relatedTo(entry).limit(2) %}#}
 {% endif %}
-
-{% set chaptIndex = siblings|indexOf(entry) %}
-{% set newChaptInd = chaptIndex + 1 %}
-{% set relatedEntries = craft.entries.section('design').relatedTo(entry.disciplines).limit(2) %}
-{% set pastSchoolURLS = {
+{% set siblingIDs = [] %}
+{% for i in 0..(siblings|length - 1) %}
+	{% set siblingIDs = siblingIDs|merge([siblings[i].id]) %}
+{% endfor %}
+{% set chaptIndex = siblingIDs|indexOf(entry.id) + 1 %}
+{% set nextChaptInd 	= chaptIndex + 1 %}
+{% set next 			= siblings[newChaptInd:1] %}
+{% set pastSchoolURLS 	= {
 	'2016' : '',
 	'2015' : 'http://2015.sfudutchdesign.ca/',
 	'2014' : 'http://2014.sfuitaliadesign.com/',
@@ -44,9 +52,13 @@
 			<div id="v-ui">
 				<div class="v-overlay"></div>
 				<div class="v-ui-top">
+					{# Interviewee / Video Heading #}
 					<h1 id="v-interviewee">{{entry.type =='interviewVideo' ? entry.parent : entry.title}}</h1>
-					<h2 id="v-title">{{entry.type !='interviewVideo' ? '' : entry}}</h2>
+					{# Video Sub-heading #}
+					<h2 id="v-title">{{entry.type !='interviewVideo' ? '' : entry}} {{ ['(', siblingIDs|indexOf(entry.id) + 1, '/', siblings|length, ')' ]|join }}</h2>
+					{# Previous Field School Link #}
 					<a href="{{pastSchoolURLS[entry.videoYear.value]}}" class="v-prev-link" target="_blank">{{entry.videoYear.value is even ? 'italiaDesign ' : 'dutchDesign '}}{{entry.videoYear}}</a>
+					{# Social Media Sharing Buttons #}
 					<div id="v-share">
 						<a class="v-share-btn-open"><img src="/assets/images/social-icons/open-01.png"></a>
 						<a class="v-share-btn-close"><img src="/assets/images/social-icons/close-01.png"></a>
@@ -66,31 +78,24 @@
 						</a>
 					</div>
 				{% endif %}
-				{# TODO: Make the proper logic later for next video... #}
-				<div class="v-ended oHidden" data-url="{{siblings[chapterIndex+1].url}}">
+				{# ========= End of video interface ============ #}
+				<div class="v-ended oHidden" data-url="{{siblings[chaptIndex].url}}">
 					<span>up next:</span>
-					<span>{{siblings[chaptIndex+1].title}} ({{chaptIndex}}/{{siblings|length}})</span>
-					<div class="v-ended-cd-cont">
-						<h2 class="v-ended-cd-num">5</h2>
-						<svg viewbox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
-							{# The viewbox attribute allows the svg to scale and gives crazy control. Really awesome: https://css-tricks.com/scale-svg/ #}
-							<circle class="circle-bg" r="69.85699" cy="80" cx="80" stroke-width="8" stroke="#ffffff" fill="none"/>
-							<path class="tProgBar" d="M10,80a70,70 0 1,0 140,0a70,70 0 1,0 -140,0" />
-						</svg>
+					<h1 class="v-ended-nextTitle">{{siblings[chaptIndex].title|lower}}</h1>
+					<h2 class="v-ended-cd-num">10</h2>
+					<a class="v-ended-cd-cancel">cancel</a>
+					<div class="v-suggestions">
+						{% for entry in relatedEntries %}
+							<div class="v-suggestion">
+								<a href="{{entry.url}}">
+									<p>suggested <br> {{entry.title}}</p>
+									<img src="{{entry.videoThumbnail.first().url}}">
+								</a>
+							</div>
+						{% endfor %}
 					</div>
-					<a class="v-ended-cancel">cancel</a>
 				</div>
-				<div class="v-suggestions oHidden">
-					<p>Suggested Videos</p>
-					{% for entry in relatedEntries %}
-						<div class="v-suggestion">
-							<a href="{{entry.url}}">
-								<p>{{entry.title}}</p>
-								<img src="{{entry.intPortrait.first().url}}">
-							</a>
-						</div>
-					{% endfor %}
-				</div>
+				{# ========= Video Controls ============ #}
 				<div class="v-controls">
 					<div class="v-play-btn-cont js-button">
 						<button class="v-play-btn">

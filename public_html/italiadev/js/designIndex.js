@@ -139,7 +139,6 @@ $(document).ready(function () {
 				category: "Company"
 			});
 		}
-//		try {
 		if($(this).attr('data-tags')) {
 			var tags = $(this).attr('data-tags').split(',');
 			tags.forEach(function (element, index, array) {
@@ -164,10 +163,6 @@ $(document).ready(function () {
 				}
 			});
 		}
-//		} catch(err) {
-//			console.log("Item "+ind+",	Title was '"+el.getAttribute("data-title")+"', "+err.message);
-//			console.log(el.getAttribute('data-tags'));
-//		}
 	});
 
 	//Sort first by category and then alphabetically.
