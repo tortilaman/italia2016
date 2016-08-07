@@ -200,9 +200,10 @@ nav {
 			line-height: 1;
 		}
 
-		&.sel {
-			color: $color1;
-			
+		&.sel::before {
+			left            : 0;
+			visibility: visible;
+			transform: scaleX(1);
 		}
 	}
 }

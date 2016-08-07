@@ -448,14 +448,6 @@ d8'          `8b  88  88           `8'        88   `"8bbdP"Y8   `"Ybbd8"'   `"Yb
 			width: 35%;
 			min-height: 75%;
 		}
-		@include respond-to(laptop) {
-		}
-
-		/*@media (orientation: portrait) {
-			width: 70%;
-			height: 43%;
-			min-height: 0;
-		}*/
 
 		.quote {
 			font-size: 1.5em;
@@ -635,10 +627,10 @@ main.team-vid {
 		@include respond-to(tablet) {
 			position: absolute;
 			left: 25%;
-			top: 28%;
+			top: 27%;
 			padding-bottom: 1%;
 			min-height:0;
-			width: auto;
+			width: 35%;
 		}
 
 		.v-contents-title {
@@ -770,6 +762,19 @@ main.team #flex-grid-team {
 			width: 30vw;
 			padding: 2em;
 			margin-top: 20vh;
+
+			//Left side Q&As
+			&:nth-child(odd) {right: -5vw;}
+			//Right side Q&As
+			&:nth-child(even) {left: -5vw;}
+		}
+		@include respond-to(laptop) {
+			&:nth-child(odd) {right: -8vw;}
+			&:nth-child(even) {left: -8vw;}
+		}
+		@include respond-to(desktop) {
+			&:nth-child(odd) {right: -15vw;}
+			&:nth-child(even) {left: -15vw;}
 		}
 	}
 }

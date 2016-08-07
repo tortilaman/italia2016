@@ -11,13 +11,6 @@ $body-font-sizes: (
 	desktop: (1.0 rem, 1.8)
 );
 
-// $body-font-sizes: (
-// 	null: (0.8rem, 1.8),
-// 	tablet: (0.9rem, 1.8),
-// 	laptop: (1.0 rem, 1.8),
-// 	desktop: (1.2 rem, 1.8)
-// );
-
 body {
 	font-family: 'karla', sans-serif;
 	@include font-size($body-font-sizes);
