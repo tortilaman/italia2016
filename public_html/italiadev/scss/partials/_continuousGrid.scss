@@ -107,7 +107,7 @@
 		}
 	}
 	.lSearch {
-		position: fixed;
+		position: absolute;
 		top: 20vh;
 		right: 30vw;
 		left:30vw;
@@ -172,9 +172,9 @@
 
 
 ul.ui-autocomplete {
-	position: fixed;
-	top: calc(20vh + 1rem);
-	left: calc(30vw + 1.75em);
+	position: absolute;
+	top: calc(20vh + 1rem) !important;
+	left: calc(30vw + 1.75em) !important;
 	background: none;
 	padding: 0.25rem 0;
 	box-shadow: none;
@@ -182,8 +182,8 @@ ul.ui-autocomplete {
 	z-index: 200;
 
 	@include respond-to(tablet) {
-		top: calc(25vh + 3rem);
-		left: 35vw;
+		top: calc(25vh + 3rem) !important;
+		left: 35vw !important;
 	}
 	li.ui-menu-item {
 		box-shadow: none;

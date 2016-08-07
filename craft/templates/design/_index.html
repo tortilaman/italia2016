@@ -84,7 +84,7 @@ _#}
 					</article>
 				{% endif %}
 				{% for entry in entries %}
-				<article class="{{entry.type == 'shortFilm' ? 'film-entry' : 'design-entry'}} {{entry.videoYear >= '2015' ? 'v21-9' : 'v16-9'}} item" data-title="{{entry|lower}}" data-tags="{% for tag in entry.disciplines  %}{{tag}}{{tag == entry.disciplines.last() ? '' :','}}{% endfor %}" data-show="true">
+				<article class="{{entry.type == 'shortFilm' ? 'film-entry' : 'design-entry'}} {{entry.videoYear >= '2015' ? 'v21-9' : 'v16-9'}} item" data-title="{{entry|lower}}" data-company="{{entry.type != 'shortFilm'?entry.companyField}}" data-tags="{% for tag in entry.disciplines  %}{{tag}}{{tag == entry.disciplines.last() ? '' :','}}{% endfor %}" data-show="true">
 						{% if entry.type == "interviewVideo" %}
 							{% set image = entry.parent.intPortrait.first %}
 						{% elseif entry.type == 'designer' %}

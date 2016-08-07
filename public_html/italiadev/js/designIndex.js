@@ -173,10 +173,11 @@ $(document).ready(function () {
 		$("#search").focus();
 		if($(window).outerWidth() > breakpoints.phone) {
 			$("#d-filter").css({
-				'height': '1vw',
-				'width': '98vw',
-				'right': '1vw',
-				'left': '1vw'
+				'position': 'absolute',
+				'height': '0',
+				'width': '100vw',
+				'right': '0',
+				'left': '0'
 			});
 			$(".design main").css({
 				'margin': '1vw',
@@ -191,6 +192,7 @@ $(document).ready(function () {
 		$("article img, article .entry-title, #page-info h1, #page-info p, [id*='year-title-']").removeClass("oHidden");
 		if($(window).outerWidth() > breakpoints.phone) {
 			$("#d-filter").css({
+				'position': 'fixed',
 				'height': '6vw',
 				'width': '88vw',
 				'right': '6vw',
@@ -210,8 +212,8 @@ $(document).ready(function () {
 			});
 		}
 		$("#d-filter form").removeClass("lSearch");
-		$("#d-filter span").removeClass("active");
-//		$(window).focus();
+//		$("#d-filter span").removeClass("active");
+		$(window).focus();
 		searching = false;
 	}
 
@@ -319,10 +321,10 @@ $(document).ready(function () {
 		delay: 0,
 		select: function (event, ui) {
 			$("#search").val(ui.item.label);
-			$("#d-filter span").addClass("active");
 			requestAnimationFrame($filterResults);
 			hideSearch();
 			$(window).focus();
+			$("#d-filter span").addClass("active");
 		}
 	}).data('ui-autocomplete')._renderItem = function (ul, item) {
 		var term = $('#search').val();
@@ -392,7 +394,6 @@ $(document).ready(function () {
 	});
 
 	$("#search").focusin(function () {
-		$(this).val("");
 		$('main').removeClass("noResults");
 	});
 
@@ -407,7 +408,6 @@ $(document).ready(function () {
 	});
 
 	$("#search, #search-btn").on("click", function () {
-		$("#search").val("");
 		$('main').removeClass("noResults");
 		showSearch();
 		$("#search").autocomplete("search", "");
