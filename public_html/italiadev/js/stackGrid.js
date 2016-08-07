@@ -57,20 +57,26 @@ $(document).ready(function () {
 		PARALLAX SOME DIVS
 	**===============================*/
 
-	function parallax() {
-		var scrolled = $(window).scrollTop();
-		if (scrolled > $('#home-videos').attr('data-offset') && scrolled < $("#v-header").attr('data-offset')) {
-			var oldTop = parseInt($('#home-films').css('top').replace('px', '')),
-				inMin = $("#home-videos").attr('data-offset'),
-				inMax = parseFloat(inMin) + parseFloat($("#home-videos").outerHeight()),
-				outMin = 0,
-				outMax = $(window).outerHeight() * 0.8,
-				newVal = -scrolled.map(inMin, inMax, outMin, outMax) + 'px';
-			$('#home-films').css('margin-top', newVal);
-		} else if (scrolled > $("#v-header").attr('data-offset')) {
-			$('#home-films').css('margin-top', $(window).outerHeight() * 0.8);
-		} else if (scrolled < $('#home-videos').attr('data-offset')) {
-			$('#home-films').css('margin-top', 0);
+	//Parent needs to be a section level element
+	function parallax(parentDiv) {
+		var scrolled 		= $(window).scrollTop(),
+			$parent			= $(parentDiv),
+			$dynDiv 		= $(parentDiv+' > div:nth-of-type(2)'),
+			$scrollRefDiv 	= $(parentDiv + ' + section' );
+
+		if (scrolled > $parent.attr('data-offset') && scrolled < $scrollRefDiv.attr('data-offset')) {
+			console.log("The parallaxing should be happening");
+			var oldTop 	= parseInt($dynDiv.css('top').replace('px', '')),
+				inMin 	= $parent.attr('data-offset'),
+				inMax 	= parseFloat(inMin) + parseFloat($parent.outerHeight()),
+				outMin 	= 0,
+				outMax 	= $(window).outerHeight() * 0.8,
+				newVal 	= -scrolled.map(inMin, inMax, outMin, outMax) + 'px';
+			$dynDiv.css('margin-top', newVal);
+		} else if (scrolled > $scrollRefDiv.attr('data-offset')) {
+			$dynDiv.css('margin-top', $(window).outerHeight() * 0.8);
+		} else if (scrolled < $parent.attr('data-offset')) {
+			$dynDiv.css('margin-top', 0);
 		}
 	}
 
@@ -145,7 +151,12 @@ $(document).ready(function () {
 					//$(this).toggleClass('is-scrollable', scrollPos > $(this).attr('data-offset'))
 				});
 			}
-			parallax();
+			if($('body').hasClass('home')) {
+				parallax('#home-videos');
+			}
+			if($('body').hasClass('v')) {
+				parallax('#v-intro');
+			}
 			//Don't show on scroll on team page.
 			if(!$('body').hasClass("team")) showOnScroll();
 		});
