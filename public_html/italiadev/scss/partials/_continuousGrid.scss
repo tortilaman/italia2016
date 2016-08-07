@@ -196,7 +196,7 @@ ul.ui-autocomplete {
 		mix-blend-mode: multiply;
 		font-family: header;
 		.highlight {
-			color: $color5;
+			color: $color1;
 			text-decoration: none;
 			mix-blend-mode: multiply;
 		}
@@ -258,14 +258,19 @@ main.team {
 	}
 
 	#flex-grid-team {
-		width: 100vw;
-		margin-bottom: 0;
+		width: 88%;
+		max-width: 88%;
+		margin: 6% 6% 0 6%;
 
 		.inner {
-			min-height: none;
+			min-height: 0;
 			transition: none;
 			margin: 0;
-			padding: 2rem 3vw;
+			padding: 2rem 0;
+
+			@include respond-to(tablet) {
+				padding: 2rem 5%;
+			}
 		}
 	}
 
@@ -447,7 +452,7 @@ h1[id*="year-title-"] {
 		mix-blend-mode: multiply;
 	}
 	//Because of the hover scaling, the centering couldn't happen on the image.
-	img {
+	img, video {
 		position: relative;
 		display: block;
 		transform-origin: center center;
@@ -501,7 +506,6 @@ h1[id*="year-title-"] {
 
 	&:hover {
 		z-index: 200 !important;
-		mix-blend-mode: normal;
 	}
 }
 
@@ -562,19 +566,57 @@ h1[id*="year-title-"] {
 	@extend .entry;
 	@extend .green-bg;
 	width: 100%;
-	height: 63.33vw;
 	margin-top: 1.5vh;
+	&.v16-9 {height: 56.25vw;}
+	&.v21-9 {
+		height: 42.86vw;
+
+		video {
+			margin-top: -6.75%;
+		}
+	}
 
 	@include respond-to(phone) {
 		width: 88vw;
-		height: 58.66vw;
+		&.v16-9 {height: 49.5vw;}
+		&.v21-9 {height: 37.71vw;}
+
+		video {
+			width: 88vw;
+			height: auto;
+		}
 	}
 	@include respond-to(tablet) {
 		width: 54vw;
-		height: 36vw;
+		&.v16-9 { height: 30.38vw;}
+		&.v21-9 { height: 23.14vw;}
+
+		video {
+			width: 54vw;
+			height: auto;
+		}
 	}
 	@include respond-to(laptop) {
 		width: 40vw;
-		height: 26.66vw;
+		&.v16-9 { height: 22.5vw;}
+		&.v21-9 { height: 17.14vw;}
+
+		video {
+			width: 40vw;
+			height: auto;
+		}
+	}
+
+	.entry-title {
+		position: absolute;
+		top: 0;
+		left: 0;
+		display: block;
+		height: 100%;
+
+		h1 {
+			height: 100%;
+			padding: calc(25% - 1.3em) 0;
+		}
 	}
 }

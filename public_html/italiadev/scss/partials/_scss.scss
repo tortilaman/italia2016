@@ -33,6 +33,11 @@ $breakpoints: (
 	desktop: 1300px
 );
 
+$orientations: (
+	p: "portrait",
+	l: "landscape"
+);
+
 //Layout Variables
 $sUnit: 2vw;
 
@@ -83,14 +88,25 @@ $sUnit: 2vw;
 //
 // ==================================
 
-@mixin respond-to($breakpoint) {
+@mixin respond-to($breakpoint: "", $orientation: "") {
 	// Retrieves the value from the key
-	$value: map-get($breakpoints, $breakpoint);
+	$bp-value: map-get($breakpoints, $breakpoint);
+	$o-value: map-get($orientations, $orientation);
 
 	// If the key exists in the map
-	@if $value != null {
-		// Prints a media query based on the value
-		@media (min-width: $value) {
+	@if $bp-value != null {
+		@if $o-value == null {
+			// Prints a media query based on the value
+			@media (min-width: $bp-value) {
+				@content;
+			}
+		} @else {
+			@media (min-width: $bp-value) and (orientation: $o-value) {
+				@content;
+			}
+		}
+	} @else if $o-value != null {
+		@media (orientation: $o-value) {
 			@content;
 		}
 	}

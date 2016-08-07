@@ -51,11 +51,10 @@ span.v-close-btn {
 		box-shadow: none;
 	}
 
-	@media (orientation: landscape) {
+	@include respond-to(l) {
 		height: calc(100vh - 7vw);
 		margin-bottom: 7vw;
 	}
-
 }
 
 main.v #v-header {
@@ -64,34 +63,6 @@ main.v #v-header {
 
 main.home #v-header {
 	animation-delay: 0.75s;
-}
-
-.v21-9 {
-	@media (orientation: landscape) {
-		height: 38.25vw !important;
-		width: 90vw !important;
-
-		#v-player {
-			top: -6.2vw !important;
-			width: 90vw !important;
-			height: 50.625vw !important;
-		}
-	}
-	@media (orientation: portrait) {
-		width: 86vw !important;
-		height: 36.86vw !important;
-	}
-}
-
-.v16-9 {
-	@media (orientation: landscape) {
-		height: calc(100vh - 14vw) !important;
-		width: calc((100vh - 14vw)/9*16) !important;
-	}
-	@media (orientation: portrait) {
-		width: 86vw !important;
-		height: 48.375vw !important;
-	}
 }
 
 #v-middle {
@@ -132,17 +103,65 @@ main.home #v-header {
 	}
 }
 
+/*====================================
+	ASPECT RATIOS
+**==================================*/
+
+[id^='v-'] .v21-9, [id^='v-'].v21-9 {
+
+	width: 100vw !important;
+	height: 42.86vw !important;
+
+	#v-player {
+		top: -6.7vw;
+		width: 100vw;
+		height: 56.25vw;
+	}
+
+	@include respond-to(tablet, l) {
+		height: 38.25vw !important;
+		width: 90vw !important;
+
+		#v-player {
+			top: -6.2vw !important;
+			width: 90vw !important;
+			height: 50.625vw !important;
+		}
+	}
+
+	@include respond-to(tablet, p) {
+		width: 86vw !important;
+		height: 36.86vw !important;
+	}
+}
+
+[id^='v-'] .v16-9, [id^='v-'].v16-9 {
+
+	width: 100vw !important;
+	height: 56.25vw !important;
+
+	@include respond-to(tablet, l) {
+		height: calc(100vh - 14vw) !important;
+		width: calc((100vh - 14vw)/9*16) !important;
+	}
+
+	@include respond-to(tablet, p) {
+		width: 86vw !important;
+		height: 48.375vw !important;
+	}
+}
+
 /*====================
-	iOS modifications
+	iOS MODIFICATIONS
 **==================*/
 
 .iOS {
-/*	.v-controls {
+	.v-controls {
 		display: none !important;
 	}
 	.v-init-play {
 		display: none !important;
-	}*/
+	}
 }
 
 /*====================
@@ -258,7 +277,7 @@ a.v-prev-link {
 	bottom: 0;
 	margin: auto;
 	height: 7em;
-	width: 8em;
+	width: 17em;
 	text-align: center;
 	z-index: 5;
 	transition: opacity 0.5;
@@ -286,6 +305,12 @@ a.v-prev-link {
 		display: inline-block;
 		margin: 0.25em auto;
 		color: $color1;
+		$play-btn-fs: (
+			null: (1.5rem, 1),
+			tablet: (2.4rem, 1)
+		);
+
+		@include font-size($play-btn-fs);
 	}
 
 	a {

@@ -13,45 +13,62 @@ d8'
 
 ** ==========================================================*/
 $(document).ready(function () {
-	var $entries = $("[class*='-entry']"),
-		hOffset = ['-2vw', '0', '2vw'],
-		vOffset = ['-2vw', '0', '2vw', '9vw', '16vw', '18vw'];
+	var $entries = $("[class*='-entry']");
 
 	function getRandomInt(min, max) {
 		return Math.round(Math.random() * (max - min + 1) + min);
 	}
 
-	//ANIMATE.CSS JQUERY FUNCTION
-	/*$.fn.extend({
-		animateCss: function (fadeDirection) {
-			var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
-			var animationName = "fade" + fadeDirection + $(this).attr('data-dir');
-			$(this).addClass('animated ' + animationName).one("animationend", function (e) {
-				$(this).removeClass('animated ' + animationName);
-			});
-		}
-	});*/
-
 	/* ==================
 		GRID FUNCTION
 	** ================*/
 
-	$entries.each(function (index, value) {
-		$(this).css('left', hOffset[Math.floor(Math.random() * hOffset.length)]);
-		$(this).css('margin-top', vOffset[Math.floor(Math.random() * vOffset.length)]);
-		$(this).css('z-index', index + 1);
-		//Prevent consecutive overlaps.
-		if (index > 0) {
-			var oldMargin = $entries.get(index - 1).style.marginLeft;
-		}
-		$(".film-entry + .design-entry").css('left', getRandomInt(-4, 0).toFixed(1) + 'vw');
+	function offsetGrid() {
+		var hoLast,
+			hoThis,
+			voLast,
+			voThis,
+			breakpoints = {phone: 480, tablet: 700, laptop: 1024, desktop: 1600};
 
-		/*var dict = {
-			0: "Up",
-			1: "Down",
-			2: "Left",
-			3: "Right"
-		};
-		$(this).attr('data-dir', dict[getRandomInt(0, 3)]);*/
-	});
+		if($(window).outerWidth() >= breakpoints.phone) {
+			if($(window).outerWidth() >= breakpoints.phone && $(window).outerWidth() < breakpoints.tablet) {
+				hOffset = ['-4vw', '0', '4vw'];
+				vOffset = ['2vw', '6vw', '30vw', '60vw'];
+			}
+			else if($(window).outerWidth() >= breakpoints.tablet && $(window).outerWidth() < breakpoints.laptop) {
+				hOffset = ['-4vw', '0', '4vw'];
+				vOffset = ['2vw', '6vw', '16vw', '30vw'];
+			}
+			else if($(window).outerWidth() >= breakpoints.laptop) {
+				hOffset = ['-1.5vw', '0', '2vw'];
+				vOffset = ['2vw', '3vw', '9vw', '15vw'];
+			}
+			$entries.each(function (index, value) {
+				while(hoThis == hoLast) hoThis = hOffset[Math.floor(Math.random() * hOffset.length)];
+				while(voThis == voLast) voThis = vOffset[Math.floor(Math.random() * vOffset.length)];
+				$(this).css('left', hoThis);
+				$(this).css('margin-top', voThis);
+				hoLast = hoThis;
+				voLast = voThis;
+				var dict = { 0: "Up", 1: "Down", 2: "Left", 3: "Right" };
+				$(this).attr('data-dir', dict[getRandomInt(0, 3)]);
+			});
+		} else {
+			$entries.each(function() {
+				var dict = { 0: "Up", 1: "Down"};
+				$(this).attr('data-dir', dict[getRandomInt(0, 1)]);
+			});
+		}
+	}
+
+	offsetGrid();
+
+	/* =======================================================
+		EVENT LISTENERS
+	** =====================================================*/
+
+	//Reflow grid on window resize or orientation change
+	$(window).on('resize', offsetGrid());
+	var orientationCheck = window.matchMedia("(orientation: portrait)");
+	orientationCheck.addListener(offsetGrid);
 });

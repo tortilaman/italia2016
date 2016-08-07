@@ -91,15 +91,23 @@ _#}
 					</article>
 				{% endif %}
 				{% for entry in entries %}
-					<article class="{{entry.type == 'shortFilm' ? 'film-entry' : 'design-entry'}} item" data-title="{{entry|lower}}" data-tags='{% for tag in entry.disciplines  %}{{tag}}{{tag == entry.disciplines.last() ? "" :","}}{% endfor %}' data-show="true">
+				<article class="{{entry.type == 'shortFilm' ? 'film-entry' : 'design-entry'}} {{entry.videoYear >= '2015' ? 'v21-9' : 'v16-9'}} item" data-title="{{entry|lower}}" data-tags="{% for tag in entry.disciplines  %}{{tag}}{{tag == entry.disciplines.last() ? '' :','}}{% endfor %}" data-show="true">
 						{% if entry.type == "interviewVideo" %}
 							{% set image = entry.parent.intPortrait.first %}
-						{% else %}
+						{% elseif entry.type == 'designer' %}
 							{% set image = entry.intPortrait.first %}
+						{% else %}
+							{% set video = entry.videoThumbnail.first() %}
 						{% endif %}
 						<a href="{{ entry.url }}" class="clearfix">
 							<div class="entry-thumb-cont">
-								<img src="{{ image.url }}" alt="{{ image.title }}">
+								{% if entry.type == 'shortFilm' %}
+									<video autoplay loop muted preload>
+										<source src="{{ video.url }}" type="video/webm" data-title="{{ entry.title }}">
+									</video>
+								{% else %}
+									<img src="{{ image.url }}" alt="{{ image.title }}">
+								{% endif %}
 							</div>
 							<div class="entry-title">
 								<h1>{{ entry }}</h1>
