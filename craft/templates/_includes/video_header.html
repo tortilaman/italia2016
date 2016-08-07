@@ -11,27 +11,24 @@
 {# All to find which video in the playlist we're on... #}
 {% set next = false %}
 {% set tag = entry.secondaryTags|length ? entry.secondaryTags|merge(entry.disciplines).order('RAND()').first() : entry.disciplines.order('RAND()').first() %}
-{% set relatedEntries = craft.entries.section('design').type('interviewVideo').relatedTo(tag).order('score').limit(2) %}
+
 {% if entry.type == 'designer' and entry.hasDescendants() %}
 	{% set siblings = [entry]|merge(entry.children) %}
-	{#{% set relatedEntries = craft.entries.section('design').type('interviewVideo').relatedTo(entry.title).limit(2) %}#}
+	{% set siblingIDs = [entry.id]|merge(entry.children.ids()) %}
 {% elseif entry.type == 'designer' and not entry.hasDescendants() %}
 	{% set siblings = false %}
-	{#{% set relatedEntries = craft.entries.section('design').type('interviewVideo').relatedTo(entrytitle).limit(2) %}#}
 {% elseif entry.type == 'interviewVideo' %}
 	{% set siblings = [entry.parent]|merge(entry.parent.children) %}
-	{#{% set relatedEntries = craft.entries.section('design').type('interviewVideo').relatedTo(entry.title).limit(2) %}#}
+	{% set siblingIDs = [entry.parent.id]|merge(entry.parent.children.ids()) %}
 {% elseif entry.section == 'italia' %}
 	{% set siblings  = craft.entries.section.italia %}
-	{#{% set relatedEntries = craft.entries.relatedTo(entry).limit(2) %}#}
+	{% set siblingIDs  = craft.entries.section.italia.ids() %}
 {% elseif entry.section == 'team' %}
 	{% set siblings  = craft.entries.section.team %}
-	{#{% set relatedEntries = craft.entries.relatedTo(entry).limit(2) %}#}
 {% endif %}
-{% set siblingIDs = [] %}
-{% for i in 0..(siblings|length - 1) %}
-	{% set siblingIDs = siblingIDs|merge([siblings[i].id]) %}
-{% endfor %}
+{% set siblingIDsString = siblingIDs | join(', not ') %}
+{# Finally Related Entries #}
+{% set relatedEntries = craft.entries.section('design').type('interviewVideo').relatedTo(tag).id('and, not '~siblingIDsString).limit(2) %}
 {% set chaptIndex = siblingIDs|indexOf(entry.id) + 1 %}
 {% set nextChaptInd 	= chaptIndex + 1 %}
 {% set next 			= siblings[newChaptInd:1] %}
