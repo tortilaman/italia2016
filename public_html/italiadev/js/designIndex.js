@@ -119,14 +119,26 @@ $(document).ready(function () {
 	var $rawData = $("[data-title]"),
 		newArray =[],
 		tagsArr = [],
-		wordsToSkip = ['is', 'in'];
+		wordsToSkip = ['is', 'in'],
+		categories = {
+			Category : "1",
+			Interviewees : "2",
+			Company : "3"
+		};
 	//Populate newArray with data.
 	$rawData.each(function (ind, el) {
 		newArray.push({
 			label: $(this).attr('data-title'),
 			category: "Interviewees"
 		});
-		try {
+		if(el.getAttribute('data-company')) {
+			newArray.push({
+				label: $(this).attr('data-company'),
+				category: "Company"
+			});
+		}
+//		try {
+		if($(this).attr('data-tags')) {
 			var tags = $(this).attr('data-tags').split(',');
 			tags.forEach(function (element, index, array) {
 				if ($.inArray(element, tagsArr) === -1 && element !== "") {
@@ -137,27 +149,36 @@ $(document).ready(function () {
 					tagsArr.push(element);
 				}
 			});
-		} catch(err) {
-			console.log("Item "+ind+",	Title was '"+el.getAttribute("data-title")+"', "+err.message);
-			console.log(el.getAttribute('data-tags'));
 		}
+//		} catch(err) {
+//			console.log("Item "+ind+",	Title was '"+el.getAttribute("data-title")+"', "+err.message);
+//			console.log(el.getAttribute('data-tags'));
+//		}
 	});
 
 	//Sort first by category and then alphabetically.
 	newArray.sort(function (a, b) {
-		if (a.category == "Category" && b.category == "Interviewees") {
-			return -1;
-		} else if (a.category == "Interviewees" && b.category == "Category") {
-			return 1;
+//		if (a.category == "Category" && b.category == "Interviewees") {
+		if(a.category != b.category) {
+//			return -1;
+			return categories[a.category] - categories[b.category];
+//		} else if (a.category == "Interviewees" && b.category == "Category") {
+//			return 1;
+		} else if (a.category == "Category" && b.category == "Category") {
+			if (a.label < b.label) return -1;
+			if (a.label > b.label) return 1;
+			return 0;
 		} else if (a.category == "Interviewees" && b.category == "Interviewees") {
 			var aName = a.label.split(' ');
 			var bName = b.label.split(' ');
 			if (aName[aName.length - 1] < bName[bName.length - 1]) return -1;
 			if (aName[aName.length - 1] > bName[bName.length - 1]) return 1;
 			return 0;
-		} else if (a.category == "Category" && b.category == "Category") {
-			if (a.label < b.label) return -1;
-			if (a.label > b.label) return 1;
+		} else if (a.category == "Company" && b.category == "Company") {
+			var aCompany = a.label.split(' ');
+			var bCompany = b.label.split(' ');
+			if (aCompany[aCompany.length - 1] < bCompany[bCompany.length - 1]) return -1;
+			if (aCompany[aCompany.length - 1] > bCompany[bCompany.length - 1]) return 1;
 			return 0;
 		}
 	});
@@ -212,7 +233,6 @@ $(document).ready(function () {
 			});
 		}
 		$("#d-filter form").removeClass("lSearch");
-//		$("#d-filter span").removeClass("active");
 		$(window).focus();
 		searching = false;
 	}
@@ -226,8 +246,10 @@ $(document).ready(function () {
 		$("article[data-title]").each(function () {
 			var tags = $(this).attr("data-tags"),
 				names = $(this).attr("data-title").toLowerCase(),
+				company = $(this).attr("data-company") ? $(this).attr("data-company").toLowerCase() : "",
 				//Merge names and tags if there are tags.
-				data = tags === "" ? names : names.concat(" ", tags),
+				datao = tags === "" ? names : names.concat(" ", tags),
+				data = company === "" ? datao : datao.concat(" ", company),
 				show = false,
 				changed,
 				$search = $("#search").val().toLowerCase(),
@@ -258,7 +280,7 @@ $(document).ready(function () {
 				$(this).animateCss('In');
 				$(this).removeClass("dHidden");
 				$(this).next('.blank').removeClass("dHidden");
-			} else if (!show && changed) {
+			} else if (show === false && changed === true) {
 				$(this).animateCss('Out');
 				$(this).addClass("dHidden");
 				$(this).next('.blank').addClass("dHidden");
