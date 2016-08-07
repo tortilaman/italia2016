@@ -615,8 +615,39 @@ h1[id*="year-title-"] {
 		height: 100%;
 
 		h1 {
+			display: inline-block;
 			height: 100%;
 			padding: calc(25% - 1.3em) 0;
+			border-bottom: 0.1em solid transparent;
+			transition: all 0.5s;
+		}
+	}
+
+	.entry-description {
+		position: absolute;
+		bottom: 5%;
+		left: 10%;
+		line-height: 1;
+		opacity: 0;
+		width: 80%;
+		height: auto;
+		color: white;
+		z-index: 50;
+		transform: translateY(100%);
+		transition: all 0.5s;
+	}
+
+	&:hover {
+		.entry-description {
+			opacity: 1;
+			transform: translateY(0);
+		}
+
+		.entry-title h1 {
+			height: auto;
+			padding: 6% 0 1% 0;
+			border-bottom: 0.2em solid white;
+			margin: 0;
 		}
 	}
 }

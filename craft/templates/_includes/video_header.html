@@ -27,6 +27,13 @@
 {% set chaptIndex = siblings|indexOf(entry) %}
 {% set newChaptInd = chaptIndex + 1 %}
 {% set relatedEntries = craft.entries.section('design').relatedTo(entry.disciplines).limit(2) %}
+{% set pastSchoolURLS = {
+	'2016' : '',
+	'2015' : 'http://2015.sfudutchdesign.ca/',
+	'2014' : 'http://2014.sfuitaliadesign.com/',
+	'2013' : 'http://2013.sfudutchdesign.ca/',
+	'2012' : 'http://2012.sfuitaliadesign.com/'
+}%}
 
 <section id="v-header" class="{{bodyClass}}-section">
 	<div id="v-middle"class="{{entry.videoYear >= '2015' ? 'v21-9' : 'v16-9'}}">
@@ -39,7 +46,7 @@
 				<div class="v-ui-top">
 					<h1 id="v-interviewee">{{entry.type =='interviewVideo' ? entry.parent : entry.title}}</h1>
 					<h2 id="v-title">{{entry.type !='interviewVideo' ? '' : entry}}</h2>
-					<a class="v-prev-link">{{entry.videoYear.value is even ? 'italiaDesign ' : 'dutchDesign '}}{{entry.videoYear}}</a>
+					<a href="{{pastSchoolURLS[entry.videoYear.value]}}" class="v-prev-link" target="_blank">{{entry.videoYear.value is even ? 'italiaDesign ' : 'dutchDesign '}}{{entry.videoYear}}</a>
 					<div id="v-share">
 						<a class="v-share-btn-open"><img src="/assets/images/social-icons/open-01.png"></a>
 						<a class="v-share-btn-close"><img src="/assets/images/social-icons/close-01.png"></a>

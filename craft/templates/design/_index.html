@@ -48,40 +48,33 @@ _#}
 	{% for year in years %}
 
 		{# Find your entries #}
-		{% set designerEntries = craft.entries.section('design').type('designer').videoYear(year).order('postDate desc') %}
-		{% set filmEntries = craft.entries.section('design').type('shortFilm').videoYear(year).order('postDate desc') %}
+		{% set designerEntries = craft.entries.section('design').type('designer').videoYear(year) %}
+		{% set filmEntries = craft.entries.section('design').type('shortFilm').videoYear(year) %}
 		{% set filmOffset = designerEntries|length // filmEntries|length %}
 		{% set entries = [] %}
 
 		{# Rearrange entries #}
 		{% if filmEntries|length and designerEntries|length %}
-			{% for i in 0..(filmEntries|length-1) %}
+			{% for i in 0..(filmEntries|length - 1) %}
 				{# Film Entry #}
 				{% set entries = entries|merge([filmEntries.nth(i)]) %}
 				{# Designer Entries #}
 				{% set entries = entries|merge(
-					designerEntries|slice(
-						(i*filmOffset),
-						((i*filmOffset)+(filmOffset - 1))
-					)
+					designerEntries[i * filmOffset : filmOffset]
 				) %}
 			{% endfor %}
 			{% set entries = entries|merge(
-				designerEntries|slice(
-					(filmOffset*filmEntries - 1),
-					(designerEntries|length)
-				)
+				designerEntries[filmOffset * filmEntries|length : filmOffset]
 			) %}
-		{% elseif designerEntries|length %}
+		{% elseif designerEntries|length and filmEntries|length == 0 %}
 			{# No short films in this year #}
 			{% set entries = designerEntries %}
-		{% elseif filmEntries|length %}
+		{% elseif filmEntries|length  and designerEntries|length == 0 %}
 			{% set entries = filmEntries %}
 		{% endif %}
 {# =========================== Display Entries =========================== #}
 		{% if entries | length %}
 			{% set entryYears = entryYears|merge([year]) %}
-			<!--<h1 id="year-title-{{year}}">{{year}}</h1>-->
 			<section id="flex-grid-{{year}}" class="flexbox-grid clearfix">
 				<h1 id="year-title-{{year}}">{{year}}</h1>
 				{% if year == '2016' %}
@@ -109,6 +102,11 @@ _#}
 									<img src="{{ image.url }}" alt="{{ image.title }}">
 								{% endif %}
 							</div>
+							{% if entry.type == 'shortFilm' %}
+								<div class="entry-description">
+									{{entry.videoDescription}}
+								</div>
+							{% endif %}
 							<div class="entry-title">
 								<h1>{{ entry }}</h1>
 								<h2>{{entry.type != 'shortFilm'?entry.companyField}}</h2>

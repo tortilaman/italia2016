@@ -121,21 +121,26 @@ $(document).ready(function () {
 		tagsArr = [],
 		wordsToSkip = ['is', 'in'];
 	//Populate newArray with data.
-	$rawData.each(function (int, el) {
+	$rawData.each(function (ind, el) {
 		newArray.push({
 			label: $(this).attr('data-title'),
 			category: "Interviewees"
 		});
-		var tags = $(this).attr("data-tags").split(",");
-		tags.forEach(function (element, index, array) {
-			if ($.inArray(element, tagsArr) === -1 && element !== "") {
-				newArray.push({
-					label: element,
-					category: "Category"
-				});
-				tagsArr.push(element);
-			}
-		});
+		try {
+			var tags = $(this).attr('data-tags').split(',');
+			tags.forEach(function (element, index, array) {
+				if ($.inArray(element, tagsArr) === -1 && element !== "") {
+					newArray.push({
+						label: element,
+						category: "Category"
+					});
+					tagsArr.push(element);
+				}
+			});
+		} catch(err) {
+			console.log("Item "+ind+",	Title was '"+el.getAttribute("data-title")+"', "+err.message);
+			console.log(el.getAttribute('data-tags'));
+		}
 	});
 
 	//Sort first by category and then alphabetically.
@@ -206,7 +211,7 @@ $(document).ready(function () {
 		}
 		$("#d-filter form").removeClass("lSearch");
 		$("#d-filter span").removeClass("active");
-		$(window).focus();
+//		$(window).focus();
 		searching = false;
 	}
 
