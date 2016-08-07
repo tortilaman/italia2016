@@ -431,8 +431,7 @@ h1[id*="year-title-"] {
 		&:hover {
 
 			img {
-				transform: scale(1.2);
-				transition: transform 8s;
+				opacity: 0.2;
 			}
 
 			&::before {
@@ -485,7 +484,7 @@ h1[id*="year-title-"] {
 		}
 
 		@include respond-to(tablet) {
-			top: 5%;
+			top: 0;
 			transform: none;
 			left: 0;
 			right: 0;
@@ -543,6 +542,43 @@ h1[id*="year-title-"] {
 		}
 	}
 
+	.entry-title {
+		transition: opacity 0.5s;
+	}
+
+	.entry-tags {
+		position: absolute;
+		top: 0.5em;
+		left: 0.5em;
+		list-style: none;
+		opacity: 0;
+		z-index: 202;
+		transition: opacity 0.5s;
+		li {
+			color: white;
+			z-index: 50;
+		}
+	}
+
+	.entry-meet {
+		position: absolute;
+		bottom: 0.5em;
+		right: 0.5em;
+		opacity: 0;
+		color: white;
+		padding-bottom: 0.05em;
+		border-bottom: 0.2em solid white;
+		z-index: 202;
+		transition: opacity 0.5s;
+	}
+
+	.entry-title {
+		@include respond-to(tablet) {
+			height: 100%;
+			padding-top: 1em;
+		}
+	}
+
 	&:not(.blank) {
 		@extend .blue-bg;
 	}
@@ -554,9 +590,17 @@ h1[id*="year-title-"] {
 	@include respond-to(tablet) {
 		width: 18vw;
 		height: 27vw;
+		&:hover {
+			.entry-tags, .entry-meet {
+				opacity: 1;
+			}
+
+			.entry-title {
+				opacity: 0;
+			}
+		}
 	}
 	@include respond-to(laptop) {
-//	@include respond-to(desktop) {
 		width: 12vw;
 		height: 18vw;
 	}

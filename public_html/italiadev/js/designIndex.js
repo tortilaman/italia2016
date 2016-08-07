@@ -119,11 +119,13 @@ $(document).ready(function () {
 	var $rawData = $("[data-title]"),
 		newArray =[],
 		tagsArr = [],
-		wordsToSkip = ['is', 'in'],
+		topicsArr = [],
+		wordsToSkip = [],
 		categories = {
 			Category : "1",
-			Interviewees : "2",
-			Company : "3"
+			Topic : "2",
+			Interviewees : "3",
+			Company : "4"
 		};
 	//Populate newArray with data.
 	$rawData.each(function (ind, el) {
@@ -150,6 +152,18 @@ $(document).ready(function () {
 				}
 			});
 		}
+		if($(this).attr('data-topics')) {
+			var topics = $(this).attr('data-topics').split(',');
+			topics.forEach(function (element, index, array) {
+				if ($.inArray(element, topicsArr) === -1 && element !== "") {
+					newArray.push({
+						label: element,
+						category: "Topic"
+					});
+					topicsArr.push(element);
+				}
+			});
+		}
 //		} catch(err) {
 //			console.log("Item "+ind+",	Title was '"+el.getAttribute("data-title")+"', "+err.message);
 //			console.log(el.getAttribute('data-tags'));
@@ -165,6 +179,10 @@ $(document).ready(function () {
 //		} else if (a.category == "Interviewees" && b.category == "Category") {
 //			return 1;
 		} else if (a.category == "Category" && b.category == "Category") {
+			if (a.label < b.label) return -1;
+			if (a.label > b.label) return 1;
+			return 0;
+		} else if (a.category == "Topic" && b.category == "Topic") {
 			if (a.label < b.label) return -1;
 			if (a.label > b.label) return 1;
 			return 0;
@@ -189,7 +207,7 @@ $(document).ready(function () {
 
 	function showSearch() {
 		searching = true;
-		$("article img, article .entry-title, #page-info h1, #page-info p, [id*='year-title-']").addClass("oHidden");
+		$("article img, article video, article .entry-description, article .entry-title, #page-info h1, #page-info p, [id*='year-title-']").addClass("oHidden");
 		$("#d-filter form").addClass("lSearch");
 		$("#search").focus();
 		if($(window).outerWidth() > breakpoints.phone) {
@@ -210,7 +228,7 @@ $(document).ready(function () {
 	}
 
 	function hideSearch() {
-		$("article img, article .entry-title, #page-info h1, #page-info p, [id*='year-title-']").removeClass("oHidden");
+		$("article img, article video, article .entry-description, article .entry-title, #page-info h1, #page-info p, [id*='year-title-']").removeClass("oHidden");
 		if($(window).outerWidth() > breakpoints.phone) {
 			$("#d-filter").css({
 				'position': 'fixed',
@@ -245,11 +263,13 @@ $(document).ready(function () {
 		//Interviewees & Films
 		$("article[data-title]").each(function () {
 			var tags = $(this).attr("data-tags"),
+				topics = $(this).attr('data-topics'),
 				names = $(this).attr("data-title").toLowerCase(),
 				company = $(this).attr("data-company") ? $(this).attr("data-company").toLowerCase() : "",
-				//Merge names and tags if there are tags.
-				datao = tags === "" ? names : names.concat(" ", tags),
-				data = company === "" ? datao : datao.concat(" ", company),
+				//Merge various names and tags if there are tags.
+				data1 = tags === "" ? names : names.concat(" ", tags),
+				data2 = topics === "" ? data1 : data1.concat(" ", topics),
+				data = company === "" ? data2 : data2.concat(" ", company),
 				show = false,
 				changed,
 				$search = $("#search").val().toLowerCase(),
