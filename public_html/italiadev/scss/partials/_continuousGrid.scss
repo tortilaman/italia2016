@@ -132,10 +132,21 @@
 		}
 
 		@include respond-to(tablet) {
-			top: 25vh;
-			right: 35vw;
-			left:35vw;
-			width: 30vw;
+			top: 20vh;
+			right: 25vw;
+			left:25vw;
+			width: 50vw;
+
+			input {
+				width: 50vw;
+				border-bottom: 0.5rem solid $color5;
+				font-size: 5em;
+				font-family: "Header"
+			}
+
+			span {
+				font-size: 5em;
+			}
 		}
 	}
 	span {
@@ -195,8 +206,8 @@ ul.ui-autocomplete {
 	z-index: 200;
 
 	@include respond-to(tablet) {
-		top: calc(25vh + 3rem) !important;
-		left: 35vw !important;
+		top: calc(25vh + 5rem) !important;
+		left: 26vw !important;
 	}
 	li.ui-menu-item {
 		box-shadow: none;

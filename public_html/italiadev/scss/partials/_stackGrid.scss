@@ -187,9 +187,9 @@
 
 		@include respond-to(tablet) {
 			float: right;
-			margin-top: %;
-			margin-right: 6vw;
-			width: 36vw;
+			margin-top: 0;
+			margin-right: 3vw;
+			width: 42vw;
 			height: 100%;
 		}
 
@@ -482,7 +482,7 @@ d8'          `8b  88  88           `8'        88   `"8bbdP"Y8   `"Ybbd8"'   `"Yb
 				top: 0.625em;
 				width: 0;
 				height: 0;
-				z-index: 20;
+				z-index: 5;
 				border-top: 1em solid transparent;
 				border-left: 2em solid white;
 				border-bottom: 1em solid transparent;
@@ -650,8 +650,7 @@ main.team-vid {
 			position: absolute;
 			width: 55%;
 			right: 15%;
-			top: calc(7% + 4.5em);
-			height: 60%;
+			top: calc(8% + 4.5em);
 		}
 
 		.v-chapter-desc {
@@ -758,7 +757,7 @@ main.team #flex-grid-team {
 		mix-blend-mode: multiply;
 
 		@include respond-to(tablet) {
-			height: 60vh;
+//			height: 60vh;
 			width: 30vw;
 			padding: 2em;
 			margin-top: 20vh;

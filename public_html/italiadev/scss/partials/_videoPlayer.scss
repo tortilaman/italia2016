@@ -68,7 +68,7 @@ main.home #v-header {
 #v-middle {
 	position: relative;
 	display: block;
-	height: 100%;
+//	height: 100%;
 	margin: 0 auto;
 }
 
@@ -79,6 +79,25 @@ main.home #v-header {
 	padding: 0;
 	height: 100%;
 	overflow: hidden;
+
+	@include respond-to(tablet) {
+		&::after {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: black;
+			opacity: 0;
+			z-index: 1;
+			transition: opacity 0.25s;
+		}
+
+		&:hover::after {
+			opacity: 0.2;
+		}
+	}
 
 	video {
 		position: absolute;
@@ -109,8 +128,8 @@ main.home #v-header {
 
 [id^='v-'] .v21-9, [id^='v-'].v21-9 {
 
-	width: 100vw !important;
-	height: 42.86vw !important;
+	width: 100vw;
+	height: 42.86vw;
 
 	#v-player {
 		top: -6.7vw;
@@ -119,35 +138,35 @@ main.home #v-header {
 	}
 
 	@include respond-to(tablet, l) {
-		height: 38.25vw !important;
-		width: 90vw !important;
+		height: 38.25vw;
+		width: 90vw;
 
 		#v-player {
-			top: -6.2vw !important;
-			width: 90vw !important;
-			height: 50.625vw !important;
+			top: -6.2vw;
+			width: 90vw;
+			height: 50.625vw;
 		}
 	}
 
 	@include respond-to(tablet, p) {
-		width: 86vw !important;
-		height: 36.86vw !important;
+		width: 86vw;
+		height: 36.86vw;
 	}
 }
 
 [id^='v-'] .v16-9, [id^='v-'].v16-9 {
 
-	width: 100vw !important;
-	height: 56.25vw !important;
+	width: 100vw;
+	height: 56.25vw;
 
 	@include respond-to(tablet, l) {
-		height: calc(100vh - 14vw) !important;
-		width: calc((100vh - 14vw)/9*16) !important;
+		height: calc(100vh - 14vw);
+		width: calc((100vh - 14vw)/9*16);
 	}
 
 	@include respond-to(tablet, p) {
-		width: 86vw !important;
-		height: 48.375vw !important;
+		width: 86vw;
+		height: 48.375vw;
 	}
 }
 
@@ -174,9 +193,7 @@ main.home #v-header {
 	top: 0;
 	left: 0;
 	width: 100%;
-	height: 7rem;
-	background: linear-gradient(to top, transparent 0%, rgba(0, 0, 0, 0.05) 20%, rgba(0, 0, 0, 0.45) 90%);
-
+	height: 4rem;
 }
 
 #v-interviewee {
@@ -404,17 +421,32 @@ a.v-prev-link {
 	opacity: 1;
 }
 
+.v-nextVid, .v-prevVid {
+	display: inline-block;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 3%;
+	height: auto;
+	fill: #ffffff;
+	z-index: 5;
+
+	&::before { display: none;}
+	&:hover::before {display: none;}
+}
+.v-nextVid {right: 2%;}
+.v-prevVid {left: 2%;}
+
 .v-controls {
 	position: absolute;
 	bottom: 0;
 	left: 0;
 	width: 100%;
-	height: 7rem;
-	padding: 4.25rem 0.75rem 0.75rem 0.25rem;
+	height: 3.5rem;
+	padding: 0.75rem;
 	margin: 0;
 	z-index: 2;
 	transition: opacity 0.5s;
-	background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.25) 50%, rgba(0, 0, 0, 0.65) 80%);
 
 	@include respond-to(tablet) {
 		display: block;
@@ -575,11 +607,7 @@ section#v-content {
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background-image: url(/assets/images/soft_wallpaper.png);
-		background-repeat: repeat;
-		background-position: top left;
 		background-color: $color4;
-		background-blend-mode: multiply;
 		z-index: 6;
 	}
 }

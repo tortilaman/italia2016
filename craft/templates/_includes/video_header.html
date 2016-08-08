@@ -48,11 +48,12 @@
 			</video>
 			<div id="v-ui">
 				<div class="v-overlay"></div>
+				{# ========= Top video info ============ #}
 				<div class="v-ui-top">
 					{# Interviewee / Video Heading #}
 					<h1 id="v-interviewee">{{entry.type =='interviewVideo' ? entry.parent : entry.title}}</h1>
 					{# Video Sub-heading #}
-					<h2 id="v-title">{{entry.type !='interviewVideo' ? '' : entry}} {{ ['(', siblingIDs|indexOf(entry.id) + 1, '/', siblings|length, ')' ]|join }}</h2>
+					<h2 id="v-title">{{entry.type !='interviewVideo' ? '' : entry}} {% if siblings|length > 1 %}{{ ['(', siblingIDs|indexOf(entry.id) + 1, '/', siblings|length, ')' ]|join }}{% endif %}</h2>
 					{# Previous Field School Link #}
 					<a href="{{pastSchoolURLS[entry.videoYear.value]}}" class="v-prev-link" target="_blank">{{entry.videoYear.value is even ? 'italiaDesign ' : 'dutchDesign '}}{{entry.videoYear}}</a>
 					{# Social Media Sharing Buttons #}
@@ -68,6 +69,7 @@
 				</div>
 				{% if entry.type == 'designer' and entry.hasDescendants() == false %}
 				{% else %}
+					{# ========= Initial play button ============ #}
 					<div class="v-init-play">
 						<a>
 							<div class="v-init-play-btn"></div>
@@ -76,7 +78,7 @@
 					</div>
 				{% endif %}
 				{# ========= End of video interface ============ #}
-				<div class="v-ended oHidden" data-url="{{siblings[chaptIndex].url}}">
+				<div class="v-ended oHidden" data-url="{{siblings[chaptIndex].url}}#v-header">
 					<span>up next:</span>
 					<h1 class="v-ended-nextTitle">{{siblings[chaptIndex].title|lower}}</h1>
 					<h2 class="v-ended-cd-num">10</h2>
@@ -84,7 +86,7 @@
 					<div class="v-suggestions">
 						{% for entry in relatedEntries %}
 							<div class="v-suggestion">
-								<a href="{{entry.url}}">
+								<a href="{{entry.url}}#v-header">
 									<p>suggested <br> {{entry.title}}</p>
 									<img src="{{entry.videoThumbnail.first().url}}">
 								</a>
@@ -93,6 +95,20 @@
 					</div>
 				</div>
 				{# ========= Video Controls ============ #}
+				{% if chaptIndex >= 1 and siblings|length > 1 %}
+					<a class="v-prevVid" href="{{siblings[chaptIndex - 2].url}}#v-header">
+						<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 53 146.7">
+							<path id="Chevron-L" class="st0" d="M47.9 0L53 3.3 7.2 73.4l45.8 70-5.1 3.3L0 73.4z"/>
+						</svg>
+					</a>
+				{% endif %}
+				{% if chaptIndex <= siblings|length - 1 %}
+					<a class="v-nextVid" href="{{siblings[chaptIndex].url}}#v-header">
+						<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 53 146.7">
+							<path id="Chevron-R" class="st0" d="M5 146.7l-5-3.3 45.8-70L0 3.3 5 0l48 73.4z"/>
+						</svg>
+					</a>
+				{% endif %}
 				<div class="v-controls">
 					<div class="v-play-btn-cont js-button">
 						<button class="v-play-btn">

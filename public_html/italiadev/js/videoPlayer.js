@@ -103,6 +103,7 @@ $(document).ready(function () {
 				$zVal = 1;
 				if(!played && $("main").hasClass("home")) {
 					playButton.toggle();
+					$(".v-init-play").addClass("oHidden").remove();
 				}
 			} else if (scrollPercent < 0.1) {
 				scrollPercent = 0;
@@ -140,13 +141,13 @@ $(document).ready(function () {
 
 	function showControls() {
 		if (played === true) {
-			$("#v-title, #v-interviewee, #v-share, a.v-prev-link, .v-controls").removeClass("oHidden");
+			$("#v-title, #v-interviewee, #v-share, a.v-prev-link, .v-controls, .v-nextVid, .v-prevVid").removeClass("oHidden");
 		}
 	}
 
 	function hideControls() {
 		if (vPlayer.paused === false) {
-			$("#v-title, #v-interviewee, #v-share, a.v-prev-link, .v-controls").addClass("oHidden");
+			$("#v-title, #v-interviewee, #v-share, a.v-prev-link, .v-controls, .v-nextVid, .v-prevVid").addClass("oHidden");
 		}
 	}
 
@@ -312,13 +313,14 @@ $(document).ready(function () {
 
 	playButton.init();
 
-	if($("main").hasClass("autoplay")) {
-		if(!$("main").hasClass("home")) {
-			playButton.toggle();
-			showControls();
-		}
-		$(".v-init-play").remove();
+	/*=================================
+		AUTOPLAY FUNCTIONALITY
+	**===============================*/
 
+	if(window.location.hash.length > 1) {
+		playButton.toggle();
+		$(".v-init-play").addClass("oHidden").remove();
+		showControls();
 	}
 
 	/*=================================

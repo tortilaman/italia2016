@@ -118,6 +118,8 @@ $(document).ready(function () {
 
 	var $rawData = $("[data-title]"),
 		newArray =[],
+		nameArr =[],
+		compArr=[],
 		tagsArr = [],
 		topicsArr = [],
 		wordsToSkip = [],
@@ -129,15 +131,25 @@ $(document).ready(function () {
 		};
 	//Populate newArray with data.
 	$rawData.each(function (ind, el) {
-		newArray.push({
-			label: $(this).attr('data-title'),
-			category: "Interviewees"
-		});
-		if(el.getAttribute('data-company')) {
-			newArray.push({
-				label: $(this).attr('data-company'),
-				category: "Company"
-			});
+		if($(this).attr('data-title')) {
+			var name = $(this).attr('data-title');
+			if($.inArray(name, nameArr) === -1 && name !== "") {
+				newArray.push({
+					label: $(this).attr('data-title'),
+					category: "Interviewees"
+				});
+				nameArr.push(name);
+			}
+		}
+		if($(this).attr('data-company')) {
+			var company = $(this).attr('data-company');
+			if($.inArray(company, compArr) === -1 && company !== "") {
+				newArray.push({
+					label: $(this).attr('data-company'),
+					category: "Company"
+				});
+				compArr.push(company);
+			}
 		}
 		if($(this).attr('data-tags')) {
 			var tags = $(this).attr('data-tags').split(',');
@@ -341,7 +353,8 @@ $(document).ready(function () {
 				//creates a new array of just category data
 				var index = newArray.map(function (e) {
 					return e.category;
-				}).indexOf('Interviewees'); //find first instance of Interviewees (end of categories)
+				//The first index of Topic shows where the end of the categories is.
+				}).indexOf('Topic');
 				results = newArray.slice(0, index);
 			}
 
