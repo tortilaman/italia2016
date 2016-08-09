@@ -7,7 +7,7 @@
 $body-font-sizes: ( null: (0.7rem, 1.8), tablet: (0.9rem, 1.8), laptop: (0.9rem, 1.8), desktop: (1.0 rem, 1.8) );
 
 body {
-	font-family: 'karla', sans-serif;
+	font-family: 'Ampersand', 'karla', sans-serif;
 	@include font-size($body-font-sizes);
 }
 
@@ -17,7 +17,7 @@ h3,
 h4,
 h5,
 h6 {
-	font-family   : 'SubHead';
+	font-family   : 'SubHeadAlt', 'SubHead', Arial, sans-serif;
 	font-size     : 2.4rem;
 	margin        : 0 0 0.5rem;
 	padding       : 0;
@@ -27,7 +27,7 @@ h6 {
 }
 
 h1 {
-	font-family: 'Header';
+	font-family: 'HeaderAlt', 'Header', Arial, sans-serif;
 	font-size  : 1.6em;
 }
 
@@ -42,7 +42,7 @@ h2 {
 
 a {
 	position       : relative;
-	font-family    : 'SubHead';
+	font-family    : 'SubHeadAlt', 'SubHead', Arial, sans-serif;
 	color          : $color5;
 	text-decoration: none;
 	letter-spacing : 0.15em;
@@ -71,12 +71,32 @@ a {
 // ==================================
 // 	FONT FACES
 // ==================================
+
+//Change the numbers to alt, the two @font-face properties are used cumulatively
+@font-face {
+	font-family  : 'HeaderAlt';
+	src          : url('../assets/fonts/N_Boldalt.eot');
+	src          : local('☺'), url('../assets/fonts/N_Boldalt.woff') format('woff'), url('../assets/fonts/N_Boldalt.ttf') format('truetype'), url('../assets/fonts/N_Boldalt.svg') format('svg');
+	font-weight  : bold;
+	font-style   : normal;
+	unicode-range: U+30-39;
+}
 @font-face {
 	font-family: 'Header';
 	src        : url('../assets/fonts/N_Bold.eot');
 	src        : local('☺'), url('../assets/fonts/N_Bold.woff') format('woff'), url('../assets/fonts/N_Bold.ttf') format('truetype'), url('../assets/fonts/N_Bold.svg') format('svg');
 	font-weight: bold;
 	font-style : normal;
+}
+
+//Change the numbers to alt, the two @font-face properties are used cumulatively
+@font-face {
+	font-family  : 'SubHeadAlt';
+	src          : url('../assets/fonts/N_Bookalt.eot');
+	src          : local('☺'), url('../assets/fonts/N_Bookalt.woff') format('woff'), url('../assets/fonts/N_Bookalt.ttf') format('truetype'), url('../assets/fonts/N_Bookalt.svg') format('svg');
+	font-weight  : normal;
+	font-style   : normal;
+	unicode-range: U+30-39;
 }
 @font-face {
 	font-family: 'SubHead';
@@ -91,4 +111,10 @@ a {
 	src        : local('☺'), url('../assets/fonts/N_DemiItalic.woff') format('woff'), url('../assets/fonts/N_DemiItalic.ttf') format('truetype'), url('../assets/fonts/N_DemiItalic.svg') format('svg');
 	font-weight: normal;
 	font-style : normal;
+}
+//Ampersands deserve some love, let's make em beautiful.
+@font-face {
+	font-family  : 'Ampersand';
+	src          : local('Baskerville'), local('Palatino'), local('Book Antiqua');
+	unicode-range: U+26;
 }

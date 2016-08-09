@@ -1,6 +1,4 @@
-{#
-
-# The site layout template
+{# # The site layout template
 # ------------------------
 #
 # This layout template extends the _layouts/base.html layout, and defines the
@@ -10,37 +8,35 @@
 # templates.
 #
 # This template defines one block region, `main`, which should be extended by
-# child templates to define the main contents for the page.
--#}
-
+# child templates to define the main contents for the page. -#}
 {% extends "_layouts/base" %}
-
-
 {# Define the site navigation #}
-{% set nav = {
-"" : 		{ title: "home"},
-design: { title: "interviews"},
-italia: { title: "film"},
-team: 	{ title: "about"}
+{% set nav = { "" :
+	{ title: "home"},
+	design: { title: "interviews"},
+	italia: { title: "film"},
+	team: { title: "about"}
 } %}
-
 {# Set the `bodyClass` variable to the entry's section handle if there is one,
-or the first URI segment (this is used by the parent template) #}
+# or the first URI segment (this is used by the parent template)
+#}
 {% if bodyClass is not defined %}
-{% set bodyClass = entry is defined ? entry.section.handle : craft.request.firstSegment %}
+	{% set bodyClass = entry is defined ? entry.section.handle : craft.request.firstSegment %}
 {% endif %}
-
 {# Set the `title` variable to the nav item that matches the first segment #}
 {% if nav[bodyClass] is defined %}
-{% set title %}{% if title is defined %}{{ title }} - {% endif %}{{ nav[bodyClass].title }}{% endset %}
+	{% set title %}
+		{% if title is defined %}
+			{{ title }} -
+		{% endif %}
+		{{ nav[bodyClass].title }}
+	{% endset %}
 {% endif %}
-
-
 {% block body %}
 	{% block nav %}
 		<button type="button" class="tcon tcon-menu--xcross" aria-label="toggle menu">
-					<span class="tcon-menu__lines" aria-hidden="true"></span>
-					<span class="tcon-visuallyhidden">toggle menu</span>
+			<span class="tcon-menu__lines" aria-hidden="true"></span>
+			<span class="tcon-visuallyhidden">toggle menu</span>
 		</button>
 		<a class="home-btn" rel="home" href="{{siteUrl}}"><img src="/assets/images/logo.png"></a>
 		<header class="header">
@@ -48,7 +44,7 @@ or the first URI segment (this is used by the parent template) #}
 				<ul>
 					{% for slug, item in nav %}
 					<li>
-						<a href="{{ url(slug) }}" {% if craft.request.firstSegment == slug %}class="sel"{% endif %}>
+						<a href="{{ url(slug) }}" {% if craft.request.firstSegment == slug %} class="sel" {% endif %}>
 							{{ item.title }}
 						</a>
 					</li>
@@ -62,10 +58,9 @@ or the first URI segment (this is used by the parent template) #}
 		{% block main %}{% endblock %}
 	</main>
 
-
-	<footer id="footer">
-	{# NOTE: Not sure if there will be a footer yet... #}
-	</footer>
-	<script src="/js/mobileNav.js"></script>
-	<script>transformicons.add('.tcon')</script>
+	<footer id="footer"></footer>
+	<script src="/js/allPages.js"></script>
+	<script>
+		transformicons.add('.tcon')
+	</script>
 {% endblock %}
