@@ -1,19 +1,9 @@
-{#
-# Italia Index template
-# _________________________
-#
-# This template gets loaded whenever the Italia index is requested, because
-# the Italia Index single_entry section's Template setting is set to
-# "italia/_index".
-#
-# An `entry` variable will be automatically passed to this template, which will
-# be set to the Italia Index entry. _
-#}
-
-{% extends "_layouts/site" %}
-{% set title = entry.title %}
-
-{% block main %}
+{# # Italia Index template # _________________________ # # This template gets loaded whenever the Italia index is requested, because # the Italia Index single_entry section's Template setting is set to # "italia/_index". # # An `entry` variable will be
+automatically passed to this template, which will # be set to the Italia Index entry. _ #} {% extends "_layouts/site" %} {% set title = entry.title %} {% block head %} {{ parent() }}
+<meta property="og:site_name" content="SFU italiaDesign field school" />
+<meta property="og:url" content="{{entry.url}}" /> {% if title is defined %}
+<meta property="og:title" content="{{title}}" /> {% endif %}
+<meta property="og:description" content="Dieci: 10 years of italiaDesign" /> {% endblock %} {% block main %}
 
 <section id="italia-intro" class="italia-section is-scrollable">
 	<div class="inner">
@@ -21,14 +11,14 @@
 	</div>
 </section>
 {% for entry in craft.entries.section('italia') %}
-	<section id="italia-{{entry.slug}}" class="italia-section">
-		<img class="v-thumbnail scrollHide" src="{{entry.videoThumbnail.first().url}}" alt="{{entry}}">
-		<div class="inner scrollHide">
-			<h2 class="v-title">{{entry}}</h2>
-			<p class="v-description">{{entry.videoDescription}}</p>
-			<a href="{{entry.url}}" class="v-play">play film</a>
-		</div>
-	</section>
+<section id="italia-{{entry.slug}}" class="italia-section">
+	<img class="v-thumbnail scrollHide" src="{{entry.videoThumbnail.first().url}}" alt="{{entry}}">
+	<div class="inner scrollHide">
+		<h2 class="v-title">{{entry}}</h2>
+		<p class="v-description">{{entry.videoDescription}}</p>
+		<a href="{{entry.url}}" class="v-play">play film</a>
+	</div>
+</section>
 {% endfor %}
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>

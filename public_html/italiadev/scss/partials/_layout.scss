@@ -6,14 +6,16 @@
 //
 // ==============================
 
-*, *::before, *::after {
-	margin: 0;
-	padding: 0;
+*,
+*::after,
+*::before {
+	margin    : 0;
+	padding   : 0;
 	box-sizing: border-box;
-	border: none;
+	border    : none;
 }
-html {
-}
+
+html {}
 
 body {
 	transition: color 0.5s;
@@ -22,25 +24,26 @@ body {
 .clearfix:after {
 	content: "";
 	display: block;
-	clear: both;
+	clear  : both;
 }
 
 .bg {
 	&::after {
-		content: '';
-		position: absolute;
-		display: block;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
+		content       : '';
+		position      : absolute;
+		display       : block;
+		top           : 0;
+		left          : 0;
+		width         : 100%;
+		height        : 100%;
 		mix-blend-mode: multiply;
-		z-index: 1;
+		z-index       : 1;
 	}
 }
 
 .green-bg {
 	@extend .bg;
+
 	&::after {
 		background: $color1;
 	}
@@ -48,6 +51,7 @@ body {
 
 .blue-bg {
 	@extend .bg;
+
 	&::after {
 		background: $color2;
 	}
@@ -55,32 +59,57 @@ body {
 
 .tan-bg {
 	@extend .bg;
+
 	&::after {
 		background: $color4;
+	}
+}
+
+#bg {
+	position             : fixed;
+	top                  : 0;
+	left                 : 0;
+	width                : 100%;
+	height               : 100vh;
+	background-image     : url("/assets/images/soft_wallpaper.png");
+	background-repeat    : repeat;
+	background-position  : top left;
+	background-color     : $color4;
+	background-blend-mode: multiply;
+	z-index              : 1;
+	@include respond-to(tablet) {
+		top   : 6vw;
+		left  : 6vw;
+		width : 88vw;
+		height: calc(100vh - 6vw);
 	}
 }
 
 .home-btn {
 	display: none;
 
-	&::before {	display: none;}
-	&:hover::before { display: none;}
+	&::before {
+		display: none;
+	}
+
+	&:hover::before {
+		display: none;
+	}
 
 	img {
 		position: relative;
-		display: block;
-		height: 100%;
-		width: auto;
+		display : block;
+		height  : 100%;
+		width   : auto;
 	}
-
 	@include respond-to(tablet) {
-		display: inline-block;
+		display : inline-block;
 		position: fixed;
-		top: 1vh;
-		left: 1vh;
-		height: 6vh;
-		width: auto;
-		z-index:10;
+		top     : 1vh;
+		left    : 1vh;
+		height  : 6vh;
+		width   : auto;
+		z-index : 10;
 	}
 	@include respond-to(laptop) {
 		height: 13vh;
@@ -91,119 +120,124 @@ body {
 	display: none;
 }
 
-.design .home-btn, .team .home-btn, .team-vid .home-btn, .italia .home-btn {
-	z-index:202;
+.design .home-btn,
+.italia .home-btn,
+.team .home-btn,
+.team-vid .home-btn {
+	z-index: 202;
 }
 
 header.header {
-	position: absolute;
-	display: block;
-	top: -75em;
-	left: 0;
-	width: 100%;
-	min-height: 12vw;//Is this necessary?
-	padding: 0;
+	position        : absolute;
+	display         : block;
+	top             : -75em;
+	left            : 0;
+	width           : 100%;
+	min-height      : 12vw; //Is this necessary?
+	padding         : 0;
 	background-color: white;
-	transform: rotate(0);
+	transform       : rotate(0);
 	transform-origin: right top 0;
-	z-index: 201;
-	transition: top 0.5s;
-	text-align: left;
-
+	z-index         : 201;
+	transition      : top 0.5s;
+	text-align      : left;
 	@include respond-to(laptop) {
-		position:fixed;
-		transform: rotate(270deg);
+		position  : fixed;
+		transform : rotate(270deg);
 		background: none;
-		top: 9vw;
-		left: auto;
-		right: calc(94vw + 3em);
-		width: calc(100vh - 10vw);
+		top       : 9vw;
+		left      : auto;
+		right     : calc(94vw + 3em);
+		width     : calc(100vh - 10vw);
 		min-height: 0;
-		height: auto;
-		z-index: 1;
+		height    : auto;
+		z-index   : 1;
 		text-align: center;
 	}
 
 	&.menuOpen {
 		position: fixed;
-		top: 12vmin;
+		top     : 12vmin;
 	}
 }
 
 nav {
 	display: block;
-	height: 100%;
-
-	@include respond-to(tablet){
+	height : 100%;
+	@include respond-to(tablet) {
 		display: inline-block;
-		height: auto;
+		height : auto;
 	}
 
 	ul {
-		list-style: none;
-		display: flex !important;
-		flex-wrap: wrap;
-		flex-direction: row;
+		list-style     : none;
+		display        : flex !important;
+		flex-wrap      : wrap;
+		flex-direction : row;
 		justify-content: space-between;
-		align-items: center;
-		height: auto;
-		margin: 0 2vw;
-
-		@include respond-to(tablet){
+		align-items    : center;
+		height         : auto;
+		margin         : 0 2vw;
+		@include respond-to(tablet) {
 			flex-direction: row-reverse;
-			flex-wrap: nowrap;
-			display: inline-block;
-			height: 100%;
+			flex-wrap     : nowrap;
+			display       : inline-block;
+			height        : 100%;
 		}
 
 		li {
-			display: block;
-			margin-left: 0;
-			width: 100%;
-			line-height: 4;
-			text-align: center;
-			height: calc(24vh - 3vmin);
-			margin: 0.5vh 0;
-			background: $color4;
+			display               : block;
+			margin-left           : 0;
+			width                 : 100%;
+			line-height           : 4;
+			text-align            : center;
+			height                : calc(24vh - 3vmin);
+			margin                : 0.5vh 0;
+			background            : $color4;
+			font-variant-ligatures: no-common-ligatures;
 
 			&:first-of-type {
-				@include respond-to(tablet) {display: none;}
-			}
-			&:last-of-type {
-				@include respond-to(tablet) {margin: 0;}
+				@include respond-to(tablet) {
+					display: none;
+				}
 			}
 
+			&:last-of-type {
+				@include respond-to(tablet) {
+					margin: 0;
+				}
+			}
 			@include respond-to(laptop) {
-				display: inline-block;
-				margin: 0 0 0 12vh;
+				display    : inline-block;
+				margin     : 0 0 0 12vh;
 				line-height: 1.8;
-				height: auto;
-				width: auto;
-				text-align: left;
-				background: none;
+				height     : auto;
+				width      : auto;
+				text-align : left;
+				background : none;
 			}
 		}
 	}
+
 	a {
-		color: $color5;
-		font-size: 4em;
+		color      : $color5;
+		font-size  : 4em;
 		font-family: "Header";
 		//Vertical Centering hack...
-		height: calc(25vh - 3vmin);
+		height     : calc(25vh - 3vmin);
 		line-height: calc(25vh - 3vmin);
-
 		@include respond-to(tablet) {
-			color: $color5;
-			font-size: 1.2em;
+			color      : $color5;
+			font-size  : 1.2em;
 			font-family: "SubHead";
-			height: auto;
+			height     : auto;
 			line-height: 1;
 		}
 
 		&.sel::before {
-			left            : 0;
+			left      : 0;
 			visibility: visible;
-			transform: scaleX(1);
+			transform : scaleX(1);
 		}
 	}
 }
@@ -211,73 +245,63 @@ nav {
 //Visually hide content but leave accessible to screen readers
 .aHidden {
 	position: absolute !important;
-	clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
-	clip: rect(1px, 1px, 1px, 1px);
-	padding: 0 !important;
-	border: 0 !important;
-	height: 1px !important;
-	width: 1px !important;
+	clip    : rect(1px 1px 1px 1px);
+	/* IE6, IE7 */
+	clip    : rect(1px, 1px, 1px, 1px);
+	padding : 0 !important;
+	border  : 0 !important;
+	height  : 1px !important;
+	width   : 1px !important;
 	overflow: hidden;
 }
+
 .oHidden {
 	opacity: 0 !important;
 }
+
 .dHidden {
 	display: none !important;
 }
 
-main.design, main.team #flex-grid-team .inner {
-	position: relative;
-	display: flex;
-	flex-flow: row wrap;
+main.design,
+main.team #flex-grid-team .inner {
+	position       : relative;
+	display        : flex;
+	flex-flow      : row wrap;
 	justify-content: space-between;
-	margin: 12vw 0 0 0;
-	padding: 0.25rem;
-	background-image: url(/assets/images/soft_wallpaper.png);
-	background-repeat: repeat;
-	background-position: top left;
-	background-color: $color4;
-	background-blend-mode: multiply;
-	min-height: 85vh;
-	width: 100%;
-	transition: all 0.5s;
-
+	margin         : 12vw 0 0;
+	padding        : 0.25rem;
+	min-height     : 85vh;
+	width          : 100%;
+	transition     : all 0.5s;
 	@include respond-to(tablet) {
 		padding: 0.25em;
-		width: 88vw;
-		margin: 6vw;
+		width  : 88vw;
+		margin : 6vw;
 	}
 }
 
-main.v, main.italia {
+main.italia,
+main.v {
 	margin-top: 12vw;
-
 	@include respond-to(tablet) {
 		margin-top: 0;
 	}
 }
 
 main.team {
-	background-image: url(/assets/images/soft_wallpaper.png);
-	background-repeat: repeat;
-	background-position: top left;
-	background-color: $color4;
+	background-image     : url("/assets/images/soft_wallpaper.png");
+	background-repeat    : repeat;
+	background-position  : top left;
+	background-color     : $color4;
 	background-blend-mode: multiply;
-
 	@include respond-to(tablet) {
 		background: none;
 	}
 
 	#flex-grid-team .inner {
 		background: none;
-
-		@include respond-to(tablet) {
-			background-image: url(/assets/images/soft_wallpaper.png);
-			background-repeat: repeat;
-			background-position: top left;
-			background-color: $color4;
-			background-blend-mode: multiply;
-		}
+		@include respond-to(tablet) {}
 	}
 }
 
@@ -295,30 +319,27 @@ main.team {
 ==========================================================*/
 
 $tcon-size: 8vw !default;
-$tcon-transition: .3s !default;
+$tcon-transition: 0.3s !default;
 $tcon-jstransform: 'tcon-transform' !default;
 
 $tcon-menu-radius: 0 !default;
 $tcon-menu-color: $color1 !default;
-$tcon-menu-arrowleft-transformation: (
-	transform: scale3d(.8, .8, .8) rotate3d(0, 0, 1, 90deg)
-) !default;
-$tcon-menu-arrow360left-transformation: (
-	transform: scale3d(.8, .8, .8) rotate3d(0, 0, 1, 360deg)
-) !default;
+$tcon-menu-arrowleft-transformation: ( transform: scale3d(.8, .8, .8) rotate3d(0, 0, 1, 90deg) ) !default;
+$tcon-menu-arrow360left-transformation: ( transform: scale3d(.8, .8, .8) rotate3d(0, 0, 1, 360deg) ) !default;
+
 .tcon {
-	appearance: none;
-	border: none;
-	cursor: pointer;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: $tcon-size;
-	transition: $tcon-transition;
-	user-select: none;
-	width: $tcon-size;
-	background: transparent;
-	outline: none;
+	appearance                 : none;
+	border                     : none;
+	cursor                     : pointer;
+	display                    : flex;
+	justify-content            : center;
+	align-items                : center;
+	height                     : $tcon-size;
+	transition                 : $tcon-transition;
+	user-select                : none;
+	width                      : $tcon-size;
+	background                 : transparent;
+	outline                    : none;
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 	-webkit-tap-highlight-color: transparent;
 
@@ -326,22 +347,22 @@ $tcon-menu-arrow360left-transformation: (
 		display: block;
 	}
 
-	&:hover,
-	&:focus {
+	&:focus,
+	&:hover {
 		outline: none; // see issue #36 https://github.com/grayghostvisuals/transformicons/issues/36
 	}
+
 	&::-moz-focus-inner {
 		border: 0;
 	}
 }
-
 @mixin tcon-menu-lines {
-	display: inline-block;
-	height: ($tcon-size / 7);
-	width: $tcon-size;
-	border-radius: $tcon-menu-radius;
-	transition: $tcon-transition;
-	background: $tcon-menu-color;
+	display       : inline-block;
+	height        : ($tcon-size / 7);
+	width         : $tcon-size;
+	border-radius : $tcon-menu-radius;
+	transition    : $tcon-transition;
+	background    : $tcon-menu-color;
 	mix-blend-mode: multiply;
 }
 
@@ -349,14 +370,14 @@ $tcon-menu-arrow360left-transformation: (
 	@include tcon-menu-lines;
 	position: relative;
 
-	&::before,
-	&::after {
+	&::after,
+	&::before {
 		@include tcon-menu-lines;
-		content: '';
-		position: absolute;
-		left: 0;
+		content         : '';
+		position        : absolute;
+		left            : 0;
 		transform-origin: ($tcon-size / 14) center;
-		width: 100%;
+		width           : 100%;
 	}
 
 	&::before {
@@ -374,34 +395,33 @@ $tcon-menu-arrow360left-transformation: (
 
 //The Menu Button
 .tcon-menu--xcross {
-	position: absolute;
-	top: 0;
-	left: 0;
-	margin: 0;
-	height: 12vmin;
-	width: 100%;
-	z-index: 202;
+	position  : absolute;
+	top       : 0;
+	left      : 0;
+	margin    : 0;
+	height    : 12vmin;
+	width     : 100%;
+	z-index   : 202;
 	background: white;
-
 	@include respond-to(tablet) {
 		display: none;
 	}
 
 	&.menuOpen {
 		position: fixed;
-		top: 0;
-		left: 0;
+		top     : 0;
+		left    : 0;
 	}
 
 	&.#{$tcon-jstransform} {
 		.tcon-menu__lines {
 			background: transparent;
 
-			&::before,
-			&::after {
+			&::after,
+			&::before {
 				transform-origin: 50% 50%;
-				top: 0;
-				width: $tcon-size;
+				top             : 0;
+				width           : $tcon-size;
 			}
 
 			&::before {
@@ -416,23 +436,23 @@ $tcon-menu-arrow360left-transformation: (
 }
 // see issue #7 https://github.com/grayghostvisuals/transformicons/issues/7#issuecomment-59813596
 .tcon-visuallyhidden {
-	border: 0;
-	clip: rect(0 0 0 0);
-	height: 1px;
-	margin: -1px;
+	border  : 0;
+	clip    : rect(0 0 0 0);
+	height  : 1px;
+	margin  : -1px;
 	overflow: hidden;
-	padding: 0;
+	padding : 0;
 	position: absolute;
-	width: 1px;
+	width   : 1px;
 
 	&:active,
 	&:focus {
-		clip: auto;
-		height: auto;
-		margin: 0;
+		clip    : auto;
+		height  : auto;
+		margin  : 0;
 		overflow: visible;
 		position: static;
-		width: auto;
+		width   : auto;
 	}
 }
 $tcon-search-size: ($tcon-size * 0.75) !default;
@@ -443,69 +463,71 @@ $tcon-search-handle-width: ($tcon-size / 10) !default;
 $tcon-search-glass-radius: ($tcon-size / 3.3333) !default;
 $tcon-search-glass-border-width: ($tcon-size / 20) !default;
 @mixin search-item {
-	display: inline-block;
-	height: $tcon-search-size;
-	width: $tcon-search-size;
+	display      : inline-block;
+	height       : $tcon-search-size;
+	width        : $tcon-search-size;
 	border-radius: 0;
-	transition: $tcon-transition;
-	background: transparent;
+	transition   : $tcon-transition;
+	background   : transparent;
 }
 
 .tcon-search__item {
 	@include search-item;
-	position: relative;
+	position : relative;
 	transform: rotate(-45deg);
 
-	&::before,
-	&::after {
+	&::after,
+	&::before {
 		@include search-item;
-		content: '';
+		content : '';
 		position: absolute;
-		width: 100%;
-		top: 0;
-		bottom: 0;
-		margin: auto;
+		width   : 100%;
+		top     : 0;
+		bottom  : 0;
+		margin  : auto;
 	}
 
 	&::before {
-		height: $tcon-search-handle-width;
-		left: 0;
-		background: $tcon-search-color;
+		height       : $tcon-search-handle-width;
+		left         : 0;
+		background   : $tcon-search-color;
 		border-radius: $tcon-search-radius;
 	}
 
 	&::after {
-		right: 0;
-		background: $tcon-search-glass-color;
-		border-radius: 50%;
-		width: $tcon-search-glass-radius;
-		height: $tcon-search-glass-radius;
-		border: $tcon-search-glass-border-width solid black;
+		right           : 0;
+		background      : $tcon-search-glass-color;
+		border-radius   : 50%;
+		width           : $tcon-search-glass-radius;
+		height          : $tcon-search-glass-radius;
+		border          : $tcon-search-glass-border-width solid black;
 		transform-origin: 50% 50%;
 	}
 }
+
 .tcon-search--xcross {
 	&.#{$tcon-jstransform} {
 		transform: scale3d(.8, .8, .8);
 
 		.tcon-search__item {
-			&::before, &::after {
+			&::after,
+			&::before {
 				border-radius: $tcon-search-radius;
-				background: $tcon-search-color;
+				background   : $tcon-search-color;
 			}
 
 			&::after {
-				height: $tcon-search-handle-width;
-				width: 100%;
-				top: 0;
-				right: 0;
-				border: 0;
+				height   : $tcon-search-handle-width;
+				width    : 100%;
+				top      : 0;
+				right    : 0;
+				border   : 0;
 				transform: rotate3d(0, 0, 1, 90deg);
 			}
 		}
 	}
 }
-$spinner_speed: .675s !default;
+$spinner_speed: 0.675s !default;
 $spinner_radius: 80% !default;
 $spinner_fill_radius: 90px !default;
 
@@ -516,44 +538,45 @@ $spinner_inner_circle: $spinner_size - $spinner_thickness !default;
 $spinner_color: black !default;
 $spinner_bg: lightgray !default;
 $spinner_inner_bg: white !default;
+
 .tcon-loader--spinner360 {
 	border-radius: 80%;
-	display: block;
-	height: $spinner_size;
-	width: $spinner_size;
-	position: relative;
-	animation: tcon-spin360 $spinner_speed linear infinite forwards;
-	background: $spinner_bg;
+	display      : block;
+	height       : $spinner_size;
+	width        : $spinner_size;
+	position     : relative;
+	animation    : tcon-spin360 $spinner_speed linear infinite forwards;
+	background   : $spinner_bg;
 
-	&:before,
-	&:after {
-		content: "";
-		display: block;
+	&:after,
+	&:before {
+		content : "";
+		display : block;
 		position: absolute;
 	}
 
 	&:before {
-		border-radius: 0 $spinner_fill_radius $spinner_fill_radius 0;
-		height: $spinner_size;
-		width: 50%;
-		top: 0; right: 0;
-		z-index: 1;
-		background: $spinner_color;
+		border-radius   : 0 $spinner_fill_radius $spinner_fill_radius 0;
+		height          : $spinner_size;
+		width           : 50%;
+		top             : 0;
+		right           : 0;
+		z-index         : 1;
+		background      : $spinner_color;
 		background-image: linear-gradient($spinner_bg, $spinner_color);
 	}
 
 	&:after {
 		border-radius: $spinner_radius;
-		height: $spinner_inner_circle;
-		width: $spinner_inner_circle;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		z-index: 1;
-		background: $spinner_inner_bg;
+		height       : $spinner_inner_circle;
+		width        : $spinner_inner_circle;
+		top          : 50%;
+		left         : 50%;
+		transform    : translate(-50%, -50%);
+		z-index      : 1;
+		background   : $spinner_inner_bg;
 	}
 }
-
 @keyframes tcon-spin360 {
 	to {
 		transform: rotate(360deg);
