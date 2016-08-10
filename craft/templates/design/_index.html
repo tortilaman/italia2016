@@ -1,89 +1,147 @@
-{# # Design Index template # _________________________ # # This template gets loaded whenever the Design index is requested, because # the Design Index single_entry section's Template setting is set to # "design/_index". # # An `entry` variable will be
-automatically passed to this template, which will # be set to the Design Index entry. _#} {% extends "_layouts/site" %} {% set bodyClass = "design" %} {% set years = [2016, 2015, 2014, 2013, 2012] %} {% set entryYears = [] %} {% block head %} {{ parent()
-}}
-<meta property="og:site_name" content="SFU italiaDesign field school" />
-<meta property="og:url" content="{{entry.url}}" /> {% if title is defined %}
-<meta property="og:title" content="{{title}}" /> {% endif %}
-<meta property="og:description" content="Dieci: 10 years of italiaDesign" /> {% endblock %} {# =========================== Filter Form =========================== #} {% block main %}
-<div id="bg"></div>
-<div id="d-filter">
-	<form id="searchForm">
-		<div id="search-btn">
-			<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1000 1000">
-				<path d="M968.2,849.4L667.3,549c83.9-136.5,66.7-317.4-51.7-435.6C477.1-25,252.5-25,113.9,113.4c-138.5,138.3-138.5,362.6,0,501C219.2,730.1,413.2,743,547.6,666.5l301.9,301.4c43.6,43.6,76.9,14.9,104.2-12.4C981,928.3,1011.8,893,968.2,849.4z M524.5,522c-88.9,88.7-233,88.7-321.8,0c-88.9-88.7-88.9-232.6,0-321.3c88.9-88.7,233-88.7,321.8,0C613.4,289.4,613.4,433.3,524.5,522z"
-				/>
-			</svg>
-		</div>
-		<input id="search" type="search" placeholder="type to search">
-		<span>x</span>
-	</form>
-</div>
+{#
+ # Design Index template
+ # _________________________
+ #
+ # This template gets loaded whenever the Design index is requested, because
+ # the Design Index single_entry section's Template setting is set to
+ # "design/_index".
+ #
+ # An `entry` variable will be automatically passed to this template, which will
+ # be set to the Design Index entry.
+ #}
 
-{# =========================== Find Entries Logic =========================== #} {# One year at a time #} {% for year in years %} {# Find your entries #} {% set designerEntries = craft.entries.section('design').type('designer').videoYear(year) %} {% set
-filmEntries = craft.entries.section('design').type('shortFilm').videoYear(year) %} {% set filmOffset = designerEntries|length // filmEntries|length %} {% set entries = [] %} {# Rearrange entries #} {% if filmEntries|length and designerEntries|length %}
-{% for i in 0..(filmEntries|length - 1) %} {# Film Entry #} {% set entries = entries|merge([filmEntries.nth(i)]) %} {# Designer Entries #} {% set entries = entries|merge( designerEntries[i * filmOffset : filmOffset] ) %} {% endfor %} {% set entries =
-entries|merge( designerEntries[filmOffset * filmEntries|length : filmOffset] ) %} {% elseif designerEntries|length and filmEntries|length == 0 %} {# No short films in this year #} {% set entries = designerEntries %} {% elseif filmEntries|length and designerEntries|length
-== 0 %} {% set entries = filmEntries %} {% endif %} {# =========================== Display Entries =========================== #} {% if entries | length %} {% set entryYears = entryYears|merge([year]) %}
-<section id="flex-grid-{{year}}" class="flexbox-grid clearfix">
-	<h1 id="year-title-{{year}}">{{year}}</h1> {% if year == '2016' %}
-	<article id="page-info">
-		<h1>Interviews</h1>
-		<p>{{entry.body}}</p>
-	</article>
-	{% endif %} {% for entry in entries %}
-	<article class="{{entry.type == 'shortFilm' ? 'film-entry' : 'design-entry'}} {{entry.videoYear >= '2015' ? 'v21-9' : 'v16-9'}} item" data-title="{{entry|lower}}" {% if entry.type !='shortFilm' %}data-company="{{entry.companyField|lower}}" {% endif %}
-					data-tags="{% for tag in entry.disciplines %}{{tag}}{{tag == entry.disciplines.last() ? '' :','}}{% endfor %}" {% if entry.secondaryTags|length %} data-topics="{% for tag in entry.secondaryTags %}{{tag}}{{tag == entry.secondaryTags.last() ? '' :','}}{% endfor %}"
-					{% endif %} data-show="true">
-		{% if entry.type == "interviewVideo" %} {% set image = entry.parent.intPortrait.first %} {% elseif entry.type == 'designer' %} {% set image = entry.intPortrait.first %} {% else %} {% set video = entry.videoThumbnail.first() %} {% endif %}
-		<a href="{{ entry.url }}" class="clearfix">
-			<div class="entry-thumb-cont">
-				{% if entry.type == 'shortFilm' %}
-				<video autoplay loop muted preload>
-					<source src="{{ video.url }}" type="video/webm" data-title="{{ entry.title }}">
-				</video>
-				{% else %}
-				<img src="{{ image.url }}" alt="{{ image.title }}"> {% endif %}
+{% extends "_layouts/site" %}
+{% set bodyClass = "design" %}
+{% set years = [2016, 2015, 2014, 2013, 2012] %}
+{% set entryYears = [] %}
+
+{% block head %}
+	{{ parent() }}
+	<meta property="og:site_name" content="SFU italiaDesign field school" />
+	<meta property="og:url" content="{{entry.url}}" /> {% if title is defined %}
+	<meta property="og:title" content="{{title}}" /> {% endif %}
+	<meta property="og:description" content="Dieci: 10 years of italiaDesign" />
+{% endblock %}
+
+{# =========================== Filter Form =========================== #}
+{% block main %}
+	<div id="bg"></div>
+	<div id="d-filter">
+		<form id="searchForm">
+			<div id="search-btn">
+				<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1000 1000">
+					<path d="M968.2,849.4L667.3,549c83.9-136.5,66.7-317.4-51.7-435.6C477.1-25,252.5-25,113.9,113.4c-138.5,138.3-138.5,362.6,0,501C219.2,730.1,413.2,743,547.6,666.5l301.9,301.4c43.6,43.6,76.9,14.9,104.2-12.4C981,928.3,1011.8,893,968.2,849.4z M524.5,522c-88.9,88.7-233,88.7-321.8,0c-88.9-88.7-88.9-232.6,0-321.3c88.9-88.7,233-88.7,321.8,0C613.4,289.4,613.4,433.3,524.5,522z"
+					/>
+				</svg>
 			</div>
-			{% if entry.type == 'shortFilm' %}
-			<div class="entry-description">
-				{{entry.videoDescription}}
-			</div>
-			{% elseif entry.type == 'designer' %}
-			<ul class="entry-tags">
-				{% for tag in entry.disciplines %}
-				<li> {{ tag }} </li>
-				{% endfor %} {% for topic in entry.secondaryTags %}
-				<li>{{topic}}</li>
-				{% endfor %}
-			</ul>
-			<span class="entry-meet">meet {{ entry.title|split(' ')|first }}</span> {% endif %}
-			<div class="entry-title">
-				<h1>{{ entry }}</h1>
-				<h2>{{entry.type != 'shortFilm'?entry.companyField}}</h2>
-			</div>
-		</a>
-	</article>
-	{% if random(2) == 0 %}
-	<article class="design-entry item blank" data-show="true"></article>
-	{% endif %} {% endfor %}
-</section>
-{% else %} {#
-<p>That's strange, we couldn't find anything, our bad. Maybe try looking for something else? We'll fix this ASAP!</p> #} {% endif %} {% endfor %}
-<div id="year-links">
-	<div class="mobile-year-menu">year
-		<div class="arrow-down"></div>
+			<input id="search" type="search" placeholder="type to search">
+			<span>x</span>
+		</form>
 	</div>
-	<ul>
-		{% for year in entryYears %}
-		<li>
-			<a href="#year-title-{{year}}">
-						{{year}}
-					</a>
-		</li>
-		{% endfor %}
-	</ul>
-</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-<script src="/js/designIndex.js"></script>
+
+	{# =========================== Find Entries Logic =========================== #}
+	{# One year at a time #}
+	{% for year in years %}
+		{# Find your entries #}
+		{% set designerEntries = craft.entries.section('design').type('designer').videoYear(year) %}
+		{% set filmEntries = craft.entries.section('design').type('shortFilm').videoYear(year) %}
+		{% set filmOffset = designerEntries|length // filmEntries|length %}
+		{% set entries = [] %}
+		{# Rearrange entries #}
+		{% if filmEntries|length and designerEntries|length %}
+			{% for i in 0..(filmEntries|length - 1) %}
+				{# Film Entry #}
+				{% set entries = entries|merge([filmEntries.nth(i)]) %}
+				{# Designer Entries #}
+				{% set entries = entries|merge( designerEntries[i * filmOffset : filmOffset] ) %}
+			{% endfor %}
+			{% set entries = entries|merge( designerEntries[filmOffset * filmEntries|length : filmOffset] ) %}
+			{% elseif designerEntries|length and filmEntries|length == 0 %}
+			{# No short films in this year #}
+			{% set entries = designerEntries %}
+			{% elseif filmEntries|length and designerEntries|length == 0 %}
+			{% set entries = filmEntries %}
+		{% endif %}
+		{# =========================== Display Entries =========================== #}
+		{% if entries | length %}
+			{% set entryYears = entryYears|merge([year]) %}
+			<section id="flex-grid-{{year}}" class="flexbox-grid clearfix">
+				<h1 id="year-title-{{year}}">{{year}}</h1>
+				{% if year == '2016' %}
+					<article id="page-info">
+						<h1>Interviews</h1>
+						<p>{{entry.body}}</p>
+					</article>
+				{% endif %}
+				{% for entry in entries %}
+					<article class="{{entry.type == 'shortFilm' ? 'film-entry' : 'design-entry'}} {{entry.videoYear >= '2015' ? 'v21-9' : 'v16-9'}} item" data-title="{{entry|lower}}" {% if entry.type !='shortFilm' %}data-company="{{entry.companyField|lower}}" {% endif %} data-tags="{% for tag in entry.disciplines %}{{tag}}{{tag == entry.disciplines.last() ? '' :','}}{% endfor %}" {% if entry.secondaryTags|length %} data-topics="{% for tag in entry.secondaryTags %}{{tag}}{{tag == entry.secondaryTags.last() ? '' :','}}{% endfor %}" {% endif %} data-show="true">
+
+						{% if entry.type == "interviewVideo" %}
+							{% set image = entry.parent.intPortrait.first %}
+						{% elseif entry.type == 'designer' %}
+							{% set image = entry.intPortrait.first %}
+						{% else %}
+							{% set video = entry.videoThumbnail.first() %}
+						{% endif %}
+						{% set transformedImage = craft.imager.transformImage(
+							image, [{ width: 500 }, { width: 300 }, { width: 200 }, { width: 150 }],
+							{ ratio: 2/3, position: image.focusPctX ~ '% ' ~ image.focusPctY ~ '%' })
+						%}
+						<a href="{{ entry.url }}" class="clearfix">
+							<div class="entry-thumb-cont">
+								{% if entry.type == 'shortFilm' %}
+									<video autoplay loop muted preload>
+										<source src="{{ video.url }}" type="video/webm" data-title="{{ entry.title }}">
+									</video>
+								{% else %}
+									<img src="{{ craft.imager.base64Pixel(2, 3) }}" sizes="(min-width: 1024px) 12vw, (min-width: 700px) 18vw, (min-width: 480) 42vw, 100vw" srcset="{{ craft.imager.srcset(transformedImage) }}">
+								{% endif %}
+							</div>
+							{% if entry.type == 'shortFilm' %}
+								<div class="entry-description">
+									{{entry.videoDescription}}
+								</div>
+							{% elseif entry.type == 'designer' %}
+								<ul class="entry-tags">
+									{% for tag in entry.disciplines %}
+										<li> {{ tag }} </li>
+									{% endfor %}
+									{% for topic in entry.secondaryTags %}
+											<li>{{topic}}</li>
+									{% endfor %}
+								</ul>
+								<span class="entry-meet">meet {{ entry.title|split(' ')|first }}</span>
+							{% endif %}
+							<div class="entry-title">
+								<h1>{{ entry }}</h1>
+								<h2>{{entry.type != 'shortFilm'?entry.companyField}}</h2>
+							</div>
+						</a>
+					</article>
+					{% if random(2) == 0 %}
+						<article class="design-entry item blank" data-show="true"></article>
+					{% endif %}
+				{% endfor %}
+			</section>
+		{% else %}
+			{# <p>That's strange, we couldn't find anything, our bad. Maybe try looking for something else? We'll fix this ASAP!</p> #}
+		{% endif %}
+	{% endfor %}{# end for year #}
+	<div id="year-links">
+		<div class="mobile-year-menu">year
+			<div class="arrow-down"></div>
+		</div>
+		<ul>
+			{% for year in entryYears %}
+			<li>
+				<a href="#year-title-{{year}}">
+							{{year}}
+						</a>
+			</li>
+			{% endfor %}
+		</ul>
+	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+	<script src="/js/designIndex.js"></script>
 {% endblock %}
