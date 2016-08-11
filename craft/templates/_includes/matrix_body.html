@@ -10,37 +10,41 @@
 {% if entry.additionalContent|length %}
 	<section id="v-context" class="v-section">
 		{% for block in entry.additionalContent %}
+			{########## QUESTION AND ANSWER ##########}
 			{% if block.type == "qa" %}
-				<div class="qa">
-					{# Q & A #}
+				<div class="qa col-{{block.size}} {{block.overlap}}">
 					{% if block.question == "" %}
 					{% else %}
 						<h2>Q: {{block.question}}</h2>
 					{% endif %}
 					<p>A: {{block.answer}}</p>
 				</div>
+			{########## PULLQUOTE ##########}
 			{% elseif block.type == "pullquote" %}
-				<!__ Pullquote __>
-				<div class="v-mat-pull-container {{block.position}}">
-					<a class="v-mat-pull-link" href="">
-						<blockquote class="v-mat-pull">
-							{{block.quote}}
-						</blockquote>
-					</a>
+				<div class="v-mat-pull-container col-{{block.size}} {{block.overlap}}">
+					<blockquote class="v-mat-pull">
+						{{block.quote}}
+					</blockquote>
 				</div>
+			{########## PODCAST ##########}
 			{% elseif block.type == "podcast" %}
-				<!__ Podcast __>
+
+			{########## IMAGE ##########}
 			{% elseif block.type == "image" %}
-				<!__ Image __>
-				<!__ TODO: make this fully standards compliant and everything __>
-				<figure class="v-mat-img-container {{block.position}} {{block.size}}">
-					<div class="v-mat-img-box">
-						<img class="v-mat-img-asset" src={{block.imageAsset.first().url}} alt="{{block.imageCaption}}">
-					</div>
-					<figcaption class="v-mat-img-caption">{{block.imageCaption}}</figcaption>
-				</figure>
+				{% set image = block.imageAsset.first %}
+				{% set transformedImage = craft.imager.transformImage(
+					image, [{width: 1920 }, {width: 1000 }, { width: 500 }, { width: 300 }, { width: 150 }],
+					{ position: image.focusPctX ~ '% ' ~ image.focusPctY ~ '%' })
+				%}
+				{% set imgW = block.size/6*100 %}
+				<div class="v-mat-img-container col-{{block.size}}">
+					<img 	class="v-mat-img" src="{{ craft.imager.base64Pixel(2, 3) }}"
+								sizes="(min-width: 1024px) {{imgW}}vw, 100vw"
+								srcset="{{ craft.imager.srcset(transformedImage) }}"
+								alt="{{block.imageCaption}}" />
+				</div>
+			{########## VIDEO CHAPTER ##########}
 			{% elseif block.type == "vidChapter" %}
-				<!__ Video Chapter __>
 			{% endif %}
 		{% endfor %}
 	</section>

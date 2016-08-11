@@ -83,7 +83,7 @@
 						{% else %}
 							{% set video = entry.videoThumbnail.first() %}
 						{% endif %}
-						{% set transformedImage = craft.imager.transformImage(
+						{% set transformedJPG = craft.imager.transformImage(
 							image, [{ width: 500 }, { width: 300 }, { width: 200 }, { width: 150 }],
 							{ ratio: 2/3, position: image.focusPctX ~ '% ' ~ image.focusPctY ~ '%' })
 						%}
@@ -94,7 +94,8 @@
 										<source src="{{ video.url }}" type="video/webm" data-title="{{ entry.title }}">
 									</video>
 								{% else %}
-									<img src="{{ craft.imager.base64Pixel(2, 3) }}" sizes="(min-width: 1024px) 12vw, (min-width: 700px) 18vw, (min-width: 480) 42vw, 100vw" srcset="{{ craft.imager.srcset(transformedImage) }}">
+										<img class="lazyload" img data-srcset="{{ craft.imager.srcset(transformedJPG) }}"
+											sizes="(min-width: 1024px) 12vw, (min-width: 700px) 18vw, (min-width: 480) 42vw, 100vw" data-src="{{image.url}}"/>
 								{% endif %}
 							</div>
 							{% if entry.type == 'shortFilm' %}
