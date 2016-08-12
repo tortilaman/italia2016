@@ -429,7 +429,7 @@ d8'          `8b  88  88           `8'        88   `"8bbdP"Y8   `"Ybbd8"'   `"Yb
 	}
 	@include respond-to(laptop) {
 		width : 90vw;
-		height: calc(100vh - 20vw);
+		height: auto;
 		margin: 10vw auto 0;
 	}
 
@@ -455,10 +455,14 @@ d8'          `8b  88  88           `8'        88   `"8bbdP"Y8   `"Ybbd8"'   `"Yb
 		padding: 1.5em 3% 3%;
 		@extend .green-bg;
 		@include respond-to(tablet) {
-			position  : absolute;
 			left      : 5%;
-			width     : 35%;
-			min-height: 50%;
+			width     : 60%;
+			min-height: 0;
+		}
+		@include respond-to(laptop) {
+			left      : 5%;
+			width     : 45%;
+			min-height: 0;
 		}
 
 		.quote {
@@ -521,6 +525,7 @@ d8'          `8b  88  88           `8'        88   `"8bbdP"Y8   `"Ybbd8"'   `"Yb
 			height        : 100%;
 			width         : 100%;
 			vertical-align: middle;
+			border-bottom : none;
 
 			&:hover::before {
 				display: none;
@@ -550,6 +555,9 @@ d8'          `8b  88  88           `8'        88   `"8bbdP"Y8   `"Ybbd8"'   `"Yb
 		}
 
 		.v-chapter-title {
+			display       : inline;
+			padding-bottom: 0.25em;
+			border-bottom : 0.15em solid;
 			@media (orientation: portrait) {
 				width: calc(100% - 7em);
 			}
@@ -568,11 +576,15 @@ d8'          `8b  88  88           `8'        88   `"8bbdP"Y8   `"Ybbd8"'   `"Yb
 		@extend .blue-bg;
 		@include respond-to(tablet) {
 			margin-top: 0;
-			position  : absolute;
-			right     : 5%;
-			top       : 15%;
-			width     : 57%;
-			height    : 70%;
+			left      : 35%;
+			top       : -3%;
+			width     : 60%;
+			min-height: 0;
+		}
+		@include respond-to(laptop) {
+			top  : -5em;
+			left : 43%;
+			width: 57%;
 		}
 
 		/*@media (orientation: portrait) {

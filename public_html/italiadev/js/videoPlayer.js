@@ -8,22 +8,22 @@
 **===============================*/
 
 //Function to scale numbers between two ranges.
-Number.prototype.map = function (in_min, in_max, out_min, out_max) {
-	return (this - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+Number.prototype.map = function(in_min, in_max, out_min, out_max) {
+    return (this - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 };
 
 //Convert seconds to minutes and seconds
-String.prototype.toMMSS = function () {
-	var sec_num = parseInt(this, 10); // don't forget the second param
-	var minutes = Math.floor(sec_num / 60);
-	var seconds = sec_num % 60;
-	if (minutes < 10) {
-		minutes = "0" + minutes;
-	}
-	if (seconds < 10) {
-		seconds = "0" + seconds;
-	}
-	return minutes + ':' + seconds;
+String.prototype.toMMSS = function() {
+    var sec_num = parseInt(this, 10); // don't forget the second param
+    var minutes = Math.floor(sec_num / 60);
+    var seconds = sec_num % 60;
+    if (minutes < 10) {
+        minutes = "0" + minutes;
+    }
+    if (seconds < 10) {
+        seconds = "0" + seconds;
+    }
+    return minutes + ':' + seconds;
 };
 
 
@@ -40,354 +40,355 @@ String.prototype.toMMSS = function () {
 
 **===============================*/
 
-$(document).ready(function () {
-	//Video Resizing Variables
-	var scrollPos;
-	var opacityValue = 0;
-	//Other Variables
-	var played = false;
-	//Scrolling Variables
-	var iterator = 0,
-		$entries = $("[class*='-section']");
+$(document).ready(function() {
+    //Video Resizing Variables
+    var scrollPos;
+    var opacityValue = 0;
+    //Other Variables
+    var played = false;
+    //Scrolling Variables
+    var iterator = 0,
+        $entries = $("[class*='-section']");
 
-	//Hide / Show Variables
-	var $title = $("#v-title"),
-		$vTimeCont = $(".v-time-ind"),
-		$vProgBarCont = $("#v-progress-bar");
-	//Interface Variables
-	var vPlayer = document.getElementById("v-player"),
-		$vTime = $(".v-cur-time"),
-		$vDur = $(".v-duration"),
-		$background = $('body'),
-		$vProgBar = $("#v-show-progress");
-	//Info
-	var chapters = $("#v-chapters");
-	var vidIndex;
+    //Hide / Show Variables
+    var $title = $("#v-title"),
+        $vTimeCont = $(".v-time-ind"),
+        $vProgBarCont = $("#v-progress-bar");
+    //Interface Variables
+    var vPlayer = document.getElementById("v-player"),
+        $vTime = $(".v-cur-time"),
+        $vDur = $(".v-duration"),
+        $background = $('body'),
+        $vProgBar = $("#v-show-progress");
+    //Info
+    var chapters = $("#v-chapters");
+    var vidIndex;
 
-	//Figure out which item in $entries is the video so videoResize can work properly.
-	$entries.each(function(ind, el) {
-		if($(this).is($("#v-header"))) {
-			vidIndex = ind;
-		}
-	});
+    //Figure out which item in $entries is the video so videoResize can work properly.
+    $entries.each(function(ind, el) {
+        if ($(this).is($("#v-header"))) {
+            vidIndex = ind;
+        }
+    });
 
-	/*=================================
-		iOS VIDEO HANDLING
-	**===============================*/
+    /*=================================
+    	iOS VIDEO HANDLING
+    **===============================*/
 
-	var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-	if (iOS) {
-		$("v-player").attr('controls', true);
-		$(".v-controls, .v-init-play, .v-ended, .v-suggestions").remove();
-	}
+    var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    if (iOS) {
+        $("v-player").attr('controls', true);
+        $(".v-controls, .v-init-play, .v-ended, .v-suggestions").remove();
+    }
 
-	/*=================================
-		VIDEO RESIZING
-	**===============================*/
+    /*=================================
+    	VIDEO RESIZING
+    **===============================*/
 
-	//Function to resize video and change bg color
-	function videoResize(sPos) {
-		var $vControls = $('.v-ui'),
-			$vOverlay = $('.v-overlay'),
-			$vScrollStart = parseInt($entries.eq(vidIndex - 1).attr('data-offset')),
-			$zVal = 0,
-			pos = parseFloat(sPos).toFixed(2),
-			totalHeight = parseFloat($('#v-header').attr('data-offset')),
-			scrollPercent = ((pos - $vScrollStart) / (totalHeight - $vScrollStart)).toFixed(2);
+    //Function to resize video and change bg color
+    function videoResize(sPos) {
+        var $vControls = $('.v-ui'),
+            $vOverlay = $('.v-overlay'),
+            $vScrollStart = parseInt($entries.eq(vidIndex - 1).attr('data-offset')),
+            $zVal = 0,
+            pos = parseFloat(sPos).toFixed(2),
+            totalHeight = parseFloat($('#v-header').attr('data-offset')),
+            scrollPercent = ((pos - $vScrollStart) / (totalHeight - $vScrollStart)).toFixed(2);
 
-		if (pos > $vScrollStart) {
-			//Hide video elements / controls when scrolled
-			if (scrollPercent > 0.5) {
-				scrollPercent = 1;
-				opacityValue = 1;
-				$zVal = 1;
-				if(!played && $("main").hasClass("home")) {
-					playButton.toggle();
-					$(".v-init-play").addClass("oHidden").remove();
-				}
-			} else if (scrollPercent < 0.1) {
-				scrollPercent = 0;
-				opacityValue = 0;
-				$zVal = 6;
-				if(!vPlayer.paused) {
-					playButton.toggle();
-				}
-			} else {
-				opacityValue = parseFloat(scrollPercent);
-				$zVal = 6;
-			}
-			$vControls.css('opacity', opacityValue);
-			$vOverlay.css('opacity', 1 - opacityValue);
-			$vOverlay.css('z-index', $zVal);
-		}
-	}
+        if (pos > $vScrollStart) {
+            //Hide video elements / controls when scrolled
+            if (scrollPercent > 0.5) {
+                scrollPercent = 1;
+                opacityValue = 1;
+                $zVal = 1;
+                if (!played && $("main").hasClass("home")) {
+                    playButton.toggle();
+                    $(".v-init-play").addClass("oHidden").remove();
+                }
+            } else if (scrollPercent < 0.1) {
+                scrollPercent = 0;
+                opacityValue = 0;
+                $zVal = 6;
+                if (!vPlayer.paused) {
+                    playButton.toggle();
+                }
+            } else {
+                opacityValue = parseFloat(scrollPercent);
+                $zVal = 6;
+            }
+            $vControls.css('opacity', opacityValue);
+            $vOverlay.css('opacity', 1 - opacityValue);
+            $vOverlay.css('z-index', $zVal);
+        }
+    }
 
-	//================================================================================================
-	//
-	//	88                                                 ad88
-	//	88                ,d                              d8"
-	//	88                88                              88
-	//	88  8b,dPPYba,  MM88MMM  ,adPPYba,  8b,dPPYba,  MM88MMM  ,adPPYYba,   ,adPPYba,   ,adPPYba,
-	//	88  88P'   `"8a   88    a8P_____88  88P'   "Y8    88     ""     `Y8  a8"     ""  a8P_____88
-	//	88  88       88   88    8PP"""""""  88            88     ,adPPPPP88  8b          8PP"""""""
-	//	88  88       88   88,   "8b,   ,aa  88            88     88,    ,88  "8a,   ,aa  "8b,   ,aa
-	//	88  88       88   "Y888  `"Ybbd8"'  88            88     `"8bbdP"Y8   `"Ybbd8"'   `"Ybbd8"'
-	//
-	//================================================================================================
+    //================================================================================================
+    //
+    //	88                                                 ad88
+    //	88                ,d                              d8"
+    //	88                88                              88
+    //	88  8b,dPPYba,  MM88MMM  ,adPPYba,  8b,dPPYba,  MM88MMM  ,adPPYYba,   ,adPPYba,   ,adPPYba,
+    //	88  88P'   `"8a   88    a8P_____88  88P'   "Y8    88     ""     `Y8  a8"     ""  a8P_____88
+    //	88  88       88   88    8PP"""""""  88            88     ,adPPPPP88  8b          8PP"""""""
+    //	88  88       88   88,   "8b,   ,aa  88            88     88,    ,88  "8a,   ,aa  "8b,   ,aa
+    //	88  88       88   "Y888  `"Ybbd8"'  88            88     `"8bbdP"Y8   `"Ybbd8"'   `"Ybbd8"'
+    //
+    //================================================================================================
 
-	/*=================================
-		HIDE & SHOW CONTROLS
-	**===============================*/
+    /*=================================
+    	HIDE & SHOW CONTROLS
+    **===============================*/
 
-	function showControls() {
-		if (played === true) {
-			$("#v-title, #v-interviewee, #v-share, a.v-prev-link, .v-controls, .v-nextVid, .v-prevVid").removeClass("oHidden");
-		}
-	}
+    function showControls() {
+        if (played === true) {
+            $("#v-title, #v-interviewee, #v-share, a.v-prev-link, .v-controls, .v-nextVid, .v-prevVid").removeClass("oHidden");
+        }
+    }
 
-	function hideControls() {
-		if (vPlayer.paused === false) {
-			$("#v-title, #v-interviewee, #v-share, a.v-prev-link, .v-controls, .v-nextVid, .v-prevVid").addClass("oHidden");
-		}
-	}
+    function hideControls() {
+        if (vPlayer.paused === false) {
+            $("#v-title, #v-interviewee, #v-share, a.v-prev-link, .v-controls, .v-nextVid, .v-prevVid").addClass("oHidden");
+        }
+    }
 
-	var i = null;
-	var prev_x = null;
+    var i = null;
+    var prev_x = null;
 
-	//CHROMEBUG: Fix for chrome mousemove event call while in fullscreen
-	function controlsTimeout(e) {
-		if ((prev_x !== null) && (prev_x != e.x)) {
-			clearTimeout(i);
-			showControls();
-			i = setTimeout(hideControls, 2000);
-		}
-		prev_x = e.x;
-	}
+    //CHROMEBUG: Fix for chrome mousemove event call while in fullscreen
+    function controlsTimeout(e) {
+        if ((prev_x !== null) && (prev_x != e.x)) {
+            clearTimeout(i);
+            showControls();
+            i = setTimeout(hideControls, 2000);
+        }
+        prev_x = e.x;
+    }
 
-	//Call controlsTimeout on mouse move or click.
-	document.addEventListener("mousemove", controlsTimeout, false);
+    //Call controlsTimeout on mouse move or click.
+    document.addEventListener("mousemove", controlsTimeout, false);
 
-	/*=================================
-		SOCIAL MEDIA
-	**===============================*/
+    /*=================================
+    	SOCIAL MEDIA
+    **===============================*/
 
-	$(".v-share-btn-open").on("click", function() {
-		$(this).css('transform', 'rotateY(90deg)');
-		$(".v-share-btn-close").css('transform', 'rotateY(180deg)');
-		for(var i = 0; i < $(".v-share-btns-container a").length; i++) {
-			$(".v-share-btns-container a").eq(i).css('top', (i*1.5)+'em');
-		}
-	});
+    $(".v-share-btn-open").on("click", function() {
+        $(this).css('transform', 'rotateY(90deg)');
+        $(".v-share-btn-close").css('transform', 'rotateY(180deg)');
+        for (var i = 0; i < $(".v-share-btns-container a").length; i++) {
+            $(".v-share-btns-container a").eq(i).css('top', (i * 1.5) + 'em');
+        }
+    });
 
-	$(".v-share-btn-close").on("click", function() {
-		$(this).css('transform', 'rotateY(90deg)');
-		$(".v-share-btn-open").css('transform', 'rotateY(0deg)');
-		for(var i = 0; i < $(".v-share-btns-container a").length; i++) {
-			$(".v-share-btns-container a").eq(i).css('top', -1.5+'em');
-		}
-	});
+    $(".v-share-btn-close").on("click", function() {
+        $(this).css('transform', 'rotateY(90deg)');
+        $(".v-share-btn-open").css('transform', 'rotateY(0deg)');
+        for (var i = 0; i < $(".v-share-btns-container a").length; i++) {
+            $(".v-share-btns-container a").eq(i).css('top', -1.5 + 'em');
+        }
+    });
 
 
-	/*=================================
-		FULLSCREEN BUTTON
-	**===============================*/
+    /*=================================
+    	FULLSCREEN BUTTON
+    **===============================*/
 
-	// Find the right method, call on correct element
-	$("#v-full-btn").on("click", function() {
-		var el = document.querySelector("#v-container");
-		var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement;
-		if(!fullscreenElement) {
-			if(el.requestFullscreen) {
-				el.requestFullscreen();
-			} else if(el.mozRequestFullScreen) {
-				el.mozRequestFullScreen();
-			} else if(el.webkitRequestFullscreen) {
-				el.webkitRequestFullscreen();
-			} else if(el.msRequestFullscreen) {
-				el.msRequestFullscreen();
-			}
-			$("#v-full-btn polygon").css('transform', 'rotate(180deg)');
-		} else {
-			if(document.exitFullscreen) {
-				document.exitFullscreen();
-			} else if(document.mozExitFullscreen) {
-				document.mozExitFullscreen();
-			} else if(document.webkitExitFullscreen) {
-				document.webkitExitFullscreen();
-			} else if(document.msExitFullscreen) {
-				document.msExitFullscreen();
-			}
-			$("#v-full-btn polygon").css('transform', 'rotate(0deg)');
-		}
-	});
+    // Find the right method, call on correct element
+    $("#v-full-btn").on("click", function() {
+        var el = document.querySelector("#v-container");
+        var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement;
+        if (!fullscreenElement) {
+            if (el.requestFullscreen) {
+                el.requestFullscreen();
+            } else if (el.mozRequestFullScreen) {
+                el.mozRequestFullScreen();
+            } else if (el.webkitRequestFullscreen) {
+                el.webkitRequestFullscreen();
+            } else if (el.msRequestFullscreen) {
+                el.msRequestFullscreen();
+            }
+            $("#v-full-btn polygon").css('transform', 'rotate(180deg)');
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.mozExitFullscreen) {
+                document.mozExitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+            $("#v-full-btn polygon").css('transform', 'rotate(0deg)');
+        }
+    });
 
-	/*=================================
-		VIDEO PROGRESS BAR
-	**===============================*/
+    /*=================================
+    	VIDEO PROGRESS BAR
+    **===============================*/
 
-	function timeUpdate() {
-		$vProgBar.css('width', ((vPlayer.currentTime / vPlayer.duration) * 100) + '%');
-	}
+    function timeUpdate() {
+        $vProgBar.css('width', ((vPlayer.currentTime / vPlayer.duration) * 100) + '%');
+    }
 
-	$vProgBarCont.click(function (e) {
-		var newTime = (((e.pageX - $vProgBarCont.offset().left) / $vProgBarCont.outerWidth()) * vPlayer.duration);
-		vPlayer.currentTime = newTime;
-	});
+    $vProgBarCont.click(function(e) {
+        var newTime = (((e.pageX - $vProgBarCont.offset().left) / $vProgBarCont.outerWidth()) * vPlayer.duration);
+        vPlayer.currentTime = newTime;
+    });
 
-	/*=================================
-		PLAY BUTTON
-	**===============================*/
+    /*=================================
+    	PLAY BUTTON
+    **===============================*/
 
-	/* global d3, document */
-	var playButton = {
-		el: document.querySelector(".js-button"),
+    /* global d3, document */
+    var playButton = {
+        el: document.querySelector(".js-button"),
 
-		iconEls: {
-			playing: document.querySelector("#pause-icon"),
-			paused: document.querySelector("#play-icon")
-		},
+        iconEls: {
+            playing: document.querySelector("#pause-icon"),
+            paused: document.querySelector("#play-icon")
+        },
 
-		nextState: {
-			playing: "paused",
-			paused: "playing"
-		},
+        nextState: {
+            playing: "paused",
+            paused: "playing"
+        },
 
-		animationDuration: 350,
+        animationDuration: 350,
 
-		vidPlayer: document.querySelector("#v-player"),
+        vidPlayer: document.querySelector("#v-player"),
 
-		init: function () {
-			this.setInitialState();
-			this.replaceUseEl();
-			this.el.addEventListener("click", this.toggle.bind(this));
-		},
+        init: function() {
+            this.setInitialState();
+            this.replaceUseEl();
+            this.el.addEventListener("click", this.toggle.bind(this));
+        },
 
-		setInitialState: function () {
-			var initialIconRef = this.el.querySelector("use").getAttribute("xlink:href");
-			this.state = this.el.querySelector(initialIconRef).getAttribute("data-state");
-		},
+        setInitialState: function() {
+            var initialIconRef = this.el.querySelector("use").getAttribute("xlink:href");
+            this.state = this.el.querySelector(initialIconRef).getAttribute("data-state");
+        },
 
-		replaceUseEl: function () {
-			d3.select(this.el.querySelector("use")).remove();
-			d3.select(this.el.querySelector("svg")).append("path")
-				.attr("class", "js-icon")
-				.attr("d", this.stateIconPath());
-		},
+        replaceUseEl: function() {
+            d3.select(this.el.querySelector("use")).remove();
+            d3.select(this.el.querySelector("svg")).append("path")
+                .attr("class", "js-icon")
+                .attr("d", this.stateIconPath());
+        },
 
-		//Button Functionality
-		toggle: function () {
-			this.goToNextState();
+        //Button Functionality
+        toggle: function() {
+            this.goToNextState();
 
-			d3.select(this.el.querySelector(".js-icon")).transition()
-				.duration(this.animationDuration)
-				.attr("d", this.stateIconPath());
-			//VIDEO TIME
-			var updateTime;
-			//Play
-			if (this.vidPlayer.paused) {
-				if (played === false) {
-					updateTime = setInterval(function () {
-						$vTime.text(vPlayer.currentTime.toFixed(0).toMMSS());
-						$vDur.text(vPlayer.duration.toFixed(0).toMMSS());
-						$vTimeCont.css('opacity', '1');
-					}, 1000);
-					played = true;
-				}
-				this.vidPlayer.play();
-				//$("header.header").css('opacity', '0');
-				//Pause
-			} else {
-				clearInterval(updateTime);
-				this.vidPlayer.pause();
-			}
-		},
+            d3.select(this.el.querySelector(".js-icon")).transition()
+                .duration(this.animationDuration)
+                .attr("d", this.stateIconPath());
+            //VIDEO TIME
+            var updateTime;
+            //Play
+            if (this.vidPlayer.paused) {
+                if (played === false) {
+                    updateTime = setInterval(function() {
+                        $vTime.text(vPlayer.currentTime.toFixed(0).toMMSS());
+                        $vDur.text(vPlayer.duration.toFixed(0).toMMSS());
+                        $vTimeCont.css('opacity', '1');
+                    }, 1000);
+                    played = true;
+                }
+                this.vidPlayer.play();
+                //$("header.header").css('opacity', '0');
+                //Pause
+            } else {
+                clearInterval(updateTime);
+                this.vidPlayer.pause();
+            }
+        },
 
-		goToNextState: function () {
-			this.state = this.nextState[this.state];
-		},
+        goToNextState: function() {
+            this.state = this.nextState[this.state];
+        },
 
-		stateIconPath: function () {
-			return this.iconEls[this.state].getAttribute("d");
-		}
-	};
+        stateIconPath: function() {
+            return this.iconEls[this.state].getAttribute("d");
+        }
+    };
 
-	playButton.init();
+    playButton.init();
 
-	/*=================================
-		AUTOPLAY FUNCTIONALITY
-	**===============================*/
+    /*=================================
+    	AUTOPLAY FUNCTIONALITY
+    **===============================*/
 
-	if(window.location.hash.length > 1) {
-		playButton.toggle();
-		$(".v-init-play").addClass("oHidden").remove();
-		showControls();
-	}
+    if (window.location.hash.length > 1) {
+        playButton.toggle();
+        $(".v-init-play").addClass("oHidden").remove();
+        showControls();
+    }
 
-	/*=================================
-		INITIAL STATE & PLAY BUTTON
-	**===============================*/
+    /*=================================
+    	INITIAL STATE & PLAY BUTTON
+    **===============================*/
 
-	if($(".v-init-play").length) {
-		$("#v-title, #v-interviewee, #v-share, a.v-prev-link, .v-controls").addClass("oHidden");
-		$(".v-init-play").one("click", function() {
-			playButton.toggle();
-			$(this).addClass("oHidden").remove();
-			showControls();
-		});
-	}
+    if ($(".v-init-play").length) {
+        $("#v-title, #v-interviewee, #v-share, a.v-prev-link, .v-controls").addClass("oHidden");
+        $(".v-init-play").one("click", function() {
+            playButton.toggle();
+            $(this).addClass("oHidden").remove();
+            showControls();
+        });
+    }
 
-	/*=================================
-		NEXT VIDEO F'N
-	**===============================*/
+    /*=================================
+    	NEXT VIDEO F'N
+    **===============================*/
 
-	var cdTime = 10,
-		count = 1;
+    var cdTime = 10,
+        count = 1;
 
-	document.querySelector("#v-player").onended = function() {
-		//Show end of video UI everywhere but about / bio pages
-		if(!$("body").hasClass("team") && !$("body").hasClass("team-vid")) {
-			$(".v-ended").css('z-index', '5').removeClass("oHidden");
-			var interval = setInterval(function() {
-				//Set text in middle
-				$('.v-ended-cd-num').text(cdTime - count);
-				//If cancel is clicked
-				$('.v-ended-cd-cancel').one("click", function() {
-					clearInterval(interval);
-					$(".v-ended span, [class^='v-ended-']").addClass("oHidden");
-				});
-				if (count == cdTime) {
-					$('.v-ended-cd-num').text('GO!');
-					clearInterval(interval);
-					window.location.href = $('.v-ended').attr('data-url');
-					return;
-				}
-				count++;
-			}, 1000);
-		} else {
-			$(".v-ended span, .v-ended-nextTitle, .v-ended-cd-num, .v-ended-cd-cancel").css('z-index', 5).addClass("oHidden");
-		}
-	};
+    document.querySelector("#v-player").onended = function() {
+        //Show end of video UI everywhere but about / bio pages
+        if (!$("body").hasClass("team") && !$("body").hasClass("team-vid")) {
+            $(".v-ended").css('z-index', '5').removeClass("oHidden");
+            if ($(".v-ended h2").length > 0) {
+                var interval = setInterval(function() {
+                    //Set text in middle
+                    $('.v-ended-cd-num').text(cdTime - count);
+                    //If cancel is clicked
+                    $('.v-ended-cd-cancel').one("click", function() {
+                        clearInterval(interval);
+                        $(".v-ended span, [class^='v-ended-']").css('visibility', 'hidden').hide("fast");
+                    });
+                    if (count == cdTime) {
+                        clearInterval(interval);
+                        window.location.href = $('.v-ended').attr('data-url');
+                        return;
+                    }
+                    count++;
+                }, 1000);
+            }
+        } else {
+            $(".v-ended span, .v-ended-nextTitle, .v-ended-cd-num, .v-ended-cd-cancel").css('z-index', 5).addClass("oHidden");
+        }
+    };
 
-	/*=================================
-		EVENT LISTENERS
-	**===============================*/
+    /*=================================
+    	EVENT LISTENERS
+    **===============================*/
 
-	if($("#v-intro").length || $("main").hasClass("home")) {
-		//Scroll progress even tlistener
-		window.addEventListener('scroll', function () {
-			requestAnimationFrame(function () {
-				scrollPos = window.pageYOffset;
-				videoResize(scrollPos);
-			});
-		});
-	} else {
-		$(".v-overlay").remove();
-	}
+    if ($("#v-intro").length || $("main").hasClass("home")) {
+        //Scroll progress even tlistener
+        window.addEventListener('scroll', function() {
+            requestAnimationFrame(function() {
+                scrollPos = window.pageYOffset;
+                videoResize(scrollPos);
+            });
+        });
+    } else {
+        $(".v-overlay").remove();
+    }
 
-	//Play Progress event listener
-	vPlayer.addEventListener("timeupdate", function () {
-		requestAnimationFrame(function () {
-			timeUpdate();
-		});
-	});
+    //Play Progress event listener
+    vPlayer.addEventListener("timeupdate", function() {
+        requestAnimationFrame(function() {
+            timeUpdate();
+        });
+    });
 });

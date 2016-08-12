@@ -32,7 +32,7 @@ $(document).ready(function() {
     function calcHeights() {
         $entries.each(function() {
             $(this).attr('data-offset', offset);
-            var $height = $(this).is($entries.first()) ? $(this).outerHeight() : $(this).outerHeight(true);
+            var $height = $(this).is($entries.first()) && $entries.length > 2 ? $(this).outerHeight() : $(this).outerHeight(true);
             offset += $(this).outerHeight(true);
             $(this).attr('data-height', $(this).outerHeight(true));
             $('body').css('height', totalHeight += $height);
@@ -63,17 +63,19 @@ $(document).ready(function() {
             $parent = $(parentDiv),
             $dynDiv = $(parentDiv + ' > div:nth-of-type(2)'),
             $scrollRefDiv = $(parentDiv + ' + section');
+        // var $dynDiv = $parent.find()
 
         if (scrolled > $parent.attr('data-offset') && scrolled < $scrollRefDiv.attr('data-offset')) {
             var oldTop = parseInt($dynDiv.css('top').replace('px', '')),
                 inMin = $parent.attr('data-offset'),
                 inMax = parseFloat(inMin) + parseFloat($parent.outerHeight()),
                 outMin = 0,
-                outMax = $(window).outerHeight() * 0.8,
+                outMax = parseFloat($dynDiv.position().top),
                 newVal = -scrolled.map(inMin, inMax, outMin, outMax) + 'px';
-            $dynDiv.css('margin-top', newVal);
+            console.log($dynDiv.position().top + ", " + $parent.attr('data-offset'));
+            $dynDiv.css('transform', 'translateY(' + newVal + ')');
         } else if (scrolled > $scrollRefDiv.attr('data-offset')) {
-            $dynDiv.css('margin-top', -$(window).outerHeight() * 0.8);
+            $dynDiv.css('transform', 'translateY(' + -$dynDiv.position().top + ')');
         } else if (scrolled < $parent.attr('data-offset')) {
             $dynDiv.css('margin-top', 0);
         }

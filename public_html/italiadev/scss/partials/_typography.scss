@@ -43,17 +43,29 @@ h2 {
 a {
 	position       : relative;
 	font-family    : 'SubHeadAlt', 'SubHead', Arial, sans-serif;
-	color          : $color5;
-	text-decoration: none;
+	color          : white;
 	letter-spacing : 0.15em;
+	opacity        : 0.6;
+	text-decoration: none;
+	padding        : 0 0 0.1em;
+	border-bottom  : 0.1em solid auto;
+	transition     : opacity 0.2s !important;
+
+	&:hover {
+		opacity: 1;
+	}
+}
+
+nav a {
+	text-decoratoin: none;
 
 	&::before {
 		content         : '';
 		position        : absolute;
 		width           : 100%;
 		height          : 0.10em;
-		top             : 1em;
-		left            : -7%;
+		top             : 1.1em;
+		left            : 0;
 		background-color: $color5;
 		visibility      : hidden;
 		mix-blend-mode  : multiply;
@@ -62,9 +74,11 @@ a {
 		transition      : all 0.2s ease-in-out;
 	}
 
-	&:hover:before {
-		visibility: visible;
-		transform : scaleX(1.1);
+	&:hover {
+		&::before {
+			visibility: visible;
+			transform : scaleX(1);
+		}
 	}
 }
 

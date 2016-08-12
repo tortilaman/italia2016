@@ -8,7 +8,6 @@
 # An `entry` variable is expected to be defined. -
 #}
 
-{# All to find which video in the playlist we're on... #}
 {% set next = false %}
 {% set tag = entry.secondaryTags|length ? entry.secondaryTags|merge(entry.disciplines).order('RAND()').first() : entry.disciplines.order('RAND()').first() %}
 
@@ -40,6 +39,14 @@
 	'2012' : 'http://2012.sfuitaliadesign.com/'
 }%}
 
+{# OOOOOH, get to make some funny related text #}
+{% set relatedMessage = [
+	"we think you'll love our other designers",
+	"something similar to whet your appetite:",
+	"the insights continue in these videos",
+	"prepare to have your mind blown"
+] %}
+
 <section id="v-header" class="{{bodyClass}}-section">
 	<div id="v-middle"class="{{entry.videoYear >= '2015' ? 'v21-9' : 'v16-9'}}">
 		<div id="v-container">
@@ -51,20 +58,26 @@
 				{# ========= Top video info ============ #}
 				<div class="v-ui-top">
 					{# Interviewee / Video Heading #}
-					<h1 id="v-interviewee">{{entry.type =='interviewVideo' ? entry.parent : entry.title}}</h1>
-					{# Video Sub-heading #}
-					<h2 id="v-title">{{entry.type !='interviewVideo' ? '' : entry}} {% if siblings|length > 1 %}{{ ['(', siblingIDs|indexOf(entry.id) + 1, '/', siblings|length, ')' ]|join }}{% endif %}</h2>
+					<h1 id="v-interviewee">{{entry.type =='interviewVideo' ? entry.parent : entry.title}}: {{entry.type !='interviewVideo' ? '' : entry}} {% if siblings|length > 1 %}{{ ['(', siblingIDs|indexOf(entry.id) + 1, '/', siblings|length, ')' ]|join }}{% endif %}</h1>
 					{# Previous Field School Link #}
-					<a href="{{pastSchoolURLS[entry.videoYear.value]}}" class="v-prev-link" target="_blank">{{entry.videoYear.value is even ? 'italiaDesign ' : 'dutchDesign '}}{{entry.videoYear}}</a>
+					<a href="{{pastSchoolURLS[entry.videoYear.value]}}" class="v-prev-link text" target="_blank">{{entry.videoYear.value is even ? 'italia ' : 'dutch '}}{{entry.videoYear}}</a>
 					{# Social Media Sharing Buttons #}
 					<div id="v-share">
-						<a class="v-share-btn-open"><img src="/assets/images/social-icons/open-01.png"></a>
-						<a class="v-share-btn-close"><img src="/assets/images/social-icons/close-01.png"></a>
-						<div class="v-share-btns-container">
-							<a class="v-share-tw"><img src="/assets/images/social-icons/twitter-01.png"></a>
-							<a class="v-share-fb"><img src="/assets/images/social-icons/facebook-01.png"></a>
-							<a class="v-share-li"><img src="/assets/images/social-icons/linkedin-01.png"></a>
-						</div>
+						<a class="v-share-vi">
+							<svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35.5 28.6">
+							  <path id="vimeo" d="M16.1 28.6h-.2c-.1 0-.1 0-.2-.1-1.1-.1-1.9-.6-2.6-1.3-1.1-1.2-1.9-2.7-2.4-4.2-.8-2.6-1.5-5.2-2.3-7.8-.5-1.6-.9-3.3-1.7-4.8-.3-.7-.7-1.3-1.3-1.8-.5-.5-.9-.6-1.5-.2-.4.2-.7.4-1.1.6-.3.2-.7.4-1.1.7C1.1 9 .6 8.4 0 7.7v-.1c.2-.1.3-.2.5-.4 2-1.6 4-3.3 6.1-4.9.8-.7 1.8-1.2 2.8-1.7C11.1-.1 13 .5 14.2 2c.6.8.9 1.7 1.1 2.6.4 1.9.7 3.9 1.1 5.8.3 1.9.7 3.9 1.5 5.7.2.6.6 1.2.9 1.7.4.5.9.6 1.5.2.3-.2.6-.4.8-.7 1.5-1.7 2.7-3.5 3.7-5.6.4-.8.6-1.7.5-2.7-.1-.8-.4-1.4-1.2-1.7-.6-.2-1.2-.2-1.8-.1-.6.1-1.3.3-2 .4.4-.8.7-1.7 1.1-2.4.8-1.6 1.9-2.9 3.4-3.8C26.9.1 29.2-.2 31.6.1c1.8.3 3 1.3 3.5 3 .6 1.9.5 3.7 0 5.6-.6 2-1.6 3.8-2.7 5.6-1.5 2.3-3.1 4.4-4.9 6.4-1.7 2-3.6 4-5.8 5.6-1.3 1-2.8 1.8-4.4 2.2-.4 0-.8.1-1.2.1z"/>
+							</svg>
+						</a>
+						<a class="v-share-fb">
+							<svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17.3 37.1">
+							  <path id="facebook" d="M16.6 18.6h-5.2v18.6H3.7V18.6H0V12h3.7V7.8c0-3 1.4-7.8 7.8-7.8h5.7v6.4h-4.1c-.7 0-1.6.3-1.6 1.8V12h5.9l-.8 6.6z"/>
+							</svg>
+						</a>
+						<a class="v-share-tw">
+							<svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35.9 29.2">
+							  <path id="twitter" d="M32.2 7.3v1c0 9.7-7.4 21-21 21-4.2 0-8-1.2-11.3-3.3.7-.1 1.3 0 1.9 0 3.5 0 6.6-1.2 9.1-3.2-3.2 0-5.9-2.2-6.9-5.1.4.1.9.1 1.4.1.7 0 1.3-.1 1.9-.3-3.4-.7-5.9-3.7-5.9-7.2v-.1c1 .6 2.1.9 3.3.9-2-1.3-3.3-3.6-3.3-6.1 0-1.4.4-2.6 1-3.7C6.1 5.8 11.6 8.7 17.7 9c-.1-.5-.2-1.1-.2-1.7 0-4.1 3.3-7.4 7.4-7.4 2.1 0 4 .9 5.4 2.3 1.7-.3 3.3-.9 4.7-1.8-.6 1.7-1.7 3.2-3.2 4.1 1.5-.2 2.9-.6 4.2-1.2-1.1 1.6-2.3 2.9-3.8 4z"/>
+							</svg>
+						</a>
 					</div>
 				</div>
 				{% if entry.type == 'designer' and entry.hasDescendants() == false %}
@@ -79,10 +92,14 @@
 				{% endif %}
 				{# ========= End of video interface ============ #}
 				<div class="v-ended oHidden" data-url="{{siblings[chaptIndex].url}}#v-header">
-					<span>up next:</span>
-					<h1 class="v-ended-nextTitle">{{siblings[chaptIndex].title|lower}}</h1>
-					<h2 class="v-ended-cd-num">10</h2>
-					<a class="v-ended-cd-cancel">cancel</a>
+					{% if siblingIDs|indexOf(entry.id) + 1 != siblings|length %}
+						<span>up next:</span>
+						<h1 class="v-ended-nextTitle">{{siblings[chaptIndex].title|lower}}</h1>
+						<h2 class="v-ended-cd-num">10</h2>
+						<a class="v-ended-cd-cancel">cancel</a>
+					{% else %}
+						<span>{{ relatedMessage[random(relatedMessage|length - 1)] }}</span>
+					{% endif %}
 					<div class="v-suggestions">
 						{% for entry in relatedEntries %}
 							<div class="v-suggestion">

@@ -6,19 +6,19 @@
 // =================================================================================
 
 span.v-close-btn {
-	position: fixed;
-	top: 2vmin;
-	left: 2vmin;
-	display: inline-block;
-	z-index: 2;
+	position   : fixed;
+	top        : 2vmin;
+	left       : 2vmin;
+	display    : inline-block;
+	z-index    : 2;
 	font-family: body;
 	font-weight: bold;
+
 	a {
 		text-decoration: none;
-		color: black;
+		color          : black;
 	}
 }
-
 
 /*=======================================================================
 
@@ -37,22 +37,20 @@ span.v-close-btn {
 
 #v-header {
 	display: block;
-	top: 0;
-	left: 0;
-	margin: 0;
+	top    : 0;
+	left   : 0;
+	margin : 0;
 	padding: 0;
-	width: 100%;
-
+	width  : 100%;
 	@include respond-to(tablet) {
-		margin: 0 0 0 6vw;
+		margin     : 0 0 0 6vw;
 		padding-top: 8vw;
-		width: 90vw;
-		max-width: 100%;
-		box-shadow: none;
+		width      : 90vw;
+		max-width  : 100%;
+		box-shadow : none;
 	}
-
 	@include respond-to(l) {
-		height: calc(100vh - 7vw);
+		height       : calc(100vh - 7vw);
 		margin-bottom: 7vw;
 	}
 }
@@ -67,30 +65,29 @@ main.home #v-header {
 
 #v-middle {
 	position: relative;
-	display: block;
-//	height: 100%;
-	margin: 0 auto;
+	display : block;
+	//	height: 100%;
+	margin  : 0 auto;
 }
 
 #v-container {
-	position:relative;
-	display: block;
-	margin: 0;
-	padding: 0;
-	height: 100%;
+	position: relative;
+	display : block;
+	margin  : 0;
+	padding : 0;
+	height  : 100%;
 	overflow: hidden;
-
 	@include respond-to(tablet) {
 		&::after {
-			content: '';
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
+			content   : '';
+			position  : absolute;
+			top       : 0;
+			left      : 0;
+			width     : 100%;
+			height    : 100%;
 			background: black;
-			opacity: 0;
-			z-index: 1;
+			opacity   : 0;
+			z-index   : 1;
 			transition: opacity 0.25s;
 		}
 
@@ -101,22 +98,22 @@ main.home #v-header {
 
 	video {
 		position: absolute;
-		display: block;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		z-index: 1;
+		display : block;
+		top     : 0;
+		left    : 0;
+		width   : 100%;
+		height  : 100%;
+		z-index : 1;
 	}
 
-	&:-webkit-full-screen{
+	&:-webkit-full-screen {
 		background-color: black;
-		width: 100% !important;
-		height: 100% !important;
+		width           : 100% !important;
+		height          : 100% !important;
 
 		video {
-			top: 0 !important;
-			width: 100% !important;
+			top   : 0 !important;
+			width : 100% !important;
 			height: 100% !important;
 		}
 	}
@@ -126,46 +123,44 @@ main.home #v-header {
 	ASPECT RATIOS
 **==================================*/
 
-[id^='v-'] .v21-9, [id^='v-'].v21-9 {
+[id^='v-'] .v21-9,
+[id^='v-'].v21-9 {
 
-	width: 100vw;
+	width : 100vw;
 	height: 42.86vw;
 
 	#v-player {
-		top: -6.7vw;
-		width: 100vw;
+		top   : -6.7vw;
+		width : 100vw;
 		height: 56.25vw;
 	}
-
 	@include respond-to(tablet, l) {
 		height: 38.25vw;
-		width: 90vw;
+		width : 90vw;
 
 		#v-player {
-			top: -6.2vw;
-			width: 90vw;
+			top   : -6.2vw;
+			width : 90vw;
 			height: 50.625vw;
 		}
 	}
-
 	@include respond-to(tablet, p) {
-		width: 86vw;
+		width : 86vw;
 		height: 36.86vw;
 	}
 }
 
-[id^='v-'] .v16-9, [id^='v-'].v16-9 {
+[id^='v-'] .v16-9,
+[id^='v-'].v16-9 {
 
-	width: 100vw;
+	width : 100vw;
 	height: 56.25vw;
-
 	@include respond-to(tablet, l) {
 		height: calc(100vh - 14vw);
-		width: calc((100vh - 14vw)/9*16);
+		width : calc((100vh - 14vw)/9*16);
 	}
-
 	@include respond-to(tablet, p) {
-		width: 86vw;
+		width : 86vw;
 		height: 48.375vw;
 	}
 }
@@ -178,6 +173,7 @@ main.home #v-header {
 	.v-controls {
 		display: none !important;
 	}
+
 	.v-init-play {
 		display: none !important;
 	}
@@ -189,153 +185,112 @@ main.home #v-header {
 
 .v-ui-top {
 	position: absolute;
-	display: block;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 4rem;
+	display : block;
+	top     : 0;
+	left    : 0;
+	width   : 100%;
+	height  : 4rem;
 }
 
 #v-interviewee {
-	position: absolute;
-	top: 1em;
-	left: 3%;
-	z-index: 5;
-	color: white;
-	font-size: 1.4em;
-	opacity: 1;
-	transition: all 1s
-}
-
-#v-title {
-	position: absolute;
-	top: 3.5em;
-	left: 3%;
-	z-index: 5;
-	color: white;
-	opacity: 1;
-	text-decoration: none !important;
-	font-size: 0.9em;
-	transition: all 1s
+	position  : absolute;
+	top       : 1em;
+	left      : 3%;
+	z-index   : 5;
+	color     : white;
+	font-size : 1.4em;
+	opacity   : 1;
+	transition: all 1s;
 }
 
 a.v-prev-link {
-	position: absolute;
-	top: 1.4em;
-	right: 4em;
-	z-index: 5;
-	color: white;
-	text-decoration: none;
-	font-size: 0.9em;
-	transition: opacity 1s;
+	position   : absolute;
+	top        : 3.5em;
+	left       : 3%;
+	z-index    : 5;
+	font-family: "Headeralt", "Header", sans-serif;
+	color      : $color3;
+	font-size  : 0.9em;
+	transition : opacity 1s;
 }
 
 #v-share {
-	position: absolute;
-	top: 1.7em;
-	right: 1em;
+	position  : absolute;
+	top       : 1.7em;
+	right     : 1em;
 	transition: opacity 1s;
+	z-index   : 10;
 
-	[class^='v-share-btn'] {
-		position: absolute;
-		display: block;
-		top: 0;
-		right: 0;
-		height: 1.5em;
-		width: 1.5em;
-		z-index: 5;
+	svg {
+		height: 100%;
+		width : auto;
 
-		img {
-			position: relative;
-			display: block;
-			width: 1.5em;
-			height: 1.5em;
-			margin: 0;
-			padding: 0.1em;
-			top: -0.5em;
+		& > path {
+			fill: white;
 		}
 	}
+}
 
-	.v-share-btn-open, .v-share-btn-close {
-		top: 0;
-		transform: rotateY(0deg);
-		transition: transform 0.2s;
-	}
+[class^='v-share-'] {
+	display   : inline-block;
+	height    : 1.8em;
+	width     : auto;
+	padding   : 0.2em;
+	margin    : 0 0.8em;
+	opacity   : 0.6;
+	transition: opacity 0.2s;
 
-	.v-share-btn-close {
-		transform: rotateY(90deg);
-	}
-
-	.v-share-btns-container {
-		position: absolute;
-		display: block;
-		top: 1.5em;
-		right: 0;
-		height: 6em;
-		width: 1.5em;
-		overflow: hidden;
-		a {
-			position: absolute;
-			top: -2em;
-			left: 0;
-			height: 1.5em;
-			width: 1.5em;
-			margin-top: 0.5em;
-			transition: top 0.2s;
-		}
+	&:hover {
+		opacity: 1;
 	}
 }
 
 .v-init-play {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	margin: auto;
-	height: 7em;
-	width: 17em;
+	position  : absolute;
+	top       : 0;
+	left      : 0;
+	right     : 0;
+	bottom    : 0;
+	margin    : auto;
+	height    : 7em;
+	width     : 17em;
 	text-align: center;
-	z-index: 5;
+	z-index   : 5;
 	transition: opacity 0.5;
-
 	@include respond-to(tablet) {
 		height: 11em;
-		width: 13em;
+		width : 13em;
 	}
 
 	.v-init-play-btn {
-		position: relative;
-		display: inline-block;
-		margin: 0 auto;
-		width: 0;
-		height: 0;
-		z-index: 5;
-		border-top: 2em solid transparent;
-		border-left: 4em solid $color1;
+		position     : relative;
+		display      : inline-block;
+		margin       : 0 auto;
+		width        : 0;
+		height       : 0;
+		z-index      : 5;
+		border-top   : 2em solid transparent;
+		border-left  : 4em solid $color1;
 		border-bottom: 2em solid transparent;
-		transition: border 0.2s;
+		transition   : border 0.2s;
 	}
 
 	.v-init-play-label {
-		position: relative;
-		display: inline-block;
-		margin: 0.25em auto;
-		color: $color1;
-		$play-btn-fs: (
-			null: (1.5rem, 1),
-			tablet: (2.4rem, 1)
-		);
-
+		position    : relative;
+		display     : inline-block;
+		margin      : 0.25em auto;
+		color       : $color1;
+		$play-btn-fs: ( null: (1.5rem, 1), tablet: (2.4rem, 1) );
 		@include font-size($play-btn-fs);
 	}
 
 	a {
 		position: absolute;
-		top: 0;
-		left: 0;
-		height: 100%;
-		width: 100%;
+		top     : 0;
+		left    : 0;
+		height  : 100%;
+		width   : 100%;
+
 		&:hover {
 			.v-init-play-btn {
 				border-left: 4em solid $color2;
@@ -353,55 +308,57 @@ a.v-prev-link {
 **==================*/
 
 .v-ended {
-	position: absolute;
-	display: block;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	min-width: 65%;
+	position  : absolute;
+	display   : block;
+	top       : 50%;
+	left      : 50%;
+	transform : translate(-50%, -50%);
+	min-width : 65%;
 	text-align: center;
-	z-index: 1;
-	color: white;
+	z-index   : 1;
+	color     : white;
 
 	span {
-		color: white;
-		display: block;
-		text-align: center;
-		font-size: 1.5em;
+		color      : white;
+		display    : block;
+		text-align : center;
+		font-size  : 1.5em;
 		font-family: "Header";
 	}
 
 	.v-ended-nextTitle {
-		font-size: 4em;
+		font-size  : 4em;
 		line-height: 1.3;
 	}
 
 	.v-ended-cd-num {
-		font-size: 3em;
+		font-size  : 3em;
 		font-family: "Header";
 	}
 }
 
 .v-suggestions {
-	position: relative;
-	margin: auto;
-	height: 6em;
-	z-index: 3;
+	position  : relative;
+	margin    : auto;
+	height    : 6em;
+	z-index   : 3;
 	text-align: center;
 
 	.v-suggestion {
-		display: inline-block;
-		margin: 0 1em;
+		@extend .blue-bg;
+		position: relative;
+		display : inline-block;
+		margin  : 0 1em;
 
 		p {
 			text-align: center;
-			color: white;
+			color     : white;
 		}
 
 		img {
 			position: relative;
-			height: 4em;
-			width: auto;
+			height  : 4em;
+			width   : auto;
 		}
 	}
 }
@@ -411,9 +368,9 @@ a.v-prev-link {
 **==================*/
 
 #v-ui {
-	position: relative;
-	height: 100%;
-	width: 100%;
+	position  : relative;
+	height    : 100%;
+	width     : 100%;
 	transition: opacity 0.5s;
 }
 
@@ -421,33 +378,44 @@ a.v-prev-link {
 	opacity: 1;
 }
 
-.v-nextVid, .v-prevVid {
-	display: inline-block;
-	position: absolute;
-	top: 50%;
+.v-nextVid,
+.v-prevVid {
+	display  : inline-block;
+	position : absolute;
+	top      : 50%;
 	transform: translateY(-50%);
-	width: 3%;
-	height: auto;
-	fill: #ffffff;
-	z-index: 5;
+	width    : 3%;
+	height   : auto;
+	fill     : #ffffff;
+	z-index  : 5;
 
-	&::before { display: none;}
-	&:hover::before {display: none;}
+	&::before {
+		display: none;
+	}
+
+	&:hover::before {
+		display: none;
+	}
 }
-.v-nextVid {right: 2%;}
-.v-prevVid {left: 2%;}
+
+.v-nextVid {
+	right: 2%;
+}
+
+.v-prevVid {
+	left: 2%;
+}
 
 .v-controls {
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	height: 3.5rem;
-	padding: 0.75rem;
-	margin: 0;
-	z-index: 2;
+	position  : absolute;
+	bottom    : 0;
+	left      : 0;
+	width     : 100%;
+	height    : 3.5rem;
+	padding   : 0.75rem;
+	margin    : 0;
+	z-index   : 2;
 	transition: opacity 0.5s;
-
 	@include respond-to(tablet) {
 		display: block;
 	}
@@ -455,24 +423,26 @@ a.v-prev-link {
 
 //Standard for buttons
 .v-control-elem {
-	float: left;
-	height: 2rem;
-	width: 2rem;
-	z-index: 10;
-	color: white;
+	float     : left;
+	height    : 2rem;
+	width     : 2rem;
+	z-index   : 10;
+	color     : white;
 	text-align: justify;
-	padding: 0;
-	margin: 0 0 0 0.5rem;
-	&> button {
-		padding: 0.2em;
-		width: 2rem;
-		height: 2rem;
-		border: 0;
-		outline: none;
-		background: black;
+	padding   : 0;
+	margin    : 0 0 0 0.5rem;
+
+	& > button {
+		padding      : 0.2em;
+		width        : 2rem;
+		height       : 2rem;
+		border       : 0;
+		outline      : none;
+		background   : black;
 		border-radius: 0.5vmin;
-		margin: 0;
+		margin       : 0;
 	}
+
 	svg {
 		fill: white;
 	}
@@ -484,15 +454,18 @@ a.v-prev-link {
 
 .v-vol-btn-cont {
 	@extend .v-control-elem;
+
 	.svg-volume-icon {
 		transform-origin: center left;
+
 		.group-wave {
 			fill-opacity: 1;
-			transition: all 0.5s ease-in;
+			transition  : all 0.5s ease-in;
 		}
+
 		.mute-anim {
-			transform: translateX(-2rem);
-			transform: scale(0 0);
+			transform   : translateX(-2rem);
+			transform   : scale(0 0);
 			fill-opacity: 0;
 		}
 	}
@@ -500,20 +473,20 @@ a.v-prev-link {
 
 .v-time-ind {
 	@extend .v-control-elem;
-	float: right;
-	width: 7em;
-	opacity: 0;
+	float     : right;
+	width     : 7em;
+	opacity   : 0;
 	margin-top: 0.2em;
 	transition: all 0.25s;
 }
 
-#v-show-progress,
-#v-progress-bar {
-	background: $color1;
-	height: 0.5rem;
-	margin: 0;
-	padding: 0;
-	z-index: 2;
+#v-progress-bar,
+#v-show-progress {
+	background: white;
+	height    : 0.5rem;
+	margin    : 0;
+	padding   : 0;
+	z-index   : 2;
 }
 
 #v-show-progress {
@@ -521,45 +494,45 @@ a.v-prev-link {
 }
 
 #v-progress-bar {
-	margin: 0.75rem 10rem 0 4rem;
+	margin    : 0.75rem 10rem 0 4rem;
 	background: rgba(255, 255, 255, 0.3);
-	z-index: 1;
+	z-index   : 1;
 	transition: opacity 0.25s;
 }
 
 #v-full-btn {
 	position: relative;
-	margin: 0.5rem 0.5rem 0 0;
-	height: 1rem;
-	width: 1rem;
-	float: right;
+	margin  : 0.5rem 0.5rem 0 0;
+	height  : 1rem;
+	width   : 1rem;
+	float   : right;
 
 	svg {
-		position: absolute;
-		display: block;
-		top: 0;
-		left: 0;
-		height: 100%;
-		width: 100%;
-		transform: scale(1, 1);
+		position  : absolute;
+		display   : block;
+		top       : 0;
+		left      : 0;
+		height    : 100%;
+		width     : 100%;
+		transform : scale(1, 1);
 		transition: transform 0.2s;
 
 		polygon {
-			fill: white;
+			fill            : white;
 			transform-origin: center center;
-			transform: rotate(0deg);
-			transition: transform 0.2s;
+			transform       : rotate(0deg);
+			transition      : transform 0.2s;
 		}
 	}
 
 	a {
 		position: absolute;
-		display: block;
-		top: 0;
-		left: 0;
-		height: 100%;
-		width: 100%;
-		padding: 0;
+		display : block;
+		top     : 0;
+		left    : 0;
+		height  : 100%;
+		width   : 100%;
+		padding : 0;
 
 		&:hover {
 			svg {
@@ -572,7 +545,6 @@ a.v-prev-link {
 		}
 	}
 }
-
 
 /*========================================
 
@@ -589,47 +561,50 @@ a.v-prev-link {
 
 //The daddy that surrounds all the video stuff after the heading
 section#v-content {
-	position: relative;
-	display: block;
-	top: 110vh;
-	width: 100vw;
+	position : relative;
+	display  : block;
+	top      : 110vh;
+	width    : 100vw;
 	max-width: 100%;
-	z-index: 1;
+	z-index  : 1;
 }
 
 .v-overlay {
 	display: none;
-
 	@include respond-to(tablet) {
-		position:absolute;
-		display: block;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
+		position        : absolute;
+		display         : block;
+		top             : 0;
+		left            : 0;
+		width           : 100%;
+		height          : 100%;
 		background-color: $color4;
-		z-index: 6;
+		z-index         : 6;
 	}
 }
 
 #v-info {
 	margin: 1em;
+
 	.v-bio {
-		position: relative;
-		display: inline-block;
-		float: right;
-		width: 70vw;
+		position      : relative;
+		display       : inline-block;
+		float         : right;
+		width         : 70vw;
 		vertical-align: top;
-		padding: 0 5vw;
+		padding       : 0 5vw;
+
 		.v-bio-photo {
 			float: left;
 			width: 50%;
 		}
+
 		.v-bio-text {
-			float: right;
-			width: 50vw;
+			float  : right;
+			width  : 50vw;
 			z-index: 8;
 		}
+
 		h2 {
 			margin-bottom: 3rem;
 		}
@@ -637,46 +612,51 @@ section#v-content {
 }
 
 #v-chapters {
-	position: relative;
-	display: inline-block;
-	float: right;
+	position      : relative;
+	display       : inline-block;
+	float         : right;
 	vertical-align: top;
-	padding-right: 5vw;
-	z-index: 5;
+	padding-right : 5vw;
+	z-index       : 5;
+
 	.v-chapter {
-		position: relative;
-		width: 20vw;
-		height: auto;
-		margin: 0 0 1em 0;
-		padding: 0;
+		position  : relative;
+		width     : 20vw;
+		height    : auto;
+		margin    : 0 0 1em;
+		padding   : 0;
 		box-shadow: 0 0 0.3em 0.1em rgba(50, 50, 50, 0.2);
+
 		img {
 			position: relative;
-			display: block;
-			width: 100%;
-			height: auto;
-			margin: 0;
-			padding: 0;
+			display : block;
+			width   : 100%;
+			height  : auto;
+			margin  : 0;
+			padding : 0;
 		}
+
 		.v-rel-info {
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			width: 100%;
-			margin: 0;
-			padding: 0;
+			position  : absolute;
+			top       : 50%;
+			left      : 50%;
+			transform : translate(-50%, -50%);
+			width     : 100%;
+			margin    : 0;
+			padding   : 0;
 			text-align: center;
-			color: white;
+			color     : white;
+
 			h3 {
 				text-transform: uppercase;
-				margin: 0;
-				padding: 0;
-				line-height: 1.3;
+				margin        : 0;
+				padding       : 0;
+				line-height   : 1.3;
 			}
+
 			span {
-				margin: 0;
-				padding: 0;
+				margin     : 0;
+				padding    : 0;
 				line-height: 1.3;
 			}
 		}
