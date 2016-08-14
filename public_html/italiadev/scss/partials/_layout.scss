@@ -66,17 +66,17 @@ body {
 }
 
 #bg {
-	position             : fixed;
-	top                  : 0;
-	left                 : 0;
-	width                : 100%;
-	height               : 100vh;
-	background-image     : url("/assets/images/soft_wallpaper.png");
-	background-repeat    : repeat;
-	background-position  : top left;
-	background-color     : $color4;
-	background-blend-mode: multiply;
-	z-index              : 1;
+	position        : fixed;
+	top             : 0;
+	left            : 0;
+	width           : 100%;
+	height          : 100vh;
+	// background-image     : url("/assets/images/soft_wallpaper.png");
+	// background-repeat    : repeat;
+	// background-position  : top left;
+	background-color: $color4;
+	// background-blend-mode: multiply;
+	z-index         : 1;
 	@include respond-to(tablet) {
 		top   : 6vw;
 		left  : 6vw;
@@ -141,18 +141,22 @@ header.header {
 	z-index         : 201;
 	transition      : top 0.5s;
 	text-align      : left;
-	@include respond-to(laptop) {
+	@include respond-to(tablet) {
 		position  : fixed;
 		transform : rotate(270deg);
 		background: none;
 		top       : 9vw;
 		left      : auto;
-		right     : calc(94vw + 3em);
+		right     : calc(94vw + 1.5em);
 		width     : calc(100vh - 10vw);
 		min-height: 0;
 		height    : auto;
 		z-index   : 1;
 		text-align: center;
+	}
+	@include respond-to(laptop) {
+		left : auto;
+		right: calc(94vw + 3em);
 	}
 
 	&.menuOpen {
@@ -207,7 +211,7 @@ nav {
 					margin: 0;
 				}
 			}
-			@include respond-to(laptop) {
+			@include respond-to(tablet) {
 				display    : inline-block;
 				margin     : 0 0 0 12vh;
 				line-height: 1.8;
@@ -220,12 +224,13 @@ nav {
 	}
 
 	a {
-		color      : $color5;
-		font-size  : 4em;
-		font-family: "Header";
+		color        : $color5;
+		font-size    : 4em;
+		font-family  : "Header";
+		border-bottom: none;
 		//Vertical Centering hack...
-		height     : calc(25vh - 3vmin);
-		line-height: calc(25vh - 3vmin);
+		height       : calc(25vh - 3vmin);
+		line-height  : calc(25vh - 3vmin);
 		@include respond-to(tablet) {
 			color      : $color5;
 			font-size  : 1.2em;
@@ -305,18 +310,16 @@ main.team {
 	}
 }
 
-/*==========================================================
-
-88
-88
-88
-88   ,adPPYba,   ,adPPYba,   8b,dPPYba,   ,adPPYba,
-88  a8"     ""  a8"     "8a  88P'   `"8a  I8[    ""
-88  8b          8b       d8  88       88   `"Y8ba,
-88  "8a,   ,aa  "8a,   ,a8"  88       88  aa    ]8I
-88   `"Ybbd8"'   `"YbbdP"'   88       88  `"YbbdP"'
-
-==========================================================*/
+// 8888888
+//   888
+//   888
+//   888   .d8888b .d88b.  88888b.  .d8888b
+//   888  d88P"   d88""88b 888 "88b 88K
+//   888  888     888  888 888  888 "Y8888b.
+//   888  Y88b.   Y88..88P 888  888      X88
+// 8888888 "Y8888P "Y88P"  888  888  88888P'
+//
+// =============================================================================
 
 $tcon-size: 8vw !default;
 $tcon-transition: 0.3s !default;

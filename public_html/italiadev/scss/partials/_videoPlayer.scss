@@ -64,10 +64,16 @@ main.home #v-header {
 }
 
 #v-middle {
-	position: relative;
-	display : block;
+	position : relative;
+	display  : block;
 	//	height: 100%;
-	margin  : 0 auto;
+	margin   : 0 auto;
+	left     : 50%;
+	transform: translateX(-50%);
+	@include respond-to(tablet) {
+		left     : 0;
+		transform: translateX(0);
+	}
 }
 
 #v-container {
@@ -116,6 +122,10 @@ main.home #v-header {
 			width : 100% !important;
 			height: 100% !important;
 		}
+	}
+
+	a {
+		border-bottom: none;
 	}
 }
 
@@ -204,14 +214,17 @@ main.home #v-header {
 }
 
 a.v-prev-link {
-	position   : absolute;
-	top        : 3.5em;
-	left       : 3%;
-	z-index    : 5;
-	font-family: "Headeralt", "Header", sans-serif;
-	color      : $color3;
-	font-size  : 0.9em;
-	transition : opacity 1s;
+	position      : absolute;
+	top           : 3.5em;
+	left          : 3%;
+	z-index       : 5;
+	font-family   : "Headeralt", "Header", sans-serif;
+	color         : $color3;
+	font-size     : 0.9em;
+	padding-bottom: 0;
+	line-height   : 1.2;
+	border-bottom : 0.1em solid !important;
+	transition    : opacity 1s;
 }
 
 #v-share {

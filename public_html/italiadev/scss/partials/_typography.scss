@@ -48,7 +48,7 @@ a {
 	opacity        : 0.6;
 	text-decoration: none;
 	padding        : 0 0 0.1em;
-	border-bottom  : 0.1em solid auto;
+	border-bottom  : 0.1em solid;
 	transition     : opacity 0.2s !important;
 
 	&:hover {
@@ -57,8 +57,6 @@ a {
 }
 
 nav a {
-	text-decoratoin: none;
-
 	&::before {
 		content         : '';
 		position        : absolute;

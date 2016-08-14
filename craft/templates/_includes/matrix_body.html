@@ -7,9 +7,10 @@
 # An `entry` variable is expected to be defined. -
 #}
 
-{% if entry.additionalContent|length %}
+{% set matrix = entry.type == 'interviewVideo' ? entry.parent.additionalContent : entry.additionalContent %}
+{% if matrix|length %}
 	<section id="v-context" class="v-section">
-		{% for block in entry.additionalContent %}
+		{% for block in matrix %}
 			{########## QUESTION AND ANSWER ##########}
 			{% if block.type == "qa" %}
 				<div class="qa col-{{block.size}} {{block.overlap}}">

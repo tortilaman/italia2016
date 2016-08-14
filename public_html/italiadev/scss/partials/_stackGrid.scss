@@ -8,14 +8,14 @@
 
 // =================================================================================
 //
-//	88888888888                                   88
-// 	88                         ,d                 ""
-// 	88                         88
-// 	88aaaaa      8b,dPPYba,  MM88MMM  8b,dPPYba,  88   ,adPPYba,  ,adPPYba,
-// 	88"""""      88P'   `"8a   88     88P'   "Y8  88  a8P_____88  I8[    ""
-// 	88           88       88   88     88          88  8PP"""""""   `"Y8ba,
-// 	88           88       88   88,    88          88  "8b,   ,aa  aa    ]8I
-// 	88888888888  88       88   "Y888  88          88   `"Ybbd8"'  `"YbbdP"'
+// 8888888888          888            d8b
+// 888                 888            Y8P
+// 888                 888
+// 8888888    88888b.  888888 888d888 888  .d88b.  .d8888b
+// 888        888 "88b 888    888P"   888 d8P  Y8b 88K
+// 888        888  888 888    888     888 88888888 "Y8888b.
+// 888        888  888 Y88b.  888     888 Y8b.          X88
+// 8888888888 888  888  "Y888 888     888  "Y8888   88888P'
 //
 // ===============================================================================
 //
@@ -119,18 +119,16 @@
 	}
 }
 
-/*==========================================
-
-88        88
-88        88
-88        88
-88aaaaaaaa88   ,adPPYba,   88,dPYba,,adPYba,    ,adPPYba,
-88""""""""88  a8"     "8a  88P'   "88"    "8a  a8P_____88
-88        88  8b       d8  88      88      88  8PP"""""""
-88        88  "8a,   ,a8"  88      88      88  "8b,   ,aa
-88        88   `"YbbdP"'   88      88      88   `"Ybbd8"'
-
-//========================================*/
+// 888    888
+// 888    888
+// 888    888
+// 8888888888  .d88b.  88888b.d88b.   .d88b.
+// 888    888 d88""88b 888 "888 "88b d8P  Y8b
+// 888    888 888  888 888  888  888 88888888
+// 888    888 Y88..88P 888  888  888 Y8b.
+// 888    888  "Y88P"  888  888  888  "Y8888
+//
+// =============================================================================
 
 .home main {
 	width  : 100%;
@@ -291,18 +289,17 @@
 	box-shadow: none;
 }
 
-/*==========================================
+// 8888888 888             888 d8b
+//   888   888             888 Y8P
+//   888   888             888
+//   888   888888  8888b.  888 888  8888b.
+//   888   888        "88b 888 888     "88b
+//   888   888    .d888888 888 888 .d888888
+//   888   Y88b.  888  888 888 888 888  888
+// 8888888  "Y888 "Y888888 888 888 "Y888888
+//
+// =============================================================================
 
-88                       88  88
-88    ,d                 88  ""
-88    88                 88
-88  MM88MMM  ,adPPYYba,  88  88  ,adPPYYba,
-88    88     ""     `Y8  88  88  ""     `Y8
-88    88     ,adPPPPP88  88  88  ,adPPPPP88
-88    88,    88,    ,88  88  88  88,    ,88
-88    "Y888  `"8bbdP"Y8  88  88  `"8bbdP"Y8
-
-//========================================*/
 #italia-content {
 	width: 80vw;
 }
@@ -399,18 +396,16 @@
 	}
 }
 
-/*==========================================
-
-	   db         88  88     8b           d8  88           88
-	  d88b        88  88     `8b         d8'  ""           88
-	 d8'`8b       88  88      `8b       d8'                88
-	d8'  `8b      88  88       `8b     d8'    88   ,adPPYb,88   ,adPPYba,   ,adPPYba,   ,adPPYba,
-   d8YaaaaY8b     88  88        `8b   d8'     88  a8"    `Y88  a8P_____88  a8"     "8a  I8[    ""
-  d8""""""""8b    88  88         `8b d8'      88  8b       88  8PP"""""""  8b       d8   `"Y8ba,
- d8'        `8b   88  88          `888'       88  "8a,   ,d88  "8b,   ,aa  "8a,   ,a8"  aa    ]8I
-d8'          `8b  88  88           `8'        88   `"8bbdP"Y8   `"Ybbd8"'   `"YbbdP"'   `"YbbdP"'
-
-//========================================*/
+// 888     888 d8b      888
+// 888     888 Y8P      888
+// 888     888          888
+// Y88b   d88P 888  .d88888  .d88b.   .d88b.  .d8888b
+//  Y88b d88P  888 d88" 888 d8P  Y8b d88""88b 88K
+//   Y88o88P   888 888  888 88888888 888  888 "Y8888b.
+//    Y888P    888 Y88b 888 Y8b.     Y88..88P      X88
+//     Y8P     888  "Y88888  "Y8888   "Y88P"   88888P'
+//
+// =============================================================================
 
 /*main:not([class*='child']) #v-intro {
 	opacity: 0;
@@ -427,7 +422,7 @@ d8'          `8b  88  88           `8'        88   `"8bbdP"Y8   `"Ybbd8"'   `"Yb
 		margin: 10vw auto 0;
 		width : auto;
 	}
-	@include respond-to(laptop) {
+	@include respond-to(tablet) {
 		width : 90vw;
 		height: auto;
 		margin: 10vw auto 0;
@@ -599,27 +594,24 @@ d8'          `8b  88  88           `8'        88   `"8bbdP"Y8   `"Ybbd8"'   `"Yb
 	}
 }
 
-/*==========================================
-
-888888888888
-	 88
-	 88
-	 88   ,adPPYba,  ,adPPYYba,  88,dPYba,,adPYba,
-	 88  a8P_____88  ""     `Y8  88P'   "88"    "8a
-	 88  8PP"""""""  ,adPPPPP88  88      88      88
-	 88  "8b,   ,aa  88,    ,88  88      88      88
-	 88   `"Ybbd8"'  `"8bbdP"Y8  88      88      88
-
-//========================================*/
+// 888888b.   d8b
+// 888  "88b  Y8P
+// 888  .88P
+// 8888888K.  888  .d88b.
+// 888  "Y88b 888 d88""88b
+// 888    888 888 888  888
+// 888   d88P 888 Y88..88P
+// 8888888P"  888  "Y88P"
+//
+// =============================================================================
 
 main.team-vid {
 	#v-intro {
 		margin-top: 12vmin;
 		height    : auto;
+		overflow  : auto;
 		@include respond-to(tablet) {
 			margin-top: 10vw;
-			height    : calc(100vh - 14vw);
-
 		}
 
 		.v-portrait {
@@ -631,7 +623,7 @@ main.team-vid {
 				position: absolute;
 				top     : 0;
 				left    : 10%;
-				height  : 75%;
+				height  : 100%;
 				width   : auto;
 			}
 		}
@@ -639,22 +631,36 @@ main.team-vid {
 
 	#v-intro #v-contents {
 		position      : relative;
+		display       : table;
 		width         : 100%;
 		padding-bottom: 1%;
 		height        : auto;
 		margin-top    : - 8em;
 		@include respond-to(tablet) {
-			position      : absolute;
-			left          : 25%;
-			top           : 27%;
+			left          : 28%;
+			margin-top    : 3em;
 			padding-bottom: 1%;
 			min-height    : 0;
-			width         : 35%;
+			width         : auto;
 		}
 
 		.v-contents-title {
-			padding-left: 22%;
-			display     : inline-block;
+			@include respond-to(tablet) {
+				padding-left: 3rem;
+			}
+			@include respond-to(laptop) {
+				padding-left: 10rem;
+			}
+		}
+
+		p.quote {
+			@include respond-to(tablet) {
+				white-space : nowrap;
+				padding-left: 5rem;
+			}
+			@include respond-to(laptop) {
+				padding-left: 12rem;
+			}
 		}
 	}
 
@@ -666,10 +672,9 @@ main.team-vid {
 		height       : auto;
 		margin-bottom: 1em;
 		@include respond-to(tablet) {
-			position: absolute;
-			width   : 55%;
-			right   : 15%;
-			top     : calc(8% + 4.5em);
+			width     : 55%;
+			right     : 15%;
+			margin-top: -3em;
 		}
 
 		.v-chapter-desc {
@@ -677,6 +682,17 @@ main.team-vid {
 		}
 	}
 }
+
+// 88888888888
+//     888
+//     888
+//     888   .d88b.   8888b.  88888b.d88b.
+//     888  d8P  Y8b     "88b 888 "888 "88b
+//     888  88888888 .d888888 888  888  888
+//     888  Y8b.     888  888 888  888  888
+//     888   "Y8888  "Y888888 888  888  888
+//
+// =============================================================================
 
 #team-about {
 	position             : relative;
@@ -686,26 +702,25 @@ main.team-vid {
 	height               : auto;
 	padding              : 2em;
 	background-color     : $color1;
-	background-image     : url("/assets/images/team_pic_small.png");
-	background-position  : left;
-	background-size      : contain;
+	background-image     : url("/assets/images/Tuscan_Hill_Town.png");
+	background-position  : bottom right;
+	background-size      : cover;
 	background-repeat    : no-repeat;
 	animation-delay      : 0.5s;
 	background-blend-mode: multiply;
 	@include respond-to(tablet) {
-		position             : fixed;
-		margin-top           : 15vw;
-		margin-left          : 15vw;
-		width                : 60vw;
-		height               : 50vh;
-		padding              : 2em;
-		background-color     : $color1;
-		background-image     : url("/assets/images/team_pic_small.png");
-		background-position  : left;
-		background-size      : contain;
-		background-repeat    : no-repeat;
-		animation-delay      : 0.5s;
-		background-blend-mode: multiply;
+		position   : fixed;
+		margin-top : 15vw;
+		margin-left: 15vw;
+		width      : 70vw;
+		height     : 50vh;
+		padding    : 2em;
+	}
+
+	.inner {
+		@include respond-to(laptop) {
+			width: 70%;
+		}
 	}
 }
 

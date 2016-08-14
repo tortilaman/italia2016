@@ -36,8 +36,8 @@ $(document).ready(function() {
             offset += $(this).outerHeight(true);
             $(this).attr('data-height', $(this).outerHeight(true));
             $('body').css('height', totalHeight += $height);
-            $(this).css('z-index', $entries.length - iterator);
-            $(this).find(".scrollHide").css('z-index', $entries.length - iterator++);
+            $(this).css('z-index', $entries.length - iterator++);
+            // $(this).find(".scrollHide").css('z-index', $entries.length - iterator++);
         });
         iterator = offset = totalHeight = 0;
     }
@@ -89,7 +89,8 @@ $(document).ready(function() {
         var page = $("body").attr('class').split(" ")[0],
             offsets = {
                 home: [0.5, 0.75],
-                italiaIndex: [0, 0.5]
+                italiaIndex: [0, 0.5],
+                team: [0, 0.5]
             };
 
         if (offsets[page]) {
@@ -159,7 +160,8 @@ $(document).ready(function() {
                 parallax('#v-intro');
             }
             //Don't show on scroll on team page.
-            if (!$('body').hasClass("team")) showOnScroll();
+            // if (!$('body').hasClass("team"))
+            showOnScroll();
         });
     });
 

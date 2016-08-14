@@ -10,70 +10,74 @@
 _#}
 
 {% extends "_layouts/site" %}
-{% set title = entry.title %}
-{% set bodyClass = entry.type == 'interviewVideo' ? 'v autoplay' : 'v' %}
-{% set children = entry.type == 'designer' ? entry.children : entry.parent.children %}
-{% if entry.type == "designer" %}
-	{% set portrait = entry.intPortrait.first %}
-{% else %}
-	{% set portrait = entry.parent.intPortrait.first %}
-{% endif %}
+	{% set title = entry.title %}
+	{% set bodyClass = entry.type == 'interviewVideo' ? 'v autoplay' : 'v' %}
+{% cache %}
+	{% set children = entry.type == 'designer' ? entry.children : entry.parent.children %}
+	{% if entry.type == "designer" %}
+		{% set portrait = entry.intPortrait.first %}
+	{% else %}
+		{% set portrait = entry.parent.intPortrait.first %}
+	{% endif %}
+{% endcache %}
 
 {% block head %}
-	{{ parent() }}
-	<meta property="og:site_name"	content="SFU italiaDesign field school" />
-	<meta property="og:url"			content="{{entry.url}}" />
-	<meta property="og:type"		content="{{entry.type == 'designer' ? 'profile' : 'video.other'}}" />
-	{% if title is defined %}
-		<meta property="og:title"	content="{{title}}" />
-	{% endif %}
-	{% if entry.videDescription is defined %}
-		<meta property="og:description"	content="{{entry.videoDescription}}" />
-	{% endif %}
-	<meta property="og:image"		content="{{entry.type == 'designer' ? entry.intPortrait.first().url : entry.videoThumbnail.first().url}}" />
+	{% cache %}
+		{{ parent() }}
+		<meta property="og:site_name"	content="SFU italiaDesign field school" />
+		<meta property="og:url"			content="{{entry.url}}" />
+		<meta property="og:type"		content="{{entry.type == 'designer' ? 'profile' : 'video.other'}}" />
+		{% if title is defined %}
+			<meta property="og:title"	content="{{title}}" />
+		{% endif %}
+		{% if entry.videDescription is defined %}
+			<meta property="og:description"	content="{{entry.videoDescription}}" />
+		{% endif %}
+		<meta property="og:image"		content="{{entry.type == 'designer' ? entry.intPortrait.first().url : entry.videoThumbnail.first().url}}" />
+	{% endcache %}
 {% endblock %}
 
 {% block main %}
 	{# ============= INTRODUCTION ================ #}
-	{% if entry.children|length or entry.siblings|length < 10 %}
-		<section id="v-intro" class="v-section is-scrollable">
-			<div id="v-contents">
-				<h1 class="v-contents-title">interview chapters</h1>
-				<div class="v-chapter-container">
-					<div id="v-chapter-ind"></div>
+	{% cache %}
+		{% if entry.children|length or entry.siblings|length < 10 %}
+			<section id="v-intro" class="v-section is-scrollable">
+				<div id="v-contents">
+					<h1 class="v-contents-title">interview chapters</h1>
+					<div class="v-chapter-container">
+						<div id="v-chapter-ind"></div>
+						{% for i in 0..(children|length-1) %}
+							<div class="v-chapter" data-chapter="{{i}}" data-offset="{{i*3}}">
+								<a href="{{children.nth(i).url}}#v-header">
+									<span class="v-chapter-number">{{i+1}}</span>
+									<span class="v-chapter-title">{{children.nth(i)}}</span>
+									<span class="v-chapter-duration">{{children.nth(i).videoDuration}}</span>
+								</a>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+				<div id="v-description">
 					{% for i in 0..(children|length-1) %}
-						<div class="v-chapter" data-chapter="{{i}}" data-offset="{{i*3}}">
-							<a href="{{children.nth(i).url}}#v-header">
-								<span class="v-chapter-number">{{i+1}}</span>
-								<span class="v-chapter-title">{{children.nth(i)}}</span>
-								<span class="v-chapter-duration">{{children.nth(i).videoDuration}}</span>
-							</a>
+						<div class="inner {{children.nth(i) == children.first() ?'':'dHidden'}}">
+							<h1 class="v-chapter-title">{{children.nth(i)}}</h1>
+							<p class="v-chapter-desc">{{children.nth(i).videoDescription}}</p>
 						</div>
 					{% endfor %}
 				</div>
-			</div>
-			<div id="v-description">
-				{% for i in 0..(children|length-1) %}
-					<div class="inner {{children.nth(i) == children.first() ?'':'dHidden'}}">
-						<h1 class="v-chapter-title">{{children.nth(i)}}</h1>
-						<p class="v-chapter-desc">{{children.nth(i).videoDescription}}</p>
-					</div>
-				{% endfor %}
-			</div>
-		</section>
-	{% endif %}
+			</section>
+		{% endif %}
+	{% endcache %}
 	{# ============= VIDEO ================ #}
 	{% include "_includes/video_header" %}
 
 	{# ============= MATRIX CONTENT ================ #}
-	{% include "_includes/matrix_body" %}
+	{% cache %}
+		{% include "_includes/matrix_body" %}
+	{% endcache %}
 	<script src="http://d3js.org/d3.v3.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 	<script src="/js/stackGrid.js"></script>
 	<script src="/js/videoPlayer.js"></script>
 	<script src="/js/interview.js"></script>
 {% endblock %}
-
-
-
-

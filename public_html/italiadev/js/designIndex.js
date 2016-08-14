@@ -104,6 +104,7 @@ $(document).ready(function() {
                     1: "Down"
                 };
                 $(this).attr('data-dir', dict[getRandomInt(0, 1)]);
+                $(this).css('opacity', '1');
             });
         }
     }

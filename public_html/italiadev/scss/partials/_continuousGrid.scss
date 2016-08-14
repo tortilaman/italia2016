@@ -462,6 +462,10 @@ h1[id*="year-title-"] {
 		opacity   : 1;
 		transition: none;
 
+		&.scrollHide {
+			opacity: 0;
+		}
+
 		&::before {
 			display: none;
 		}
@@ -505,7 +509,7 @@ h1[id*="year-title-"] {
 		right     : 0;
 		transform : translateY(-30%);
 		text-align: center;
-		padding   : 0 2em;
+		padding   : 0;
 		z-index   : 50;
 		transition: all 0.5s;
 
@@ -524,6 +528,10 @@ h1[id*="year-title-"] {
 			transform: none;
 			left     : 0;
 			right    : 0;
+			padding  : 0 0.5em;
+		}
+		@include respond-to(laptop) {
+			padding: 0 1em;
 		}
 	}
 

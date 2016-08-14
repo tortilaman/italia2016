@@ -87,13 +87,17 @@ $columns: 6;
 }
 
 .o-left {
-	transform: translateX(-5vw) !important;
-	z-index  : 5;
+	@include respond-to(tablet) {
+		transform: translateX(-5vw) !important;
+		z-index  : 5;
+	}
 }
 
 .o-right {
-	transform: translateX(5vw) !important;
-	z-index  : 5;
+	@include respond-to(tablet) {
+		transform: translateX(5vw) !important;
+		z-index  : 5;
+	}
 }
 
 a[class*="link"] {
@@ -223,7 +227,10 @@ PULLQUOTES
 
 div.v-mat-pull-container {
 	background: $color1;
-	padding   : 2vw;
+	padding   : 5vw;
+	@include respond-to(tablet) {
+		padding: 2vw;
+	}
 
 	.v-mat-pull {
 		margin: 0;
@@ -233,10 +240,14 @@ div.v-mat-pull-container {
 			font-size  : 8em;
 			line-height: 1;
 			position   : absolute;
-			top        : 0;
-			left       : 0;
-			z-index    : -1;
+			top        : 0.25rem;
+			left       : 0.25rem;
+			z-index    : 0;
 			opacity    : 0.6;
+			@include respond-to(tablet) {
+				top : 0;
+				left: 0;
+			}
 		}
 	}
 
