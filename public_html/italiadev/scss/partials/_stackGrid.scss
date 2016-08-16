@@ -136,12 +136,14 @@
 	@include respond-to(tablet) {
 		width  : auto;
 		padding: 0;
+		margin-top: -4vw;
 	}
 }
 
 [id^='home-'] {
 	//	margin: 0 0 2vw 0;
 	width: 100%;
+	margin-top: -4vw;
 }
 
 #home-play {
@@ -176,7 +178,7 @@
 	animation-delay      : 0.5s;
 	background-blend-mode: multiply;
 	@include respond-to(tablet) {
-		margin-top : 13.5vw;
+		margin-top : 9.5vw;
 		margin-left: 21.5vw;
 		width      : 73vw;
 		height     : calc(100vh - 18vw);
