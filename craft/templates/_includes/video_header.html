@@ -8,67 +8,21 @@
 # An `entry` variable is expected to be defined. -
 #}
 
-{% set next = false %}
-{% set tag %}
-	{# TODO: Not 100% sure if this will cache on a per-page basis, or just once for the video_header.html file. Test to confirm #}
-	{% cache %}
-		{% if entry.section('design') %}
-			{% if entry.secondaryTags|length > 1 %}
-				shuffle(entry.secondaryTags|merge(entry.disciplines)).first()
-			{% elseif entry.secondaryTags|length %}
-				shuffle([entry.secondaryTags]|merge(entry.disciplines)).first()
-			{% else %}
-				shuffle(entry.disciplines).first()
-			{% endif %}
-		{% elseif entry.section('team') %}
-			{% if entry.seriousRoles|length > 1 %}
-				shuffle(entry.seriousRoles|merge([entry.funnyRole])).first()
-			{% elseif entry.seriousRoles|length %}
-				shuffle([entry.seriousRoles]|merge([entry.funnyRole])).first()
-			{% else %}
-				entry.funnyRole
-			{% endif %}
-		{% endif %}
-	{% endcache %}
-{% endset %}
+{# TODO: Not 100% sure if this will cache on a per-page basis, or just once for the video_header.html file. Test to confirm #}
 
-{#
-{% if entry.type == 'designer' and entry.hasDescendants() %}
-	{% set siblings = [entry]|merge(entry.children) %}
-	{% set siblingIDs = [entry.id]|merge(entry.children.ids()) %}
-{% elseif entry.type == 'designer' and not entry.hasDescendants() %}
-	{% set siblings = false %}
-{% elseif entry.type == 'interviewVideo' %}
-	{% set siblings = [entry.parent]|merge(entry.parent.children) %}
-	{% set siblingIDs = [entry.parent.id]|merge(entry.parent.children.ids()) %}
-{% elseif entry.type == 'italia' %}
-	{% set siblings  = craft.entries.section('italia') %}
-	{% set siblingIDs  = craft.entries.section('italia').ids() %}
-{% elseif entry.type == 'team' %}
-	{% set siblings  = craft.entries.section('team') %}
-	{% set siblingIDs = craft.entries.section('team').ids() %}
-{% endif %}
-#}
+{###############################################################################
+888     888                 d8b          888      888
+888     888                 Y8P          888      888
+888     888                              888      888
+Y88b   d88P 8888b.  888d888 888  8888b.  88888b.  888  .d88b.  .d8888b
+ Y88b d88P     "88b 888P"   888     "88b 888 "88b 888 d8P  Y8b 88K
+  Y88o88P  .d888888 888     888 .d888888 888  888 888 88888888 "Y8888b.
+   Y888P   888  888 888     888 888  888 888 d88P 888 Y8b.          X88
+    Y8P    "Y888888 888     888 "Y888888 88888P"  888  "Y8888   88888P'
+###############################################################################}
 
-{% set siblings %}
-	{% if entry.type == 'designer' and entry.hasDescendants() %}
-		[entry]|merge(entry.children)
-	{% elseif entry.type == 'designer' and not entry.hasDescendants() %}
-		false
-	{% elseif entry.type == 'interviewVideo' %}
-		[entry.parent]|merge(entry.parent.children)
-	{% elseif entry.type == 'italia' %}
-		craft.entries.section('italia')
-	{% elseif entry.type == 'team' %}
-		craft.entries.section('team')
-	{% endif %}
-{% endset %}
-{% set siblingIDs = siblings.ids() %}
-{% set siblingIDsString = siblingIDs | join(', not ') %}
-
-{% set chaptIndex = siblingIDs|indexOf(entry.id) %}
-{% set nextChaptInd 	= chaptIndex + 1 %}
-{% set next 			= siblings[nextChaptInd] %}
+{# {% cache %} #}
+{# Every video shows what year it's from #}
 {% set pastSchoolURLS 	= {
 	'2016' : '',
 	'2015' : 'http://2015.sfudutchdesign.ca/',
@@ -76,6 +30,48 @@
 	'2013' : 'http://2013.sfudutchdesign.ca/',
 	'2012' : 'http://2012.sfuitaliadesign.com/'
 }%}
+
+{############ PLAYLIST VIDEOS ############}
+{% if entry.type == 'designer' and entry.hasDescendants() %}
+	{% set siblings = entry.children %}
+{% elseif entry.type == 'interviewVideo' %}
+	{% set siblings = entry.parent.children %}
+{% elseif entry.type == 'italia' %}
+	{% set siblings = craft.entries.section('italia') %}
+{% elseif entry.type == 'team' %}
+	{% set siblings = craft.entries.section('team') %}
+{% endif %}
+
+{# NOTE: If there are siblings, do all the playlist logic #}
+{% set playlist = siblings is defined ? true : false %}
+
+{% if playlist == true %}
+	{% set siblingIDs = siblings.ids() %}
+	{% set siblingIDsString = siblingIDs | join(', not ') %}
+	{% set chaptIndex = siblingIDs|indexOf(entry.id) %}
+	{% set nextChaptInd 	= chaptIndex + 1 %}
+{% endif %}
+
+{############ RELATED VIDEOS ############}
+{# What the suggested posts will be related based on #}
+{% if entry.section == 'design' %}
+	{% if entry.secondaryTags|length > 1 %}
+		{% set tag = shuffle(entry.secondaryTags|merge(entry.disciplines))[0] %}
+	{% elseif entry.secondaryTags|length %}
+		{% set tag = shuffle([entry.secondaryTags]|merge(entry.disciplines))[0] %}
+	{% else %}
+		{% set tag = shuffle(entry.disciplines)[0] %}
+	{% endif %}
+	{% set relatedEntries = craft.entries.section('design').type('interviewVideo').relatedTo(tag).id(siblingIDsString is defined ? 'and, not '~siblingIDsString: 'not'~entry.id).limit(2)
+	%}
+{% elseif entry.section =='team' %}
+	{% set relatedEntries = craft.entries.section('team').id('not'~entry.id).limit(2) %}
+{% elseif entry.section == 'italia' %}
+	{% set relatedEntries = craft.entries.section('italia').id('not'~entry.id).limit(2) %}
+{% else %}
+	{% set relatedEntries = craft.entries.section('design').type('interviewVideo').id('not'~entry.id).limit(2) %}
+{% endif %}
+
 {# OOOOOH, get to make some funny related text #}
 {% set relatedMessage = [
 	"we think you'll love our other designers",
@@ -83,9 +79,19 @@
 	"the insights continue in these videos",
 	"prepare to have your mind blown"
 ] %}
-{# Finally Related Entries #}
-{% set relatedEntries = craft.entries.section('design').type('interviewVideo').relatedTo(tag).id('and, not '~siblingIDsString).limit(2) %}
-
+{###############################################################################
+	888888b.                 888
+	888  "88b                888
+	888  .88P                888
+	8888888K.   .d88b.   .d88888 888  888
+	888  "Y88b d88""88b d88" 888 888  888
+	888    888 888  888 888  888 888  888
+	888   d88P Y88..88P Y88b 888 Y88b 888
+	8888888P"   "Y88P"   "Y88888  "Y88888
+	                                  888
+	                             Y8b d88P
+	                              "Y88P"
+###############################################################################}
 {% cache %}
 <section id="v-header" class="{{bodyClass}}-section">
 	<div id="v-middle"class="{{entry.videoYear >= '2015' ? 'v21-9' : 'v16-9'}}">
@@ -98,9 +104,9 @@
 				{# ========= Top video info ============ #}
 				<div class="v-ui-top">
 				{# Interviewee / Video Heading #}
-				<h1 id="v-interviewee">{{entry.type =='interviewVideo' ? entry.parent : entry.title}}: {{entry.type !='interviewVideo' ? '' : entry}} {% if siblings|length > 1 %}{{ ['(', siblingIDs|indexOf(entry.id) + 1, '/', siblings|length, ')' ]|join }}{% endif %}</h1>
+				<h1 id="v-interviewee">{{entry.type =='interviewVideo' ? entry.parent : entry.title}}{{entry.type =='interviewVideo' ? [': ', entry]|join}} {% if playlist == true %}{{ ['(', siblingIDs|indexOf(entry.id) + 1, '/', siblings|length, ')' ]|join }}{% endif %}</h1>
 				{# Previous Field School Link #}
-				<a href="{{pastSchoolURLS[entry.videoYear.value]}}" class="v-prev-link text" target="_blank">{{entry.videoYear.value is even ? 'italia ' : 'dutch '}}{{entry.videoYear}}</a>
+				<a href="{{pastSchoolURLS[entry.videoYear.value]}}" class="v-prev-link text" target="_blank">{{entry.videoYear.value is even ? 'italia ' : 'dutch '}} {{entry.videoYear}}</a>
 {% endcache %}
 					{# Social Media Sharing Buttons #}
 					<div id="v-share">
@@ -122,27 +128,30 @@
 					</div>
 				</div>
 {% cache %}
-				{% if entry.type == 'designer' and entry.hasDescendants() == false %}
-				{% else %}
+				{% if entry.type == 'designer' and entry.hasDescendants() == true %}
 					{# ========= Initial play button ============ #}
 					<div class="v-init-play">
 						<a>
 							<div class="v-init-play-btn"></div>
-							<h4 class="v-init-play-label">Watch {{siblings|length > 1 ? 'Playlist' : 'Video'}}</h4>
+							<h4 class="v-init-play-label">Watch Playlist {#{{siblings|length > 1 ? 'Playlist' : 'Video'}}#}</h4>
 						</a>
 					</div>
 				{% endif %}
-{% endcache %}
+{# {% endcache %} #}
 				{# ========= End of video interface ============ #}
-				<div class="v-ended oHidden" data-url="{{siblings[nextChaptInd].url}}#v-header">
-					{% if siblingIDs|indexOf(entry.id) + 1 != siblings|length %}
+				<div class="v-ended oHidden" data-url="{{siblings is defined and nextChaptInd < siblings|length ? siblings[nextChaptInd].url}}#v-header">
+{% endcache %}
+					{% if playlist == true and nextChaptInd != siblings|length %}
+{% cache %}
 						<span>up next:</span>
 						<h1 class="v-ended-nextTitle">{{siblings[nextChaptInd].title|lower}}</h1>
 						<h2 class="v-ended-cd-num">10</h2>
 						<a class="v-ended-cd-cancel">cancel</a>
+{% endcache %}
 					{% else %}
 						<span>{{ relatedMessage[random(relatedMessage|length - 1)] }}</span>
 					{% endif %}
+{% cache %}
 					<div class="v-suggestions">
 						{% for entry in relatedEntries %}
 							<div class="v-suggestion">
@@ -154,21 +163,22 @@
 						{% endfor %}
 					</div>
 				</div>
-{% cache %}
 				{# ========= Video Controls ============ #}
-				{% if chaptIndex >= 1 and siblings|length > 1 %}
-					<a class="v-prevVid" href="{{siblings[chaptIndex - 1].url}}#v-header">
-						<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 53 146.7">
-							<path id="Chevron-L" class="st0" d="M47.9 0L53 3.3 7.2 73.4l45.8 70-5.1 3.3L0 73.4z"/>
-						</svg>
-					</a>
-				{% endif %}
-				{% if chaptIndex < siblings|length - 1 %}
-					<a class="v-nextVid" href="{{siblings[nextChaptInd].url}}#v-header">
-						<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 53 146.7">
-							<path id="Chevron-R" class="st0" d="M5 146.7l-5-3.3 45.8-70L0 3.3 5 0l48 73.4z"/>
-						</svg>
-					</a>
+				{% if playlist == true %}
+					{% if chaptIndex >= 1 and siblings|length > 1 %}
+						<a class="v-prevVid" href="{{siblings[chaptIndex - 1].url}}#v-header">
+							<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 53 146.7">
+								<path id="Chevron-L" class="st0" d="M47.9 0L53 3.3 7.2 73.4l45.8 70-5.1 3.3L0 73.4z"/>
+							</svg>
+						</a>
+					{% endif %}
+					{% if nextChaptInd < siblings|length %}
+						<a class="v-nextVid" href="{{siblings[nextChaptInd].url}}#v-header">
+							<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 53 146.7">
+								<path id="Chevron-R" class="st0" d="M5 146.7l-5-3.3 45.8-70L0 3.3 5 0l48 73.4z"/>
+							</svg>
+						</a>
+					{% endif %}
 				{% endif %}
 {% endcache %}
 				<div class="v-controls">

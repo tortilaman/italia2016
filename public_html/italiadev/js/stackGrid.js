@@ -47,6 +47,7 @@ $(document).ready(function() {
         if ($("#v-context img").length) {
             $(window).on('load', function() {
                 calcHeights();
+                console.log("Finished loading");
             });
         } else {
             calcHeights();
@@ -72,7 +73,6 @@ $(document).ready(function() {
                 outMin = 0,
                 outMax = parseFloat($dynDiv.position().top),
                 newVal = -scrolled.map(inMin, inMax, outMin, outMax) + 'px';
-            console.log($dynDiv.position().top + ", " + $parent.attr('data-offset'));
             $dynDiv.css('transform', 'translateY(' + newVal + ')');
         } else if (scrolled > $scrollRefDiv.attr('data-offset')) {
             $dynDiv.css('transform', 'translateY(' + -$dynDiv.position().top + ')');

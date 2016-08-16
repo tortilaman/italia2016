@@ -43,7 +43,6 @@ Thumbs.db
 public_html/italiadev/css/main.css
 public_html/italiadev/css/main.min.css
 public_html/italiadev/css/animate.css
-main.css
 
 # Non code files #
 ##################
@@ -57,11 +56,6 @@ public_html/italiadev/assets
 *..htaccess
 public_html/italiadev/htaccess
 public_html/italiadev/Prepros Build/
-
-# Minified Files #
-##################
-*-min.*
-*.min.*
 
 # Irrelevant Files #
 ####################
