@@ -6,12 +6,18 @@
 //
 // ==============================
 
-// ==============================
-// 	SEARCH BAR
-// ==============================
+/*8888b.                                    888
+d88P  Y88b                                   888
+Y88b.                                        888
+ "Y888b.    .d88b.   8888b.  888d888 .d8888b 88888b.
+    "Y88b. d8P  Y8b     "88b 888P"  d88P"    888 "88b
+      "888 88888888 .d888888 888    888      888  888
+Y88b  d88P Y8b.     888  888 888    Y88b.    888  888
+ "Y8888P"   "Y8888  "Y888888 888     "Y8888P 888  8*/
+
 #a-border,
 #d-filter {
-	position  : relative;
+	position  : fixed;
 	top       : 0;
 	right     : 8%;
 	left      : 2%;
@@ -30,23 +36,22 @@
 	}
 
 	form {
-		position: absolute;
-		top     : 0;
-		right   : 5vw;
-		bottom  : 0;
-		height  : 1em;
+		position  : relative;
+		float     : right;
+		top       : 0;
+		right     : 5vw;
+		bottom    : 0;
+		height    : 1em;
+		transition: all 1supposes;
 		@include respond-to(tablet) {
-			bottom: 0.3rem;
-			height: 3em;
+			top   : auto;
+			bottom: 0;
+			height: 6vw;
 			width : 30vw;
 			right : 0;
 		}
 		@include respond-to(laptop) {
-			bottom: 0.55rem;
-
-			top   : auto;
 			bottom: -0.1rem;
-			height: auto;
 			width : 30vw;
 			right : 0;
 		}
@@ -77,23 +82,25 @@
 	}
 
 	input {
-		position      : relative;
-		display       : none;
-		right         : 0;
-		background    : none;
-		border        : none;
-		box-shadow    : none;
-		border-bottom : 0.13rem solid $color5;
-		font-family   : "SubHead";
-		font-size     : 0.8rem;
-		line-height   : 0.8;
-		outline       : none;
-		width         : calc(40vw - 2em);
-		color         : $color5;
-		transition    : all, 0.5s;
-		mix-blend-mode: multiply;
+		-webkit-appearance: none;
+		border-radius     : 0;
+		position          : absolute;
+		display           : none;
+		bottom            : 0;
+		right             : 0;
+		background        : none;
+		border            : none;
+		box-shadow        : none;
+		border-bottom     : 0.13rem solid $color5;
+		font-family       : "SubHead";
+		font-size         : 0.8rem;
+		line-height       : 0.8;
+		outline           : none;
+		width             : calc(40vw - 2em);
+		color             : $color5;
+		transition        : all, 0.5s;
+		mix-blend-mode    : multiply;
 		@include respond-to(tablet) {
-			position      : absolute;
 			bottom        : 0;
 			display       : inline-block;
 			font-size     : 1.2em;
@@ -122,10 +129,10 @@
 	}
 
 	.lSearch {
-		position  : absolute;
+		position  : relative;
 		top       : 20vh;
 		right     : 30vw;
-		left      : 30vw;
+		left      : auto;
 		width     : 40vw;
 		background: none;
 
@@ -133,18 +140,23 @@
 			display: inline-block !important;
 		}
 		@include respond-to(tablet) {
-			top  : 20vh;
 			right: 25vw;
-			left : 25vw;
+			left : auto;
 			width: 50vw;
+
+			input,
+			span {
+				font-size: 3em;
+			}
 
 			input {
 				width        : 50vw;
 				border-bottom: 0.5rem solid $color5;
-				font-size    : 5em;
 				font-family  : "Header";
 			}
-
+		}
+		@include respond-to(desktop) {
+			input,
 			span {
 				font-size: 5em;
 			}
@@ -169,13 +181,12 @@
 			opacity: 1;
 		}
 		@include respond-to(tablet) {
-			top        : 0.5rem;
-			bottom     : auto;
-			font-size  : 1.2em;
+			bottom     : 0;
+			font-size  : 1.5em;
 			line-height: 1.2;
 		}
 		@include respond-to(laptop) {
-			font-size: 2em;
+			font-size: 4em;
 		}
 	}
 
@@ -199,25 +210,44 @@
 	}
 }
 
-// ==============================
-// 	Auto-Complete Filter
-// ==============================
+/*		 /*888          888             .d8888b.
+      d88888          888            d88P  Y88b
+     d88P888          888            888    888
+    d88P 888 888  888 888888 .d88b.  888         .d88b.  88888b.d88b.  88888b.
+   d88P  888 888  888 888   d88""88b 888        d88""88b 888 "888 "88b 888 "88b
+  d88P   888 888  888 888   888  888 888    888 888  888 888  888  888 888  888
+ d8888888888 Y88b 888 Y88b. Y88..88P Y88b  d88P Y88..88P 888  888  888 888 d88P
+d88P     888  "Y88888  "Y888 "Y88P"   "Y8888P"   "Y88P"  888  888  888 88888P"
+                                                                       888
+                                                                       888
+                                                                       8*/
+
 //	These items are created by jQuery UI. They are only visible
 //	if you inspect the live page, and then only when the search
 //	box has focus, so a bit frustrating to style.
 
 ul.ui-autocomplete {
-	position  : absolute;
-	top       : calc(20vh + 1rem) !important;
-	left      : calc(30vw + 1.75em) !important;
-	background: none;
-	padding   : 0.25rem 0;
-	box-shadow: none;
-	border    : none;
-	z-index   : 200;
+	position      : fixed;
+	top           : calc(20vh + 1rem) !important;
+	left          : calc(30vw + 1.75em) !important;
+	background    : none;
+	padding       : 0.25rem 0;
+	box-shadow    : none;
+	border        : none;
+	z-index       : 200;
+	height        : 50vh;
+	overflow      : auto;
+	padding-bottom: 10em;
 	@include respond-to(tablet) {
-		top : calc(25vh + 5rem) !important;
+		top : calc(20vh + 5rem) !important;
 		left: 26vw !important;
+	}
+	@include respond-to(laptop) {
+		top: calc(25vh + 5em) !important;
+	}
+
+	&::-webkit-scrollbar {
+		display: none;
 	}
 
 	li.ui-menu-item {
@@ -269,23 +299,21 @@ span[role="status"] {
 	}
 }
 
-// ===================================================================================================
-//
-// 	88888888888  88                                      ,ad8888ba,               88           88
-// 	88           88                                     d8"'    `"8b              ""           88
-// 	88           88                                    d8'                                     88
-// 	88aaaaa      88   ,adPPYba,  8b,     ,d8           88             8b,dPPYba,  88   ,adPPYb,88
-// 	88"""""      88  a8P_____88   `Y8, ,8P'  aaaaaaaa  88      88888  88P'   "Y8  88  a8"    `Y88
-// 	88           88  8PP"""""""     )888(    """"""""  Y8,        88  88          88  8b       88
-// 	88           88  "8b,   ,aa   ,d8" "8b,             Y8a.    .a88  88          88  "8a,   ,d88
-// 	88           88   `"Ybbd8"'  8P'     `Y8             `"Y88888P"   88          88   `"8bbdP"Y8
-//
-// ===================================================================================================
+/*88888888 888                    .d8888b.          d8b      888
+888        888                   d88P  Y88b         Y8P      888
+888        888                   888    888                  888
+8888888    888  .d88b.  888  888 888        888d888 888  .d88888
+888        888 d8P  Y8b `Y8bd8P' 888  88888 888P"   888 d88" 888
+888        888 88888888   X88K   888    888 888     888 888  888
+888        888 Y8b.     .d8""8b. Y88b  d88P 888     888 Y88b 888
+888        888  "Y8888  888  888  "Y8888P88 888     888  "Y888*/
+
+// =============================================================================
 //
 //	Each year of interview results has its own flexbox grid. The layering and randomness is done with
 //	javascript, none of that is in the scss code.
 //
-// ===================================================================================================
+// =============================================================================
 
 main.team {
 	margin-bottom: 0;
@@ -338,30 +366,46 @@ section[id^="flex-grid-"] {
 }
 
 #page-info {
-	background: white;
-	padding   : 2em 2em 2em 5em;
-	width     : 100%;
-	color     : $color5;
 	z-index   : 100;
+	margin-top: 2em;
+	width     : 100%;
 
-	h1 {
-		line-height: 1.0;
-		margin-top : 0;
-		color      : $color5;
-	}
+	div {
+		background   : white;
+		padding      : 2em 2em 3em;
+		margin-bottom: 3em;
+		width        : 100%;
+		color        : $color5;
 
-	&::after {
-		display: none;
-	}
-	@include respond-to(phone) {
-		width: 55vw;
+		h1 {
+			line-height  : 1.8;
+			margin-top   : 0;
+			margin-bottom: 0.25em;
+			color        : $color5;
+		}
+
+		&::after {
+			display: none;
+		}
+		@include respond-to(tablet) {
+			margin-left: 5vw;
+			width      : 45vw;
+		}
+		@include respond-to(desktop) {
+			margin-left: 10vw;
+			width      : 20vw;
+		}
 	}
 	@include respond-to(laptop) {
+		width: 50vw;
+	}
+	@include respond-to(desktop) {
 		width: 30vw;
 	}
 }
 
-h1[id*="year-title-"] {
+[id*="year-title-"],
+[id*="year-title-"] h1 {
 	position      : relative;
 	margin-left   : 5vw;
 	color         : $color2;
@@ -384,8 +428,9 @@ h1[id*="year-title-"] {
 	z-index : 5;
 	@include respond-to(tablet) {
 		position: fixed;
-		top     : 15vw;
+		top     : 20vw;
 		right   : 4vw;
+		height  : 40vh;
 	}
 
 	.mobile-year-menu {
@@ -420,8 +465,14 @@ h1[id*="year-title-"] {
 			//			transition: all 0.5s;
 		}
 		@include respond-to(tablet) {
-			transform: scaleY(1);
-			opacity  : 1;
+			display        : flex;
+			flex-direction : column;
+			flex-wrap      : nowrap;
+			justify-content: space-between;
+			align-items    : center;
+			height         : 100%;
+			transform      : scaleY(1);
+			opacity        : 1;
 		}
 	}
 
@@ -433,10 +484,50 @@ h1[id*="year-title-"] {
 	}
 
 	a {
-		color      : $color5;
-		font-family: subhead;
+		position     : relative;
+		color        : $color5;
+		font-family  : subhead;
+		border-bottom: none;
+
+		&.active {
+			&::before {
+				transform: scaleX(1);
+				opacity  : 1;
+			}
+		}
+
+		&::before {
+			content         : '';
+			position        : absolute;
+			bottom          : -0.1em;
+			display         : block;
+			width           : 100%;
+			height          : 0.1em;
+			background-color: $color5;
+			transform-origin: center left;
+			transform       : scaleX(0);
+			opacity         : 0;
+			transition      : 0.2s;
+		}
+
+		&:hover::before {
+			transform: scaleX(1);
+			opacity  : 1;
+		}
 	}
 }
+
+/*88888888          888
+888                 888
+888                 888
+8888888    88888b.  888888 888d888 888  888
+888        888 "88b 888    888P"   888  888
+888        888  888 888    888     888  888
+888        888  888 Y88b.  888     Y88b 888
+8888888888 888  888  "Y888 888      "Y88888
+                                        888
+                                   Y8b d88P
+                                    "Y88*/
 
 // ========================================================
 // 	ENTRY CLASS:
@@ -449,7 +540,8 @@ h1[id*="year-title-"] {
 	margin        : 1vw 0 0;
 	padding       : 0;
 	z-index       : 200;
-	mix-blend-mode: normal;
+	mix-blend-mode: multiply;
+	transition    : transform 0.1s;
 	//The link hides the overflow
 	a {
 		position  : relative;
@@ -514,7 +606,8 @@ h1[id*="year-title-"] {
 		transition: all 0.5s;
 
 		h1 {
-			font-size: 1.6em;
+			font-size  : 1.6em;
+			font-family: 'HeaderAlt', 'Header2', Arial, sans-serif;
 			@include respond-to(tablet) {
 				font-size: 1.3em;
 			}
@@ -549,6 +642,15 @@ h1[id*="year-title-"] {
 		z-index: 200 !important;
 	}
 }
+
+/*88888888          888            d8b
+888                 888            Y8P
+888                 888
+8888888    88888b.  888888 888d888 888  .d88b.  .d8888b
+888        888 "88b 888    888P"   888 d8P  Y8b 88K
+888        888  888 888    888     888 88888888 "Y8888b.
+888        888  888 Y88b.  888     888 Y8b.          X88
+8888888888 888  888  "Y888 888     888  "Y8888   88888*/
 
 // ========================================================
 // 	Entries:
@@ -649,6 +751,9 @@ h1[id*="year-title-"] {
 	}
 }
 
+/*==============================================================================
+	FILM ENTRIES
+==============================================================================*/
 .film-entry {
 	@extend .entry;
 	@extend .green-bg;
@@ -665,6 +770,7 @@ h1[id*="year-title-"] {
 
 		video {
 			margin-top: -6.75%;
+			opacity   : 1;
 		}
 	}
 	@include respond-to(phone) {
@@ -728,13 +834,14 @@ h1[id*="year-title-"] {
 			height       : 100%;
 			padding      : calc(25% - 1.3em) 0;
 			border-bottom: 0.1em solid transparent;
+			opacity      : 1;
 			transition   : all 0.5s;
 		}
 	}
 
 	.entry-description {
 		position   : absolute;
-		bottom     : 5%;
+		top        : 5%;
 		left       : 10%;
 		line-height: 1;
 		opacity    : 0;
@@ -742,21 +849,33 @@ h1[id*="year-title-"] {
 		height     : auto;
 		color      : white;
 		z-index    : 50;
-		transform  : translateY(100%);
 		transition : all 0.5s;
 	}
 
+	.entry-meet {
+		position      : absolute;
+		bottom        : 0.5em;
+		right         : 0.5em;
+		opacity       : 0;
+		color         : white;
+		padding-bottom: 0.05em;
+		border-bottom : 0.2em solid white;
+		z-index       : 202;
+		transition    : opacity 0.5s;
+	}
+
 	&:hover {
-		.entry-description {
-			opacity  : 1;
-			transform: translateY(0);
+		.entry-description,
+		.entry-meet {
+			opacity: 1;
+		}
+
+		video {
+			opacity: 0.3;
 		}
 
 		.entry-title h1 {
-			height       : auto;
-			padding      : 6% 0 1%;
-			border-bottom: 0.2em solid white;
-			margin       : 0;
+			opacity: 0;
 		}
 	}
 }

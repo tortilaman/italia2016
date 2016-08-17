@@ -58,10 +58,10 @@
 		{% block main %}{% endblock %}
 	</main>
 
-	<footer id="footer"></footer>
+{% endblock %}
+{% block foot %}
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 	<script src="/js/allPages.js"></script>
 	<script src="/js/lazysizes.min.js" async=""></script>
-	<script>
-		transformicons.add('.tcon')
-	</script>
+	<script>transformicons.add('.tcon')</script>
 {% endblock %}

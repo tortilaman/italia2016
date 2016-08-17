@@ -33,10 +33,15 @@
 			{########## IMAGE ##########}
 			{% elseif block.type == "image" %}
 				{% set image = block.imageAsset.first %}
+				{% set imgSize = [150, 500, 800, 1050, 1350, 1650] %}
 				{% set transformedImage = craft.imager.transformImage(
-					image, [{width: 1920 }, {width: 1000 }, { width: 500 }, { width: 300 }, { width: 150 }],
-					{ position: image.focusPctX ~ '% ' ~ image.focusPctY ~ '%' })
+					image, [{width: imgSize[block.size - 1]}, {width: 650}, {width: 350}],
+					{position: image.focusPctX ~ '% ' ~ image.focusPctY ~ '%'})
 				%}
+				{# {% set transformedImage = craft.imager.transformImage(
+					image, [{width: 1920 }, { width: 500 }, { width: 150 }],
+					{ position: image.focusPctX ~ '% ' ~ image.focusPctY ~ '%' })
+				%} #}
 				{% set imgW = block.size/6*100 %}
 				<div class="v-mat-img-container col-{{block.size}}">
 					<img 	class="v-mat-img" src="{{ craft.imager.base64Pixel(2, 3) }}"

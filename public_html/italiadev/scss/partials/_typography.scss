@@ -100,6 +100,13 @@ nav a {
 	font-weight: bold;
 	font-style : normal;
 }
+@font-face {
+	font-family: 'Header2';
+	src        : url('../assets/fonts/N_Demi.eot');
+	src        : local('☺'), url('../assets/fonts/N_Demi.woff') format('woff'), url('../assets/fonts/N_Demi.ttf') format('truetyype'), url('../assets/fonts/N_Demi.svg') format('svg');
+	font-weight: normal;
+	font-style : normal;
+}
 
 //Change the numbers to alt, the two @font-face properties are used cumulatively
 @font-face {

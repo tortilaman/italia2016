@@ -8,25 +8,30 @@ function getParameterByName(name, url) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
-/* ============================================================
+//Function to scale numbers between two ranges.
+Number.prototype.map = function(in_min, in_max, out_min, out_max) {
+    return (this - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+};
 
-88888888ba                                   88
-88      "8b                                  88
-88      ,8P                                  88
-88aaaaaa8P'  ,adPPYba,  ,adPPYYba,   ,adPPYb,88  8b       d8
-88""""88'   a8P_____88  ""     `Y8  a8"    `Y88  `8b     d8'
-88    `8b   8PP"""""""  ,adPPPPP88  8b       88   `8b   d8'
-88     `8b  "8b,   ,aa  88,    ,88  "8a,   ,d88    `8b,d8'
-88      `8b  `"Ybbd8"'  `"8bbdP"Y8   `"8bbdP"Y8      Y88'
-													 d8'
-													d8'
- testing 123
-** ==========================================================*/
+/*88888b.                        888
+888   Y88b                       888
+888    888                       888
+888   d88P .d88b.   8888b.   .d88888 888  888
+8888888P" d8P  Y8b     "88b d88" 888 888  888
+888 T88b  88888888 .d888888 888  888 888  888
+888  T88b Y8b.     888  888 Y88b 888 Y88b 888
+888   T88b "Y8888  "Y888888  "Y88888  "Y88888
+                                          888
+                                     Y8b d88P
+                                      "Y88*/
+
 $(document).ready(function() {
     var searching = false,
         keyPlace = "",
         key = "",
+        $window = $(window),
         $entries = $("[class*='-entry']:not(.blank)"),
+        $dEntries = $(".design-entry:not(.blank)"),
         breakpoints = {
             phone: 480,
             tablet: 700,
@@ -38,6 +43,9 @@ $(document).ready(function() {
 
     $("#search").focus();
 
+    //Fit interviewee names to the container
+    $(".design-entry .entry-title h1").fitText(0.9);
+
     function findWithAttr(array, attr, value) {
         for (var i = 0; i < array.length; i += 1) {
             if (array[i][attr] == value) {
@@ -47,7 +55,7 @@ $(document).ready(function() {
     }
 
     function getRandomInt(min, max) {
-        return Math.round(Math.random() * (max - min + 1) + min);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
     //ANIMATE.CSS JQUERY FUNCTION
@@ -61,6 +69,15 @@ $(document).ready(function() {
         }
     });
 
+    /*8888b.          d8b      888
+    d88P  Y88b         Y8P      888
+    888    888                  888
+    888        888d888 888  .d88888
+    888  88888 888P"   888 d88" 888
+    888    888 888     888 888  888
+    Y88b  d88P 888     888 Y88b 888
+     "Y8888P88 888     888  "Y888*/
+
     /* ==================
     	GRID FUNCTION
     ** ================*/
@@ -70,16 +87,16 @@ $(document).ready(function() {
             hoThis,
             voLast,
             voThis;
-        if ($(window).outerWidth() >= breakpoints.phone) {
-            if ($(window).outerWidth() >= breakpoints.phone && $(window).outerWidth() < breakpoints.tablet) {
+        if ($window.outerWidth() >= breakpoints.phone) {
+            if ($window.outerWidth() >= breakpoints.phone && $window.outerWidth() < breakpoints.tablet) {
                 hOffset = ['-4vw', '0', '4vw'];
                 vOffset = ['2vw', '6vw', '30vw', '60vw'];
-            } else if ($(window).outerWidth() >= breakpoints.tablet && $(window).outerWidth() < breakpoints.laptop) {
+            } else if ($window.outerWidth() >= breakpoints.tablet && $window.outerWidth() < breakpoints.laptop) {
                 hOffset = ['-4vw', '0', '4vw'];
                 vOffset = ['2vw', '6vw', '16vw', '30vw'];
-            } else if ($(window).outerWidth() >= breakpoints.laptop) {
-                hOffset = ['-1.5vw', '0', '2vw'];
-                vOffset = ['2vw', '3vw', '9vw', '15vw'];
+            } else if ($window.outerWidth() >= breakpoints.laptop) {
+                hOffset = ['0', '2vw'];
+                vOffset = ['-1vw', '3vw', '9vw', '15vw'];
             }
             $entries.each(function(index, value) {
                 while (hoThis == hoLast) hoThis = hOffset[Math.floor(Math.random() * hOffset.length)];
@@ -111,19 +128,78 @@ $(document).ready(function() {
 
     offsetGrid();
 
+    /*88888b.                           888 888 d8b
+    d88P  Y88b                          888 888 Y8P
+    Y88b.                               888 888
+     "Y888b.    .d8888b 888d888 .d88b.  888 888 888 88888b.   .d88b.
+        "Y88b. d88P"    888P"  d88""88b 888 888 888 888 "88b d88P"88b
+          "888 888      888    888  888 888 888 888 888  888 888  888
+    Y88b  d88P Y88b.    888    Y88..88P 888 888 888 888  888 Y88b 888
+     "Y8888P"   "Y8888P 888     "Y88P"  888 888 888 888  888  "Y88888
+                                                                  888
+                                                             Y8b d88P
+                                                              "Y88*/
 
-    /* =======================================================
+    pImgs = [];
+    $dictPar = {
+        "Left": 1,
+        "Right": 2,
+        "Up": 4,
+        "Down": 6
+    };
+    $dEntries.each(function(index) {
+        var pImg = {};
+        pImg.el = $(this);
+        pImg.iMax = pImg.el.offset().top;
+        pImg.iMin = parseFloat(pImg.iMax) - $window.outerHeight();
+        pImg.oMax = parseFloat(pImg.el.outerHeight()) * 0.2 * parseFloat($dictPar[pImg.el.attr('data-dir')]);
+        pImgs.push(pImg);
+    });
 
-     ad88888ba                                                   88
-    d8"     "8b                                                  88
-    Y8,                                                          88
-    `Y8aaaaa,     ,adPPYba,  ,adPPYYba,  8b,dPPYba,   ,adPPYba,  88,dPPYba,
-      `"""""8b,  a8P_____88  ""     `Y8  88P'   "Y8  a8"     ""  88P'    "8a
-    		`8b  8PP"""""""  ,adPPPPP88  88          8b          88       88
-    Y8a     a8P  "8b,   ,aa  88,    ,88  88          "8a,   ,aa  88       88
-     "Y88888P"    `"Ybbd8"'  `"8bbdP"Y8  88           `"Ybbd8"'  88       88
+    parallax = function() {
+        var scrollPos = $window.scrollTop();
+        $.each(pImgs, function(index, pImg) {
+            if (scrollPos > pImg.iMin && scrollPos < pImg.iMax) {
+                var newVal = parseFloat(scrollPos).map(pImg.iMin, pImg.iMax, 0, pImg.oMax).toFixed(2);
+                pImg.el.css('transform', 'translateY(-' + newVal + 'px)');
+            } else if (scrollPos < pImg.iMin) pImg.el.css('transform', 'translateY(' + 0 + ')');
+            else if (scrollPos > pImg.iMax) pImg.el.css('transform', 'translateY(-' + pImg.oMax + 'px)');
+        });
+    };
 
-    ** =====================================================*/
+    years = [];
+    yearLinks = $("#year-links a");
+
+    $("#year-links a").each(function(index) {
+        var year = {};
+        year.el = $(this);
+        year.begin = $("[id^='year-title-']").eq(index).offset().top;
+        years.push(year);
+    });
+
+    yearLinks = function() {
+        var scrollPos = $window.scrollTop();
+        $.each(years, function(index, year) {
+            if (scrollPos > year.begin) {
+                $("#year-links a").removeClass("active");
+                year.el.addClass("active");
+            }
+        });
+    };
+
+    yearLinks();
+
+    /*888
+          d88888
+         d88P888
+        d88P 888 888d888 888d888 8888b.  888  888
+       d88P  888 888P"   888P"      "88b 888  888
+      d88P   888 888     888    .d888888 888  888
+     d8888888888 888     888    888  888 Y88b 888
+    d88P     888 888     888    "Y888888  "Y88888
+                                              888
+                                         Y8b d88P
+                                          "Y88*/
 
     /* ==============================
     	CREATING AUTOCOMPLETE DATA
@@ -221,19 +297,28 @@ $(document).ready(function() {
         }
     });
 
+    /*8888b.  888                             8888888888 d8b
+    d88P  Y88b 888                             888        88P
+    Y88b.      888                             888        8P
+     "Y888b.   88888b.   .d88b.  888  888  888 8888888    "  88888b.  .d8888b
+        "Y88b. 888 "88b d88""88b 888  888  888 888           888 "88b 88K
+          "888 888  888 888  888 888  888  888 888           888  888 "Y8888b.
+    Y88b  d88P 888  888 Y88..88P Y88b 888 d88P 888           888  888      X88
+     "Y8888P"  888  888  "Y88P"   "Y8888888P"  888           888  888  88888*/
+
     /* ==============================
-    	SHOW & HIDE SEARCH F'NS
+      SHOW & HIDE SEARCH F'NS
     ** ============================*/
 
     function showSearch() {
         searching = true;
-        $("article img, article video, article .entry-description, article .entry-title, #page-info h1, #page-info p, [id*='year-title-']").addClass("oHidden");
+        $("article img, article video, article .entry-description, article .entry-title, #page-info h1, #page-info p, [id*='year-title-'], article .entry-tags, article .entry-meet").addClass("oHidden");
         $("#d-filter form").addClass("lSearch");
         $("#search").focus();
-        if ($(window).outerWidth() > breakpoints.phone) {
+        if ($window.outerWidth() > breakpoints.phone) {
             $("#d-filter").css({
                 'position': 'absolute',
-                'height': '0',
+                'height': '6vw',
                 'width': '100vw',
                 'right': '0',
                 'left': '0'
@@ -248,8 +333,8 @@ $(document).ready(function() {
     }
 
     function hideSearch() {
-        $("article img, article video, article .entry-description, article .entry-title, #page-info h1, #page-info p, [id*='year-title-']").removeClass("oHidden");
-        if ($(window).outerWidth() > breakpoints.phone) {
+        $("article img, article video, article .entry-description, article .entry-title, #page-info h1, #page-info p, [id*='year-title-'], article .entry-tags, article .entry-meet").removeClass("oHidden");
+        if ($window.outerWidth() > breakpoints.phone) {
             $("#d-filter").css({
                 'position': 'fixed',
                 'height': '6vw',
@@ -271,13 +356,22 @@ $(document).ready(function() {
             });
         }
         $("#d-filter form").removeClass("lSearch");
-        $(window).focus();
+        $window.focus();
         searching = false;
     }
 
-    /* ===========================================================
-    	THUMBNAIL FILTER
-    ** =========================================================*/
+    /*888888888 888                             888
+        888     888                             888
+        888     888                             888
+        888     88888b.  888  888 88888b.d88b.  88888b.  .d8888b
+        888     888 "88b 888  888 888 "888 "88b 888 "88b 88K
+        888     888  888 888  888 888  888  888 888  888 "Y8888b.
+        888     888  888 Y88b 888 888  888  888 888 d88P      X88
+        888     888  888  "Y88888 888  888  888 88888P"   88888*/
+
+    /* ==============================
+    	FILTER THUMBNAIL F'N
+    ** ============================*/
 
     function $filterResults() {
         //Interviewees & Films
@@ -354,9 +448,17 @@ $(document).ready(function() {
         }
     }
 
-    /* =========================================
-    	AUTOCOMPLETE SEARCH F'N
-    ** =======================================*/
+    /*     /*888          888             .d8888b.
+          d88888          888            d88P  Y88b
+         d88P888          888            888    888
+        d88P 888 888  888 888888 .d88b.  888         .d88b.  88888b.d88b.  88888b.
+       d88P  888 888  888 888   d88""88b 888        d88""88b 888 "888 "88b 888 "88b
+      d88P   888 888  888 888   888  888 888    888 888  888 888  888  888 888  888
+     d8888888888 Y88b 888 Y88b. Y88..88P Y88b  d88P Y88..88P 888  888  888 888 d88P
+    d88P     888  "Y88888  "Y888 "Y88P"   "Y8888P"   "Y88P"  888  888  888 88888P"
+                                                                           888
+                                                                           888
+                                                                           8*/
 
     $("#search").autocomplete({
         source: function(request, response) {
@@ -377,7 +479,6 @@ $(document).ready(function() {
                     category: "Oops!"
                 }];
             }
-
             response(results);
         },
         minLength: 0,
@@ -386,7 +487,7 @@ $(document).ready(function() {
             $("#search").val(ui.item.label);
             requestAnimationFrame($filterResults);
             hideSearch();
-            $(window).focus();
+            $window.focus();
             $("#d-filter span").addClass("active");
         }
     }).data('ui-autocomplete')._renderItem = function(ul, item) {
@@ -429,12 +530,25 @@ $(document).ready(function() {
             return matcher.test(val);
         });
     };
+    /*8      d8b          888
+    888      Y8P          888
+    888                   888
+    888      888 .d8888b  888888 .d88b.  88888b.   .d88b.  888d888
+    888      888 88K      888   d8P  Y8b 888 "88b d8P  Y8b 888P"
+    888      888 "Y8888b. 888   88888888 888  888 88888888 888
+    888      888      X88 Y88b. Y8b.     888  888 Y8b.     888
+    88888888 888  88888P'  "Y888 "Y8888  888  888  "Y8888  8*/
 
     /* =======================================================
-    	EVENT LISTENERS
+    	 EVENT LISTENERS
     ** =====================================================*/
 
-    //Mobile year menu
+    $window.on('scroll', function(e) {
+        if ($window.outerWidth() > breakpoints.laptop) this.requestAnimationFrame(parallax);
+        this.requestAnimationFrame(yearLinks);
+    });
+
+    //Mobile year navigation menu
     $(".mobile-year-menu").on('click', function(e) {
         $("#year-links ul").toggleClass("open");
     });
@@ -444,12 +558,13 @@ $(document).ready(function() {
     });
 
     //Reflow grid on window resize or orientation change
-    $(window).on('resize', offsetGrid());
+    $window.on('resize', offsetGrid());
     var orientationCheck = window.matchMedia("(orientation: portrait)");
     orientationCheck.addListener(offsetGrid);
 
     //Clicked search close button.
     $("#searchForm > span").on("click", function(e) {
+        $('main').removeClass("noResults");
         $("#search").val('');
         requestAnimationFrame($filterResults);
         if ($("#searchForm").hasClass('lSearch')) hideSearch();
@@ -462,6 +577,9 @@ $(document).ready(function() {
 
     $("#search").focusout(function() {
         hideSearch();
+        if ($(this).val() === '') {
+            $("#searchForm > span").removeClass("active");
+        }
     });
 
     $("#searchForm").submit(function() {
@@ -479,7 +597,7 @@ $(document).ready(function() {
 
     //You hit the enter key
     $("#search").on("keyup", function(e) {
-        if (e.keyCode === 27) {
+        if (e.which === 27) {
             $(this).val("");
             hideSearch();
         } else {
@@ -490,13 +608,17 @@ $(document).ready(function() {
         }
     });
 
-    //Hit a number key
-    $(window).on("keyup", function(e) {
-        if (!searching && e.keyCode >= 65 && e.keyCode <= 90) {
-            key = String.fromCharCode(e.keyCode).toLowerCase();
-            $("#search").focus();
-            $("#search").val(key);
-            showSearch();
+    //Hit an alphanumeric key
+    $window.on("keyup", function(e) {
+        if (e.which >= 65 && e.which <= 90) {
+            if (!searching) {
+                key = String.fromCharCode(e.which).toLowerCase();
+                $("#search").focus();
+                $("#search").val(key);
+                showSearch();
+            }
+
+            console.log("changing text size");
         }
     });
 });

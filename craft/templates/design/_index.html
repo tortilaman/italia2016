@@ -39,7 +39,7 @@
 		</form>
 	</div>
 
-	{# =========================== Find Entries Logic =========================== #}
+	{# ======================= Find Entries Logic ======================= #}
 	{# One year at a time #}
 	{% cache %}
 		{% for year in years %}
@@ -51,10 +51,10 @@
 			{# Rearrange entries #}
 			{% if filmEntries|length and designerEntries|length %}
 				{% for i in 0..(filmEntries|length - 1) %}
-					{# Film Entry #}
-					{% set entries = entries|merge([filmEntries.nth(i)]) %}
 					{# Designer Entries #}
 					{% set entries = entries|merge( designerEntries[i * filmOffset : filmOffset] ) %}
+					{# Film Entry #}
+					{% set entries = entries|merge([filmEntries.nth(i)]) %}
 				{% endfor %}
 				{% set entries = entries|merge( designerEntries[filmOffset * filmEntries|length : filmOffset] ) %}
 				{% elseif designerEntries|length and filmEntries|length == 0 %}
@@ -63,19 +63,23 @@
 				{% elseif filmEntries|length and designerEntries|length == 0 %}
 				{% set entries = filmEntries %}
 			{% endif %}
-			{# =========================== Display Entries =========================== #}
+			{# ========================= Display Entries ========================= #}
 			{% if entries | length %}
 				{% set entryYears = entryYears|merge([year]) %}
 				<section id="flex-grid-{{year}}" class="flexbox-grid clearfix">
-					<h1 id="year-title-{{year}}">{{year}}</h1>
 					{% if year == '2016' %}
 						<article id="page-info">
-							<h1>Interviews</h1>
-							<p>{{entry.body}}</p>
+							<div>
+								<h1>Interviews</h1>
+								<p>{{entry.body}}</p>
+							</div>
+							<h1 id="year-title-2016" class="active">{{year}}</h1>
 						</article>
+					{% else %}
+						<h1 id="year-title-{{year}}">{{year}}</h1>
 					{% endif %}
 					{% for entry in entries %}
-						<article class="{{entry.type == 'shortFilm' ? 'film-entry' : 'design-entry'}} {{entry.videoYear >= '2015' ? 'v21-9' : 'v16-9'}} item" data-title="{{entry|lower}}" {% if entry.type !='shortFilm' %}data-company="{{entry.companyField|lower}}" {% endif %} data-tags="{% for tag in entry.disciplines %}{{tag}}{{tag == entry.disciplines.last() ? '' :','}}{% endfor %}" {% if entry.secondaryTags|length %} data-topics="{% for tag in entry.secondaryTags %}{{tag}}{{tag == entry.secondaryTags.last() ? '' :','}}{% endfor %}" {% endif %} data-show="true">
+						<article class="{{entry.type == 'shortFilm' ? 'film-entry' : 'design-entry'}} {{entry.videoYear >= '2015' ? 'v21-9' : 'v16-9'}} item" data-title="{{entry|lower}}" {% if entry.type !='shortFilm' %}data-company="{{entry.companyField|lower}}" {% endif %} data-tags="{% for tag in entry.disciplines %}{{tag}}{{tag == entry.disciplines.last() ? '' :','}}{% endfor %}" {% if entry.secondaryTags|length %} data-topics="{% for tag in entry.secondaryTags %}{{tag}}{{tag == entry.secondaryTags.last() ? '' :','}}{% endfor %}" {% endif %} data-show="true" >
 
 							{% if entry.type == "interviewVideo" %}
 								{% set image = entry.parent.intPortrait.first %}
@@ -105,6 +109,7 @@
 									<div class="entry-description">
 										{{entry.videoDescription}}
 									</div>
+									<span class="entry-meet">watch film</span>
 								{% elseif entry.type == 'designer' %}
 									<ul class="entry-tags">
 										{% for tag in entry.disciplines %}
@@ -122,7 +127,7 @@
 								</div>
 							</a>
 						</article>
-						{% if random(2) == 0 %}
+						{% if random(1) == 0 %}
 							<article class="design-entry item blank" data-show="true"></article>
 						{% endif %}
 					{% endfor %}
@@ -148,7 +153,11 @@
 			{% endcache %}
 		</ul>
 	</div>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+{% endblock %}
+
+{% block foot %}
+	{{ parent() }}
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+	<script src="/js/jquery.fittext.js"></script>
 	<script src="/js/designIndex.js"></script>
 {% endblock %}

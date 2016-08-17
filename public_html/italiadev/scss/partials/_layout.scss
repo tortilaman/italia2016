@@ -86,15 +86,8 @@ body {
 }
 
 .home-btn {
-	display: none;
-
-	&::before {
-		display: none;
-	}
-
-	&:hover::before {
-		display: none;
-	}
+	display      : none;
+	border-bottom: none;
 
 	img {
 		position: relative;
@@ -136,26 +129,18 @@ header.header {
 	min-height      : 12vw; //Is this necessary?
 	padding         : 0;
 	background-color: white;
-	transform       : rotate(0);
-	transform-origin: right top 0;
 	z-index         : 201;
 	transition      : top 0.5s;
 	text-align      : left;
 	@include respond-to(tablet) {
 		position  : fixed;
-		transform : rotate(270deg);
 		background: none;
-		top       : 9vw;
-		left      : auto;
-		right     : calc(94vw + 1.5em);
-		width     : calc(100vh - 10vw);
+		top       : 20vw;
+		left      : 0;
+		width     : auto;
 		min-height: 0;
-		height    : auto;
+		height    : 40vh;
 		text-align: center;
-	}
-	@include respond-to(laptop) {
-		left : auto;
-		right: calc(94vw + 3em);
 	}
 
 	&.menuOpen {
@@ -167,10 +152,6 @@ header.header {
 nav {
 	display: block;
 	height : 100%;
-	@include respond-to(tablet) {
-		display: inline-block;
-		height : auto;
-	}
 
 	ul {
 		list-style     : none;
@@ -182,10 +163,11 @@ nav {
 		height         : auto;
 		margin         : 0 2vw;
 		@include respond-to(tablet) {
-			flex-direction: row-reverse;
+			flex-direction: column;
 			flex-wrap     : nowrap;
-			display       : inline-block;
 			height        : 100%;
+			margin        : 0;
+			width         : 6vw;
 		}
 
 		li {
@@ -207,17 +189,20 @@ nav {
 
 			&:last-of-type {
 				@include respond-to(tablet) {
-					margin: 0;
+					transform: rotate(270deg) translate(100%, -100%);
+					margin   : 0;
 				}
 			}
 			@include respond-to(tablet) {
-				display    : inline-block;
-				margin     : 0 0 0 12vh;
-				line-height: 1.8;
-				height     : auto;
-				width      : auto;
-				text-align : left;
-				background : none;
+				transform-origin: center right;
+				transform       : translateX(-50%) rotate(270deg);
+				margin          : 0;
+				padding         : 0;
+				line-height     : 1.8;
+				height          : auto;
+				width           : auto;
+				text-align      : left;
+				background      : none;
 			}
 		}
 	}
