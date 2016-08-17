@@ -83,6 +83,7 @@ main.home #v-header {
 	padding : 0;
 	height  : 100%;
 	overflow: hidden;
+	margin-top: -4vw;
 	@include respond-to(tablet) {
 		&::after {
 			content   : '';
