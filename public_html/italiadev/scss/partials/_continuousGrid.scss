@@ -487,6 +487,7 @@ section[id^="flex-grid-"] {
 		position     : relative;
 		color        : $color5;
 		font-family  : subhead;
+		opacity: 1;
 		border-bottom: none;
 
 		&.active {
