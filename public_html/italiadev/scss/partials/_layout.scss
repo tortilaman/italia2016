@@ -88,6 +88,7 @@ body {
 .home-btn {
 	display      : none;
 	border-bottom: none;
+					opacity: 1;
 
 	img {
 		position: relative;
@@ -111,6 +112,7 @@ body {
 
 .home .home-btn {
 	display: none;
+
 }
 
 .design .home-btn,
@@ -128,6 +130,7 @@ header.header {
 	width           : 100%;
 	min-height      : 12vw; //Is this necessary?
 	padding         : 0;
+
 	background-color: white;
 	z-index         : 201;
 	transition      : top 0.5s;
@@ -212,6 +215,7 @@ nav {
 		font-size    : 4em;
 		font-family  : "Header";
 		border-bottom: none;
+		opacity: 1;
 		//Vertical Centering hack...
 		height       : calc(25vh - 3vmin);
 		line-height  : calc(25vh - 3vmin);
