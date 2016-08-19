@@ -67,7 +67,7 @@ _#}
 			</div>
 		</section>
 	{% endif %}
-	
+
 	{# ============= VIDEO ================ #}
 	{% include "_includes/video_header" %}
 
@@ -75,6 +75,9 @@ _#}
 	{% cache using key entry.id + '-3' %}
 		{% include "_includes/matrix_body" %}
 	{% endcache %}
+{% endblock %}
+{% block foot %}
+	{{ parent() }}
 	<script src="http://d3js.org/d3.v3.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 	<script src="/js/stackGrid.js"></script>

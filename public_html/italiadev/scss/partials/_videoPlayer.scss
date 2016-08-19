@@ -22,16 +22,17 @@ span.v-close-btn {
 
 /*=======================================================================
 
-88888888ba   88
-88      "8b  88
-88      ,8P  88
-88aaaaaa8P'  88  ,adPPYYba,  8b       d8   ,adPPYba,  8b,dPPYba,
-88""""""'    88  ""     `Y8  `8b     d8'  a8P_____88  88P'   "Y8
-88           88  ,adPPPPP88   `8b   d8'   8PP"""""""  88
-88           88  88,    ,88    `8b,d8'    "8b,   ,aa  88
-88           88  `"8bbdP"Y8      Y88'      `"Ybbd8"'  88
-								 d8'
-								d8'
+8888888b.  888
+888   Y88b 888
+888    888 888
+888   d88P 888  8888b.  888  888  .d88b.  888d888
+8888888P"  888     "88b 888  888 d8P  Y8b 888P"
+888        888 .d888888 888  888 88888888 888
+888        888 888  888 Y88b 888 Y8b.     888
+888        888 "Y888888  "Y88888  "Y8888  888
+                             888
+                        Y8b d88P
+                         "Y88P"
 
 **=====================================================================*/
 
@@ -77,14 +78,14 @@ main.home #v-header {
 }
 
 #v-container {
-	position: relative;
-	display : block;
-	margin  : 0;
-	padding : 0;
-	height  : 100%;
-	overflow: hidden;
+	position  : relative;
+	display   : block;
+	margin    : 0;
+	padding   : 0;
+	height    : 100%;
+	overflow  : hidden;
 	margin-top: -4vw;
-	@include respond-to(tablet) {
+	@include respond-to(laptop) {
 		&::after {
 			content   : '';
 			position  : absolute;
@@ -129,19 +130,27 @@ main.home #v-header {
 		border-bottom: none;
 	}
 }
+/*********************************************************
 
-/*====================================
-	ASPECT RATIOS
-**==================================*/
+8888888b.           888    d8b
+888   Y88b          888    Y8P
+888    888          888
+888   d88P  8888b.  888888 888  .d88b.  .d8888b
+8888888P"      "88b 888    888 d88""88b 88K
+888 T88b   .d888888 888    888 888  888 "Y8888b.
+888  T88b  888  888 Y88b.  888 Y88..88P      X88
+888   T88b "Y888888  "Y888 888  "Y88P"   88888P'
+
+*********************************************************/
 
 [id^='v-'] .v21-9,
 [id^='v-'].v21-9 {
 
 	width : 100vw;
-	height: 42.86vw;
+	height: 56.25vw;
 
 	#v-player {
-		top   : -6.7vw;
+		top   : 0;
 		width : 100vw;
 		height: 56.25vw;
 	}
@@ -158,6 +167,21 @@ main.home #v-header {
 	@include respond-to(tablet, p) {
 		width : 86vw;
 		height: 36.86vw;
+
+		#v-player {
+			top   : -6.88vw;
+			width : 86vw;
+			height: 50.625vw;
+		}
+
+		&.mobile {
+			height: 48.375vw !important;
+
+			#v-player {
+				top   : 0 !important;
+				height: 48.375vw !important;
+			}
+		}
 	}
 }
 
@@ -190,9 +214,18 @@ main.home #v-header {
 	}
 }
 
-/*====================
-	INTERFACE
-**==================*/
+/*************************************************************************
+
+8888888          888                     .d888
+  888            888                    d88P"
+  888            888                    888
+  888   88888b.  888888 .d88b.  888d888 888888 8888b.   .d8888b .d88b.
+  888   888 "88b 888   d8P  Y8b 888P"   888       "88b d88P"   d8P  Y8b
+  888   888  888 888   88888888 888     888   .d888888 888     88888888
+  888   888  888 Y88b. Y8b.     888     888   888  888 Y88b.   Y8b.
+8888888 888  888  "Y888 "Y8888  888     888   "Y888888  "Y8888P "Y8888
+
+*************************************************************************/
 
 .v-ui-top {
 	position: absolute;
@@ -317,9 +350,18 @@ a.v-prev-link {
 	}
 }
 
-/*====================
-	NEXT VIDEO F'N
-**==================*/
+/*********************************************************************
+
+888b    888                   888       888     888 d8b      888
+8888b   888                   888       888     888 Y8P      888
+88888b  888                   888       888     888          888
+888Y88b 888  .d88b.  888  888 888888    Y88b   d88P 888  .d88888
+888 Y88b888 d8P  Y8b `Y8bd8P' 888        Y88b d88P  888 d88" 888
+888  Y88888 88888888   X88K   888  888888 Y88o88P   888 888  888
+888   Y8888 Y8b.     .d8""8b. Y88b.        Y888P    888 Y88b 888
+888    Y888  "Y8888  888  888  "Y888        Y8P     888  "Y88888
+
+*********************************************************************/
 
 .v-ended {
 	position  : absolute;
@@ -359,27 +401,52 @@ a.v-prev-link {
 	text-align: center;
 
 	.v-suggestion {
-		@extend .blue-bg;
 		position: relative;
 		display : inline-block;
 		margin  : 0 1em;
 
+		a {
+			position: absolute;
+			display : block;
+			top     : 0;
+			left    : 0;
+			height  : 100%;
+			width   : 100%;
+		}
+
 		p {
+			top       : 50%;
+			transform : translateY(-50%);
 			text-align: center;
 			color     : white;
 		}
 
-		img {
-			position: relative;
-			height  : 4em;
-			width   : auto;
+		.bg {
+			@extend .blue-bg;
+			font-size: 0;
+
+			img {
+				position: relative;
+				display : block;
+				height  : auto;
+				width   : 15vw;
+			}
 		}
 	}
 }
 
-/*====================
-	VIDEO CONTROLS
-**==================*/
+/***********************************************************************
+
+ .d8888b.                    888                    888
+d88P  Y88b                   888                    888
+888    888                   888                    888
+888         .d88b.  88888b.  888888 888d888 .d88b.  888 .d8888b
+888        d88""88b 888 "88b 888    888P"  d88""88b 888 88K
+888    888 888  888 888  888 888    888    888  888 888 "Y8888b.
+Y88b  d88P Y88..88P 888  888 Y88b.  888    Y88..88P 888      X88
+ "Y8888P"   "Y88P"  888  888  "Y888 888     "Y88P"  888  88888P'
+
+ ***********************************************************************/
 
 #v-ui {
 	position  : relative;
@@ -421,6 +488,7 @@ a.v-prev-link {
 }
 
 .v-controls {
+	display   : none;
 	position  : absolute;
 	bottom    : 0;
 	left      : 0;
@@ -585,7 +653,7 @@ section#v-content {
 
 .v-overlay {
 	display: none;
-	@include respond-to(tablet) {
+	@include respond-to(laptop) {
 		position        : absolute;
 		display         : block;
 		top             : 0;

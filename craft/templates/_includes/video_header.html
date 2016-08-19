@@ -54,17 +54,20 @@ Y88b   d88P 8888b.  888d888 888  8888b.  88888b.  888  .d88b.  .d8888b
 
 {############ RELATED VIDEOS ############}
 {# What the suggested posts will be related based on #}
-{% if entry.section == 'design' %}
+{% if entry.section('design') %}
 	{% if entry.secondaryTags|length > 1 %}
 		{% set tag = shuffle(entry.secondaryTags|merge(entry.disciplines))[0] %}
+		{% set tagCond = 'multiple secondary tags' %}
 	{% elseif entry.secondaryTags|length %}
 		{% set tag = shuffle([entry.secondaryTags]|merge(entry.disciplines))[0] %}
+		{% set tagCond = 'one secondary tag' %}
 	{% else %}
 		{% set tag = shuffle(entry.disciplines)[0] %}
+		{% set tagCond = 'no secondary tags' %}
 	{% endif %}
 	{% set relatedEntries = craft.entries.section('design').type('interviewVideo').relatedTo(tag).id(siblingIDsString is defined ? 'and, not '~siblingIDsString: 'not'~entry.id).limit(2)
 	%}
-{% elseif entry.section =='team' %}
+{% elseif entry.section('team') %}
 	{% set relatedEntries = craft.entries.section('team').id('not'~entry.id).limit(2) %}
 {% elseif entry.section == 'italia' %}
 	{% set relatedEntries = craft.entries.section('italia').id('not'~entry.id).limit(2) %}
@@ -92,11 +95,13 @@ Y88b   d88P 8888b.  888d888 888  8888b.  88888b.  888  .d88b.  .d8888b
 	                             Y8b d88P
 	                              "Y88P"
 ###############################################################################}
+{# {% cache unless craft.config.devMode %} #}
 {% cache %}
 <section id="v-header" class="{{bodyClass}}-section">
 	<div id="v-middle"class="{{entry.videoYear >= '2015' ? 'v21-9' : 'v16-9'}}">
 		<div id="v-container">
-			<video id="v-player" src="{{entry.videoID}}" type="video/mp4">
+			<video id="v-player" poster="{{entry.videoThumbnail|length ? entry.videoThumbnail.first().url}}">
+				<source src="{{entry.videoID}}" type="video/mp4" />
 				Oops! Your browser doesn't support the video tag. Consider downloading <a href="https://www.google.com/chrome/browser/desktop/index.html">Chrome</a>.
 			</video>
 			<div id="v-ui">
@@ -157,8 +162,10 @@ Y88b   d88P 8888b.  888d888 888  8888b.  88888b.  888  .d88b.  .d8888b
 							<div class="v-suggestion">
 								<a href="{{entry.url}}#v-header">
 									<p>suggested <br> {{entry.title}}</p>
-									<img src="{{entry.videoThumbnail.first().url}}">
 								</a>
+								<div class="bg">
+									<img src="{{entry.videoThumbnail.first().url}}">
+								</div>
 							</div>
 						{% endfor %}
 					</div>

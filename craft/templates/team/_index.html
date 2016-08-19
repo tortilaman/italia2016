@@ -24,26 +24,25 @@ _#}
 	<div id="bg"></div>
 
 	{# Find your entries #}
-	{% cache %}
+	{% cache unless craft.config.devMode %}
 		{% set entries = craft.entries.section('team').order('RAND()') %}
 	{% endcache %}
 	<div id="a-border"></div>
 	{# =========================== Display Entries =========================== #}
 	<section id="team-about" class="team-section bghidden is-scrollable">
 		<div class="inner hide ">
-			<h1>what is italiaDesign?</h1>
-			<p>We are dieci, the tenth year of an on-going research program offered by the School of Interactive Arts and Technology at Simon Fraser University. We travelled to Italy to build on the foundation of the past 10 years of research on italian designers
-				and culture.</p>
+			{{entry.aboutItalia}}
 		</div>
 	</section>
 
-	<section id="flex-grid-team" class="flexbox-grid team-section clearfix">
+	<section id="flex-grid-team" class="flexbox-grid team-section">
 		<section class="inner">
 {% cache %}
 			{% if entries | length %}
 				<article id="page-info">
-					<h1>we are dieci</h1>
-					<p>{{entry.body}}</p>
+					<div>
+						{{entry.aboutDieci}}
+					</div>
 				</article>
 				{% for entry in entries %}
 					<article class="design-entry item">
@@ -86,7 +85,6 @@ _#}
 			<p>phone: +1 778.782.7474</p>
 		</div>
 	</section>
-
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 	<script src="/js/teamIndex.js"></script>
 	<script src="/js/stackGrid.js"></script>

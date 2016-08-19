@@ -323,8 +323,8 @@ main.team {
 	}
 
 	#flex-grid-team {
-		width    : 88%;
-		max-width: 88%;
+		width    : 88vw;
+		max-width: 88vw;
 		margin   : 6% 6% 0;
 
 		.inner {
@@ -340,7 +340,8 @@ main.team {
 
 	#contact-info {
 		position: relative;
-		margin  : 1vw 5vw;
+		padding : 1vw 5vw;
+		width   : 100%;
 
 		h1,
 		p {
@@ -354,6 +355,7 @@ section[id^="flex-grid-"] {
 	display        : flex;
 	flex-flow      : row wrap;
 	justify-content: space-between;
+	align-items    : flex-start;
 	width          : 96vw;
 	max-width      : 96%;
 	margin         : 2vh 2vw;
@@ -382,6 +384,15 @@ section[id^="flex-grid-"] {
 			margin-top   : 0;
 			margin-bottom: 0.25em;
 			color        : $color5;
+		}
+
+		h2,
+		p {
+			color: $color5;
+		}
+
+		h2 {
+			font-size: 1.2rem;
 		}
 
 		&::after {
@@ -591,6 +602,7 @@ section[id^="flex-grid-"] {
 		transform-origin: center center;
 		width           : auto;
 		height          : 100%;
+		opacity         : 0.5;
 		transition      : all 0.5s;
 	}
 
@@ -759,7 +771,6 @@ section[id^="flex-grid-"] {
 	@extend .green-bg;
 	width     : 100%;
 	margin-top: 1.5vh;
-	opacity   : 0;
 
 	&.v16-9 {
 		height: 56.25vw;
@@ -770,7 +781,7 @@ section[id^="flex-grid-"] {
 
 		video {
 			margin-top: -6.75%;
-			opacity   : 1;
+			// opacity   : 1;
 		}
 	}
 	@include respond-to(phone) {
@@ -834,7 +845,7 @@ section[id^="flex-grid-"] {
 			height       : 100%;
 			padding      : calc(25% - 1.3em) 0;
 			border-bottom: 0.1em solid transparent;
-			opacity      : 1;
+			// opacity      : 1;
 			transition   : all 0.5s;
 		}
 	}
@@ -871,7 +882,7 @@ section[id^="flex-grid-"] {
 		}
 
 		video {
-			opacity: 0.3;
+			// opacity: 0.3;
 		}
 
 		.entry-title h1 {

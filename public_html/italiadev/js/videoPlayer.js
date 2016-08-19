@@ -29,18 +29,24 @@ String.prototype.toMMSS = function() {
 
 /*=================================
 
-88888888ba   88888888888         db         88888888ba,  8b        d8
-88      "8b  88                 d88b        88      `"8b  Y8,    ,8P
-88      ,8P  88                d8'`8b       88        `8b  Y8,  ,8P
-88aaaaaa8P'  88aaaaa          d8'  `8b      88         88   "8aa8"
-88""""88'    88"""""         d8YaaaaY8b     88         88    `88'
-88    `8b    88             d8""""""""8b    88         8P     88
-88     `8b   88            d8'        `8b   88      .a8P      88
-88      `8b  88888888888  d8'          `8b  88888888Y"'       88
+8888888b.                        888
+888   Y88b                       888
+888    888                       888
+888   d88P .d88b.   8888b.   .d88888 888  888
+8888888P" d8P  Y8b     "88b d88" 888 888  888
+888 T88b  88888888 .d888888 888  888 888  888
+888  T88b Y8b.     888  888 Y88b 888 Y88b 888
+888   T88b "Y8888  "Y888888  "Y88888  "Y88888
+                                          888
+                                     Y8b d88P
+                                      "Y88P"
 
 **===============================*/
 
 $(document).ready(function() {
+    var $window = $(window),
+        $vCont = $("#v-middle.v21-9"),
+        $vPlayer = $("#v-player");
     //Video Resizing Variables
     var scrollPos;
     var opacityValue = 0;
@@ -63,6 +69,11 @@ $(document).ready(function() {
     //Info
     var chapters = $("#v-chapters");
     var vidIndex;
+    //Kids, do as I say not as I do...(mobile responsive stuff).
+    var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream,
+        android = /Android/.test(navigator.userAgent),
+        firefox = /Firefox/.test(navigator.userAgent),
+        mobile = iOS || android ? true : false;
 
     //Figure out which item in $entries is the video so videoResize can work properly.
     $entries.each(function(ind, el) {
@@ -71,14 +82,16 @@ $(document).ready(function() {
         }
     });
 
-    /*=================================
-    	iOS VIDEO HANDLING
-    **===============================*/
+    /**********************************
+    	MOBILE VIDEO HANDLING
+    **********************************/
 
-    var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    if (iOS) {
-        $("v-player").attr('controls', true);
+    if (iOS || android) {
+        $vPlayer.attr('controls', 'controls');
+        $vCont.addClass("mobile");
         $(".v-controls, .v-init-play, .v-ended, .v-suggestions").remove();
+    } else {
+        $vPlayer.removeAttr("controls");
     }
 
     /*=================================
@@ -100,7 +113,7 @@ $(document).ready(function() {
             if (scrollPercent > 0.5) {
                 scrollPercent = 1;
                 opacityValue = 1;
-                $zVal = 1;
+                $zVal = -1;
                 if (!played && $("main").hasClass("home")) {
                     playButton.toggle();
                     $(".v-init-play").addClass("oHidden").remove();
@@ -122,18 +135,18 @@ $(document).ready(function() {
         }
     }
 
-    //================================================================================================
-    //
-    //	88                                                 ad88
-    //	88                ,d                              d8"
-    //	88                88                              88
-    //	88  8b,dPPYba,  MM88MMM  ,adPPYba,  8b,dPPYba,  MM88MMM  ,adPPYYba,   ,adPPYba,   ,adPPYba,
-    //	88  88P'   `"8a   88    a8P_____88  88P'   "Y8    88     ""     `Y8  a8"     ""  a8P_____88
-    //	88  88       88   88    8PP"""""""  88            88     ,adPPPPP88  8b          8PP"""""""
-    //	88  88       88   88,   "8b,   ,aa  88            88     88,    ,88  "8a,   ,aa  "8b,   ,aa
-    //	88  88       88   "Y888  `"Ybbd8"'  88            88     `"8bbdP"Y8   `"Ybbd8"'   `"Ybbd8"'
-    //
-    //================================================================================================
+    /***************************************************************************
+
+     .d8888b.                    888                    888
+    d88P  Y88b                   888                    888
+    888    888                   888                    888
+    888         .d88b.  88888b.  888888 888d888 .d88b.  888 .d8888b
+    888        d88""88b 888 "88b 888    888P"  d88""88b 888 88K
+    888    888 888  888 888  888 888    888    888  888 888 "Y8888b.
+    Y88b  d88P Y88..88P 888  888 Y88b.  888    Y88..88P 888      X88
+     "Y8888P"   "Y88P"  888  888  "Y888 888     "Y88P"  888  88888P'
+
+    ***************************************************************************/
 
     /*=================================
     	HIDE & SHOW CONTROLS
@@ -166,27 +179,6 @@ $(document).ready(function() {
 
     //Call controlsTimeout on mouse move or click.
     document.addEventListener("mousemove", controlsTimeout, false);
-
-    /*=================================
-    	SOCIAL MEDIA
-    **===============================*/
-
-    $(".v-share-btn-open").on("click", function() {
-        $(this).css('transform', 'rotateY(90deg)');
-        $(".v-share-btn-close").css('transform', 'rotateY(180deg)');
-        for (var i = 0; i < $(".v-share-btns-container a").length; i++) {
-            $(".v-share-btns-container a").eq(i).css('top', (i * 1.5) + 'em');
-        }
-    });
-
-    $(".v-share-btn-close").on("click", function() {
-        $(this).css('transform', 'rotateY(90deg)');
-        $(".v-share-btn-open").css('transform', 'rotateY(0deg)');
-        for (var i = 0; i < $(".v-share-btns-container a").length; i++) {
-            $(".v-share-btns-container a").eq(i).css('top', -1.5 + 'em');
-        }
-    });
-
 
     /*=================================
     	FULLSCREEN BUTTON
@@ -311,17 +303,49 @@ $(document).ready(function() {
         }
     };
 
-    playButton.init();
+    if (playButton.el !== null) playButton.init();
+
+    /***************************************************************************
+
+    888     888 d8b      888 8888888888                           888
+    888     888 Y8P      888 888                                  888
+    888     888          888 888                                  888
+    Y88b   d88P 888  .d88888 8888888   888  888  .d88b.  88888b.  888888 .d8888b
+     Y88b d88P  888 d88" 888 888       888  888 d8P  Y8b 888 "88b 888    88K
+      Y88o88P   888 888  888 888       Y88  88P 88888888 888  888 888    "Y8888b.
+       Y888P    888 Y88b 888 888        Y8bd8P  Y8b.     888  888 Y88b.       X88
+        Y8P     888  "Y88888 8888888888  Y88P    "Y8888  888  888  "Y888  88888P'
+
+    ***************************************************************************/
 
     /*=================================
     	AUTOPLAY FUNCTIONALITY
     **===============================*/
-
-    if (window.location.hash.length > 1) {
-        playButton.toggle();
-        $(".v-init-play").addClass("oHidden").remove();
-        showControls();
-    }
+    autoplayVid = function() {
+        if (window.location.hash.length >= 1 && !mobile) {
+            var offset = 0;
+            for (var i = 0; i < vidIndex; i++) {
+                offset += $entries.eq(i).outerHeight(true);
+            }
+            if (firefox) {
+                $("html").animate({
+                    scrollTop: offset
+                }, 'slow', 'swing', function() {
+                    playButton.toggle();
+                    $(".v-init-play").addClass("oHidden").remove();
+                    showControls();
+                });
+            } else {
+                $("body").animate({
+                    scrollTop: offset
+                }, 'slow', 'swing', function() {
+                    playButton.toggle();
+                    $(".v-init-play").addClass("oHidden").remove();
+                    showControls();
+                });
+            }
+        }
+    };
 
     /*=================================
     	INITIAL STATE & PLAY BUTTON
@@ -369,9 +393,11 @@ $(document).ready(function() {
         }
     };
 
-    /*=================================
+    /**********************************
     	EVENT LISTENERS
-    **===============================*/
+    **********************************/
+
+    $(document).on("grid:loaded", autoplayVid);
 
     if ($("#v-intro").length || $("main").hasClass("home")) {
         //Scroll progress even tlistener

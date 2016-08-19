@@ -1,48 +1,50 @@
-/* ============================================================
+/************************************************
 
-88888888ba                                   88
-88      "8b                                  88
-88      ,8P                                  88
-88aaaaaa8P'  ,adPPYba,  ,adPPYYba,   ,adPPYb,88  8b       d8
-88""""88'   a8P_____88  ""     `Y8  a8"    `Y88  `8b     d8'
-88    `8b   8PP"""""""  ,adPPPPP88  8b       88   `8b   d8'
-88     `8b  "8b,   ,aa  88,    ,88  "8a,   ,d88    `8b,d8'
-88      `8b  `"Ybbd8"'  `"8bbdP"Y8   `"8bbdP"Y8      Y88'
-d8'
-d8'
+8888888b.                        888
+888   Y88b                       888
+888    888                       888
+888   d88P .d88b.   8888b.   .d88888 888  888
+8888888P" d8P  Y8b     "88b d88" 888 888  888
+888 T88b  88888888 .d888888 888  888 888  888
+888  T88b Y8b.     888  888 Y88b 888 Y88b 888
+888   T88b "Y8888  "Y888888  "Y88888  "Y88888
+                                          888
+                                     Y8b d88P
+                                      "Y88P"
 
-** ==========================================================*/
+************************************************/
 $(document).ready(function() {
-    var $entries = $("[class*='-entry']");
+    var $entries = $("[class*='-entry']:not(.blank)"),
+        $window = $(window),
+        breakpoints = {
+            phone: 480,
+            tablet: 700,
+            laptop: 1024,
+            desktop: 1600
+        };
 
     function getRandomInt(min, max) {
-        return Math.round(Math.random() * (max - min + 1) + min);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
     /* ==================
     	GRID FUNCTION
     ** ================*/
 
-    function offsetGrid() {
+    offsetGrid = function() {
         var hoLast,
             hoThis,
             voLast,
-            voThis,
-            breakpoints = {
-                phone: 480,
-                tablet: 700,
-                laptop: 1024,
-                desktop: 1600
-            };
+            voThis;
 
-        if ($(window).outerWidth() >= breakpoints.phone) {
-            if ($(window).outerWidth() >= breakpoints.phone && $(window).outerWidth() < breakpoints.tablet) {
+        if ($window.outerWidth() >= breakpoints.phone) {
+            if ($window.outerWidth() >= breakpoints.phone && $window.outerWidth() < breakpoints.tablet) {
                 hOffset = ['-4vw', '0', '4vw'];
                 vOffset = ['2vw', '6vw', '30vw', '60vw'];
-            } else if ($(window).outerWidth() >= breakpoints.tablet && $(window).outerWidth() < breakpoints.laptop) {
+            } else if ($window.outerWidth() >= breakpoints.tablet && $window.outerWidth() < breakpoints.laptop) {
                 hOffset = ['-4vw', '0', '4vw'];
                 vOffset = ['2vw', '6vw', '16vw', '30vw'];
-            } else if ($(window).outerWidth() >= breakpoints.laptop) {
+            } else if ($window.outerWidth() >= breakpoints.laptop) {
                 hOffset = ['-1.5vw', '0', '2vw'];
                 vOffset = ['2vw', '3vw', '9vw', '15vw'];
             }
@@ -72,16 +74,49 @@ $(document).ready(function() {
                 $(this).css('opacity', '1');
             });
         }
-    }
+    };
 
     offsetGrid();
 
-    /* =======================================================
+    /************************************************
+    	PARALLAX
+    ************************************************/
+
+    pImgs = [];
+    $entries.each(function(index) {
+        var pImg = {};
+        pImg.el = $(this);
+        pImg.iMax = pImg.el.offset().top;
+        pImg.iMin = parseFloat(pImg.iMax) - $window.outerHeight();
+        pImg.oMax = parseFloat(pImg.el.outerHeight()) * 0.2 * parseFloat(getRandomInt(-3, 3));
+        pImgs.push(pImg);
+    });
+
+    parallax = function() {
+        var scrollPos = $window.scrollTop();
+        $.each(pImgs, function(index, pImg) {
+            if (scrollPos > pImg.iMin && scrollPos < pImg.iMax) {
+                var newVal = parseFloat(scrollPos).map(pImg.iMin, pImg.iMax, 0, pImg.oMax).toFixed(2);
+                pImg.el.css('transform', 'translateY(-' + newVal + 'px)');
+            } else if (scrollPos < pImg.iMin) pImg.el.css('transform', 'translateY(' + 0 + ')');
+            else if (scrollPos > pImg.iMax) pImg.el.css('transform', 'translateY(-' + pImg.oMax + 'px)');
+        });
+    };
+
+    parallax();
+
+    /************************************************
     	EVENT LISTENERS
-    ** =====================================================*/
+    ************************************************/
 
     //Reflow grid on window resize or orientation change
-    $(window).on('resize', offsetGrid());
-    var orientationCheck = window.matchMedia("(orientation: portrait)");
-    orientationCheck.addListener(offsetGrid);
+    $window.on('resize', offsetGrid());
+    var pCheck = window.matchMedia("(orientation: portrait)");
+    var lCheck = window.matchMedia("(orientation: landscape)");
+    pCheck.addListener(offsetGrid);
+    lCheck.addListener(offsetGrid);
+
+    $window.on('scroll', function(e) {
+        if ($window.outerWidth() > breakpoints.laptop) this.requestAnimationFrame(parallax);
+    });
 });

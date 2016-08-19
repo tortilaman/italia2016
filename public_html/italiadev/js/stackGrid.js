@@ -18,12 +18,14 @@ $.fn.extend({
 **===============================*/
 
 $(document).ready(function() {
+    var $window = $(window);
     //Scrolling Variables
     var scrollPos,
         iterator = 0,
         totalHeight = 0,
         offset = 0,
-        $entries = $("section[class*='-section']");
+        mobile = $window.outerWidth() > 480 ? false : true;
+    $entries = $("section[class*='-section']");
 
     /*=================================
     	SCROLLING F'NS
@@ -40,46 +42,72 @@ $(document).ready(function() {
             // $(this).find(".scrollHide").css('z-index', $entries.length - iterator++);
         });
         iterator = offset = totalHeight = 0;
+
+        //NOTE: Now autoplay can wait until there's something to scroll to.
+        $(document).trigger("grid:loaded");
     }
 
     //Delays implementation of scrolling on pages with lots of images, and avoids scrolling script on mobile.
-    if ($(window).outerWidth(true) > 700) {
-        if ($("#v-context img").length) {
-            $(window).on('load', function() {
-                calcHeights();
-                console.log("Finished loading");
-            });
-        } else {
+    if ($window.outerWidth() >= 700) {
+        $window.on('load', function() {
             calcHeights();
-        }
+            console.log("Finished loading");
+        });
     }
 
     /*=================================
     	PARALLAX SOME DIVS
     **===============================*/
 
-    //Parent needs to be a section level element
-    function parallax(parentDiv) {
-        var scrolled = $(window).scrollTop(),
-            $parent = $(parentDiv),
-            $dynDiv = $(parentDiv + ' > div:nth-of-type(2)'),
-            $scrollRefDiv = $(parentDiv + ' + section');
-        // var $dynDiv = $parent.find()
+    //Setup the array we'll be parallaxing with.
+    pDivs = [];
+    pPars = [];
+    $(document).on('grid:loaded', function() {
+        if ($('body').hasClass('home')) pPars.push('#home-videos');
+        if ($('body').hasClass('v')) pPars.push('#v-intro');
 
-        if (scrolled > $parent.attr('data-offset') && scrolled < $scrollRefDiv.attr('data-offset')) {
-            var oldTop = parseInt($dynDiv.css('top').replace('px', '')),
-                inMin = $parent.attr('data-offset'),
-                inMax = parseFloat(inMin) + parseFloat($parent.outerHeight()),
-                outMin = 0,
-                outMax = parseFloat($dynDiv.position().top),
-                newVal = -scrolled.map(inMin, inMax, outMin, outMax) + 'px';
-            $dynDiv.css('transform', 'translateY(' + newVal + ')');
-        } else if (scrolled > $scrollRefDiv.attr('data-offset')) {
-            $dynDiv.css('transform', 'translateY(' + -$dynDiv.position().top + ')');
-        } else if (scrolled < $parent.attr('data-offset')) {
-            $dynDiv.css('margin-top', 0);
-        }
-    }
+        $.each(pPars, function(index, pPar) {
+            var pDiv = {};
+            pDiv.par = $(pPar);
+            pDiv.el = $(pPar + ' > div:nth-of-type(2)');
+            pDiv.iMin = pDiv.par.attr('data-offset');
+            pDiv.iMax = parseFloat(pDiv.iMin) + parseFloat(pDiv.par.outerHeight());
+            pDiv.oMax = parseFloat(pDiv.el.position().top);
+            pDivs.push(pDiv);
+        });
+    });
+
+    //Actually do some parallaxing.
+    parallax = function() {
+        var scrollPos = $window.scrollTop();
+        $.each(pDivs, function(index, pDiv) {
+            if (scrollPos > pDiv.iMin && scrollPos < pDiv.iMax) {
+                var newVal = parseFloat(scrollPos).map(pDiv.iMin, pDiv.iMax, 0, pDiv.oMax).toFixed(2);
+                pDiv.el.css('transform', 'translateY(-' + newVal + 'px)');
+            } else if (scrollPos < pDiv.iMin) pDiv.el.css('transform', 'translateY(' + 0 + ')');
+            else if (scrollPos > pDiv.iMax) pDiv.el.css('transform', 'translateY(-' + pDiv.oMax + 'px)');
+        });
+
+        // var scrollPos = $window.scrollTop(),
+        //     $parent = $(parentDiv),
+        //     $dynDiv = $(parentDiv + ' > div:nth-of-type(2)'),
+        //     $scrollRefDiv = $(parentDiv + ' + section');
+        // // var $dynDiv = $parent.find()
+        //
+        // if (scrolled > $parent.attr('data-offset') && scrolled < $scrollRefDiv.attr('data-offset')) {
+        //     var oldTop = parseInt($dynDiv.css('top').replace('px', '')),
+        //         inMin = $parent.attr('data-offset'),
+        //         inMax = parseFloat(inMin) + parseFloat($parent.outerHeight()),
+        //         outMin = 0,
+        //         outMax = parseFloat($dynDiv.position().top),
+        //         newVal = -scrolled.map(inMin, inMax, outMin, outMax) + 'px';
+        //     $dynDiv.css('transform', 'translateY(' + newVal + ')');
+        // } else if (scrolled > $scrollRefDiv.attr('data-offset')) {
+        //     $dynDiv.css('transform', 'translateY(' + -$dynDiv.position().top + ')');
+        // } else if (scrolled < $parent.attr('data-offset')) {
+        //     $dynDiv.css('margin-top', 0);
+        // }
+    };
 
     /*=================================
     	SHOW CONTENTS ON SCROLL
@@ -130,35 +158,39 @@ $(document).ready(function() {
         this.requestAnimationFrame(function() {
             scrollPos = window.pageYOffset;
             //If we're not on mobile
-            if ($(window).outerWidth() > 480) {
-                $entries.each(function(ind, el) {
-                    var top = parseFloat($(this).attr('data-offset')) + parseFloat($(this).attr('data-height'));
+            if (!mobile) {
+                $entries.each(function(ind) {
+                    var el = $(this),
+                        elOffset = el.attr('data-offset'),
+                        elHeight = el.attr('data-height'),
+                        top = parseFloat(elOffset) + parseFloat(elHeight);
 
-                    if (scrollPos < $(this).attr('data-offset')) { //Fixed
-                        $(this).removeClass('is-scrollable');
-                        $(this).removeClass('fixedTop');
-                        $(this).css('top', 0);
-                    } else if (scrollPos > $(this).attr('data-offset') && scrollPos < top) { //Scroll
-                        $(this).addClass('is-scrollable');
-                        $(this).removeClass('fixedTop');
-                        $(this).css({
-                            'top': $(this).attr('data-offset') + 'px',
+                    if (scrollPos < elOffset) { //Fixed
+                        el.removeClass('is-scrollable');
+                        el.removeClass('fixedTop');
+                        el.css('top', 0);
+                    } else if (scrollPos > elOffset && scrollPos < top) { //Scroll
+                        el.addClass('is-scrollable');
+                        el.removeClass('fixedTop');
+                        el.css({
+                            'top': elOffset + 'px',
                             'position': null //Remove any js position
                         });
                     } else if (scrollPos > top) { //Stick-to-top
-                        $(this).removeClass('is-scrollable');
-                        $(this).addClass('fixedTop');
+                        el.removeClass('is-scrollable');
+                        el.addClass('fixedTop');
                     }
                     //Original implementation if the bugs become a problem.
-                    //$(this).toggleClass('is-scrollable', scrollPos > $(this).attr('data-offset'))
+                    //el.toggleClass('is-scrollable', scrollPos > el.attr('data-offset'))
                 });
             }
-            if ($('body').hasClass('home')) {
-                parallax('#home-videos');
-            }
-            if ($('body').hasClass('v')) {
-                parallax('#v-intro');
-            }
+            parallax();
+            // if ($('body').hasClass('home')) {
+            //     parallax('#home-videos');
+            // }
+            // if ($('body').hasClass('v')) {
+            //     parallax('#v-intro');
+            // }
             //Don't show on scroll on team page.
             // if (!$('body').hasClass("team"))
             showOnScroll();

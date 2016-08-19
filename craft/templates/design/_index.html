@@ -70,7 +70,6 @@
 					{% if year == '2016' %}
 						<article id="page-info">
 							<div>
-								<h1>Interviews</h1>
 								<p>{{entry.body}}</p>
 							</div>
 							<h1 id="year-title-2016" class="active">{{year}}</h1>
@@ -79,14 +78,15 @@
 						<h1 id="year-title-{{year}}">{{year}}</h1>
 					{% endif %}
 					{% for entry in entries %}
-						<article class="{{entry.type == 'shortFilm' ? 'film-entry' : 'design-entry'}} {{entry.videoYear >= '2015' ? 'v21-9' : 'v16-9'}} item" data-title="{{entry|lower}}" {% if entry.type !='shortFilm' %}data-company="{{entry.companyField|lower}}" {% endif %} data-tags="{% for tag in entry.disciplines %}{{tag}}{{tag == entry.disciplines.last() ? '' :','}}{% endfor %}" {% if entry.secondaryTags|length %} data-topics="{% for tag in entry.secondaryTags %}{{tag}}{{tag == entry.secondaryTags.last() ? '' :','}}{% endfor %}" {% endif %} data-show="true" >
+						<article class="{{entry.type == 'shortFilm' ? 'film-entry' : 'design-entry'}} {{entry.videoYear >= '2015' ? 'v21-9' : 'v16-9'}} item" data-title="{{entry|lower}}" data-tags="{% for tag in entry.disciplines %}{{tag}}{{tag == entry.disciplines.last() ? '' :','}}{% endfor %}" {% if entry.secondaryTags|length %} data-topics="{% for tag in entry.secondaryTags %}{{tag}}{{tag == entry.secondaryTags.last() ? '' :','}}{% endfor %}" {% endif %} data-show="true" >
 
 							{% if entry.type == "interviewVideo" %}
 								{% set image = entry.parent.intPortrait.first %}
 							{% elseif entry.type == 'designer' %}
 								{% set image = entry.intPortrait.first %}
-							{% else %}
+							{% elseif entry.type == 'shortFilm' %}
 								{% set video = entry.videoThumbnail.first() %}
+								{% set iosThumb = entry.iosThumbnail.first() %}
 							{% endif %}
 							{% if entry.type != 'shortFilm' %}
 								{% set transformedJPG = craft.imager.transformImage(
@@ -97,8 +97,8 @@
 							<a href="{{ entry.url }}" class="clearfix">
 								<div class="entry-thumb-cont">
 									{% if entry.type == 'shortFilm' %}
-										<video autoplay loop muted preload>
-											<source src="{{ video.url }}" type="video/webm" data-title="{{ entry.title }}">
+										<video autoplay loop muted preload poster="{{ iosThumb.url }}">
+											<source src="{{ video.url }}" type="video/mp4" data-title="{{ entry.title }}">
 										</video>
 									{% else %}
 											<img class="lazyload" data-srcset="{{ craft.imager.srcset(transformedJPG) }}"
@@ -119,11 +119,10 @@
 												<li>{{topic}}</li>
 										{% endfor %}
 									</ul>
-									<span class="entry-meet">meet {{ entry.title|split(' ')|first }}</span>
+									<span class="entry-meet">meet {{entry.hoverName|lower}}</span>
 								{% endif %}
 								<div class="entry-title">
 									<h1>{{ entry }}</h1>
-									<h2>{{entry.type != 'shortFilm'?entry.companyField}}</h2>
 								</div>
 							</a>
 						</article>
@@ -145,7 +144,7 @@
 			{% cache %}
 				{% for year in entryYears %}
 				<li>
-					<a href="#year-title-{{year}}">
+					<a href="#year-title-{{year}}" class="{{year == 2016 ? 'active'}}">
 								{{year}}
 							</a>
 				</li>

@@ -78,9 +78,9 @@ $(document).ready(function() {
     Y88b  d88P 888     888 Y88b 888
      "Y8888P88 888     888  "Y888*/
 
-    /* ==================
+    /********************
     	GRID FUNCTION
-    ** ================*/
+    ********************/
 
     function offsetGrid() {
         var hoLast,
@@ -96,7 +96,7 @@ $(document).ready(function() {
                 vOffset = ['2vw', '6vw', '16vw', '30vw'];
             } else if ($window.outerWidth() >= breakpoints.laptop) {
                 hOffset = ['0', '2vw'];
-                vOffset = ['-1vw', '3vw', '9vw', '15vw'];
+                vOffset = ['-1vw', '3vw', '5vw', '9vw'];
             }
             $entries.each(function(index, value) {
                 while (hoThis == hoLast) hoThis = hOffset[Math.floor(Math.random() * hOffset.length)];
@@ -140,19 +140,16 @@ $(document).ready(function() {
                                                              Y8b d88P
                                                               "Y88*/
 
+    /********************************
+      Parallax
+    ********************************/
     pImgs = [];
-    $dictPar = {
-        "Left": 1,
-        "Right": 2,
-        "Up": 4,
-        "Down": 6
-    };
-    $dEntries.each(function(index) {
+    $entries.each(function(index) {
         var pImg = {};
         pImg.el = $(this);
         pImg.iMax = pImg.el.offset().top;
         pImg.iMin = parseFloat(pImg.iMax) - $window.outerHeight();
-        pImg.oMax = parseFloat(pImg.el.outerHeight()) * 0.2 * parseFloat($dictPar[pImg.el.attr('data-dir')]);
+        pImg.oMax = parseFloat(pImg.el.outerHeight()) * 0.2 * parseFloat(getRandomInt(-3, 3));
         pImgs.push(pImg);
     });
 
@@ -166,6 +163,10 @@ $(document).ready(function() {
             else if (scrollPos > pImg.iMax) pImg.el.css('transform', 'translateY(-' + pImg.oMax + 'px)');
         });
     };
+
+    /********************************
+      Year link underline
+    ********************************/
 
     years = [];
     yearLinks = $("#year-links a");
@@ -185,6 +186,9 @@ $(document).ready(function() {
                 year.el.addClass("active");
             }
         });
+        if (scrollPos < years[0].begin) {
+            years[0].el.addClass("active");
+        }
     };
 
     yearLinks();
@@ -555,6 +559,7 @@ $(document).ready(function() {
 
     $("#year-links a").on('click', function(e) {
         $("#year-links ul").removeClass("open");
+        $("#year-links a").removeClass("active");
     });
 
     //Reflow grid on window resize or orientation change
@@ -617,8 +622,6 @@ $(document).ready(function() {
                 $("#search").val(key);
                 showSearch();
             }
-
-            console.log("changing text size");
         }
     });
 });
