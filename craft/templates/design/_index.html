@@ -44,8 +44,27 @@
 	{% cache %}
 		{% for year in years %}
 			{# Find your entries #}
-			{% set designerEntries = craft.entries.section('design').type('designer').videoYear(year) %}
-			{% set filmEntries = craft.entries.section('design').type('shortFilm').videoYear(year) %}
+			{% set designerEntries = craft.entries({
+				section: 'design',
+				type: 'designer',
+				videoYear: year,
+				with: [
+					'disciplines',
+					'secondaryTags',
+					'intPortrait'
+				]
+			}) %}
+			{% set filmEntries = craft.entries({
+				section: 'design',
+				type: 'shortFilm',
+				videoYear: year,
+				with: [
+					'disciplines',
+					'secondaryTags',
+					'videoThumbnail',
+					'iosThumbnail'
+				]
+			}) %}
 			{% set filmOffset = designerEntries|length // filmEntries|length %}
 			{% set entries = [] %}
 			{# Rearrange entries #}
@@ -78,17 +97,17 @@
 						<h1 id="year-title-{{year}}">{{year}}</h1>
 					{% endif %}
 					{% for entry in entries %}
-						<article class="{{entry.type == 'shortFilm' ? 'film-entry' : 'design-entry'}} {{entry.videoYear >= '2015' ? 'v21-9' : 'v16-9'}} item" data-title="{{entry|lower}}" data-tags="{% for tag in entry.disciplines %}{{tag}}{{tag == entry.disciplines.last() ? '' :','}}{% endfor %}" {% if entry.secondaryTags|length %} data-topics="{% for tag in entry.secondaryTags %}{{tag}}{{tag == entry.secondaryTags.last() ? '' :','}}{% endfor %}" {% endif %} data-show="true" >
+						<article class="{{entry.type == 'shortFilm' ? 'film-entry' : 'design-entry'}} {{entry.videoYear >= '2015' ? 'v21-9' : 'v16-9'}} item" data-title="{{entry.title}}" {% if entry.nameFull|length %} data-name="{{entry.nameFull}}" {% endif %} {% if entry.nameCompany|length %} data-company="{{entry.nameCompany}}" {% endif %} data-tags="{% for tag in entry.disciplines %}{{tag}}{{tag == entry.disciplines[entry.disciplines|length - 1] ? '' :','}}{% endfor %}" {% if entry.secondaryTags|length %} data-topics="{% for tag in entry.secondaryTags %}{{tag}}{{tag == entry.secondaryTags[-0] ? '' :','}}{% endfor %}" {% endif %} data-show="true" >
 
 							{% if entry.type == "interviewVideo" %}
-								{% set image = entry.parent.intPortrait.first %}
+								{% set image = entry.parent.intPortrait %}
 							{% elseif entry.type == 'designer' %}
-								{% set image = entry.intPortrait.first %}
+								{% set image = entry.intPortrait[0] ?? null %}
 							{% elseif entry.type == 'shortFilm' %}
-								{% set video = entry.videoThumbnail.first() %}
-								{% set iosThumb = entry.iosThumbnail.first() %}
+								{% set video = entry.videoThumbnail[0] ?? null %}
+								{% set iosThumb = entry.iosThumbnail[0] ?? null %}
 							{% endif %}
-							{% if entry.type != 'shortFilm' %}
+							{% if entry.type != 'shortFilm' and image %}
 								{% set transformedJPG = craft.imager.transformImage(
 									image, [{ width: 500 }, { width: 300 }, { width: 150 }],
 									{ ratio: 2/3, position: image.focusPctX ~ '% ' ~ image.focusPctY ~ '%' })
@@ -119,7 +138,7 @@
 												<li>{{topic}}</li>
 										{% endfor %}
 									</ul>
-									<span class="entry-meet">meet {{entry.hoverName|lower}}</span>
+									<span class="entry-meet">meet {{entry.nameHover}}</span>
 								{% endif %}
 								<div class="entry-title">
 									<h1>{{ entry }}</h1>
@@ -132,7 +151,7 @@
 					{% endfor %}
 				</section>
 			{% else %}
-				{# <p>That's strange, we couldn't find anything, our bad. Maybe try looking for something else? We'll fix this ASAP!</p> #}
+				{# <p>That's strange, we couldn't find anything, our bad. Maybe try looking for something else? We will fix this ASAP!</p> #}
 			{% endif %}
 		{% endfor %}{# end for year #}
 	{% endcache %}

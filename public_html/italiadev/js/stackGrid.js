@@ -47,6 +47,8 @@ $(document).ready(function() {
         $(document).trigger("grid:loaded");
     }
 
+    calcHeights();
+
     //Delays implementation of scrolling on pages with lots of images, and avoids scrolling script on mobile.
     if ($window.outerWidth() >= 700) {
         $window.on('load', function() {
@@ -87,26 +89,6 @@ $(document).ready(function() {
             } else if (scrollPos < pDiv.iMin) pDiv.el.css('transform', 'translateY(' + 0 + ')');
             else if (scrollPos > pDiv.iMax) pDiv.el.css('transform', 'translateY(-' + pDiv.oMax + 'px)');
         });
-
-        // var scrollPos = $window.scrollTop(),
-        //     $parent = $(parentDiv),
-        //     $dynDiv = $(parentDiv + ' > div:nth-of-type(2)'),
-        //     $scrollRefDiv = $(parentDiv + ' + section');
-        // // var $dynDiv = $parent.find()
-        //
-        // if (scrolled > $parent.attr('data-offset') && scrolled < $scrollRefDiv.attr('data-offset')) {
-        //     var oldTop = parseInt($dynDiv.css('top').replace('px', '')),
-        //         inMin = $parent.attr('data-offset'),
-        //         inMax = parseFloat(inMin) + parseFloat($parent.outerHeight()),
-        //         outMin = 0,
-        //         outMax = parseFloat($dynDiv.position().top),
-        //         newVal = -scrolled.map(inMin, inMax, outMin, outMax) + 'px';
-        //     $dynDiv.css('transform', 'translateY(' + newVal + ')');
-        // } else if (scrolled > $scrollRefDiv.attr('data-offset')) {
-        //     $dynDiv.css('transform', 'translateY(' + -$dynDiv.position().top + ')');
-        // } else if (scrolled < $parent.attr('data-offset')) {
-        //     $dynDiv.css('margin-top', 0);
-        // }
     };
 
     /*=================================
@@ -118,7 +100,8 @@ $(document).ready(function() {
             offsets = {
                 home: [0.5, 0.75],
                 italiaIndex: [0, 0.5],
-                team: [0, 0.5]
+                team: [0, 0.5],
+                v: [0.5, 0.75]
             };
 
         if (offsets[page]) {

@@ -30,6 +30,7 @@ $(document).ready(function() {
         keyPlace = "",
         key = "",
         $window = $(window),
+        $search = $("#search"),
         $entries = $("[class*='-entry']:not(.blank)"),
         $dEntries = $(".design-entry:not(.blank)"),
         breakpoints = {
@@ -41,7 +42,7 @@ $(document).ready(function() {
         hOffset,
         vOffset;
 
-    $("#search").focus();
+    $search.focus();
 
     //Fit interviewee names to the container
     $(".design-entry .entry-title h1").fitText(0.9);
@@ -148,12 +149,12 @@ $(document).ready(function() {
         var pImg = {};
         pImg.el = $(this);
         pImg.iMax = pImg.el.offset().top;
-        pImg.iMin = parseFloat(pImg.iMax) - $window.outerHeight();
-        pImg.oMax = parseFloat(pImg.el.outerHeight()) * 0.2 * parseFloat(getRandomInt(-3, 3));
+        pImg.iMin = parseFloat(pImg.iMax) > $window.outerHeight() ? parseFloat(pImg.iMax) - $window.outerHeight() : 0;
+        pImg.oMax = parseFloat(pImg.el.outerHeight()) * 0.2 * parseFloat(pImg.el.offset().top < 75 ? getRandomInt(1, 6) : getRandomInt(1, 3));
         pImgs.push(pImg);
     });
 
-    parallax = function() {
+    function parallax() {
         var scrollPos = $window.scrollTop();
         $.each(pImgs, function(index, pImg) {
             if (scrollPos > pImg.iMin && scrollPos < pImg.iMax) {
@@ -162,7 +163,7 @@ $(document).ready(function() {
             } else if (scrollPos < pImg.iMin) pImg.el.css('transform', 'translateY(' + 0 + ')');
             else if (scrollPos > pImg.iMax) pImg.el.css('transform', 'translateY(-' + pImg.oMax + 'px)');
         });
-    };
+    }
 
     /********************************
       Year link underline
@@ -219,17 +220,17 @@ $(document).ready(function() {
         categories = {
             Category: "1",
             Topic: "2",
-            Interviewees: "3",
+            Designers: "3",
             Company: "4"
         };
     //Populate newArray with data.
     $rawData.each(function(ind, el) {
-        if ($(this).attr('data-title')) {
-            var name = $(this).attr('data-title');
+        if ($(this).attr('data-name')) {
+            var name = $(this).attr('data-name');
             if ($.inArray(name, nameArr) === -1 && name !== "") {
                 newArray.push({
-                    label: $(this).attr('data-title'),
-                    category: "Interviewees"
+                    label: $(this).attr('data-name'),
+                    category: "Designers"
                 });
                 nameArr.push(name);
             }
@@ -239,7 +240,7 @@ $(document).ready(function() {
             if ($.inArray(company, compArr) === -1 && company !== "") {
                 newArray.push({
                     label: $(this).attr('data-company'),
-                    category: "Company"
+                    category: "Hover"
                 });
                 compArr.push(company);
             }
@@ -318,7 +319,12 @@ $(document).ready(function() {
         searching = true;
         $("article img, article video, article .entry-description, article .entry-title, #page-info h1, #page-info p, [id*='year-title-'], article .entry-tags, article .entry-meet").addClass("oHidden");
         $("#d-filter form").addClass("lSearch");
-        $("#search").focus();
+        $("#d-filter #search").addClass("active").css('font-size', '');
+        $formTop = $(window).scrollTop() + ($(window).outerHeight() * 0.2);
+        $ulTop = $(window).scrollTop() + ($(window).outerHeight() * 0.21);
+        $("#d-filter form").css('top', $formTop);
+        $("ul.ui-autocomplete").css('top', $ulTop);
+        $search.focus();
         if ($window.outerWidth() > breakpoints.phone) {
             $("#d-filter").css({
                 'position': 'absolute',
@@ -338,6 +344,12 @@ $(document).ready(function() {
 
     function hideSearch() {
         $("article img, article video, article .entry-description, article .entry-title, #page-info h1, #page-info p, [id*='year-title-'], article .entry-tags, article .entry-meet").removeClass("oHidden");
+        $("#d-filter form").css('top', '');
+        $("ul.ui-autocomplete").css('top', '');
+        if ($search.val().length > 11) {
+            $fSize = $search.innerWidth() / $search.val().length * 1.2;
+            $("#search, #d-filter span").css('font-size', $fSize);
+        }
         if ($window.outerWidth() > breakpoints.phone) {
             $("#d-filter").css({
                 'position': 'fixed',
@@ -379,10 +391,10 @@ $(document).ready(function() {
 
     function $filterResults() {
         //Interviewees & Films
-        $("article[data-title]").each(function() {
+        $("article[data-name]").each(function() {
             var tags = $(this).attr("data-tags"),
                 topics = $(this).attr('data-topics'),
-                names = $(this).attr("data-title").toLowerCase(),
+                names = $(this).attr("data-name").toLowerCase(),
                 company = $(this).attr("data-company") ? $(this).attr("data-company").toLowerCase() : "",
                 //Merge various names and tags if there are tags.
                 data1 = tags === "" ? names : names.concat(" ", tags),
@@ -390,9 +402,9 @@ $(document).ready(function() {
                 data = company === "" ? data2 : data2.concat(" ", company),
                 show = false,
                 changed,
-                $search = $("#search").val().toLowerCase(),
+                $searchVal = $search.val().toLowerCase(),
                 //Match using the search term starting at the beginning of every word.
-                matcher = new RegExp('(^| )' + $search, 'i');
+                matcher = new RegExp('(^| )' + $searchVal, 'i');
 
             //Should this thumbnail show, and has that changed?
             if (matcher.test(data)) {
@@ -426,7 +438,7 @@ $(document).ready(function() {
         });
 
         //Hide the interviews explanation box
-        if ($("article[data-title]").hasClass("dHidden")) {
+        if ($("article[data-name]").hasClass("dHidden")) {
             $("#page-info").addClass("dHidden");
         } else {
             $("#page-info").removeClass("dHidden");
@@ -464,7 +476,7 @@ $(document).ready(function() {
                                                                            888
                                                                            8*/
 
-    $("#search").autocomplete({
+    $search.autocomplete({
         source: function(request, response) {
             var results = $.ui.autocomplete.filter(newArray, request.term);
             //If search is empty, give list of categories by default.
@@ -488,7 +500,7 @@ $(document).ready(function() {
         minLength: 0,
         delay: 0,
         select: function(event, ui) {
-            $("#search").val(ui.item.label);
+            $search.val(ui.item.label);
             requestAnimationFrame($filterResults);
             hideSearch();
             $window.focus();
@@ -505,7 +517,7 @@ $(document).ready(function() {
             .appendTo(ul);
     };
 
-    $("#search").data('ui-autocomplete')._renderMenu = function(ul, items) {
+    $search.data('ui-autocomplete')._renderMenu = function(ul, items) {
         var that = this,
             currentCategory = "";
         $.each(items, function(index, item) {
@@ -570,17 +582,17 @@ $(document).ready(function() {
     //Clicked search close button.
     $("#searchForm > span").on("click", function(e) {
         $('main').removeClass("noResults");
-        $("#search").val('');
+        $search.val('');
         requestAnimationFrame($filterResults);
         if ($("#searchForm").hasClass('lSearch')) hideSearch();
         $(this).removeClass("active");
     });
 
-    $("#search").focusin(function() {
+    $search.focusin(function() {
         $('main').removeClass("noResults");
     });
 
-    $("#search").focusout(function() {
+    $search.focusout(function() {
         hideSearch();
         if ($(this).val() === '') {
             $("#searchForm > span").removeClass("active");
@@ -588,20 +600,20 @@ $(document).ready(function() {
     });
 
     $("#searchForm").submit(function() {
-        $("#search").blur();
-        if ($("#search").val() !== '') $("#d-filter span").addClass("active");
+        $search.blur();
+        if ($search.val() !== '') $("#d-filter span").addClass("active");
         return false;
     });
 
     $("#search, #search-btn").on("click", function() {
         $('main').removeClass("noResults");
         showSearch();
-        $("#search").autocomplete("search", "");
+        $search.autocomplete("search", "");
         requestAnimationFrame($filterResults);
     });
 
     //You hit the enter key
-    $("#search").on("keyup", function(e) {
+    $search.on("keyup", function(e) {
         if (e.which === 27) {
             $(this).val("");
             hideSearch();
@@ -618,9 +630,15 @@ $(document).ready(function() {
         if (e.which >= 65 && e.which <= 90) {
             if (!searching) {
                 key = String.fromCharCode(e.which).toLowerCase();
-                $("#search").focus();
-                $("#search").val(key);
+                $search.focus();
+                $search.val(key);
                 showSearch();
+            }
+            $("#d-filter form").css('top', '');
+            $("ul.ui-autocomplete").css('top', '');
+            if ($search.hasClass('active') && $search.val().length > 20) {
+                $fSize = $search.innerWidth() / $search.val().length * 2;
+                $search.css('font-size', $fSize);
             }
         }
     });

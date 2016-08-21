@@ -43,10 +43,10 @@ $(document).ready(function() {
                 vOffset = ['2vw', '6vw', '30vw', '60vw'];
             } else if ($window.outerWidth() >= breakpoints.tablet && $window.outerWidth() < breakpoints.laptop) {
                 hOffset = ['-4vw', '0', '4vw'];
-                vOffset = ['2vw', '6vw', '16vw', '30vw'];
+                vOffset = ['2vw', '6vw', '9vw', '15vw'];
             } else if ($window.outerWidth() >= breakpoints.laptop) {
                 hOffset = ['-1.5vw', '0', '2vw'];
-                vOffset = ['2vw', '3vw', '9vw', '15vw'];
+                vOffset = ['2vw', '3vw', '5vw', '9vw'];
             }
             $entries.each(function(index, value) {
                 while (hoThis == hoLast) hoThis = hOffset[Math.floor(Math.random() * hOffset.length)];
@@ -87,12 +87,12 @@ $(document).ready(function() {
         var pImg = {};
         pImg.el = $(this);
         pImg.iMax = pImg.el.offset().top;
-        pImg.iMin = parseFloat(pImg.iMax) - $window.outerHeight();
-        pImg.oMax = parseFloat(pImg.el.outerHeight()) * 0.2 * parseFloat(getRandomInt(-3, 3));
+        pImg.iMin = parseFloat(pImg.iMax) > $window.outerHeight() ? parseFloat(pImg.iMax) - $window.outerHeight() : 0;
+        pImg.oMax = parseFloat(pImg.el.outerHeight()) * 0.2 * parseFloat(pImg.el.offset().top < 75 ? getRandomInt(1, 6) : getRandomInt(1, 3));
         pImgs.push(pImg);
     });
 
-    parallax = function() {
+    function parallax() {
         var scrollPos = $window.scrollTop();
         $.each(pImgs, function(index, pImg) {
             if (scrollPos > pImg.iMin && scrollPos < pImg.iMax) {
@@ -101,7 +101,7 @@ $(document).ready(function() {
             } else if (scrollPos < pImg.iMin) pImg.el.css('transform', 'translateY(' + 0 + ')');
             else if (scrollPos > pImg.iMax) pImg.el.css('transform', 'translateY(-' + pImg.oMax + 'px)');
         });
-    };
+    }
 
     parallax();
 
@@ -117,6 +117,8 @@ $(document).ready(function() {
     lCheck.addListener(offsetGrid);
 
     $window.on('scroll', function(e) {
-        if ($window.outerWidth() > breakpoints.laptop) this.requestAnimationFrame(parallax);
+        if ($window.outerWidth() > breakpoints.laptop) this.requestAnimationFrame(function() {
+            parallax();
+        });
     });
 });

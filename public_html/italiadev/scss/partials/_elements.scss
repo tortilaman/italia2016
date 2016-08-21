@@ -55,6 +55,7 @@
 	margin         : 1em 1vw 0;
 	width          : 98vw;
 	box-shadow     : none;
+	z-index: 1;
 	@include respond-to(tablet) {
 		padding   : 1em;
 		margin    : 8vw 0 0 8vw;
@@ -78,7 +79,7 @@ $columns: 6;
 	@include respond-to(laptop) {
 		width  : $columns-to-span / $total-columns * 100%;
 		padding: $gutter-half;
-		margin : 0 0 4em;
+		margin : 0 0 4rem;
 	}
 }
 @for $i from 1 through $columns {
@@ -131,11 +132,14 @@ IMAGES
 	margin : 0;
 	padding: 0;
 	@include respond-to(laptop) {
-		box-shadow: 0.5em 0.5em 0 0.1em $color3T;
+		box-shadow: 0.5rem 0.5rem 0 0.1em $color3T;
 	}
 }
 
 .v-mat-img-container {
+	background: $color3T;
+	font-size: 0;
+	padding: 0;
 	.v-mat-img-caption {
 		bottom : 0;
 		width  : 100%;
