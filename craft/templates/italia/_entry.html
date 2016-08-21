@@ -13,11 +13,6 @@ _#}
 {% set title = entry.title %}
 {% set bodyClass = entry.section == 'Italia' ? 'italia autoplay' : 'italia' %}
 {% set children = craft.entries.section('italia') %}
-{% if entry.type == "designer" %}
-	{% set portrait = entry.intPortrait.first %}
-{% else %}
-	{% set portrait = entry.parent.intPortrait.first %}
-{% endif %}
 
 {% block head %}
 	{{ parent() }}
@@ -71,4 +66,3 @@ _#}
 	<script src="/js/videoPlayer.js"></script>
 	<script src="/js/interview.js"></script>
 {% endblock %}
-

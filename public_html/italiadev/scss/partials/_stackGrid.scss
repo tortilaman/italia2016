@@ -416,6 +416,7 @@ Y88b   d88P 888  .d88888  .d88b.   .d88b.  .d8888b
 	margin             : 0 auto;
 	width              : 98vw;
 	box-shadow         : none;
+	z-index: 3;
 	animation-delay    : 0.75s;
 	animation-fill-mode: forwards;
 	@include respond-to(tablet) {
@@ -622,6 +623,7 @@ main.team-vid {
 		margin-top: 12vmin;
 		height    : auto;
 		overflow  : visible;
+		z-index: 3;
 		@include respond-to(tablet) {
 			margin-top: 10vw;
 		}

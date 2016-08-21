@@ -22,7 +22,7 @@
 				</div>
 			{########## PULLQUOTE ##########}
 			{% elseif block.type == "pullquote" %}
-				<div class="v-mat-pull-container col-{{block.size}} {{block.overlap}}">
+				<div class="v-mat-pull-container col-{{block.size}} {{block.overlap}} v-mat-img-container">
 					<blockquote class="v-mat-pull">
 						{{block.quote}}
 					</blockquote>
@@ -44,7 +44,7 @@
 				%} #}
 				{% set imgW = block.size/6*100 %}
 				<div class="v-mat-img-container col-{{block.size}}">
-					<img 	class="v-mat-img" src="{{ craft.imager.base64Pixel(2, 3) }}"
+					<img 	class="v-mat-img scrollHide" src="{{ craft.imager.base64Pixel(2, 3) }}"
 								sizes="(min-width: 1024px) {{imgW}}vw, 100vw"
 								srcset="{{ craft.imager.srcset(transformedImage) }}"
 								alt="{{block.imageCaption}}" />

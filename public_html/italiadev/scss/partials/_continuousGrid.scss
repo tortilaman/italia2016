@@ -42,6 +42,8 @@ Y88b  d88P Y8b.     888  888 888    Y88b.    888  888
 		right     : 5vw;
 		bottom    : 0;
 		height    : 1em;
+		z-index: 250;
+		background: transparent;
 		transition: all 1supposes;
 		@include respond-to(tablet) {
 			top   : auto;
@@ -97,7 +99,9 @@ Y88b  d88P Y8b.     888  888 888    Y88b.    888  888
 		line-height       : 0.8;
 		outline           : none;
 		width             : calc(40vw - 2em);
+		height: 1em;
 		color             : $color5;
+		z-index: 300;
 		transition        : all, 0.5s;
 		mix-blend-mode    : multiply;
 		@include respond-to(tablet) {
@@ -110,8 +114,11 @@ Y88b  d88P Y8b.     888  888 888    Y88b.    888  888
 		}
 		@include respond-to(laptop) {
 			font-size    : 4em;
-			font-weight  : 900;
+			font-weight: 900;
 			border-bottom: 0.4rem solid $color5;
+		}
+		@include respond-to(deesktop) {
+			font-size: 5em;
 		}
 	}
 
@@ -138,21 +145,22 @@ Y88b  d88P Y8b.     888  888 888    Y88b.    888  888
 
 		input {
 			display: inline-block !important;
+			transition: font-size 0.1s;
 		}
 		@include respond-to(tablet) {
 			right: 25vw;
 			left : auto;
 			width: 50vw;
 
-			input,
-			span {
-				font-size: 3em;
-			}
-
 			input {
 				width        : 50vw;
 				border-bottom: 0.5rem solid $color5;
-				font-family  : "Header";
+			}
+		}
+		@include respond-to(laptop) {
+			input, span {
+				font-size: 4em;
+				font-weight: 900;
 			}
 		}
 		@include respond-to(desktop) {
@@ -171,7 +179,6 @@ Y88b  d88P Y8b.     888  888 888    Y88b.    888  888
 		bottom        : 0;
 		font-size     : 0.8em;
 		line-height   : 0.8;
-		font-weight   : bold;
 		color         : $color5;
 		opacity       : 0;
 		cursor        : pointer;
@@ -186,7 +193,7 @@ Y88b  d88P Y8b.     888  888 888    Y88b.    888  888
 			line-height: 1.2;
 		}
 		@include respond-to(laptop) {
-			font-size: 4em;
+			font-size: 3em;
 		}
 	}
 
@@ -227,30 +234,32 @@ d88P     888  "Y88888  "Y888 "Y88P"   "Y8888P"   "Y88P"  888  888  888 88888P"
 //	box has focus, so a bit frustrating to style.
 
 ul.ui-autocomplete {
-	position      : fixed;
-	top           : calc(20vh + 1rem) !important;
+	position      : absolute;
+	top           : calc(20vh + 1rem);
 	left          : calc(30vw + 1.75em) !important;
 	background    : none;
 	padding       : 0.25rem 0;
 	box-shadow    : none;
 	border        : none;
 	z-index       : 200;
-	height        : 50vh;
-	overflow      : auto;
-	padding-bottom: 10em;
 	@include respond-to(tablet) {
-		top : calc(20vh + 5rem) !important;
+		top : calc(20vh + 5rem);
 		left: 26vw !important;
 	}
 	@include respond-to(laptop) {
-		top: calc(25vh + 5em) !important;
+		top: calc(25vh + 5em);
 	}
 
 	&::-webkit-scrollbar {
 		display: none;
 	}
 
-	li.ui-menu-item {
+	li.ui-autocomplete-category {
+		font-family: "SubHeadAlt", "SubHead", arial, sans-serif;
+		font-size  : 1.5em;
+	}
+
+	.ui-menu-item {
 		box-shadow    : none;
 		border        : none;
 		padding       : 0.25rem 0;
@@ -259,10 +268,14 @@ ul.ui-autocomplete {
 		cursor        : pointer;
 		line-height   : 1;
 		mix-blend-mode: multiply;
-		font-family   : header;
+		font-family   : "HeaderAlt", "Header", arial, sans-serif;
+		font-size     : 5em;
+		font-weight: 900;
 
 		.highlight {
-			color          : $color1;
+			opacity: 1;
+			color: darken($color5, 25%);
+			font-weight: 900;
 			text-decoration: none;
 			mix-blend-mode : multiply;
 		}
@@ -271,6 +284,7 @@ ul.ui-autocomplete {
 			color         : $color5;
 			mix-blend-mode: multiply;
 			font-family   : subhead;
+			border-bottom : none;
 
 			&:hover {}
 		}
@@ -498,7 +512,7 @@ section[id^="flex-grid-"] {
 		position     : relative;
 		color        : $color5;
 		font-family  : subhead;
-		opacity: 1;
+		opacity      : 1;
 		border-bottom: none;
 
 		&.active {
@@ -723,7 +737,7 @@ section[id^="flex-grid-"] {
 		bottom        : 0.5em;
 		right         : 0.5em;
 		opacity       : 0;
-		font-size: 0.7em;
+		font-size     : 0.9em;
 		color         : white;
 		padding-bottom: 0.02em;
 		border-bottom : 0.2em solid white;

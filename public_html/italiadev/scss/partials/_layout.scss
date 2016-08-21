@@ -106,7 +106,9 @@ body {
 		z-index : 10;
 	}
 	@include respond-to(laptop) {
-		height: 13vh;
+		top: 2vh;
+		left: 2vh;
+		height: 10vh;
 	}
 }
 

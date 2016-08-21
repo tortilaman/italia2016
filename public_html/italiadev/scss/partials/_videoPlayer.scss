@@ -43,6 +43,7 @@ span.v-close-btn {
 	margin : 0;
 	padding: 0;
 	width  : 100%;
+	z-index: 2;
 	@include respond-to(tablet) {
 		margin     : 0 0 0 6vw;
 		padding-top: 8vw;
