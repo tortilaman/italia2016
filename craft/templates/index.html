@@ -19,6 +19,11 @@
 
 {% extends "_layouts/site" %}
 {% set bodyClass = "home autoplay" %}
+{% set collage = entry.aboutImage.first() %}
+{% set transformedPNG = craft.imager.transformImage(
+	collage, [{ width: 775 }, { width: 550 }, { width: 400 }],
+	{ position: collage.focusPctX ~ '% ' ~ collage.focusPctY ~ '%' })
+%}
 
 {% block main %}
 	{% set index = 0 %}
@@ -35,6 +40,8 @@
 				<span>learn more</span>
 			</a>
 		</div>
+		<img id="collage" class="scrollHide" srcset="{{ craft.imager.srcset(transformedPNG) }}"
+			sizes="(min-width: 1024px) 40vw, 100vw" src="{{collage.url}}" />
 	</section>
 	<section id="home-videos" class="home-section">
 		<div id="home-interviews" data-scroll-speed="3">

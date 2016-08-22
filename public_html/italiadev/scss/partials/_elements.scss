@@ -52,7 +52,7 @@
 	align-items    : center;
 	align-content  : flex-start;
 	padding        : 1em 0;
-	margin         : 1em 1vw 0;
+	margin         : 5vw 1vw 0;
 	width          : 98vw;
 	box-shadow     : none;
 	z-index: 1;
@@ -132,7 +132,7 @@ IMAGES
 	margin : 0;
 	padding: 0;
 	@include respond-to(laptop) {
-		box-shadow: 0.5rem 0.5rem 0 0.1em $color3T;
+		// box-shadow: 0.5rem 0.5rem 0 0.1em $color3T;
 	}
 }
 
@@ -171,6 +171,7 @@ div.v-mat-pull-container {
 			left       : 0.25rem;
 			z-index    : 0;
 			opacity    : 0.6;
+			font-family: "karla", times, serif;
 			@include respond-to(tablet) {
 				top : 0;
 				left: 0;
@@ -182,6 +183,7 @@ div.v-mat-pull-container {
 		font-size  : 1.5em;
 		line-height: 1.4;
 		color      : white;
+		font-family: "Quotes", Arial, sans-serif;
 	}
 }
 

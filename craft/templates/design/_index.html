@@ -35,7 +35,7 @@
 				</svg>
 			</div>
 			<input id="search" type="search" placeholder="type to search">
-			<span>x</span>
+			<span id="close-btn">x</span>
 		</form>
 	</div>
 
@@ -82,7 +82,7 @@
 				{% elseif filmEntries|length and designerEntries|length == 0 %}
 				{% set entries = filmEntries %}
 			{% endif %}
-			{# ========================= Display Entries ========================= #}
+			{# ======================= Display Entries ======================= #}
 			{% if entries | length %}
 				{% set entryYears = entryYears|merge([year]) %}
 				<section id="flex-grid-{{year}}" class="flexbox-grid clearfix">
@@ -176,6 +176,5 @@
 {% block foot %}
 	{{ parent() }}
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-	<script src="/js/jquery.fittext.js"></script>
 	<script src="/js/designIndex.js"></script>
 {% endblock %}

@@ -103,6 +103,19 @@ main.home #v-header {
 		&:hover::after {
 			opacity: 0.2;
 		}
+
+		#play-btn {
+			position: absolute;
+			bottom: 0.2em;
+			left: 0.2em;
+			height: 6em;
+			width: 6em;
+			z-index: 250;
+
+			#play-icon {
+				fill: $color5;
+			}
+		}
 	}
 
 	video {
@@ -396,7 +409,7 @@ a.v-prev-link {
 
 .v-suggestions {
 	position  : relative;
-	margin    : auto;
+	margin    : 2em auto auto;
 	height    : 6em;
 	z-index   : 3;
 	text-align: center;
@@ -413,13 +426,27 @@ a.v-prev-link {
 			left    : 0;
 			height  : 100%;
 			width   : 100%;
+			z-index: 200;
+			backface-visibility: hidden;
+
+			.titles-cont {
+				position: relative;
+				top: 50%;
+				transform: translateY(-50%);
+			}
 		}
 
-		p {
-			top       : 50%;
-			transform : translateY(-50%);
+		h1, h2 {
 			text-align: center;
 			color     : white;
+		}
+
+		h1 {
+			font-weight: 900;
+		}
+
+		h2 {
+			font-weight: 400;
 		}
 
 		.bg {
@@ -430,7 +457,12 @@ a.v-prev-link {
 				position: relative;
 				display : block;
 				height  : auto;
-				width   : 15vw;
+				width   : 40vw;
+				opacity: 0.5;
+
+				@include respond-to(tablet) {
+					width: 15vw;
+				}
 			}
 		}
 	}

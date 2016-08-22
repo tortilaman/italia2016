@@ -144,7 +144,7 @@ header.header {
 		left      : 0;
 		width     : auto;
 		min-height: 0;
-		height    : 40vh;
+		height    : 50vh;
 		text-align: center;
 	}
 
@@ -218,6 +218,8 @@ nav {
 		font-family  : "Header";
 		border-bottom: none;
 		opacity: 1;
+		//Chrome hack to fix weird text anti-aliasing fuzziness...
+		backface-visibility: hidden;
 		//Vertical Centering hack...
 		height       : calc(25vh - 3vmin);
 		line-height  : calc(25vh - 3vmin);

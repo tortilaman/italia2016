@@ -33,11 +33,28 @@
 	{% endset %}
 {% endif %}
 {% block body %}
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '517823885082231',
+      xfbml      : true,
+      version    : 'v2.7'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
 	{% block nav %}
-		<button type="button" class="tcon tcon-menu--xcross" aria-label="toggle menu">
-			<span class="tcon-menu__lines" aria-hidden="true"></span>
-			<span class="tcon-visuallyhidden">toggle menu</span>
-		</button>
+	<button type="button" class="tcon tcon-menu--xcross" aria-label="toggle menu">
+		<span class="tcon-menu__lines" aria-hidden="true"></span>
+		<span class="tcon-visuallyhidden">toggle menu</span>
+	</button>
 		<a class="home-btn" rel="home" href="{{siteUrl}}"><img src="/assets/images/logo-new.png"></a>
 		<header class="header">
 			<nav>
@@ -63,5 +80,6 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 	<script src="/js/allPages.js"></script>
 	<script src="/js/lazysizes.min.js" async=""></script>
+	<script src="/js/jquery.fittext.js"></script>
 	<script>transformicons.add('.tcon')</script>
 {% endblock %}

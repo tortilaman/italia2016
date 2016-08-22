@@ -39,12 +39,8 @@ $(document).ready(function() {
             $(this).attr('data-height', $(this).outerHeight(true));
             $('body').css('height', totalHeight += $height);
             $(this).css('z-index', $entries.length - iterator++);
-            // $(this).find(".scrollHide").css('z-index', $entries.length - iterator++);
         });
         iterator = offset = totalHeight = 0;
-
-        //NOTE: Now autoplay can wait until there's something to scroll to.
-        $(document).trigger("grid:loaded");
     }
 
     calcHeights();
@@ -53,6 +49,8 @@ $(document).ready(function() {
     if ($window.outerWidth() >= 700) {
         $window.on('load', function() {
             calcHeights();
+            //NOTE: Now autoplay can wait until there's something to scroll to.
+            $(document).trigger("grid:loaded");
             console.log("Finished loading");
         });
     }
@@ -148,40 +146,33 @@ $(document).ready(function() {
                         elHeight = el.attr('data-height'),
                         top = parseFloat(elOffset) + parseFloat(elHeight);
 
-                    if (scrollPos < elOffset) { //Fixed
+                    if (scrollPos < elOffset && el.hasClass('is-scrollable')) { //Fixed
                         el.removeClass('is-scrollable');
                         el.removeClass('fixedTop');
                         el.css('top', 0);
-                    } else if (scrollPos > elOffset && scrollPos < top) { //Scroll
+                        el.trigger('scrollable:no');
+                    } else if (scrollPos > elOffset && scrollPos < top && !el.hasClass('is-scrollable')) { //Scroll
                         el.addClass('is-scrollable');
                         el.removeClass('fixedTop');
                         el.css({
                             'top': elOffset + 'px',
                             'position': null //Remove any js position
                         });
-                    } else if (scrollPos > top) { //Stick-to-top
+                        el.trigger('scrollable:yes');
+                    } else if (scrollPos > top && el.hasClass('is-scrollable')) { //Stick-to-top
                         el.removeClass('is-scrollable');
                         el.addClass('fixedTop');
+                        el.trigger('scrollable:no');
                     }
-                    //Original implementation if the bugs become a problem.
-                    //el.toggleClass('is-scrollable', scrollPos > el.attr('data-offset'))
                 });
             }
             parallax();
-            // if ($('body').hasClass('home')) {
-            //     parallax('#home-videos');
-            // }
-            // if ($('body').hasClass('v')) {
-            //     parallax('#v-intro');
-            // }
-            //Don't show on scroll on team page.
-            // if (!$('body').hasClass("team"))
             showOnScroll();
         });
     });
 
     //Cards bounce in on page load
-    if (!$("main").hasClass("autoplay")) {
-        $("[class*='-section']").animateCss("bounceInUp");
-    }
+    // if (!$("main").hasClass("autoplay")) {
+    //     $("[class*='-section']").animateCss("bounceInUp");
+    // }
 });

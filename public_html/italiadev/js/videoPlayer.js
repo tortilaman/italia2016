@@ -370,6 +370,8 @@ $(document).ready(function() {
     document.querySelector("#v-player").onended = function() {
         //Show end of video UI everywhere but about / bio pages
         if (!$("body").hasClass("team") && !$("body").hasClass("team-vid")) {
+            $(".suggested h1").fitText(0.5);
+            $(".suggested h2").fitText(1.2);
             $(".v-ended").css('z-index', '5').removeClass("oHidden");
             if ($(".v-ended h2").length > 0) {
                 var interval = setInterval(function() {
@@ -398,6 +400,7 @@ $(document).ready(function() {
     **********************************/
 
     $(document).on("grid:loaded", autoplayVid);
+    // $("video#v-player").on('load', autoplayVid());
 
     if ($("#v-intro").length || $("main").hasClass("home")) {
         //Scroll progress even tlistener

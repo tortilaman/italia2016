@@ -171,13 +171,11 @@
 
 #home-about {
 	background-color     : $color1;
-	background-image     : url("/assets/images/working.jpg");
 	background-position  : left;
 	background-size      : contain;
 	background-repeat    : no-repeat;
 	animation-delay      : 0.5s;
 	padding              : 3vw;
-	background-blend-mode: multiply;
 	@include respond-to(tablet) {
 		margin-top : 9.5vw;
 		margin-left: 21.5vw;
@@ -188,6 +186,21 @@
 	&.bgHidden {
 		background-color: $color1;
 		background-image: url("");
+	}
+
+	#collage {
+		position: relative;
+		top:0;
+		left:0;
+		width: 100%;
+		mix-blend-mode: multiply;
+
+		@include respond-to(tablet) {
+			position: absolute;
+			width: 40vw;
+			top: -5.4vw;
+			left: -15vw;
+		}
 	}
 
 	.inner {

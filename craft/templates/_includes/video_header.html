@@ -57,13 +57,10 @@ Y88b   d88P 8888b.  888d888 888  8888b.  88888b.  888  .d88b.  .d8888b
 {% if entry.section == 'design' %}
 	{% if entry.secondaryTags|length > 1 %}
 		{% set tag = shuffle(entry.secondaryTags|merge(entry.disciplines))[0] %}
-		{% set tagCond = 'multiple secondary tags' %}
 	{% elseif entry.secondaryTags|length %}
 		{% set tag = shuffle([entry.secondaryTags]|merge(entry.disciplines))[0] %}
-		{% set tagCond = 'one secondary tag' %}
-	{% else %}
+	{% elseif entry.disciplines|length %}
 		{% set tag = shuffle(entry.disciplines)[0] %}
-		{% set tagCond = 'no secondary tags' %}
 	{% endif %}
 	{% set relatedEntries = craft.entries.section('design').type('interviewVideo').relatedTo(tag).id(siblingIDsString is defined ? 'and, not '~siblingIDsString: 'not'~entry.id).limit(2)
 	%}
@@ -100,10 +97,22 @@ Y88b   d88P 8888b.  888d888 888  8888b.  88888b.  888  .d88b.  .d8888b
 <section id="v-header" class="{{bodyClass}}-section">
 	<div id="v-middle"class="{{entry.videoYear >= '2015' ? 'v21-9' : 'v16-9'}}">
 		<div id="v-container">
-			<video id="v-player" poster="{{entry.videoThumbnail|length ? entry.videoThumbnail.first().url}}">
-				<source src="{{entry.videoID}}" type="video/mp4" />
-				Oops! Your browser doesn't support the video tag. Consider downloading <a href="https://www.google.com/chrome/browser/desktop/index.html">Chrome</a>.
-			</video>
+			{% if entry.videoID|length %}
+				<video id="v-player" poster="{{entry.videoThumbnail|length ? entry.videoThumbnail.first().url}}">
+					<source src="{{entry.videoID}}" type="video/mp4" />
+					Oops! Your browser doesn't support the video tag. Consider downloading <a href="https://www.google.com/chrome/browser/desktop/index.html">Chrome</a>.
+				</video>
+			{% else %}
+				<img id="v-player" src="{{entry.children.first().videoThumbnail.first().url}}" />
+					<a href="{{entry.children.first().url}}" id="play-btn">
+							<svg width="100%" height="100%" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg">
+								<defs>
+									<path id="play-icon"  data-state="paused"  d="M11,10 L18,13.74 18,22.28 11,26 M18,13.74 L26,18 26,18 18,22.28" />
+								</defs>
+								<use xlink:href="#play-icon" />
+							</svg>
+					</a>
+			{% endif %}
 			<div id="v-ui">
 				<div class="v-overlay"></div>
 				{# ========= Top video info ============ #}
@@ -133,15 +142,15 @@ Y88b   d88P 8888b.  888d888 888  8888b.  88888b.  888  .d88b.  .d8888b
 					</div>
 				</div>
 {% cache %}
-				{% if entry.type == 'designer' and entry.hasDescendants() == true %}
+				{#{% if entry.type == 'designer' and entry.hasDescendants() == true %}#}
 					{# ========= Initial play button ============ #}
-					<div class="v-init-play">
+					{#<div class="v-init-play">
 						<a>
 							<div class="v-init-play-btn"></div>
-							<h4 class="v-init-play-label">Watch Playlist {#{{siblings|length > 1 ? 'Playlist' : 'Video'}}#}</h4>
+							<h4 class="v-init-play-label">Watch Playlist</h4>
 						</a>
 					</div>
-				{% endif %}
+				{% endif %}#}
 {# {% endcache %} #}
 				{# ========= End of video interface ============ #}
 				<div class="v-ended oHidden" data-url="{{siblings is defined and nextChaptInd < siblings|length ? siblings[nextChaptInd].url}}#v-header">
@@ -159,12 +168,27 @@ Y88b   d88P 8888b.  888d888 888  8888b.  88888b.  888  .d88b.  .d8888b
 {% cache %}
 					<div class="v-suggestions">
 						{% for entry in relatedEntries %}
+							{# {% if entry.type == "interviewVideo" %} #}
+								{% set image = entry.parent.intPortrait.first() %}
+							{# {% elseif entry.type == 'designer' %}
+								{% set image = entry.intPortrait.first() %}
+							{% elseif entry.type == 'shortFilm' %}
+								{% set image = entry.iosThumbnail.first() %}
+							{% endif %} #}
+							{% set transformedPNG = craft.imager.transformImage(
+								image, [{width: 400}, { width: 300 }, { width: 150 }],
+								{ ratio: 16/9, position: image.focusPctX ~ '% ' ~ image.focusPctY ~ '%' })
+							%}
 							<div class="v-suggestion">
 								<a href="{{entry.url}}#v-header">
-									<p>suggested <br> {{entry.title}}</p>
+									<div class="titles-cont">
+										<h1>{{entry.title}}</h1>
+										<h2>{{entry.parent.title}}</h2>
+									</div>
 								</a>
 								<div class="bg">
-									<img src="{{entry.videoThumbnail.first().url}}">
+									<img srcset="{{ craft.imager.srcset(transformedPNG) }}"
+										sizes="(min-width: 700) 15vw, 40vw" src="{{image.url}}"/>
 								</div>
 							</div>
 						{% endfor %}
