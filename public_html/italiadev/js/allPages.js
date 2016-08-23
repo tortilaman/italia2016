@@ -25,15 +25,15 @@ $(document).ready(function() {
             $(this).toggleClass("menuOpen");
         });
     }
-});
 
-$(".v-share-fb").on('click', function() {
-    FB.ui({
-        method: 'share',
-        mobile_iframe: true,
-        href: window.location.href,
-    }, function(response) {});
-})
+    $(".v-share-fb").on('click', function() {
+        FB.ui({
+            method: 'share',
+            mobile_iframe: true,
+            href: window.location.href,
+        }, function(response) {});
+    });
+});
 
 /*=======================================================
 8888888

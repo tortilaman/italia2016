@@ -45,7 +45,7 @@ _#}
 					{% cache %}
 						{% for i in 0..(children|length-1) %}
 							<div class="v-chapter" data-chapter="{{i}}" data-offset="{{i*3}}">
-								<a href="{{children.nth(i).url}}#v-header">
+								<a href="{{children.nth(i).url}}">
 									<span class="v-chapter-number">{{i+1}}</span>
 									<span class="v-chapter-title">{{children.nth(i)}}</span>
 									<span class="v-chapter-duration">{{children.nth(i).videoDuration}}</span>
@@ -69,7 +69,9 @@ _#}
 	{% endif %}
 
 	{# ============= VIDEO ================ #}
-	{% include "_includes/video_header" %}
+	{% if not entry.children|length %}
+		{% include "_includes/video_header" %}
+	{% endif %}
 
 	{# ============= MATRIX CONTENT ================ #}
 	{% cache using key entry.id + '-3' %}

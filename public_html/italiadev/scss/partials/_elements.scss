@@ -107,13 +107,17 @@ a[class*="link"] {
 	padding: 0;
 }
 
+.is-scrollable .qa {
+	background-color: $color1T;
+}
 .qa {
 	position        : relative;
 	display         : block;
 	padding         : 2em;
 	margin-top      : 0;
 	z-index         : 10;
-	background-color: $color1;
+	background-color: darken($color1T, 10%);
+	transition: background-color 0.5s;
 	// mix-blend-mode  : multiply;
 	@include respond-to(tablet) {
 		//			height: 60vh;
@@ -136,10 +140,15 @@ IMAGES
 	}
 }
 
-.v-mat-img-container {
+.is-scrollable .v-mat-img-container {
 	background: $color3T;
+}
+
+.v-mat-img-container {
+	background: darken($color3T, 10%);
 	font-size: 0;
 	padding: 0;
+	transition: background-color 0.5s;
 	.v-mat-img-caption {
 		bottom : 0;
 		width  : 100%;
@@ -152,8 +161,12 @@ IMAGES
 PULLQUOTES
 **=======================*/
 
+.is-scrollable div.v-mat-pull-container {
+	background: $color1T;
+}
+
 div.v-mat-pull-container {
-	background: $color1;
+	background: darken($color1T, 10%);
 	padding   : 5vw;
 	@include respond-to(tablet) {
 		padding: 2vw;

@@ -87,23 +87,6 @@ main.home #v-header {
 	overflow  : hidden;
 	margin-top: -4vw;
 	@include respond-to(laptop) {
-		&::after {
-			content   : '';
-			position  : absolute;
-			top       : 0;
-			left      : 0;
-			width     : 100%;
-			height    : 100%;
-			background: black;
-			opacity   : 0;
-			z-index   : 1;
-			transition: opacity 0.25s;
-		}
-
-		&:hover::after {
-			opacity: 0.2;
-		}
-
 		#play-btn {
 			position: absolute;
 			bottom: 0.2em;
@@ -128,22 +111,47 @@ main.home #v-header {
 		z-index : 1;
 	}
 
-	&:-webkit-full-screen {
-		background-color: black;
-		width           : 100% !important;
-		height          : 100% !important;
-
-		video {
-			top   : 0 !important;
-			width : 100% !important;
-			height: 100% !important;
-		}
-	}
-
 	a {
 		border-bottom: none;
 	}
 }
+
+.v16-9 #v-container:-webkit-full-screen, .v21-9 #v-container:-webkit-full-screen {
+	#v-ui {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+}
+
+.v21-9 #v-container:-webkit-full-screen {
+	background-color: black;
+	width: 100vw;
+	height: 42.857vw;
+
+	video {
+		position: relative;
+		top: -6.2vw;
+		width: 100vw;
+		height: 56.25vw;
+	}
+}
+
+.v16-9 #v-container:-webkit-full-screen {
+	background-color: black;
+	width: 100vw;
+	height: 56.25vw;
+
+	video {
+		position: relative;
+		top: 0;
+		width: 100vw;
+		height: 56.25vw;
+	}
+}
+
 /*********************************************************
 
 8888888b.           888    d8b
@@ -179,8 +187,8 @@ main.home #v-header {
 		}
 	}
 	@include respond-to(tablet, p) {
-		width : 86vw;
 		height: 36.86vw;
+		width : 86vw;
 
 		#v-player {
 			top   : -6.88vw;
@@ -589,7 +597,7 @@ Y88b  d88P Y88..88P 888  888 Y88b.  888    Y88..88P 888      X88
 .v-time-ind {
 	@extend .v-control-elem;
 	float     : right;
-	width     : 7em;
+	width     : 4em;
 	opacity   : 0;
 	margin-top: 0.2em;
 	transition: all 0.25s;
@@ -602,6 +610,7 @@ Y88b  d88P Y88..88P 888  888 Y88b.  888    Y88..88P 888      X88
 	margin    : 0;
 	padding   : 0;
 	z-index   : 2;
+	cursor: pointer;
 }
 
 #v-show-progress {
@@ -609,7 +618,7 @@ Y88b  d88P Y88..88P 888  888 Y88b.  888    Y88..88P 888      X88
 }
 
 #v-progress-bar {
-	margin    : 0.75rem 10rem 0 4rem;
+	margin    : 0.75rem 6rem 0 4rem;
 	background: rgba(255, 255, 255, 0.3);
 	z-index   : 1;
 	transition: opacity 0.25s;

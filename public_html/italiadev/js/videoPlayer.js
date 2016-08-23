@@ -122,9 +122,6 @@ $(document).ready(function() {
                 scrollPercent = 0;
                 opacityValue = 0;
                 $zVal = 6;
-                if (!vPlayer.paused) {
-                    playButton.toggle();
-                }
             } else {
                 opacityValue = parseFloat(scrollPercent);
                 $zVal = 6;
@@ -322,29 +319,31 @@ $(document).ready(function() {
     	AUTOPLAY FUNCTIONALITY
     **===============================*/
     autoplayVid = function() {
-        if (window.location.hash.length >= 1 && !mobile) {
-            var offset = 0;
-            for (var i = 0; i < vidIndex; i++) {
-                offset += $entries.eq(i).outerHeight(true);
-            }
-            if (firefox) {
-                $("html").animate({
-                    scrollTop: offset
-                }, 'slow', 'swing', function() {
-                    playButton.toggle();
-                    $(".v-init-play").addClass("oHidden").remove();
-                    showControls();
-                });
-            } else {
-                $("body").animate({
-                    scrollTop: offset
-                }, 'slow', 'swing', function() {
-                    playButton.toggle();
-                    $(".v-init-play").addClass("oHidden").remove();
-                    showControls();
-                });
-            }
+        // if (window.location.hash.length >= 1 && !mobile) {
+        var offset = 0;
+        for (var i = 0; i < vidIndex; i++) {
+            offset += $entries.eq(i).outerHeight(true);
         }
+        $("#v-play-btn").focus();
+        $("#v-intro").css('opacity', 1);
+        if (firefox) {
+            $("html").animate({
+                scrollTop: offset
+            }, 1000, 'swing', function() {
+                playButton.toggle();
+                $(".v-init-play").addClass("oHidden").remove();
+                showControls();
+            });
+        } else {
+            $("body").animate({
+                scrollTop: offset
+            }, 1000, 'swing', function() {
+                playButton.toggle();
+                $(".v-init-play").addClass("oHidden").remove();
+                showControls();
+            });
+        }
+        // }
     };
 
     /*=================================
@@ -370,6 +369,7 @@ $(document).ready(function() {
     document.querySelector("#v-player").onended = function() {
         //Show end of video UI everywhere but about / bio pages
         if (!$("body").hasClass("team") && !$("body").hasClass("team-vid")) {
+            $(".v-controls").css('opacity', 0);
             $(".suggested h1").fitText(0.5);
             $(".suggested h2").fitText(1.2);
             $(".v-ended").css('z-index', '5').removeClass("oHidden");
@@ -399,7 +399,7 @@ $(document).ready(function() {
     	EVENT LISTENERS
     **********************************/
 
-    $(document).on("grid:loaded", autoplayVid);
+    $(document).one("grid:loaded", autoplayVid);
     // $("video#v-player").on('load', autoplayVid());
 
     if ($("#v-intro").length || $("main").hasClass("home")) {
