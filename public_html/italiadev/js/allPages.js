@@ -1,3 +1,12 @@
+$.extend($.lazyLoadXT, {
+    edgeY: 600,
+    srcAttr: 'data-src',
+    onload: {
+        removeClass: 'lazy-hidden',
+        addClass: 'animated fadeInUp lazy-loaded'
+    }
+});
+
 /* ============================================================
 8888888b.                        888
 888   Y88b                       888

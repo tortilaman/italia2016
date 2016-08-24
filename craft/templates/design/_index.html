@@ -97,7 +97,7 @@
 						<h1 id="year-title-{{year}}">{{year}}</h1>
 					{% endif %}
 					{% for entry in entries %}
-						<article class="{{entry.type == 'shortFilm' ? 'film-entry' : 'design-entry'}} {{entry.videoYear >= '2015' ? 'v21-9' : 'v16-9'}} item" data-title="{{entry.title}}" {% if entry.nameFull|length %} data-name="{{entry.nameFull}}" {% endif %} {% if entry.nameCompany|length %} data-company="{{entry.nameCompany}}" {% endif %} data-tags="{% for tag in entry.disciplines %}{{tag}}{{tag == entry.disciplines[entry.disciplines|length - 1] ? '' :','}}{% endfor %}" {% if entry.secondaryTags|length %} data-topics="{% for tag in entry.secondaryTags %}{{tag}}{{tag == entry.secondaryTags[-0] ? '' :','}}{% endfor %}" {% endif %} data-show="true" >
+						<article class="{{entry.type == 'shortFilm' ? 'film-entry' : 'design-entry'}} {{entry.videoYear >= '2015' ? 'v21-9' : 'v16-9'}} item" data-title="{{entry.title}}" {% if entry.nameFull|length %} data-name="{{entry.nameFull}}" {% endif %} {% if entry.nameCompany|length %} data-company="{{entry.nameCompany}}" {% endif %} data-tags="{% for tag in entry.disciplines %}{{tag}}{{tag == entry.disciplines[entry.disciplines|length - 1] ? '' :','}}{% endfor %}" {% if entry.secondaryTags|length %} data-topics="{% for tag in entry.secondaryTags %}{{tag}}{{tag == entry.secondaryTags[entry.secondaryTags|length - 1] ? '' :','}}{% endfor %}" {% endif %} data-show="true" >
 
 							{% if entry.type == "interviewVideo" %}
 								{% set image = entry.parent.intPortrait %}
@@ -116,11 +116,11 @@
 							<a href="{{ entry.url }}" class="clearfix">
 								<div class="entry-thumb-cont">
 									{% if entry.type == 'shortFilm' %}
-										<video autoplay loop muted preload poster="{{ iosThumb.url }}">
-											<source src="{{ video.url }}" type="video/mp4" data-title="{{ entry.title }}">
+										<video autoplay loop muted preload data-poster="{{ iosThumb.url }}">
+											<source data-src="{{ video.url }}" type="video/mp4" data-title="{{ entry.title }}">
 										</video>
 									{% else %}
-											<img class="lazyload" data-srcset="{{ craft.imager.srcset(transformedJPG) }}"
+											<img data-srcset="{{ craft.imager.srcset(transformedJPG) }}"
 												sizes="(min-width: 1024px) 12vw, (min-width: 700px) 18vw, (min-width: 480) 42vw, 100vw" data-src="{{image.url}}"/>
 									{% endif %}
 								</div>

@@ -324,7 +324,6 @@ $(document).ready(function() {
         for (var i = 0; i < vidIndex; i++) {
             offset += $entries.eq(i).outerHeight(true);
         }
-        $("#v-play-btn").focus();
         $("#v-intro").css('opacity', 1);
         if (firefox) {
             $("html").animate({
@@ -343,6 +342,7 @@ $(document).ready(function() {
                 showControls();
             });
         }
+        $(".v-play-btn").focus();
         // }
     };
 
@@ -399,8 +399,9 @@ $(document).ready(function() {
     	EVENT LISTENERS
     **********************************/
 
-    $(document).one("grid:loaded", autoplayVid);
-    // $("video#v-player").on('load', autoplayVid());
+    if (!$('body').hasClass('home')) {
+        $(document).one("grid:loaded", autoplayVid);
+    }
 
     if ($("#v-intro").length || $("main").hasClass("home")) {
         //Scroll progress even tlistener

@@ -52,10 +52,11 @@ $(document).ready(function() {
     //ANIMATE.CSS JQUERY FUNCTION
     $.fn.extend({
         animateCss: function(fadeDirection) {
-            var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
-            var animationName = "fade" + fadeDirection + $(this).attr('data-dir');
-            $(this).addClass('animated ' + animationName).one("animationend", function(e) {
-                $(this).removeClass('animated ' + animationName);
+            var el = $(this),
+                animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+            var animationName = "fade" + fadeDirection + el.attr('data-dir');
+            el.addClass('animated ' + animationName).one("animationend", function(e) {
+                el.removeClass('animated ' + animationName);
             });
         }
     });
@@ -92,10 +93,11 @@ $(document).ready(function() {
                 vOffset = ['-1vw', '3vw', '5vw', '9vw'];
             }
             $entries.each(function(index, value) {
+                var el = $(this);
                 while (hoThis == hoLast) hoThis = hOffset[Math.floor(Math.random() * hOffset.length)];
                 while (voThis == voLast) voThis = vOffset[Math.floor(Math.random() * vOffset.length)];
-                $(this).css('left', hoThis);
-                $(this).css('margin-top', voThis);
+                el.css('left', hoThis);
+                el.css('margin-top', voThis);
                 hoLast = hoThis;
                 voLast = voThis;
                 var dict = {
@@ -104,17 +106,18 @@ $(document).ready(function() {
                     2: "Left",
                     3: "Right"
                 };
-                $(this).attr('data-dir', dict[getRandomInt(0, 3)]);
-                $(this).css('opacity', '1');
+                el.attr('data-dir', dict[getRandomInt(0, 3)]);
+                el.css('opacity', '1');
             });
         } else {
             $entries.each(function() {
-                var dict = {
-                    0: "Up",
-                    1: "Down"
-                };
-                $(this).attr('data-dir', dict[getRandomInt(0, 1)]);
-                $(this).css('opacity', '1');
+                var el = $(this),
+                    dict = {
+                        0: "Up",
+                        1: "Down"
+                    };
+                el.attr('data-dir', dict[getRandomInt(0, 1)]);
+                el.css('opacity', '1');
             });
         }
     }
@@ -215,54 +218,55 @@ $(document).ready(function() {
         topicsArr = [],
         wordsToSkip = [],
         categories = {
-            Category: "1",
-            Topic: "2",
-            Designers: "3",
-            Company: "4"
+            category: "1",
+            topic: "2",
+            designer: "3",
+            company: "4"
         };
     //Populate newArray with data.
-    $rawData.each(function(ind, el) {
-        if ($(this).attr('data-name')) {
-            var name = $(this).attr('data-name');
+    $rawData.each(function(ind) {
+        var el = $(this);
+        if (el.attr('data-name')) {
+            var name = el.attr('data-name');
             if ($.inArray(name, nameArr) === -1 && name !== "") {
                 newArray.push({
-                    label: $(this).attr('data-name'),
-                    category: "Designer"
+                    label: el.attr('data-name'),
+                    category: "designer"
                 });
                 nameArr.push(name);
             }
         }
-        if ($(this).attr('data-company')) {
-            var company = $(this).attr('data-company');
+        if (el.attr('data-company')) {
+            var company = el.attr('data-company');
             if ($.inArray(company, compArr) === -1 && company !== "") {
                 newArray.push({
-                    label: $(this).attr('data-company'),
-                    category: "Company"
+                    label: el.attr('data-company'),
+                    category: "company"
                 });
                 compArr.push(company);
             }
         }
-        if ($(this).attr('data-tags')) {
-            var tags = $(this).attr('data-tags').split(',');
-            tags.forEach(function(element, index, array) {
-                if ($.inArray(element, tagsArr) === -1 && element !== "") {
+        if (el.attr('data-tags')) {
+            var tags = el.attr('data-tags').split(',');
+            tags.forEach(function(tag, index, array) {
+                if ($.inArray(tag, tagsArr) === -1 && tag !== "") {
                     newArray.push({
-                        label: element,
-                        category: "Category"
+                        label: tag,
+                        category: "category"
                     });
-                    tagsArr.push(element);
+                    tagsArr.push(tag);
                 }
             });
         }
-        if ($(this).attr('data-topics')) {
-            var topics = $(this).attr('data-topics').split(',');
-            topics.forEach(function(element, index, array) {
-                if ($.inArray(element, topicsArr) === -1 && element !== "") {
+        if (el.attr('data-topics')) {
+            var topics = el.attr('data-topics').split(',');
+            topics.forEach(function(topic, index, array) {
+                if ($.inArray(topic, topicsArr) === -1 && topic !== "") {
                     newArray.push({
-                        label: element,
-                        category: "Topic"
+                        label: topic,
+                        category: "topic"
                     });
-                    topicsArr.push(element);
+                    topicsArr.push(topic);
                 }
             });
         }
@@ -270,27 +274,23 @@ $(document).ready(function() {
 
     //Sort first by category and then alphabetically.
     newArray.sort(function(a, b) {
-        //		if (a.category == "Category" && b.category == "Interviewees") {
         if (a.category != b.category) {
-            //			return -1;
             return categories[a.category] - categories[b.category];
-            //		} else if (a.category == "Interviewees" && b.category == "Category") {
-            //			return 1;
-        } else if (a.category == "Category" && b.category == "Category") {
+        } else if (a.category == "category" && b.category == "category") {
             if (a.label < b.label) return -1;
             if (a.label > b.label) return 1;
             return 0;
-        } else if (a.category == "Topic" && b.category == "Topic") {
+        } else if (a.category == "topic" && b.category == "topic") {
             if (a.label < b.label) return -1;
             if (a.label > b.label) return 1;
             return 0;
-        } else if (a.category == "Interviewees" && b.category == "Interviewees") {
+        } else if (a.category == "designers" && b.category == "designers") {
             var aName = a.label.split(' ');
             var bName = b.label.split(' ');
             if (aName[aName.length - 1] < bName[bName.length - 1]) return -1;
             if (aName[aName.length - 1] > bName[bName.length - 1]) return 1;
             return 0;
-        } else if (a.category == "Company" && b.category == "Company") {
+        } else if (a.category == "company" && b.category == "company") {
             var aCompany = a.label.split(' ');
             var bCompany = b.label.split(' ');
             if (aCompany[aCompany.length - 1] < bCompany[bCompany.length - 1]) return -1;
@@ -389,10 +389,11 @@ $(document).ready(function() {
     function $filterResults() {
         //Interviewees & Films
         $("article[data-title]").each(function() {
-            var tags = $(this).attr("data-tags"),
-                topics = $(this).attr('data-topics'),
-                names = $(this).attr("data-name") ? $(this).attr("data-name").toLowerCase() : "",
-                company = $(this).attr("data-company") ? $(this).attr("data-company").toLowerCase() : "",
+            var el = $(this),
+                tags = el.attr("data-tags"),
+                topics = el.attr('data-topics'),
+                names = el.attr("data-name") ? el.attr("data-name").toLowerCase() : "",
+                company = el.attr("data-company") ? el.attr("data-company").toLowerCase() : "",
                 //Merge various names and tags if there are tags.
                 data1 = tags === "" ? names : names.concat(" ", tags),
                 data2 = topics === "" ? data1 : data1.concat(" ", topics),
@@ -405,32 +406,32 @@ $(document).ready(function() {
 
             //Should this thumbnail show, and has that changed?
             if (matcher.test(data)) {
-                if ($(this).attr('data-show') == "true") {
+                if (el.attr('data-show') == "true") {
                     changed = false;
                 } else {
                     changed = true;
                 }
-                $(this).attr('data-show', "true");
+                el.attr('data-show', "true");
                 show = true;
             } else {
-                if ($(this).attr('data-show') == "false") {
+                if (el.attr('data-show') == "false") {
                     changed = false;
                 } else {
                     changed = true;
                 }
-                $(this).attr('data-show', "false");
+                el.attr('data-show', "false");
                 show = false;
             }
 
             //Trigger the animations
             if (show && changed) {
-                $(this).animateCss('In');
-                $(this).removeClass("dHidden");
-                $(this).next('.blank').removeClass("dHidden");
+                el.animateCss('In');
+                el.removeClass("dHidden");
+                el.next('.blank').removeClass("dHidden");
             } else if (show === false && changed === true) {
-                $(this).animateCss('Out');
-                $(this).addClass("dHidden");
-                $(this).next('.blank').addClass("dHidden");
+                el.animateCss('Out');
+                el.addClass("dHidden");
+                el.next('.blank').addClass("dHidden");
             }
         });
 
@@ -482,7 +483,7 @@ $(document).ready(function() {
                 var index = newArray.map(function(e) {
                     return e.category;
                     //The first index of Topic shows where the end of the categories is.
-                }).indexOf('Topic');
+                }).indexOf('topic');
                 results = newArray.slice(0, index);
             }
 
