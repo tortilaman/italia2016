@@ -24,7 +24,9 @@
 // ===============================================================================
 
 .is-scrollable {
-	position: relative !important;
+	@include respond-to(tablet) {
+		position: absolute !important;
+	}
 }
 
 .fixedTop {
@@ -55,7 +57,7 @@
 	@include respond-to(tablet) {
 		position : fixed;
 		margin   : 0;
-		transform: translateY(2em);
+		transform: translateY(2vw);
 	}
 
 	.inner {
@@ -143,7 +145,10 @@
 [id^='home-'] {
 	//	margin: 0 0 2vw 0;
 	width     : 100%;
-	margin-top: -4vw;
+	margin-top: 4vw;
+	@include respond-to(tablet) {
+		margin-top: auto;
+	}
 }
 
 #home-play {
@@ -152,7 +157,7 @@
 	background-color: #fff6ee;
 	animation-delay : 0.75s;
 	@include respond-to(tablet) {
-		margin: 8vw auto auto 8vw;
+		margin: 4vw auto auto 8vw;
 		width : 86vw;
 		height: calc(100vh - 14vw);
 	}
@@ -170,12 +175,9 @@
 }
 
 #home-about {
-	background-color     : $color1;
-	background-position  : left;
-	background-size      : contain;
-	background-repeat    : no-repeat;
-	animation-delay      : 0.5s;
-	padding              : 3vw;
+	background-color: $color1;
+	animation-delay : 0.5s;
+	padding         : 3vw;
 	@include respond-to(tablet) {
 		margin-top : 9.5vw;
 		margin-left: 21.5vw;
@@ -183,29 +185,24 @@
 		height     : calc(100vh - 18vw);
 	}
 
-	&.bgHidden {
-		background-color: $color1;
-		background-image: url("");
-	}
-
-	#collage {
-		position: relative;
-		top:0;
-		left:0;
-		width: 100%;
+	.collage {
+		position      : relative;
+		top           : 0;
+		left          : 0;
+		width         : 100%;
 		mix-blend-mode: multiply;
-
 		@include respond-to(tablet) {
-			position: absolute;
-			width: 40vw;
-			top: -5.4vw;
-			left: -15vw;
+			position      : absolute;
+			width         : 40vw;
+			top           : -5.1vw;
+			left          : -14vw;
+			z-index       : 350;
+			mix-blend-mode: multiply;
 		}
 	}
 
 	.inner {
-		padding   : 3vw;
-		text-align: center;
+		padding: 3vw;
 		@include respond-to(tablet) {
 			float       : right;
 			margin-top  : 0;
@@ -213,11 +210,9 @@
 			width       : 42vw;
 			height      : 100%;
 		}
-
-		h1,
-		p {
-			text-align: left;
-			margin    : 0;
+		@include respond-to(laptop) {
+			margin-right: 7vw;
+			width       : 36vw;
 		}
 
 		p {
@@ -227,82 +222,69 @@
 }
 
 #home-videos {
+	background-color   : $color3;
 	box-shadow         : none;
 	color              : white;
+	padding            : 3vw;
 	animation-delay    : 0.25s;
 	animation-fill-mode: forwards;
 	@include respond-to(tablet) {
-		margin-top : 7vw;
-		margin-left: 6.5vw;
-		width      : 80%;
-		height     : calc(100vh - 14vw);
+		margin-top   : 3vw;
+		margin-left  : 6.5vw;
+		margin-bottom: 8vw;
+		width        : 40vw;
+		height       : calc(100vh - 20vw);
 	}
 
-	#home-interviews {
-		position     : relative;
-		padding      : 3vw;
-		text-align   : center;
-		margin-bottom: 0.5em;
-		@extend .blue-bg;
-		@include respond-to(tablet) {
-			padding      : 3vw;
-			margin-bottom: 0;
-			width        : 40vw;
-			box-shadow   : 0.01rem 0.01rem 0.1rem $shadow;
-		}
-
-		h1 {
-			margin-top : 3vw;
-			margin-left: 6vw;
-			text-align : left;
-		}
-
-		p {
-			margin-top : 2vw;
-			margin-left: 6vw;
-			text-align : left;
-		}
-
-		.inner {
-			top : -2vw;
-			left: -2vw;
-		}
-	}
-
-	#home-films {
-		position  : relative;
-		padding   : 3vw;
-		text-align: center;
-		@extend .blue-bg;
+	.collage {
+		position      : relative;
+		top           : 0;
+		left          : 0;
+		width         : 100%;
+		mix-blend-mode: multiply;
 		@include respond-to(tablet) {
 			position: absolute;
-			top     : 12vw;
-			left    : 35vw; //		height: 50%;
-			padding : 3vw;
-			width   : 40vw;
+			height  : 120%;
+			width   : auto;
+			top     : 3.3vh;
+			left    : 30%;
 		}
+	}
 
-		h1 {
-			margin-top : 3vw;
-			margin-left: 6vw;
-			text-align : left;
+	.inner {
+		top  : 2vw;
+		left : 2vw;
+		width: 95%;
+		@include respond-to(tablet) {
+			top  : 0;
+			left : 0;
+			width: 35em;
 		}
+	}
 
-		p {
-			margin-top : 2vw;
-			margin-left: 6vw;
-			text-align : left;
+	a,
+	h1,
+	p {
+		margin-top: 2vw;
+		text-align: left;
+		@include respond-to(tablet) {
+			margin-left: 3vw;
 		}
+	}
 
-		&::after {
-			z-index: 1;
-		}
+	h1 {
+		margin-top: 3vw;
 	}
 }
 
-#v-header.home-section {
+#v-header.home {
 	background: none;
 	box-shadow: none;
+	margin-top: 8vw;
+	@include respond-to(tablet) {
+		margin-top   : calc((100vh - 36.86vw) * 0.25);
+		margin-bottom: calc((100vh - 36.86vw) * 0.5);
+	}
 }
 
 // 8888888 888             888 d8b
@@ -429,7 +411,7 @@ Y88b   d88P 888  .d88888  .d88b.   .d88b.  .d8888b
 	margin             : 0 auto;
 	width              : 98vw;
 	box-shadow         : none;
-	z-index: 3;
+	z-index            : 3;
 	animation-delay    : 0.75s;
 	animation-fill-mode: forwards;
 	@include respond-to(tablet) {
@@ -569,9 +551,13 @@ Y88b   d88P 888  .d88888  .d88b.   .d88b.  .d8888b
 		}
 
 		.v-chapter-title {
+			@extend .navLink;
 			display       : inline;
 			padding-bottom: 0.25em;
-			border-bottom : 0.15em solid;
+
+			&::before {
+				background-color: white;
+			}
 			@media (orientation: portrait) {
 				width: calc(100% - 7em);
 			}
@@ -593,6 +579,7 @@ Y88b   d88P 888  .d88888  .d88b.   .d88b.  .d8888b
 		padding: 4% 6% 4% 8%;
 		@extend .blue-bg;
 		@include respond-to(tablet) {
+			position  : absolute;
 			margin-top: 0;
 			left      : 35%;
 			top       : -3%;
@@ -600,10 +587,15 @@ Y88b   d88P 888  .d88888  .d88b.   .d88b.  .d8888b
 			min-height: 0;
 		}
 		@include respond-to(laptop) {
-			margin: 0;
-			top   : -5em;
-			left  : 43%;
-			width : 57%;
+			// margin: 0;
+			// top   : -5em;
+			// left  : 43%;
+			// width : 57%;
+			position : relative;
+			margin   : 0;
+			left     : 10%;
+			transform: translateY(-15%);
+			width    : 60%;
 		}
 
 		/*@media (orientation: portrait) {
@@ -614,6 +606,29 @@ Y88b   d88P 888  .d88888  .d88b.   .d88b.  .d8888b
 		.inner {
 			opacity   : 1;
 			transition: opacity 0.5s;
+		}
+
+		h1,
+		p {
+			@include respond-to(tablet) {
+				width: 35vw;
+			}
+		}
+	}
+
+	/********************************
+		Collage
+	********************************/
+
+	#collage {
+		width : 100%;
+		height: auto;
+		@include respond-to(tablet) {
+			position: absolute;
+			top     : -5vw;
+			left    : 50vw;
+			height  : 36vw;
+			width   : auto;
 		}
 	}
 }
@@ -636,7 +651,7 @@ main.team-vid {
 		margin-top: 12vmin;
 		height    : auto;
 		overflow  : visible;
-		z-index: 3;
+		z-index   : 3;
 		@include respond-to(tablet) {
 			margin-top: 10vw;
 		}
@@ -722,19 +737,33 @@ main.team-vid {
 // =============================================================================
 
 #team-about {
-	position             : relative;
-	margin-top           : 2vw;
-	margin-left          : 5vw;
-	width                : 90%;
-	height               : auto;
-	padding              : 2em;
-	background-color     : $color1;
-	background-image     : url("/assets/images/Tuscan_Hill_Town.png");
-	background-position  : bottom right;
-	background-size      : cover;
-	background-repeat    : no-repeat;
-	animation-delay      : 0.5s;
-	background-blend-mode: multiply;
+	position        : relative;
+	margin-top      : 2vw;
+	margin-left     : 5vw;
+	width           : 90%;
+	height          : auto;
+	padding         : 2em;
+	background-color: $color1;
+	z-index         : 1;
+	animation-delay : 0.5s;
+
+	.img-bg {
+		position      : absolute;
+		top           : 0;
+		left          : 0;
+		width         : 100%;
+		height        : 100%;
+		mix-blend-mode: multiply;
+
+		img {
+			position: absolute;
+			bottom  : 0;
+			left    : 0;
+			width   : 100%;
+			height  : auto;
+			opacity : 0.5;
+		}
+	}
 
 	p {
 		margin-bottom: 1em;
@@ -765,11 +794,19 @@ main.team #flex-grid-team {
 	margin    : 2vw 5vw 0;
 	width     : 90vw;
 	box-shadow: none;
+
+	#page-info {
+		margin-top: 0;
+	}
 	@include respond-to(tablet) {
 		position      : fixed;
 		margin        : 6vw 5vw 0;
 		width         : 90vw;
 		box-shadow    : none;
 		padding-bottom: 0;
+
+		#page-info {
+			margin-top: 4em;
+		}
 	}
 }

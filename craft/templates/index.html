@@ -19,51 +19,50 @@
 
 {% extends "_layouts/site" %}
 {% set bodyClass = "home autoplay" %}
-{% set collage = entry.aboutImage.first() %}
-{% set transformedPNG = craft.imager.transformImage(
-	collage, [{ width: 775 }, { width: 550 }, { width: 400 }],
-	{ position: collage.focusPctX ~ '% ' ~ collage.focusPctY ~ '%' })
+{% set collage1 = entry.aboutImage.first() %}
+{% set collage2 = entry.interviewsImage.first() %}
+{% set transformedCollage1 = craft.imager.transformImage(
+	collage1, [{ width: 775 }, { width: 550 }, { width: 400 }],
+	{ position: collage1.focusPctX ~ '% ' ~ collage1.focusPctY ~ '%' })
 %}
-
+{% set transformedCollage2 = craft.imager.transformImage(
+	collage2, [{ width: 1350 }, { width: 700 }, { width: 400 }],
+	{ position: collage2.focusPctX ~ '% ' ~ collage2.focusPctY ~ '%' })
+%}
 {% block main %}
-	{% set index = 0 %}
-	<section id="home-play" class="home-section is-scrollable">
-		<div class="inner">
-			{# This is just for now until the play stuff is implemented #}
-			<img id="home-play-logo" src="/assets/images/Logo.png">
-		</div>
-	</section>
-	<section id="home-about" class="home-section bghidden">
-		<div class="inner scrollHide">
-			{{entry.aboutPreview}}
-			<a href="/about" class="button-green">
-				<span>learn more</span>
-			</a>
-		</div>
-		<img id="collage" class="scrollHide" srcset="{{ craft.imager.srcset(transformedPNG) }}"
-			sizes="(min-width: 1024px) 40vw, 100vw" src="{{collage.url}}" />
-	</section>
-	<section id="home-videos" class="home-section">
-		<div id="home-interviews" data-scroll-speed="3">
+	{% cache %}
+		{% set index = 0 %}
+		<section id="home-play" class="home-section is-scrollable">
+			<div class="inner">
+				{# This is just for now until the play stuff is implemented #}
+				<img id="home-play-logo" src="/assets/images/Logo.png">
+			</div>
+		</section>
+		<section id="home-about" class="home-section">
 			<div class="inner scrollHide">
-				{{entry.interviewsPreview}}
-				<a href="/design" class="button-blue">
-					<span>see interviews</span>
+				{{entry.aboutPreview}}
+				<a href="/about" class="button-green">
+					<span>learn more</span>
 				</a>
 			</div>
-		</div>
-		<div id="home-films" data-scroll-speed="2">
-			<div class="inner scrollHide">
-				{{entry.filmsPreview}}
-				<a href="/italia" class="button-blue">
-					<span>watch films</span>
-				</a>
-			</div>
-		</div>
-	</section>
-	{% include "_includes/video_header" %}
-	<script src="http://d3js.org/d3.v3.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-	<script src="/js/stackGrid.js"></script>
-	<script src="/js/videoPlayer.js"></script>
+			<img class="collage scrollHide" srcset="{{ craft.imager.srcset(transformedCollage1) }}"
+				sizes="(min-width: 1024px) 40vw, 100vw" src="{{collage1.url}}" />
+		</section>
+		<section id="home-videos" class="home-section">
+				<div class="inner scrollHide">
+					{{entry.interviewsPreview}}
+					<a href="/design" class="button-blue">
+						<span>see interviews</span>
+					</a>
+				</div>
+				<img class="collage scrollHide" srcset="{{craft.imager.srcset(transformedCollage2) }}" sizes="(min-width: 1024px) 65vw, 100vw" src="{{collage2.url}}" />
+		</section>
+		{% include "_includes/video_header" %}
+	{% endcache %}
+{% endblock %}
+{% block foot %}
+{{ parent() }}
+{% includeJsFile "http://d3js.org/d3.v3.min.js" %}
+{% includeJsFile "/js/stackGrid.js" %}
+{% includeJsFile "/js/videoPlayer.js" %}
 {% endblock %}

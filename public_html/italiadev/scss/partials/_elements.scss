@@ -55,7 +55,7 @@
 	margin         : 5vw 1vw 0;
 	width          : 98vw;
 	box-shadow     : none;
-	z-index: 1;
+	z-index        : 1;
 	@include respond-to(tablet) {
 		padding   : 1em;
 		margin    : 8vw 0 0 8vw;
@@ -107,22 +107,19 @@ a[class*="link"] {
 	padding: 0;
 }
 
-.is-scrollable .qa {
-	background-color: $color1T;
-}
 .qa {
 	position        : relative;
 	display         : block;
 	padding         : 2em;
-	margin-top      : 0;
+	margin          : 1em 0;
 	z-index         : 10;
-	background-color: darken($color1T, 10%);
-	transition: background-color 0.5s;
+	background-color: $color1T;
+	transition      : background-color 0.5s;
 	// mix-blend-mode  : multiply;
 	@include respond-to(tablet) {
 		//			height: 60vh;
-		padding   : 2em;
-		margin-top: 20vh;
+		padding: 2em;
+		margin : 20vh 0 0;
 	}
 }
 
@@ -140,15 +137,16 @@ IMAGES
 	}
 }
 
-.is-scrollable .v-mat-img-container {
-	background: $color3T;
-}
-
 .v-mat-img-container {
-	background: darken($color3T, 10%);
-	font-size: 0;
-	padding: 0;
+	background: $color3T;
+	font-size : 0;
+	padding   : 0;
+	margin    : 1rem 0;
 	transition: background-color 0.5s;
+	@include respond-to(tablet) {
+		margin: 0;
+	}
+
 	.v-mat-img-caption {
 		bottom : 0;
 		width  : 100%;
@@ -161,42 +159,22 @@ IMAGES
 PULLQUOTES
 **=======================*/
 
-.is-scrollable div.v-mat-pull-container {
-	background: $color1T;
-}
-
 div.v-mat-pull-container {
-	background: darken($color1T, 10%);
+	background: $color1T;
 	padding   : 5vw;
+	margin    : 1em 0;
 	@include respond-to(tablet) {
 		padding: 2vw;
+		margin : 0;
 	}
 
 	.v-mat-pull {
-		margin: 0;
-
-		&::before {
-			content    : '“';
-			font-size  : 8em;
-			line-height: 1;
-			position   : absolute;
-			top        : 0.25rem;
-			left       : 0.25rem;
-			z-index    : 0;
-			opacity    : 0.6;
-			font-family: "karla", times, serif;
-			@include respond-to(tablet) {
-				top : 0;
-				left: 0;
-			}
-		}
-	}
-
-	.v-mat-pull {
+		margin     : 0;
+		text-indent: -0.4em;
 		font-size  : 1.5em;
 		line-height: 1.4;
 		color      : white;
-		font-family: "Quotes", Arial, sans-serif;
+		font-family: "Header2", Arial, sans-serif;
 	}
 }
 

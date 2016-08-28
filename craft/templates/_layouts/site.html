@@ -11,11 +11,9 @@
 # child templates to define the main contents for the page. -#}
 {% extends "_layouts/base" %}
 {# Define the site navigation #}
-{% set nav = { "" :
-	{ title: "home"},
-	design: { title: "interviews"},
-	italia: { title: "films"},
-	team: { title: "about"}
+{% set nav = {
+	design: { title: "videos"},
+	team: { title: "team"}
 } %}
 {# Set the `bodyClass` variable to the entry's section handle if there is one,
 # or the first URI segment (this is used by the parent template)
@@ -52,17 +50,13 @@
 </script>
 <script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
 	{% block nav %}
-	<button type="button" class="tcon tcon-menu--xcross" aria-label="toggle menu">
-		<span class="tcon-menu__lines" aria-hidden="true"></span>
-		<span class="tcon-visuallyhidden">toggle menu</span>
-	</button>
-		<a class="home-btn" rel="home" href="{{siteUrl}}"><img src="/assets/images/logo-new.png"></a>
 		<header class="header">
 			<nav>
+				<a id="home-btn" href="{{url('')}}"><img src="/assets/images/logo_letters.png"></a>
 				<ul>
 					{% for slug, item in nav %}
 					<li>
-						<a href="{{ url(slug) }}" {% if craft.request.firstSegment == slug %} class="sel" {% endif %}>
+						<a href="{{ url(slug) }}" class="navLink {{ craft.request.firstSegment == slug ? 'sel'}}">
 							{{ item.title }}
 						</a>
 					</li>
@@ -78,9 +72,10 @@
 
 {% endblock %}
 {% block foot %}
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-	<script src="/js/allPages.js"></script>
-	<script src="/js/jquery.lazyloadxt.extra.min.js"></script>
-	<script src="/js/jquery.fittext.js"></script>
-	<script>transformicons.add('.tcon')</script>
+{% includeJsFile "https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js" first %}
+{% includeJsFile "/js/scroll-up-bar.min.js" %}
+{# {% includeJsFile "/js/blazy.min.js" %} #}
+{% includeJsFile "https://cdnjs.cloudflare.com/ajax/libs/lazysizes/2.0.1/lazysizes.min.js" %}
+{% includeJsFile "/js/allPages.js" %}
+{% includeJsFile "/js/jquery.fittext.js" %}
 {% endblock %}

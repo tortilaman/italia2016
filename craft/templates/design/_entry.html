@@ -13,17 +13,34 @@ _#}
 {% set i = 0 %}
 {% set title = entry.title %}
 {% set bodyClass = entry.type == 'interviewVideo' ? 'v autoplay' : 'v' %}
-{% set children = entry.type == 'designer' ? entry.children : entry.parent.children %}
+
+{% if entry.type == 'designer' and entry.videoYear == '2016' %}
+	{% set children = entry.children %}
+{% elseif entry.type == 'interviewVideo' and entry.videoYear == '2016' %}
+	{% set children = entry.parent.children %}
+{% endif %}
 {% if entry.type == "designer" %}
 	{% set portrait = entry.intPortrait.first %}
-{% else %}
+{% elseif entry.type=="interviewVideo" %}
 	{% set portrait = entry.parent.intPortrait.first %}
+{% endif %}
+
+{% if entry.type == 'interviewVideo' %}
+	{% set collage = entry.parent.portraitCollage.first() %}
+	{% set transformedCollage = craft.imager.transformImage(
+		collage, [
+		{ width: 700 },
+		{ width: 460 },
+		{ width: 350, pngCompressionLevel: 4 }
+		])
+	%}
 {% endif %}
 
 {% block head %}
 	{{ parent() }}
+	<meta property="og:"
 	<meta property="og:site_name"	content="SFU italiaDesign field school" />
-	<meta property="og:url"			content="{{entry.url}}" />
+	<meta property="og:url"			content="{{entry.url|replace(craft.request.queryString, '')}}" />
 	<meta property="og:type"		content="{{entry.type == 'designer' ? 'profile' : 'video.other'}}" />
 	{% if title is defined %}
 		<meta property="og:title"	content="{{title}}" />
@@ -36,8 +53,12 @@ _#}
 
 {% block main %}
 	{# ============= INTRODUCTION ================ #}
-	{% if children|length %}
+	{% if children is defined %}
 		<section id="v-intro" class="v-section is-scrollable">
+			<img id="collage"
+				sizes="(min-width: 1024px) 36vw, (min-width: 700px) 36vw, 100vw"
+				srcset="{{ craft.imager.srcset(transformedCollage) }}"
+				src="{{ craft.imager.base64Pixel(16, 9) }}" />
 			<div id="v-contents">
 				<h1 class="v-contents-title">interview chapters</h1>
 				<div class="v-chapter-container">
@@ -45,9 +66,9 @@ _#}
 					{% cache %}
 						{% for i in 0..(children|length-1) %}
 							<div class="v-chapter" data-chapter="{{i}}" data-offset="{{i*3}}">
-								<a href="{{children.nth(i).url}}">
+								<a {% if craft.request.url == children.nth(i).url %} onclick="autoplayVid()" {% else %}href="{{children.nth(i).url}}?autoplay" {% endif %} class="navLink">
 									<span class="v-chapter-number">{{i+1}}</span>
-									<span class="v-chapter-title">{{children.nth(i)}}</span>
+									<span class="v-chapter-title nav">{{children.nth(i)}}</span>
 									<span class="v-chapter-duration">{{children.nth(i).videoDuration}}</span>
 								</a>
 							</div>
@@ -80,8 +101,8 @@ _#}
 {% endblock %}
 {% block foot %}
 	{{ parent() }}
-	<script src="http://d3js.org/d3.v3.min.js"></script>
-	<script src="/js/stackGrid.js"></script>
-	<script src="/js/videoPlayer.js"></script>
-	<script src="/js/interview.js"></script>
+	{% includeJsFile "http://d3js.org/d3.v3.min.js" %}
+	{% includeJsFile "/js/stackGrid.js" %}
+	{% includeJsFile "/js/videoPlayer.js" %}
+	{% includeJsFile "/js/interview.js" %}
 {% endblock %}

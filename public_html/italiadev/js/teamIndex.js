@@ -81,29 +81,37 @@ $(document).ready(function() {
     /************************************************
     	PARALLAX
     ************************************************/
-
     pImgs = [];
-    $entries.each(function(index) {
-        var pImg = {};
-        pImg.el = $(this);
-        pImg.iMax = pImg.el.offset().top;
-        pImg.iMin = parseFloat(pImg.iMax) > $window.outerHeight() ? parseFloat(pImg.iMax) - $window.outerHeight() : 0;
-        pImg.oMax = parseFloat(pImg.el.outerHeight()) * 0.2 * parseFloat(pImg.el.offset().top < 75 ? getRandomInt(1, 6) : getRandomInt(1, 3));
-        pImgs.push(pImg);
-    });
 
-    function parallax() {
+    //Actually do some parallaxing.
+    parallax = function() {
         var scrollPos = $window.scrollTop();
         $.each(pImgs, function(index, pImg) {
             if (scrollPos > pImg.iMin && scrollPos < pImg.iMax) {
-                var newVal = parseFloat(scrollPos).map(pImg.iMin, pImg.iMax, 0, pImg.oMax).toFixed(2);
-                pImg.el.css('transform', 'translateY(-' + newVal + 'px)');
-            } else if (scrollPos < pImg.iMin) pImg.el.css('transform', 'translateY(' + 0 + ')');
-            else if (scrollPos > pImg.iMax) pImg.el.css('transform', 'translateY(-' + pImg.oMax + 'px)');
+                var newVal = parseFloat(scrollPos).map(pImg.iMin, pImg.iMax, pImg.oMax, 0).toFixed(2);
+                pImg.el.css('transform', 'translateY(' + newVal + 'px)');
+            } else if (scrollPos < pImg.iMin) {
+                pImg.el.css('transform', 'translateY(' + pImg.oMax + 'px)');
+            } else if (scrollPos > pImg.iMax) {
+                pImg.el.css('transform', 'translateY(' + 0 + ')');
+            } else {
+                pImg.el.css('transform', 'translateY(' + pImg.oMax + 'px)');
+            }
         });
-    }
+    };
 
-    parallax();
+    //Setup the array we'll be parallaxing with.
+    $(document).on('grid:loaded', function() {
+        $entries.each(function(index) {
+            var pImg = {};
+            pImg.el = $(this);
+            pImg.iMax = pImg.el.offset().top;
+            pImg.iMin = parseFloat(pImg.iMax) > $window.outerHeight() ? parseFloat(pImg.iMax) - $window.outerHeight() : 0;
+            pImg.oMax = parseFloat(pImg.el.outerHeight()) * 0.2 * parseFloat(getRandomInt(1, 6));
+            pImgs.push(pImg);
+        });
+        parallax();
+    });
 
     /************************************************
     	EVENT LISTENERS

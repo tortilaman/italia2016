@@ -6,6 +6,10 @@
 //
 // ==============================
 
+.static {
+	top: 0 !important;
+}
+
 /*8888b.                                    888
 d88P  Y88b                                   888
 Y88b.                                        888
@@ -17,202 +21,214 @@ Y88b  d88P Y8b.     888  888 888    Y88b.    888  888
 
 #a-border,
 #d-filter {
-	position  : absolute;
-	top       : 0;
+	position  : fixed;
+	top       : 12vmin;
 	right     : 8%;
 	left      : 2%;
 	width     : 100%;
 	height    : 12vmin;
 	background: none;
-	z-index   : 200;
-	transition: height 0.5s;
+	z-index   : 300;
+	// transition: all 0.5s;
 	@include respond-to(tablet) {
-		position  : fixed;
-		height    : 6vw;
-		background: white;
-		width     : 88vw;
-		left      : 6vw;
-		right     : 6vw;
+		top   : 0;
+		height: 6vw;
+		width : 88vw;
+		left  : 6vw;
+		right : 6vw;
 	}
 
+	/**************************
+		Form
+	**************************/
+
 	form {
-		position  : relative;
-		float     : right;
-		top       : 3vmin;
-		right     : 20vmin;
-		bottom    : 0;
-		height    : 3em;
-		width: 3em;
-		z-index: 250;
-		background: transparent;
-		transition: all 1supposes;
+		position: relative;
+		float   : right;
+		top     : 3vmin;
+		right   : 28vmin;
+		bottom  : 0;
+		height  : 3em;
+		width   : 3em;
+		overflow: hidden;
+		// transition: transform 0.5s;
 		@include respond-to(tablet) {
-			top   : auto;
-			bottom: 0;
-			height: 6vw;
-			width : 30vw;
-			right : 0;
+			position: absolute;
+			top     : auto;
+			bottom  : 0;
+			right   : 0;
+			height  : $tSize;
+			width   : auto;
 		}
 		@include respond-to(laptop) {
 			bottom: -0.1rem;
-			width : 30vw;
-			right : 0;
+			height: $lSize;
 		}
-
-		#search-btn {
-			display       : inline-block;
-			vertical-align: middle;
-			height        : 3em;
-			width         : 3em;
-
-			&:hover {
-				cursor: pointer;
-			}
-			@include respond-to(tablet) {
-				display: none;
-				height : 3em;
-				width  : 3em;
-			}
-
-			svg {
-				height: 100%;
-				width : 100%;
-				fill  : $color5;
-				stroke: none;
-			}
+		@include respond-to(desktop) {
+			height: $dSize;
 		}
 	}
 
+	#search-btn {
+		display       : inline-block;
+		vertical-align: middle;
+		height        : 3em;
+		width         : 3em;
+
+		&:hover {
+			cursor: pointer;
+		}
+		@include respond-to(tablet) {
+			display: none;
+			height : 3em;
+			width  : 3em;
+		}
+
+		svg {
+			height: 100%;
+			width : 100%;
+			fill  : $color5;
+			stroke: none;
+			filter: drop-shadow( 0.1em 0.1em 0.35em rgba(0, 0, 0, 0.1));
+		}
+	}
+
+	/**************************
+		Search Field
+	**************************/
+
 	input {
-		-webkit-appearance: none;
-		border-radius     : 0;
+
 		position          : absolute;
 		display           : none;
 		bottom            : 0;
 		right             : 0;
+		height            : 1em;
 		background        : none;
 		border            : none;
+		outline           : none;
+		-webkit-appearance: none;
+		border-radius     : 0;
 		box-shadow        : none;
 		border-bottom     : 0.13rem solid $color5;
 		font-family       : "SubHead";
-		font-size         : 0.8rem;
-		line-height       : 0.8;
-		outline           : none;
-		width             : calc(40vw - 2em);
-		height: 1.1em;
+		font-size         : $pSize;
+		line-height       : 1;
 		color             : $color5;
-		z-index: 300;
-		transition        : all, 0.5s;
-		mix-blend-mode    : multiply;
+		transition        : all 0.5s;
 		@include respond-to(tablet) {
-			bottom        : 0;
-			display       : inline-block;
-			font-size     : 1.2em;
-			line-height   : 1.2;
-			padding-bottom: 0.1em;
-			width         : 30vw;
+			position   : relative; //make auto-width work...
+			display    : inline-block;
+			font-size  : $tSize;
+			font-weight: 900;
 		}
 		@include respond-to(laptop) {
-			font-size    : 4em;
-			font-weight: 900;
+			font-size    : $lSize;
 			border-bottom: 0.4rem solid $color5;
 		}
-		@include respond-to(deesktop) {
-			font-size: 5em;
-		}
-	}
-
-	input::-webkit-input-placeholder {
-		color: $color5;
-	}
-
-	input::-moz-placeholder {
-		color  : $color5;
-		opacity: 1;
-	}
-
-	input:-ms-input-placeholder {
-		color: $color5;
-	}
-
-	.lSearch {
-		position  : relative;
-		top       : 18vh;
-		right     : 0;
-		left      : 0;
-		width     : 90vw;
-		background: none;
-
-		input {
-			display: inline-block !important;
-			transition: font-size 0.1s;
-			width: 90vw;
-			height: 1em;
-			font-size:3em;
-		}
-
-		#close-btn {
-			font-size: 3em;
-		}
-		@include respond-to(tablet) {
-			right: 25vw;
-			left : auto;
-			width: 50vw;
-
-			input {
-				width        : 50vw;
-				border-bottom: 0.5rem solid $color5;
-			}
-		}
-		@include respond-to(laptop) {
-			input, #close-btn {
-				font-size: 4em;
-				font-weight: 900;
-			}
-		}
 		@include respond-to(desktop) {
-			input,
-			#close-btn {
-				font-size: 5em;
-			}
+			font-size: $dSize;
 		}
 	}
+
+	/**************************
+		Close Button
+	**************************/
 
 	#close-btn {
 		position      : absolute;
 		display       : inline-block;
 		vertical-align: middle;
-		right         : 0.5rem;
+		right         : 0;
 		bottom        : 0;
-		font-size     : 3em;
-		line-height   : 0.8;
-		color         : $color5;
+		// height        : 0.6em;
+		// width         : 0.6em;
+		height        : 1.2em;
+		width         : 1.2em;
+		font-size     : $pSize;
+		line-height   : 1;
 		opacity       : 0;
+		visibility    : hidden;
 		cursor        : pointer;
 		transition    : all 0.5s;
-		z-index: 301;
+		z-index       : 301;
+
+		path,
+		svg {
+			position    : absolute;
+			bottom      : 0;
+			right       : 0;
+			height      : 100%;
+			width       : 100%;
+			stroke      : $color5;
+			fill        : $color5;
+			stroke-width: 0.3em;
+			z-index     : 310;
+		}
+
+		svg {
+			height   : 70%;
+			width    : 70%;
+			bottom   : 40%;
+			right    : 40%;
+			transform: translate(50%, 50%);
+		}
 
 		&.active {
-			opacity: 1;
+			opacity   : 1;
+			visibility: visible;
 		}
 		@include respond-to(tablet) {
-			bottom     : 0;
-			font-size  : 1.5em;
-			line-height: 1.2;
+			// bottom     : 0.18em;
+			font-size  : $tSize;
+			font-weight: 900;
 		}
 		@include respond-to(laptop) {
-			font-size: 3em;
+			font-size: $lSize;
+
+			svg {
+				height: 45%;
+				width : 45%;
+				bottom: 30%;
+				right : 30%;
+			}
+		}
+		@include respond-to(desktop) {
+			font-size: $dSize;
 		}
 	}
 
-	#undo-search {
-		position   : absolute;
-		right      : 0.25rem;
-		top        : 1rem;
-		font-size  : 3rem;
-		font-weight: bold;
-		color      : $color3;
-		z-index    : 50;
+	/**************************
+		Search is active
+	**************************/
+
+	.lSearch {
+		position  : relative;
+		top       : 0;
+		right     : 5vw;
+		width     : 90vw;
+		background: none;
+		z-index   : 300;
+
+		input {
+			display: inline-block !important;
+			width  : 90vw;
+		}
+
+		#close-btn {
+			right     : 0.2em;
+			opacity   : 1;
+			visibility: visible;
+		}
+		@include respond-to(tablet) {
+			right: 25vw;
+			left : auto;
+			width: auto;
+
+			input {
+				width: 50vw;
+			}
+		}
 	}
 }
 
@@ -242,20 +258,22 @@ d88P     888  "Y88888  "Y888 "Y88P"   "Y8888P"   "Y88P"  888  888  888 88888P"
 //	box has focus, so a bit frustrating to style.
 
 ul.ui-autocomplete {
-	position      : absolute;
-	top           : 30vh !important;
-	left          : 5vw !important;
-	background    : none;
-	padding       : 0.25rem 0;
-	box-shadow    : none;
-	border        : none;
-	z-index       : 200;
+	position  : fixed;
+	top       : 0 !important;
+	left      : 5vw !important;
+	background: none;
+	padding   : 0.25rem 0;
+	box-shadow: none;
+	border    : none;
+	z-index   : 300;
+	margin-top: $tSize;
 	@include respond-to(tablet) {
-		top : calc(20vh + 5rem);
-		left: 26vw !important;
+		left      : 19vw !important;
+		margin-top: $tSize;
 	}
 	@include respond-to(laptop) {
-		top: calc(25vh + 5em);
+		left      : 19vw !important;
+		margin-top: $lSize;
 	}
 
 	&::-webkit-scrollbar {
@@ -277,30 +295,34 @@ ul.ui-autocomplete {
 		line-height   : 1;
 		mix-blend-mode: multiply;
 		font-family   : "HeaderAlt", "Header", arial, sans-serif;
-		font-size     : 3em;
+		font-size     : $pSize;
 		@include respond-to(tablet) {
-			font-size: 5em;
+			font-size  : $tSize;
 			font-weight: 900;
+		}
+		@include respond-to(laptop) {
+			font-size: $lSize;
+		}
+		@include respond-to(desktop) {
+			font-size: $dSize;
 		}
 
 		.highlight {
-			opacity: 1;
-			color: darken($color5, 25%);
-			font-weight: 900;
+			opacity        : 1;
+			color          : darken($color5, 25%);
+			font-weight    : 900;
 			text-decoration: none;
 			mix-blend-mode : multiply;
 		}
 
 		a {
-			color         : $color5;
-			mix-blend-mode: multiply;
-			font-family   : subhead;
-			border-bottom : none;
+			color                 : $color5;
+			mix-blend-mode        : multiply;
+			font-family           : subhead;
+			font-variant-ligatures: no-common-ligatures;
+			border-bottom         : none;
 
 			&:hover {}
-		}
-		@include respond-to(tablet) {
-			font-size: 2.5em;
 		}
 	}
 }
@@ -363,14 +385,60 @@ main.team {
 		}
 	}
 
-	#contact-info {
+	#footer {
 		position: relative;
-		padding : 1vw 5vw;
 		width   : 100%;
 
 		h1,
 		p {
 			color: $color5;
+		}
+
+		h1 {
+			font-family: "HeaderAlt", "Header", arial, sans-serif;
+			font-weight: 900;
+			display    : inline-block;
+		}
+	}
+
+	#contact-info {
+		position: relative;
+		display : inline-block;
+		padding : 1vw 5vw;
+	}
+
+	#connect {
+		position  : absolute;
+		top       : 0;
+		right     : 0;
+		padding   : 1vw 5vw;
+		text-align: center;
+	}
+
+	#social-icons {
+		display        : flex;
+		flex-direction : row;
+		flex-wrap      : nowrap;
+		justify-content: space-between;
+
+		a {
+			display     : inline-block;
+			width       : 1.5em;
+			height      : 1.5em;
+			margin-right: 0.2em;
+		}
+
+		svg {
+			position: relative;
+			height  : 100%;
+			width   : 100%;
+			fill    : $color5;
+		}
+
+		path {
+			position: relative;
+			height  : 100%;
+			width   : 100%;
 		}
 	}
 }
@@ -394,18 +462,14 @@ section[id^="flex-grid-"] {
 
 #page-info {
 	z-index   : 100;
-	margin-top: 4em;
+	margin-top: 2em;
 	width     : 100%;
-
-	@include respond-to(tablet) {
-		margin-top: 2em;
-	}
 
 	div {
 		background   : white;
 		padding      : 2em 2em 3em;
 		margin-bottom: 3em;
-		width        : 100%;
+		width        : 30em;
 		color        : $color5;
 
 		h1 {
@@ -428,19 +492,19 @@ section[id^="flex-grid-"] {
 			display: none;
 		}
 		@include respond-to(tablet) {
+			margin-top : 2em;
 			margin-left: 5vw;
-			width      : 45vw;
 		}
 		@include respond-to(desktop) {
 			margin-left: 10vw;
-			width      : 20vw;
 		}
 	}
-	@include respond-to(laptop) {
-		width: 50vw;
+	@include respond-to(tablet) {
+		margin-top: 2em;
+		width     : calc(5vw + 30em);
 	}
 	@include respond-to(desktop) {
-		width: 30vw;
+		width: calc(10vw + 30em);
 	}
 }
 
@@ -461,29 +525,51 @@ section[id^="flex-grid-"] {
 	}
 }
 
+/************************************************
+Y88b   d88P
+ Y88b d88P
+  Y88o88P
+   Y888P  .d88b.   8888b.  888d888 .d8888b
+    888  d8P  Y8b     "88b 888P"   88K
+    888  88888888 .d888888 888     "Y8888b.
+    888  Y8b.     888  888 888          X88
+    888   "Y8888  "Y888888 888      88888P'
+************************************************/
+
 #year-links {
-	position: absolute;
-	top     : 2vw;
-	right   : 5.5vw;
-	z-index : 300;
+	position  : fixed;
+	top       : 14vw;
+	right     : 5.5vw;
+	z-index   : 300;
+	transition: top 0.5s;
 	@include respond-to(tablet) {
 		position: fixed;
-		top     : 20vw;
-		right   : 4vw;
-		height  : 50vh;
+		top     : 7vh;
+		right   : 5.5vw;
+		// height  : 25vh;
+	}
+	@include respond-to(laptop) {
+		top: 15vh;
 	}
 
 	.mobile-year-menu {
 		display       : inline-block;
 		vertical-align: middle;
+		font-size     : $pSize;
+		height        : 1.5em;
+		line-height   : 1.5em;
+		color         : $color5;
+		text-shadow   : 0.1em 0.1em 0.3em rgba(0, 0, 0, 0.1);
 		@include respond-to(tablet) {
-			display: none;
+			display    : none;
+			text-shadow: none;
+			line-height: 1;
+			height     : auto;
 		}
 
 		.arrow-down {
 			display       : inline-block;
 			vertical-align: middle;
-			margin-left   : 0.25em;
 			width         : 0;
 			height        : 0;
 			border-left   : 0.3em solid transparent;
@@ -495,6 +581,7 @@ section[id^="flex-grid-"] {
 	ul {
 		opacity         : 0;
 		transform-origin: top center;
+		background      : white;
 		transform       : scaleY(0);
 		list-style      : none;
 		transition      : all 0.5s;
@@ -510,6 +597,7 @@ section[id^="flex-grid-"] {
 			flex-wrap      : nowrap;
 			justify-content: space-between;
 			align-items    : center;
+			background     : none;
 			height         : 100%;
 			transform      : scaleY(1);
 			opacity        : 1;
@@ -519,7 +607,7 @@ section[id^="flex-grid-"] {
 	li {
 		list-style: none;
 		@include respond-to(tablet) {
-			margin-bottom: 2rem;
+			margin-bottom: 0.5rem;
 		}
 	}
 
@@ -529,6 +617,8 @@ section[id^="flex-grid-"] {
 		font-family  : subhead;
 		opacity      : 1;
 		border-bottom: none;
+		font-size    : $pSize;
+		line-height  : 1;
 
 		&.active {
 			&::before {
@@ -540,7 +630,7 @@ section[id^="flex-grid-"] {
 		&::before {
 			content         : '';
 			position        : absolute;
-			bottom          : -0.1em;
+			bottom          : 0;
 			display         : block;
 			width           : 100%;
 			height          : 0.1em;
@@ -582,71 +672,76 @@ section[id^="flex-grid-"] {
 	padding       : 0;
 	z-index       : 200;
 	mix-blend-mode: multiply;
-	transition    : transform 0.1s;
-	//The link hides the overflow
+
 	a {
-		position  : relative;
-		display   : block;
-		top       : 0;
-		left      : 0;
-		height    : 100%;
-		width     : 100%;
-		overflow  : hidden;
-		opacity   : 1;
-		transition: none;
+		//Links hide the overflow
+		position     : relative;
+		display      : block;
+		top          : 0;
+		left         : 0;
+		height       : 100%;
+		width        : 100%;
+		overflow     : hidden;
+		opacity      : 1;
+		transition   : none;
+		border-bottom: none;
 
 		&.scrollHide {
-			opacity: 0;
+			@include respond-to(tablet) {
+				opacity   : 0;
+				transition: opacity 0.1s;
+			}
 		}
 
 		&::before {
 			display: none;
 		}
+		@include respond-to(tablet) {
+			&:hover {
+				img {
+					opacity: 0.2;
+				}
 
-		&:hover {
-			img {
-				opacity: 0.2;
-			}
-
-			&::before {
-				display: none;
+				&::before {
+					display: none;
+				}
 			}
 		}
 	}
-	//Images that are bigger than the container will be centered by this element
+
 	.entry-thumb-cont {
-		position      : relative;
-		display       : inline-block;
-		margin-left   : 50%;
-		transform     : translateX(-50%);
-		width         : auto;
-		height        : 100%;
-		margin-top    : 0;
-		mix-blend-mode: multiply;
+		//This will center images bigger than the container.
+		position   : relative;
+		display    : inline-block;
+		margin-left: 50%;
+		transform  : translateX(-50%);
+		width      : auto;
+		height     : 100%;
+		margin-top : 0;
 	}
-	//Because of the hover scaling, the centering couldn't happen on the image.
+
 	img,
 	video {
-		position        : relative;
-		display         : block;
-		transform-origin: center center;
-		width           : auto;
-		height          : 100%;
-		opacity         : 0.5;
-		transition      : all 0.5s;
+		//These are inside a parent b/c of multiply effect. Maybe removable.
+		position  : relative;
+		display   : block;
+		width     : auto;
+		height    : 100%;
+		opacity   : 0.5;
+		transition: all 0.5s;
 	}
 
 	.entry-title {
-		position  : absolute;
-		top       : 50%;
-		left      : 0;
-		right     : 0;
+		position      : absolute;
+		top           : 50%;
+		left          : 0;
+		right         : 0;
 		letter-spacing: 0.15em;
-		transform : translateY(-30%);
-		text-align: center;
-		padding   : 0;
-		z-index   : 50;
-		transition: all 0.5s;
+		transform     : translateY(-50%);
+		text-align    : center;
+		padding       : 0;
+		z-index       : 50;
+		transition    : all 0.5s;
 
 		h1 {
 			font-size  : 1.6em;
@@ -679,10 +774,10 @@ section[id^="flex-grid-"] {
 	}
 	@include respond-to(laptop) {
 		mix-blend-mode: multiply;
-	}
 
-	&:hover {
-		z-index: 200 !important;
+		&:hover {
+			z-index: 200 !important;
+		}
 	}
 }
 
@@ -706,7 +801,7 @@ section[id^="flex-grid-"] {
 	width     : 100%;
 	height    : 20vh;
 	margin-top: 1.5vh;
-	opacity   : 0;
+	// opacity   : 0;
 
 	.entry-thumb-cont {
 		width     : 80vw;
@@ -730,6 +825,10 @@ section[id^="flex-grid-"] {
 
 	.entry-title {
 		transition: opacity 0.5s;
+		@include respond-to(tablet) {
+			height     : 100%;
+			padding-top: 1em;
+		}
 	}
 
 	.entry-tags {
@@ -758,13 +857,6 @@ section[id^="flex-grid-"] {
 		border-bottom : 0.2em solid white;
 		z-index       : 202;
 		transition    : opacity 0.5s;
-	}
-
-	.entry-title {
-		@include respond-to(tablet) {
-			height     : 100%;
-			padding-top: 1em;
-		}
 	}
 
 	&:not(.blank) {
@@ -804,18 +896,19 @@ section[id^="flex-grid-"] {
 	width     : 100%;
 	margin-top: 1.5vh;
 
-	&.v16-9 {
+	&.v16-9,
+	&.v21-9 {
 		height: 56.25vw;
 	}
 
-	&.v21-9 {
-		height: 42.86vw;
-
-		video {
-			margin-top: -6.75%;
-			// opacity   : 1;
-		}
-	}
+	// &.v21-9 {
+	// 	height: 42.86vw;
+	//
+	// 	video {
+	// 		margin-top: -6.75%;
+	// 		// opacity   : 1;
+	// 	}
+	// }
 	@include respond-to(phone) {
 		width: 88vw;
 
@@ -866,32 +959,35 @@ section[id^="flex-grid-"] {
 	}
 
 	.entry-title {
-		position: absolute;
-		top     : 0;
-		left    : 0;
-		display : block;
-		height  : 100%;
+		@include respond-to(tablet) {
+			height: 100%;
+			top   : 0;
+			width : auto;
+		}
 
 		h1 {
-			display      : inline-block;
-			height       : 100%;
-			padding      : calc(25% - 1.3em) 0;
-			border-bottom: 0.1em solid transparent;
-			// opacity      : 1;
-			transition   : all 0.5s;
+			@include respond-to(tablet) {
+				display      : inline-block;
+				height       : 100%;
+				padding      : calc(25% - 1.3em) 0;
+				border-bottom: 0.1em solid transparent;
+				// opacity      : 1;
+				transition   : all 0.5s;
+			}
 		}
 	}
 
 	.entry-description {
 		position   : absolute;
-		top        : 5%;
+		top        : 50%;
 		left       : 10%;
-		line-height: 1;
+		line-height: 1.6;
 		opacity    : 0;
 		width      : 80%;
 		height     : auto;
 		color      : white;
 		z-index    : 50;
+		transform  : translateY(-50%);
 		transition : all 0.5s;
 	}
 
@@ -906,19 +1002,20 @@ section[id^="flex-grid-"] {
 		z-index       : 202;
 		transition    : opacity 0.5s;
 	}
+	@include respond-to(tablet) {
+		&:hover {
+			.entry-description,
+			.entry-meet {
+				opacity: 1;
+			}
 
-	&:hover {
-		.entry-description,
-		.entry-meet {
-			opacity: 1;
-		}
+			video {
+				// opacity: 0.3;
+			}
 
-		video {
-			// opacity: 0.3;
-		}
-
-		.entry-title h1 {
-			opacity: 0;
+			.entry-title h1 {
+				opacity: 0;
+			}
 		}
 	}
 }

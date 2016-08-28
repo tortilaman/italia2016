@@ -34,55 +34,34 @@
 					/>
 				</svg>
 			</div>
-			<input id="search" type="search" placeholder="type to search">
-			<span id="close-btn">x</span>
+			<div id="close-btn">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 71.65 71.65">
+			    <path d="M7.07 7.07l57.51 57.51m0-57.51L7.07 64.58"/>
+				</svg>
+			</div>
+			<input id="search" type="search" size="13" placeholder="type to search">
 		</form>
 	</div>
 
-	{# ======================= Find Entries Logic ======================= #}
+	{# ===================== Find Entries Logic ===================== #}
 	{# One year at a time #}
 	{% cache %}
+	{# {% cache unless craft.config.devMode %} #}
 		{% for year in years %}
 			{# Find your entries #}
-			{% set designerEntries = craft.entries({
+			{% set entries = craft.entries({
 				section: 'design',
-				type: 'designer',
+				type: ['designer', 'shortFilm'],
 				videoYear: year,
 				with: [
 					'disciplines',
 					'secondaryTags',
-					'intPortrait'
-				]
-			}) %}
-			{% set filmEntries = craft.entries({
-				section: 'design',
-				type: 'shortFilm',
-				videoYear: year,
-				with: [
-					'disciplines',
-					'secondaryTags',
+					'intPortrait',
 					'videoThumbnail',
 					'iosThumbnail'
 				]
 			}) %}
-			{% set filmOffset = designerEntries|length // filmEntries|length %}
-			{% set entries = [] %}
-			{# Rearrange entries #}
-			{% if filmEntries|length and designerEntries|length %}
-				{% for i in 0..(filmEntries|length - 1) %}
-					{# Designer Entries #}
-					{% set entries = entries|merge( designerEntries[i * filmOffset : filmOffset] ) %}
-					{# Film Entry #}
-					{% set entries = entries|merge([filmEntries.nth(i)]) %}
-				{% endfor %}
-				{% set entries = entries|merge( designerEntries[filmOffset * filmEntries|length : filmOffset] ) %}
-				{% elseif designerEntries|length and filmEntries|length == 0 %}
-				{# No short films in this year #}
-				{% set entries = designerEntries %}
-				{% elseif filmEntries|length and designerEntries|length == 0 %}
-				{% set entries = filmEntries %}
-			{% endif %}
-			{# ======================= Display Entries ======================= #}
+			{# =================== Display Entries =================== #}
 			{% if entries | length %}
 				{% set entryYears = entryYears|merge([year]) %}
 				<section id="flex-grid-{{year}}" class="flexbox-grid clearfix">
@@ -108,20 +87,31 @@
 								{% set iosThumb = entry.iosThumbnail[0] ?? null %}
 							{% endif %}
 							{% if entry.type != 'shortFilm' and image %}
-								{% set transformedJPG = craft.imager.transformImage(
-									image, [{ width: 500 }, { width: 300 }, { width: 150 }],
-									{ ratio: 2/3, position: image.focusPctX ~ '% ' ~ image.focusPctY ~ '%' })
+								{% set transformedPortrait = craft.imager.transformImage(
+									image, [
+									{ width: 288, pngCompressionLevel: 4 },
+									{ width: 250 },
+									{ width: 150 }
+									], {ratio: 2/3, position: image.focusPctX ~ '% ' ~ image.focusPctY ~ '%'})
+								%}
+								{% set transformedLandscape = craft.imager.transformImage(
+									image, [
+									{ width: 500},
+									{ width: 288, pngCompressionLevel: 4}
+									], {ratio: 4/1, position: image.focusPctX ~ '% ' ~ image.focusPctY ~ '%'})
 								%}
 							{% endif %}
-							<a href="{{ entry.url }}" class="clearfix">
+							<a href="{{ entry.children|length ? entry.children.first.url : entry.url }}">
 								<div class="entry-thumb-cont">
 									{% if entry.type == 'shortFilm' %}
-										<video autoplay loop muted preload data-poster="{{ iosThumb.url }}">
-											<source data-src="{{ video.url }}" type="video/mp4" data-title="{{ entry.title }}">
+										<video class="" autoplay loop muted preload poster="{{ iosThumb.url }}">
+											<source src="{{ video.url }}" type="video/mp4" data-title="{{ entry.title }}">
 										</video>
 									{% else %}
-											<img data-srcset="{{ craft.imager.srcset(transformedJPG) }}"
-												sizes="(min-width: 1024px) 12vw, (min-width: 700px) 18vw, (min-width: 480) 42vw, 100vw" data-src="{{image.url}}"/>
+										<img class="lazyload"
+											data-sizes="(min-width: 1024px) 12vw, (min-width: 700px) 18vw, (min-width: 480px) 42vw, 80vw"
+											data-srcset="{{ craft.imager.srcset(transformedPortrait) }}"
+											srcset="{{ craft.imager.base64Pixel(16, 9) }}" />
 									{% endif %}
 								</div>
 								{% if entry.type == 'shortFilm' %}
@@ -175,6 +165,6 @@
 
 {% block foot %}
 	{{ parent() }}
-	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-	<script src="/js/designIndex.js"></script>
+	{% includeJsFile "https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" %}
+	{% includeJsFile "/js/designIndex.js" %}
 {% endblock %}

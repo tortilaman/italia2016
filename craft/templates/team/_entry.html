@@ -44,9 +44,8 @@ _#}
 	{% include "_includes/video_header" %}
 	{# ============= MATRIX CONTENT ================ #}
 	{% include "_includes/matrix_body" %}
-	<script src="http://d3js.org/d3.v3.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-	<script src="/js/stackGrid.js"></script>
-	<script src="/js/videoPlayer.js"></script>
-	<script src="/js/interview.js"></script>
+	{% includeJsFile "http://d3js.org/d3.v3.min.js" %}
+	{% includeJsFile "/js/stackGrid.js" %}
+	{% includeJsFile "/js/videoPlayer.js" %}
+	{% includeJsFile "/js/interview.js" %}
 {% endblock %}

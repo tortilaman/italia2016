@@ -32,12 +32,8 @@ Y88b   d88P 8888b.  888d888 888  8888b.  88888b.  888  .d88b.  .d8888b
 }%}
 
 {############ PLAYLIST VIDEOS ############}
-{% if entry.type == 'designer' and entry.hasDescendants() %}
-	{% set siblings = entry.children %}
-{% elseif entry.type == 'interviewVideo' %}
+{% if entry.type == 'interviewVideo' and entry.videoYear == '2016' %}
 	{% set siblings = entry.parent.children %}
-{% elseif entry.type == 'italia' %}
-	{% set siblings = craft.entries.section('italia') %}
 {% elseif entry.type == 'team' %}
 	{% set siblings = craft.entries.section('team') %}
 {% endif %}
@@ -54,22 +50,33 @@ Y88b   d88P 8888b.  888d888 888  8888b.  88888b.  888  .d88b.  .d8888b
 
 {############ RELATED VIDEOS ############}
 {# What the suggested posts will be related based on #}
-{% if entry.section == 'design' %}
+{% set debug = "blank" %}
+{% if entry.section.handle == 'design' %}
+	{% set debug = "design" %}
 	{% if entry.secondaryTags|length > 1 %}
 		{% set tag = shuffle(entry.secondaryTags|merge(entry.disciplines))[0] %}
+		{% set debug = "multiple secondary tags: "%}
 	{% elseif entry.secondaryTags|length %}
 		{% set tag = shuffle([entry.secondaryTags]|merge(entry.disciplines))[0] %}
+		{% set debug = "one secondary tags: "%}
 	{% elseif entry.disciplines|length %}
 		{% set tag = shuffle(entry.disciplines)[0] %}
+		{% set debug = tag %}
+	{% else %}
+		{% set debug = "cultural film" %}
 	{% endif %}
-	{% set relatedEntries = craft.entries.section('design').type('interviewVideo').relatedTo(tag).id(siblingIDsString is defined ? 'and, not '~siblingIDsString: 'not'~entry.id).limit(2)
-	%}
-{% elseif entry.section == 'team' %}
-	{% set relatedEntries = craft.entries.section('team').id('not'~entry.id).limit(2) %}
-{% elseif entry.section == 'italia' %}
-	{% set relatedEntries = craft.entries.section('italia').id('not'~entry.id).limit(2) %}
+	{% set relatedEntries = craft.entries.section('design').type(['interviewVideo', 'shortFilm']).relatedTo(tag).id(siblingIDsString is defined ? 'and, not '~siblingIDsString: 'not '~entry.id).order('RAND()').limit(2) %}
+{% elseif entry.section.handle == 'team' %}
+	{% set debug = "team" %}
+	{% set relatedEntries = craft.entries.section('team').id('not'~entry.id).order('RAND()').limit(2) %}
 {% else %}
-	{% set relatedEntries = craft.entries.section('design').type('interviewVideo').id('not'~entry.id).limit(2) %}
+	{% set debug = "home / other?" %}
+	{% set relatedEntries = craft.entries({
+		section: 'design',
+		type: 'interviewVideo',
+		order: 'RAND()',
+		limit: 2
+	}) %}
 {% endif %}
 
 {# OOOOOH, get to make some funny related text #}
@@ -95,10 +102,11 @@ Y88b   d88P 8888b.  888d888 888  8888b.  88888b.  888  .d88b.  .d8888b
 {# {% cache unless craft.config.devMode %} #}
 {% cache %}
 <section id="v-header" class="{{bodyClass}}-section">
-	<div id="v-middle"class="{{entry.videoYear >= '2015' ? 'v21-9' : 'v16-9'}}">
+	{# <span>{{debug}}</span> #}
+	<div id="v-middle"class="{{entry.videoYear >= '2015' ? 'v21-9' : 'v16-9'}} {{bodyClass == 'home autoplay' ? 'homePlayer'}}">
 		<div id="v-container">
 			{% if entry.videoID|length %}
-				<video id="v-player" {% if entry.type != 'interviewVideo' %} poster="{{entry.videoThumbnail|length ? entry.videoThumbnail.first().url}}" {% endif %}>
+				<video id="v-player" poster="{{entry.type == 'shortFilm' ? entry.iosThumbnail.first().url : entry.videoThumbnail.first().url }}" preload="none">
 					<source src="{{entry.videoID}}" type="video/mp4" />
 					Oops! Your browser doesn't support the video tag. Consider downloading <a href="https://www.google.com/chrome/browser/desktop/index.html">Chrome</a>.
 				</video>
@@ -120,40 +128,30 @@ Y88b   d88P 8888b.  888d888 888  8888b.  88888b.  888  .d88b.  .d8888b
 				{# Interviewee / Video Heading #}
 				<h1 id="v-interviewee">{{entry.type =='interviewVideo' ? entry.parent : entry.title}}{{entry.type =='interviewVideo' ? [': ', entry]|join}} {% if playlist == true %}{{ ['(', siblingIDs|indexOf(entry.id) + 1, '/', siblings|length, ')' ]|join }}{% endif %}</h1>
 				{# Previous Field School Link #}
-				<a href="{{pastSchoolURLS[entry.videoYear.value]}}" class="v-prev-link text" target="_blank">{{entry.videoYear.value is even ? 'italia ' : 'dutch '}} {{entry.videoYear}}</a>
+				<a {% if entry.videoYear.value != 2016 %} href="{{pastSchoolURLS[entry.videoYear.value]}}" {% endif %} class="v-prev-link text" target="_blank">{{entry.videoYear.value is even ? 'italia ' : 'dutch '}} {{entry.videoYear}}</a>
 {% endcache %}
 					{# Social Media Sharing Buttons #}
 					<div id="v-share">
-						<a class="v-share-vi">
-							<svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35.5 28.6">
-							  <path id="vimeo" d="M16.1 28.6h-.2c-.1 0-.1 0-.2-.1-1.1-.1-1.9-.6-2.6-1.3-1.1-1.2-1.9-2.7-2.4-4.2-.8-2.6-1.5-5.2-2.3-7.8-.5-1.6-.9-3.3-1.7-4.8-.3-.7-.7-1.3-1.3-1.8-.5-.5-.9-.6-1.5-.2-.4.2-.7.4-1.1.6-.3.2-.7.4-1.1.7C1.1 9 .6 8.4 0 7.7v-.1c.2-.1.3-.2.5-.4 2-1.6 4-3.3 6.1-4.9.8-.7 1.8-1.2 2.8-1.7C11.1-.1 13 .5 14.2 2c.6.8.9 1.7 1.1 2.6.4 1.9.7 3.9 1.1 5.8.3 1.9.7 3.9 1.5 5.7.2.6.6 1.2.9 1.7.4.5.9.6 1.5.2.3-.2.6-.4.8-.7 1.5-1.7 2.7-3.5 3.7-5.6.4-.8.6-1.7.5-2.7-.1-.8-.4-1.4-1.2-1.7-.6-.2-1.2-.2-1.8-.1-.6.1-1.3.3-2 .4.4-.8.7-1.7 1.1-2.4.8-1.6 1.9-2.9 3.4-3.8C26.9.1 29.2-.2 31.6.1c1.8.3 3 1.3 3.5 3 .6 1.9.5 3.7 0 5.6-.6 2-1.6 3.8-2.7 5.6-1.5 2.3-3.1 4.4-4.9 6.4-1.7 2-3.6 4-5.8 5.6-1.3 1-2.8 1.8-4.4 2.2-.4 0-.8.1-1.2.1z"/>
+						<a class="v-share-vi" href="{{entry.vimeoLink}}" target="_blank">
+							<svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 33">
+							  <path id="vimeo" d="M16.1 28.6h-.2c-.1 0-.1 0-.2-.1-1.1-.1-1.9-.6-2.6-1.3-1.1-1.2-1.9-2.7-2.4-4.2-.8-2.6-1.5-5.2-2.3-7.8-.5-1.6-.9-3.3-1.7-4.8-.3-.7-.7-1.3-1.3-1.8-.5-.5-.9-.6-1.5-.2-.4.2-.7.4-1.1.6-.3.2-.7.4-1.1.7C1.1 9 .6 8.4 0 7.7v-.1c.2-.1.3-.2.5-.4 2-1.6 4-3.3 6.1-4.9.8-.7 1.8-1.2 2.8-1.7C11.1-.1 13 .5 14.2 2c.6.8.9 1.7 1.1 2.6.4 1.9.7 3.9 1.1 5.8.3 1.9.7 3.9 1.5 5.7.2.6.6 1.2.9 1.7.4.5.9.6 1.5.2.3-.2.6-.4.8-.7 1.5-1.7 2.7-3.5 3.7-5.6.4-.8.6-1.7.5-2.7-.1-.8-.4-1.4-1.2-1.7-.6-.2-1.2-.2-1.8-.1-.6.1-1.3.3-2 .4.4-.8.7-1.7 1.1-2.4.8-1.6 1.9-2.9 3.4-3.8C26.9.1 29.2-.2 31.6.1c1.8.3 3 1.3 3.5 3 .6 1.9.5 3.7 0 5.6-.6 2-1.6 3.8-2.7 5.6-1.5 2.3-3.1 4.4-4.9 6.4-1.7 2-3.6 4-5.8 5.6-1.3 1-2.8 1.8-4.4 2.2-.4 0-.8.1-1.2.1z" />
 							</svg>
 						</a>
 						<a class="v-share-fb">
-							<svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17.3 37.1">
-							  <path id="facebook" d="M16.6 18.6h-5.2v18.6H3.7V18.6H0V12h3.7V7.8c0-3 1.4-7.8 7.8-7.8h5.7v6.4h-4.1c-.7 0-1.6.3-1.6 1.8V12h5.9l-.8 6.6z"/>
+							<svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 40">
+							  <path id="facebook" d="M16.6 18.6h-5.2v18.6H3.7V18.6H0V12h3.7V7.8c0-3 1.4-7.8 7.8-7.8h5.7v6.4h-4.1c-.7 0-1.6.3-1.6 1.8V12h5.9l-.8 6.6z" />
 							</svg>
 						</a>
 						<a class="v-share-tw" href="https://twitter.com/intent/tweet?url={{entry.url}}&hashtags=italiaDesign">
-							<svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35.9 29.2">
+							<svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 35">
 							  <path id="twitter" d="M32.2 7.3v1c0 9.7-7.4 21-21 21-4.2 0-8-1.2-11.3-3.3.7-.1 1.3 0 1.9 0 3.5 0 6.6-1.2 9.1-3.2-3.2 0-5.9-2.2-6.9-5.1.4.1.9.1 1.4.1.7 0 1.3-.1 1.9-.3-3.4-.7-5.9-3.7-5.9-7.2v-.1c1 .6 2.1.9 3.3.9-2-1.3-3.3-3.6-3.3-6.1 0-1.4.4-2.6 1-3.7C6.1 5.8 11.6 8.7 17.7 9c-.1-.5-.2-1.1-.2-1.7 0-4.1 3.3-7.4 7.4-7.4 2.1 0 4 .9 5.4 2.3 1.7-.3 3.3-.9 4.7-1.8-.6 1.7-1.7 3.2-3.2 4.1 1.5-.2 2.9-.6 4.2-1.2-1.1 1.6-2.3 2.9-3.8 4z"/>
 							</svg>
 						</a>
 					</div>
 				</div>
 {% cache %}
-				{#{% if entry.type == 'designer' and entry.hasDescendants() == true %}#}
-					{# ========= Initial play button ============ #}
-					{#<div class="v-init-play">
-						<a>
-							<div class="v-init-play-btn"></div>
-							<h4 class="v-init-play-label">Watch Playlist</h4>
-						</a>
-					</div>
-				{% endif %}#}
-{# {% endcache %} #}
 				{# ========= End of video interface ============ #}
-				<div class="v-ended oHidden" data-url="{{siblings is defined and nextChaptInd < siblings|length ? siblings[nextChaptInd].url}}#v-header">
+				<div class="v-ended oHidden" data-url="{{siblings is defined and nextChaptInd < siblings|length ? siblings[nextChaptInd].url}}?autoplay" data-plist="{{playlist and nextChaptInd != siblings | length ? true : false}}">
 {% endcache %}
 					{% if playlist == true and nextChaptInd != siblings|length %}
 {% cache %}
@@ -165,25 +163,28 @@ Y88b   d88P 8888b.  888d888 888  8888b.  88888b.  888  .d88b.  .d8888b
 					{% else %}
 						<span>{{ relatedMessage[random(relatedMessage|length - 1)] }}</span>
 					{% endif %}
-{% cache %}
 					<div class="v-suggestions">
 						{% for entry in relatedEntries %}
-							{# {% if entry.type == "interviewVideo" %} #}
+							{% if entry.type == 'interviewVideo' %}
 								{% set image = entry.parent.intPortrait.first() %}
-							{# {% elseif entry.type == 'designer' %}
+							{% elseif entry.type == 'designer' %}
 								{% set image = entry.intPortrait.first() %}
 							{% elseif entry.type == 'shortFilm' %}
 								{% set image = entry.iosThumbnail.first() %}
-							{% endif %} #}
+							{% elseif entry.section.handle == 'team' %}
+								{% set image = entry.intPortrait.first() %}
+							{% endif %}
 							{% set transformedPNG = craft.imager.transformImage(
 								image, [{width: 400}, { width: 300 }, { width: 150 }],
 								{ ratio: 16/9, position: image.focusPctX ~ '% ' ~ image.focusPctY ~ '%' })
 							%}
 							<div class="v-suggestion">
-								<a href="{{entry.url}}#v-header">
+								<a href="{{entry.url}}?autoplay">
 									<div class="titles-cont">
 										<h1>{{entry.title}}</h1>
-										<h2>{{entry.parent.title}}</h2>
+										{% if entry.parent|length %}
+											<h2>{{entry.parent.title}}</h2>
+										{% endif %}
 									</div>
 								</a>
 								<div class="bg">
@@ -192,19 +193,20 @@ Y88b   d88P 8888b.  888d888 888  8888b.  88888b.  888  .d88b.  .d8888b
 								</div>
 							</div>
 						{% endfor %}
+{% cache %}
 					</div>
 				</div>
 				{# ========= Video Controls ============ #}
 				{% if playlist == true %}
 					{% if chaptIndex >= 1 and siblings|length > 1 %}
-						<a class="v-prevVid" href="{{siblings[chaptIndex - 1].url}}">
+						<a class="v-prevVid" href="{{siblings[chaptIndex - 1].url}}?autoplay">
 							<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 53 146.7">
 								<path id="Chevron-L" class="st0" d="M47.9 0L53 3.3 7.2 73.4l45.8 70-5.1 3.3L0 73.4z"/>
 							</svg>
 						</a>
 					{% endif %}
 					{% if nextChaptInd < siblings|length %}
-						<a class="v-nextVid" href="{{siblings[nextChaptInd].url}}">
+						<a class="v-nextVid" href="{{siblings[nextChaptInd].url}}?autoplay">
 							<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 53 146.7">
 								<path id="Chevron-R" class="st0" d="M5 146.7l-5-3.3 45.8-70L0 3.3 5 0l48 73.4z"/>
 							</svg>
@@ -215,10 +217,10 @@ Y88b   d88P 8888b.  888d888 888  8888b.  88888b.  888  .d88b.  .d8888b
 				<div class="v-controls">
 					<div class="v-play-btn-cont js-button">
 						<button class="v-play-btn">
-							<svg width="100%" height="100%" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg">
+							<svg width="100%" height="100%" viewBox="6 6 22 22" version="1.1" xmlns="http://www.w3.org/2000/svg">
 								<defs>
-									<path id="pause-icon" data-state="playing" d="M11,10 L17,10 17,26 11,26 M20,10 L26,10 26,26 20,26" />
-									<path id="play-icon"  data-state="paused"  d="M11,10 L18,13.74 18,22.28 11,26 M18,13.74 L26,18 26,18 18,22.28" />
+									<path id="pause-icon" data-state="playing" d="M11,10 L17,10 17,26 11,26 M20,10 L26,10 26,26 20,26"/>
+									<path id="play-icon"  data-state="paused"  d="M11,10 L18,13.74 18,22.28 11,26 M18,13.74 L26,18 26,18 18,22.28"/>
 								</defs>
 								<use xlink:href="#play-icon" />
 							</svg>
@@ -228,10 +230,10 @@ Y88b   d88P 8888b.  888d888 888  8888b.  88888b.  888  .d88b.  .d8888b
 						<a href="#!">
 							<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 								 viewBox="0 0 209 208" enable-background="new 0 0 209 208" xml:space="preserve">
-								<polygon id="TL" points="30,89 30,30 90,30 90,0 0,0 0,89 	"/>
-								<polygon id="BL" points="30,119 0,119 0,208 90,208 90,178 30,178 	"/>
-								<polygon id="TR" points="179,89 209,89 209,0 120,0 120,30 179,30 	"/>
-								<polygon id="BR" points="179,119 179,178 120,178 120,208 209,208 209,119 	"/>
+								<polygon id="TL" points="30,89 30,30 90,30 90,0 0,0 0,89"/>
+								<polygon id="BL" points="30,119 0,119 0,208 90,208 90,178 30,178"/>
+								<polygon id="TR" points="179,89 209,89 209,0 120,0 120,30 179,30"/>
+								<polygon id="BR" points="179,119 179,178 120,178 120,208 209,208 209,119"/>
 							</svg>
 						</a>
 					</div>

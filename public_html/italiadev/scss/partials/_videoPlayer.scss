@@ -47,7 +47,7 @@ span.v-close-btn {
 	@include respond-to(tablet) {
 		margin     : 0 0 0 6vw;
 		padding-top: 8vw;
-		width      : 90vw;
+		width      : 88vw;
 		max-width  : 100%;
 		box-shadow : none;
 	}
@@ -89,11 +89,11 @@ main.home #v-header {
 	@include respond-to(laptop) {
 		#play-btn {
 			position: absolute;
-			bottom: 0.2em;
-			left: 0.2em;
-			height: 6em;
-			width: 6em;
-			z-index: 250;
+			bottom  : 0.2em;
+			left    : 0.2em;
+			height  : 6em;
+			width   : 6em;
+			z-index : 250;
 
 			#play-icon {
 				fill: $color5;
@@ -116,43 +116,6 @@ main.home #v-header {
 	}
 }
 
-.v16-9 #v-container:-webkit-full-screen, .v21-9 #v-container:-webkit-full-screen {
-	background-color: black;
-	margin-top: 0;
-	width: 100vw;
-
-	video {
-		position: relative;
-		width: 100vw;
-	}
-
-	#v-ui {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-	}
-}
-
-.v21-9 #v-container:-webkit-full-screen {
-	height: 42.857vw;
-
-	video {
-		top: -6.2vw;
-		height: 56.25vw;
-	}
-}
-
-.v16-9 #v-container:-webkit-full-screen {
-	height: 56.25vw;
-
-	video {
-		top: 0;
-		height: 56.25vw;
-	}
-}
-
 /*********************************************************
 
 8888888b.           888    d8b
@@ -166,6 +129,51 @@ main.home #v-header {
 
 *********************************************************/
 
+/*****************
+	Fullscreen
+*****************/
+.v16-9 #v-container:-webkit-full-screen,
+.v21-9 #v-container:-webkit-full-screen {
+	background-color: black;
+	margin-top      : 0;
+	width           : 100vw;
+
+	video {
+		position: relative;
+		width   : 100vw;
+	}
+
+	#v-ui {
+		position: absolute;
+		top     : 0;
+		left    : 0;
+		width   : 100%;
+		height  : 100%;
+	}
+}
+
+.v21-9 #v-container:-webkit-full-screen {
+	height: 42.857vw;
+
+	video {
+		top   : -6.2vw;
+		height: 56.25vw;
+	}
+}
+
+.v16-9 #v-container:-webkit-full-screen {
+	height: 56.25vw;
+
+	video {
+		top   : 0;
+		height: 56.25vw;
+	}
+}
+
+/*****************
+	In-window
+*****************/
+
 [id^='v-'] .v21-9,
 [id^='v-'].v21-9 {
 
@@ -178,13 +186,13 @@ main.home #v-header {
 		height: 56.25vw;
 	}
 	@include respond-to(tablet, l) {
-		height: 38.25vw;
-		width : 90vw;
+		height: 37vw;
+		width : 88vw;
 
 		#v-player {
-			top   : -6.2vw;
-			width : 90vw;
-			height: 50.625vw;
+			top   : -6.3vw;
+			width : 88vw;
+			height: 49.5vw;
 		}
 	}
 	@include respond-to(tablet, p) {
@@ -208,6 +216,27 @@ main.home #v-header {
 	}
 }
 
+[id^='v-'] .homePlayer,
+[id^='v-'].homePlayer {
+	width : 100vw;
+	height: 56.25vw;
+	@include respond-to(tablet) {
+		height: 36.5vw;
+		width : 86vw;
+
+		#v-player {
+			top   : -7.1vw;
+			width : 86vw;
+			height: 50.625vw;
+		}
+
+		.v-overlay {
+			width : 86vw;
+			height: 36.86vw;
+		}
+	}
+}
+
 [id^='v-'] .v16-9,
 [id^='v-'].v16-9 {
 
@@ -218,8 +247,8 @@ main.home #v-header {
 		width : calc((100vh - 14vw)/9*16);
 	}
 	@include respond-to(tablet, p) {
-		width : 86vw;
-		height: 48.375vw;
+		width : 88vw;
+		height: 49.5vw;
 	}
 }
 
@@ -250,6 +279,14 @@ main.home #v-header {
 
 *************************************************************************/
 
+//Make things visible with shadows
+#v-interviewee,
+.v-cur-time,
+.v-ended span,
+.v-prev-link {
+	text-shadow: 0.1em 0.1em 0.3em rgba(0, 0, 0, 0.1);
+}
+
 .v-ui-top {
 	position: absolute;
 	display : block;
@@ -276,7 +313,7 @@ a.v-prev-link {
 	left          : 3%;
 	z-index       : 5;
 	font-family   : "Headeralt", "Header", sans-serif;
-	color         : $color3;
+	color         : white;
 	font-size     : 0.9em;
 	padding-bottom: 0;
 	line-height   : 1.2;
@@ -294,6 +331,7 @@ a.v-prev-link {
 	svg {
 		height: 100%;
 		width : auto;
+		filter: drop-shadow( 0.1em 0.1em 0.35em rgba(0, 0, 0, 0.1));
 
 		& > path {
 			fill: white;
@@ -312,64 +350,6 @@ a.v-prev-link {
 
 	&:hover {
 		opacity: 1;
-	}
-}
-
-.v-init-play {
-	position  : absolute;
-	top       : 0;
-	left      : 0;
-	right     : 0;
-	bottom    : 0;
-	margin    : auto;
-	height    : 7em;
-	width     : 17em;
-	text-align: center;
-	z-index   : 5;
-	transition: opacity 0.5;
-	@include respond-to(tablet) {
-		height: 11em;
-		width : 13em;
-	}
-
-	.v-init-play-btn {
-		position     : relative;
-		display      : inline-block;
-		margin       : 0 auto;
-		width        : 0;
-		height       : 0;
-		z-index      : 5;
-		border-top   : 2em solid transparent;
-		border-left  : 4em solid $color1;
-		border-bottom: 2em solid transparent;
-		transition   : border 0.2s;
-	}
-
-	.v-init-play-label {
-		position    : relative;
-		display     : inline-block;
-		margin      : 0.25em auto;
-		color       : $color1;
-		$play-btn-fs: ( null: (1.5rem, 1), tablet: (2.4rem, 1) );
-		@include font-size($play-btn-fs);
-	}
-
-	a {
-		position: absolute;
-		top     : 0;
-		left    : 0;
-		height  : 100%;
-		width   : 100%;
-
-		&:hover {
-			.v-init-play-btn {
-				border-left: 4em solid $color2;
-			}
-
-			&::before {
-				display: none;
-			}
-		}
 	}
 }
 
@@ -394,7 +374,7 @@ a.v-prev-link {
 	transform : translate(-50%, -50%);
 	min-width : 65%;
 	text-align: center;
-	z-index   : 1;
+	z-index   : -1;
 	color     : white;
 
 	span {
@@ -429,23 +409,24 @@ a.v-prev-link {
 		margin  : 0 1em;
 
 		a {
-			position: absolute;
-			display : block;
-			top     : 0;
-			left    : 0;
-			height  : 100%;
-			width   : 100%;
-			z-index: 200;
+			position           : absolute;
+			display            : block;
+			top                : 0;
+			left               : 0;
+			height             : 100%;
+			width              : 100%;
+			z-index            : 200;
 			backface-visibility: hidden;
 
 			.titles-cont {
-				position: relative;
-				top: 50%;
+				position : relative;
+				top      : 50%;
 				transform: translateY(-50%);
 			}
 		}
 
-		h1, h2 {
+		h1,
+		h2 {
 			text-align: center;
 			color     : white;
 		}
@@ -467,8 +448,7 @@ a.v-prev-link {
 				display : block;
 				height  : auto;
 				width   : 40vw;
-				opacity: 0.5;
-
+				opacity : 0.5;
 				@include respond-to(tablet) {
 					width: 15vw;
 				}
@@ -562,37 +542,20 @@ Y88b  d88P Y88..88P 888  888 Y88b.  888    Y88..88P 888      X88
 		height       : 2rem;
 		border       : 0;
 		outline      : none;
-		background   : black;
+		background   : transparent;
 		border-radius: 0.5vmin;
 		margin       : 0;
+		cursor       : pointer;
 	}
 
 	svg {
 		fill: white;
+		filter: drop-shadow(.1em .1em .3em rgba(0,0,0,.1));
 	}
 }
 
 .v-play-btn-cont {
 	@extend .v-control-elem;
-}
-
-.v-vol-btn-cont {
-	@extend .v-control-elem;
-
-	.svg-volume-icon {
-		transform-origin: center left;
-
-		.group-wave {
-			fill-opacity: 1;
-			transition  : all 0.5s ease-in;
-		}
-
-		.mute-anim {
-			transform   : translateX(-2rem);
-			transform   : scale(0 0);
-			fill-opacity: 0;
-		}
-	}
 }
 
 .v-time-ind {
@@ -611,7 +574,7 @@ Y88b  d88P Y88..88P 888  888 Y88b.  888    Y88..88P 888      X88
 	margin    : 0;
 	padding   : 0;
 	z-index   : 2;
-	cursor: pointer;
+	cursor    : pointer;
 }
 
 #v-show-progress {
@@ -639,6 +602,7 @@ Y88b  d88P Y88..88P 888  888 Y88b.  888    Y88..88P 888      X88
 		left      : 0;
 		height    : 100%;
 		width     : 100%;
+		filter: drop-shadow( 0.1em 0.1em 0.35em rgba(0, 0, 0, 0.1));
 		transform : scale(1, 1);
 		transition: transform 0.2s;
 
@@ -704,7 +668,7 @@ section#v-content {
 		width           : 100%;
 		height          : 100%;
 		background-color: $color4;
-		z-index         : 6;
+		z-index         : 11;
 	}
 }
 

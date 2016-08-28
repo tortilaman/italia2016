@@ -14,9 +14,9 @@
 $(document).ready(function() {
     var $window = $(window),
         $items = $("#v-context > div");
-    $(".v-chapter").mouseover(function() {
-        var index = $(this).attr('data-chapter'),
-            offset = $(this).attr('data-offset');
+    $(".v-chapter a").mouseover(function() {
+        var index = $(this).parent().attr('data-chapter'),
+            offset = $(this).parent().attr('data-offset');
         $("#v-chapter-ind").css('margin-top', offset + 'em');
         $("#v-description .inner").addClass("dHidden");
         $("#v-description .inner:eq(" + index + ")").removeClass("dHidden");

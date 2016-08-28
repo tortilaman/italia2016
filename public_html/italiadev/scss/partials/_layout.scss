@@ -18,7 +18,10 @@
 html {}
 
 body {
-	transition: color 0.5s;
+	background-color: $color4;
+	@include respond-to(tablet) {
+		background-color: transparent;
+	}
 }
 
 .clearfix:after {
@@ -26,6 +29,17 @@ body {
 	display: block;
 	clear  : both;
 }
+
+/****************************
+888888b.    .d8888b.
+888  "88b  d88P  Y88b
+888  .88P  888    888
+8888888K.  888
+888  "Y88b 888  88888
+888    888 888    888
+888   d88P Y88b  d88P
+8888888P"   "Y8888P88
+****************************/
 
 .bg {
 	&::after {
@@ -66,29 +80,42 @@ body {
 }
 
 #bg {
-	position        : fixed;
-	top             : 0;
-	left            : 0;
-	width           : 100%;
-	height          : 100vh;
-	// background-image     : url("/assets/images/soft_wallpaper.png");
-	// background-repeat    : repeat;
-	// background-position  : top left;
-	background-color: $color4;
-	// background-blend-mode: multiply;
-	z-index         : 1;
+	opacity   : 0;
+	visibility: hidden;
 	@include respond-to(tablet) {
-		top   : 6vw;
-		left  : 6vw;
-		width : 88vw;
-		height: calc(100vh - 6vw);
+		position        : fixed;
+		top             : 6vw;
+		left            : 6vw;
+		width           : 88vw;
+		height          : calc(100vh - 6vw);
+		background-color: $color4;
+		z-index         : 1;
+		opacity         : 1;
+		visibility      : visible;
 	}
 }
 
-.home-btn {
-	display      : none;
+/*********************************************
+888b    888
+8888b   888
+88888b  888
+888Y88b 888  8888b.  888  888
+888 Y88b888     "88b 888  888
+888  Y88888 .d888888 Y88  88P
+888   Y8888 888  888  Y8bd8P
+888    Y888 "Y888888   Y88P
+*********************************************/
+
+#home-btn {
+	position     : absolute;
+	top          : 0;
+	left         : 0;
+	height       : 12vmin;
+	width        : auto;
 	border-bottom: none;
-					opacity: 1;
+	opacity      : 1;
+	margin-top   : 0;
+	padding      : 2vw;
 
 	img {
 		position: relative;
@@ -97,55 +124,60 @@ body {
 		width   : auto;
 	}
 	@include respond-to(tablet) {
-		display : inline-block;
-		position: fixed;
-		top     : 1vh;
-		left    : 1vh;
-		height  : 6vh;
-		width   : auto;
-		z-index : 10;
-	}
-	@include respond-to(laptop) {
-		top: 2vh;
-		left: 2vh;
-		height: 10vh;
+		display   : block;
+		position  : fixed;
+		top       : 0;
+		left      : 0;
+		height    : 6vw;
+		width     : 6vw;
+		padding   : 0;
+		text-align: center;
+		z-index   : 10;
+
+		img {
+			width     : 100%;
+			height    : auto;
+			margin-top: 50%;
+			padding   : 0 0.5vw 0 1vw;
+			transform : translateY(-50%);
+		}
 	}
 }
 
-.home .home-btn {
-	display: none;
-
+.home #home-btn {
+	@include respond-to(tablet) {
+		display: none;
+	}
 }
 
-.design .home-btn,
-.italia .home-btn,
-.team .home-btn,
-.team-vid .home-btn {
+.design #home-btn,
+.italia #home-btn,
+.team #home-btn,
+.team-vid #home-btn {
 	z-index: 202;
 }
 
 header.header {
 	position        : absolute;
 	display         : block;
-	top             : -75em;
+	top             : 0;
 	left            : 0;
 	width           : 100%;
-	min-height      : 12vw; //Is this necessary?
+	height          : 12vw; //Is this necessary?
 	padding         : 0;
-
 	background-color: white;
-	z-index         : 201;
-	transition      : top 0.5s;
+	z-index         : 210;
 	text-align      : left;
 	@include respond-to(tablet) {
 		position  : fixed;
 		background: none;
-		top       : 20vw;
+		top       : 48vh;
 		left      : 0;
-		width     : auto;
+		width     : 100vw;
 		min-height: 0;
-		height    : 50vh;
+		height    : 4vh;
 		text-align: center;
+		z-index   : 1;
 	}
 
 	&.menuOpen {
@@ -161,68 +193,61 @@ nav {
 	ul {
 		list-style     : none;
 		display        : flex !important;
-		flex-wrap      : wrap;
+		flex-wrap      : nowrap;
 		flex-direction : row;
-		justify-content: space-between;
+		justify-content: space-around;
 		align-items    : center;
-		height         : auto;
-		margin         : 0 2vw;
+		height         : 100%;
+		margin         : 0 2vw 0 20vw;
 		@include respond-to(tablet) {
-			flex-direction: column;
-			flex-wrap     : nowrap;
-			height        : 100%;
-			margin        : 0;
-			width         : 6vw;
+			flex-wrap      : nowrap;
+			justify-content: space-between;
+			margin         : 0;
+			width          : 100%;
 		}
 
 		li {
-			display               : block;
-			margin-left           : 0;
-			width                 : 100%;
-			line-height           : 4;
+			display               : inline-block;
+			line-height           : 1.5;
+			height                : 100%;
 			text-align            : center;
-			height                : calc(24vh - 3vmin);
-			margin                : 0.5vh 0;
-			background            : $color4;
+			// margin                : 0.5vh 0;
+			// background            : $color4;
 			font-variant-ligatures: no-common-ligatures;
-
-			&:first-of-type {
-				@include respond-to(tablet) {
-					display: none;
-				}
-			}
-
-			&:last-of-type {
-				@include respond-to(tablet) {
-					transform: rotate(270deg) translate(100%, -100%);
-					margin   : 0;
-				}
-			}
 			@include respond-to(tablet) {
-				transform-origin: center right;
-				transform       : translateX(-50%) rotate(270deg);
 				margin          : 0;
 				padding         : 0;
-				line-height     : 1.8;
-				height          : auto;
-				width           : auto;
-				text-align      : left;
+				line-height     : 6vw;
+				height          : 6vw;
+				width           : 6vw;
+				text-align      : center;
 				background      : none;
+				transform-origin: center center;
+
+				&:first-of-type {
+					transform: rotateZ(270deg);
+				}
+
+				&:last-of-type {
+					transform: rotateZ(90deg);
+				}
 			}
 		}
 	}
 
 	a {
-		color        : $color5;
-		font-size    : 4em;
-		font-family  : "Header";
-		border-bottom: none;
-		opacity: 1;
+		color                  : $color5;
+		font-size              : 2em;
+		font-family            : "Header";
 		//Chrome hack to fix weird text anti-aliasing fuzziness...
-		backface-visibility: hidden;
+		backface-visibility    : hidden;
+		-webkit-font-smoothing : antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		font-smoothing         : antialiased;
 		//Vertical Centering hack...
-		height       : calc(25vh - 3vmin);
-		line-height  : calc(25vh - 3vmin);
+		height                 : 12vmin;
+		line-height            : 12vmin;
+		font-size              : $pSize;
 		@include respond-to(tablet) {
 			color      : $color5;
 			font-size  : 1.2em;
@@ -236,29 +261,26 @@ nav {
 			visibility: visible;
 			transform : scaleX(1);
 		}
+
+		&:hover {
+			backface-visibility    : hidden;
+			-webkit-font-smoothing : antialiased;
+			-moz-osx-font-smoothing: grayscale;
+			font-smoothing         : antialiased;
+		}
 	}
 }
 
-//Visually hide content but leave accessible to screen readers
-.aHidden {
-	position: absolute !important;
-	clip    : rect(1px 1px 1px 1px);
-	/* IE6, IE7 */
-	clip    : rect(1px, 1px, 1px, 1px);
-	padding : 0 !important;
-	border  : 0 !important;
-	height  : 1px !important;
-	width   : 1px !important;
-	overflow: hidden;
-}
-
-.oHidden {
-	opacity: 0 !important;
-}
-
-.dHidden {
-	display: none !important;
-}
+/*********************************************
+888b     d888          d8b
+8888b   d8888          Y8P
+88888b.d88888
+888Y88888P888  8888b.  888 88888b.
+888 Y888P 888     "88b 888 888 "88b
+888  Y8P  888 .d888888 888 888  888
+888   "   888 888  888 888 888  888
+888       888 "Y888888 888 888  888
+*********************************************/
 
 main.design,
 main.team #flex-grid-team .inner {
@@ -278,6 +300,13 @@ main.team #flex-grid-team .inner {
 	}
 }
 
+main.design {
+	margin-top: 20vw;
+	@include respond-to(tablet) {
+		margin-top: 12vw;
+	}
+}
+
 main.italia,
 main.v {
 	margin-top: 12vw;
@@ -287,11 +316,7 @@ main.v {
 }
 
 main.team {
-	background-image     : url("/assets/images/soft_wallpaper.png");
-	background-repeat    : repeat;
-	background-position  : top left;
-	background-color     : $color4;
-	background-blend-mode: multiply;
+	background-color: $color4;
 	@include respond-to(tablet) {
 		background: none;
 	}
@@ -300,6 +325,66 @@ main.team {
 		background: none;
 		@include respond-to(tablet) {}
 	}
+}
+
+/*********************************************
+888b     d888 d8b
+8888b   d8888 Y8P
+88888b.d88888
+888Y88888P888 888 .d8888b   .d8888b
+888 Y888P 888 888 88K      d88P"
+888  Y8P  888 888 "Y8888b. 888
+888   "   888 888      X88 Y88b.
+888       888 888  88888P'  "Y8888P
+*********************************************/
+
+// .b-lazy {
+// 	opacity: 0;
+// 	// transition: opacity 1s ease-in-out;
+// }
+
+// .b-lazy.b-loaded {
+// 	opacity           : 0;
+// 	opacity           : 0.5;
+// 	-moz-transition   : opacity 0.5s ease-out;
+// 	-webkit-transition: opacity 0.5s ease-out;
+// 	-o-transition     : opacity 0.5s ease-out;
+// 	transition        : opacity 0.5s ease-out;
+// 	// opacity   : 0.5;
+// 	// transition: opacity 1s ease-in-out;
+// }
+
+/* fade image in after load */
+.lazyload,
+.lazyloading {
+	opacity: 0;
+}
+
+.lazyloaded {
+	opacity   : 1;
+	transition: opacity 300ms;
+}
+
+//Visually hide content but leave accessible to screen readers
+.aHidden {
+	position: absolute !important;
+	clip    : rect(1px 1px 1px 1px);
+	/* IE6, IE7 */
+	clip    : rect(1px, 1px, 1px, 1px);
+	padding : 0 !important;
+	border  : 0 !important;
+	height  : 1px !important;
+	width   : 1px !important;
+	overflow: hidden;
+}
+
+.oHidden {
+	opacity   : 0 !important;
+	visibility: hidden;
+}
+
+.dHidden {
+	display: none !important;
 }
 
 // 8888888
@@ -577,3 +662,4 @@ $spinner_inner_bg: white !default;
 		transform: rotate(360deg);
 	}
 }
+//

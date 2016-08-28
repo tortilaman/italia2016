@@ -319,7 +319,6 @@ $(document).ready(function() {
     	AUTOPLAY FUNCTIONALITY
     **===============================*/
     autoplayVid = function() {
-        // if (window.location.hash.length >= 1 && !mobile) {
         var offset = 0;
         for (var i = 0; i < vidIndex; i++) {
             offset += $entries.eq(i).outerHeight(true);
@@ -343,7 +342,6 @@ $(document).ready(function() {
             });
         }
         $(".v-play-btn").focus();
-        // }
     };
 
     /*=================================
@@ -373,7 +371,7 @@ $(document).ready(function() {
             $(".suggested h1").fitText(0.5);
             $(".suggested h2").fitText(1.2);
             $(".v-ended").css('z-index', '5').removeClass("oHidden");
-            if ($(".v-ended h2").length > 0) {
+            if ($(".v-ended").attr('data-plist') == 1) {
                 var interval = setInterval(function() {
                     //Set text in middle
                     $('.v-ended-cd-num').text(cdTime - count);
@@ -398,8 +396,7 @@ $(document).ready(function() {
     /**********************************
     	EVENT LISTENERS
     **********************************/
-
-    if (!$('body').hasClass('home')) {
+    if (!$('body').hasClass('home') && window.location.search == '?autoplay' && !mobile) {
         $(document).one("grid:loaded", autoplayVid);
     }
 
@@ -420,5 +417,11 @@ $(document).ready(function() {
         requestAnimationFrame(function() {
             timeUpdate();
         });
+    });
+
+    //Click vieo to pause.
+    vPlayer.addEventListener('click', function(e) {
+        console.log("Video clicked");
+        playButton.toggle();
     });
 });

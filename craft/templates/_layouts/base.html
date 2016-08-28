@@ -57,14 +57,24 @@
 		<meta charset="utf-8">
 		<title>{% if title is defined %}{{ title }} - {% endif %}{{ siteName }}</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" type="text/css" href="{{ siteUrl }}css/normalize.css">
-		<link rel="stylesheet" type="text/css" href="{{ siteUrl }}css/animate.min.css">
-		<link rel="stylesheet" type="text/css" href="{{ siteUrl }}css/main.min.css">
-		<link href="https://fonts.googleapis.com/css?family=Karla" rel="stylesheet">
+		{% includeCssFile "/css/normalize.css" %}
+		{% includeCssFile "/css/animate.min.css" %}
+		{% includeCssFile "/css/main.min.css" %}
+		{% includeCssFile "https://fonts.googleapis.com/css?family=Karla" %}
 		{% endblock %}
+		{% if craft.config.devMode %}
+			{{getHeadHtml()}}
+		{% else %}
+			{{ getHeadHtml() | minimee }}
+		{% endif %}
 	</head>
 	<body {% if bodyClass is defined %}class="{{ bodyClass }}"{% endif %}>
 		{% block body %}{% endblock %}
 		{% block foot %}{% endblock %}
+		{% if craft.config.devMode %}
+			{{getFootHtml()}}
+		{% else %}
+			{{ getFootHtml() | minimee }}
+		{% endif %}
 	</body>
 </html>
