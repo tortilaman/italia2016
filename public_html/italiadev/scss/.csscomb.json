@@ -24,7 +24,7 @@
   "strip-spaces": true,
   "tab-size": true,
   "unitless-zero": true,
-  "vendor-prefix-align": true
+  "vendor-prefix-align": true,
   "sort-order": [
     "display",
     "position",
@@ -151,6 +151,11 @@
     "table-layout",
     "vertical-align",
     "visibility",
-    "z-index"
+    "z-index",
+    "mix-blend-mode",
+    "@include respond-to(phone)",
+    "@include respond-to(tablet)",
+    "@include respond-to(laptop)",
+    "@include respond-to(desktop)"
   ]
 }

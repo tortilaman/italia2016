@@ -13,6 +13,7 @@ _#}
 {% set i = 0 %}
 {% set title = entry.title %}
 {% set bodyClass = entry.type == 'interviewVideo' ? 'v autoplay' : 'v' %}
+{% set autoplay = craft.request.queryString == "?autoplay" ? true : false %}
 
 {% if entry.type == 'designer' and entry.videoYear == '2016' %}
 	{% set children = entry.children %}
@@ -54,9 +55,9 @@ _#}
 {% block main %}
 	{# ============= INTRODUCTION ================ #}
 	{% if children is defined %}
-		<section id="v-intro" class="v-section is-scrollable">
+		<section id="v-intro" class="v-section is-scrollable" {{autoplay == "true" ? 'style="opacity: 1;"' : 'style="opacity: 0;"' }}>
 			<img id="collage"
-				sizes="(min-width: 1024px) 36vw, (min-width: 700px) 36vw, 100vw"
+				sizes="(min-width: 1024px) 36vw, (min-width: 700px) 86vw, 100vw"
 				srcset="{{ craft.imager.srcset(transformedCollage) }}"
 				src="{{ craft.imager.base64Pixel(16, 9) }}" />
 			<div id="v-contents">
@@ -91,7 +92,7 @@ _#}
 
 	{# ============= VIDEO ================ #}
 	{% if not entry.children|length %}
-		{% include "_includes/video_header" %}
+		{% include "_includes/video_header" with {'autoplay' : autoplay} %}
 	{% endif %}
 
 	{# ============= MATRIX CONTENT ================ #}

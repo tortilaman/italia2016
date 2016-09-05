@@ -3,10 +3,15 @@
 .button {
 	position  : relative;
 	display   : inline-block;
-	margin    : 2vw auto 0;
+	margin    : 1em auto;
 	color     : white;
 	text-align: center;
 	z-index   : 10;
+	font-size: 1.6em;
+	line-height: 1;
+	@include respond-to(laptop) {
+		font-size: 1.2em;
+	}
 
 	span {
 		position: relative;
@@ -57,7 +62,7 @@
 	box-shadow     : none;
 	z-index        : 1;
 	@include respond-to(tablet) {
-		padding   : 1em;
+		padding   : 1em 1em calc(20vh + 1em);
 		margin    : 8vw 0 0 8vw;
 		width     : 86vw;
 		box-shadow: none;
@@ -116,7 +121,7 @@ a[class*="link"] {
 	background-color: $color1T;
 	transition      : background-color 0.5s;
 	// mix-blend-mode  : multiply;
-	@include respond-to(tablet) {
+	@include respond-to(laptop) {
 		//			height: 60vh;
 		padding: 2em;
 		margin : 20vh 0 0;
@@ -143,7 +148,7 @@ IMAGES
 	padding   : 0;
 	margin    : 1rem 0;
 	transition: background-color 0.5s;
-	@include respond-to(tablet) {
+	@include respond-to(laptop) {
 		margin: 0;
 	}
 

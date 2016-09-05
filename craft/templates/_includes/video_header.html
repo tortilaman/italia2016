@@ -80,12 +80,11 @@ Y88b   d88P 8888b.  888d888 888  8888b.  88888b.  888  .d88b.  .d8888b
 {% endif %}
 
 {# OOOOOH, get to make some funny related text #}
-{% set relatedMessage = [
-	"we think you'll love our other designers",
-	"something similar to whet your appetite:",
-	"the insights continue in these videos",
-	"prepare to have your mind blown"
-] %}
+{# {% set relatedMessage = [
+	"still curious? there's more.",
+	"interested in discovering more? here's other options.",
+	"don't worry! there's more.",
+] %} #}
 {###############################################################################
 	888888b.                 888
 	888  "88b                888
@@ -100,13 +99,13 @@ Y88b   d88P 8888b.  888d888 888  8888b.  88888b.  888  .d88b.  .d8888b
 	                              "Y88P"
 ###############################################################################}
 {# {% cache unless craft.config.devMode %} #}
-{% cache %}
-<section id="v-header" class="{{bodyClass}}-section">
+{% cache unless craft.config.devMode %}
+<section id="v-header" class="{{bodyClass}}-section" style="{{craft.request.queryString == '?autoplay' ? 'opacity: 1;' : 'opacity: 0;' }}">
 	{# <span>{{debug}}</span> #}
-	<div id="v-middle"class="{{entry.videoYear >= '2015' ? 'v21-9' : 'v16-9'}} {{bodyClass == 'home autoplay' ? 'homePlayer'}}">
+	<div id="v-middle"class="{{entry.videoYear >= '2015' ? 'v21-9' : 'v16-9'}}">
 		<div id="v-container">
 			{% if entry.videoID|length %}
-				<video id="v-player" poster="{{entry.type == 'shortFilm' ? entry.iosThumbnail.first().url : entry.videoThumbnail.first().url }}" preload="none">
+				<video id="v-player" poster="{{entry.type == 'shortFilm' ? entry.iosThumbnail.first().url : entry.videoThumbnail.first().url }}" {#preload="{{craft.request.isMobileBrowser() ? none : ''}}"#} preload="none" controls>
 					<source src="{{entry.videoID}}" type="video/mp4" />
 					Oops! Your browser doesn't support the video tag. Consider downloading <a href="https://www.google.com/chrome/browser/desktop/index.html">Chrome</a>.
 				</video>
@@ -137,12 +136,12 @@ Y88b   d88P 8888b.  888d888 888  8888b.  88888b.  888  .d88b.  .d8888b
 							  <path id="vimeo" d="M16.1 28.6h-.2c-.1 0-.1 0-.2-.1-1.1-.1-1.9-.6-2.6-1.3-1.1-1.2-1.9-2.7-2.4-4.2-.8-2.6-1.5-5.2-2.3-7.8-.5-1.6-.9-3.3-1.7-4.8-.3-.7-.7-1.3-1.3-1.8-.5-.5-.9-.6-1.5-.2-.4.2-.7.4-1.1.6-.3.2-.7.4-1.1.7C1.1 9 .6 8.4 0 7.7v-.1c.2-.1.3-.2.5-.4 2-1.6 4-3.3 6.1-4.9.8-.7 1.8-1.2 2.8-1.7C11.1-.1 13 .5 14.2 2c.6.8.9 1.7 1.1 2.6.4 1.9.7 3.9 1.1 5.8.3 1.9.7 3.9 1.5 5.7.2.6.6 1.2.9 1.7.4.5.9.6 1.5.2.3-.2.6-.4.8-.7 1.5-1.7 2.7-3.5 3.7-5.6.4-.8.6-1.7.5-2.7-.1-.8-.4-1.4-1.2-1.7-.6-.2-1.2-.2-1.8-.1-.6.1-1.3.3-2 .4.4-.8.7-1.7 1.1-2.4.8-1.6 1.9-2.9 3.4-3.8C26.9.1 29.2-.2 31.6.1c1.8.3 3 1.3 3.5 3 .6 1.9.5 3.7 0 5.6-.6 2-1.6 3.8-2.7 5.6-1.5 2.3-3.1 4.4-4.9 6.4-1.7 2-3.6 4-5.8 5.6-1.3 1-2.8 1.8-4.4 2.2-.4 0-.8.1-1.2.1z" />
 							</svg>
 						</a>
-						<a class="v-share-fb">
+						<a class="v-share-fb" target="_blank">
 							<svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 40">
 							  <path id="facebook" d="M16.6 18.6h-5.2v18.6H3.7V18.6H0V12h3.7V7.8c0-3 1.4-7.8 7.8-7.8h5.7v6.4h-4.1c-.7 0-1.6.3-1.6 1.8V12h5.9l-.8 6.6z" />
 							</svg>
 						</a>
-						<a class="v-share-tw" href="https://twitter.com/intent/tweet?url={{entry.url}}&hashtags=italiaDesign">
+						<a class="v-share-tw" href="https://twitter.com/intent/tweet?url={{entry.url}}&hashtags=italiaDesign" target="_blank">
 							<svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 35">
 							  <path id="twitter" d="M32.2 7.3v1c0 9.7-7.4 21-21 21-4.2 0-8-1.2-11.3-3.3.7-.1 1.3 0 1.9 0 3.5 0 6.6-1.2 9.1-3.2-3.2 0-5.9-2.2-6.9-5.1.4.1.9.1 1.4.1.7 0 1.3-.1 1.9-.3-3.4-.7-5.9-3.7-5.9-7.2v-.1c1 .6 2.1.9 3.3.9-2-1.3-3.3-3.6-3.3-6.1 0-1.4.4-2.6 1-3.7C6.1 5.8 11.6 8.7 17.7 9c-.1-.5-.2-1.1-.2-1.7 0-4.1 3.3-7.4 7.4-7.4 2.1 0 4 .9 5.4 2.3 1.7-.3 3.3-.9 4.7-1.8-.6 1.7-1.7 3.2-3.2 4.1 1.5-.2 2.9-.6 4.2-1.2-1.1 1.6-2.3 2.9-3.8 4z"/>
 							</svg>
@@ -152,18 +151,21 @@ Y88b   d88P 8888b.  888d888 888  8888b.  88888b.  888  .d88b.  .d8888b
 {% cache %}
 				{# ========= End of video interface ============ #}
 				<div class="v-ended oHidden" data-url="{{siblings is defined and nextChaptInd < siblings|length ? siblings[nextChaptInd].url}}?autoplay" data-plist="{{playlist and nextChaptInd != siblings | length ? true : false}}">
-{% endcache %}
 					{% if playlist == true and nextChaptInd != siblings|length %}
-{% cache %}
 						<span>up next:</span>
 						<h1 class="v-ended-nextTitle">{{siblings[nextChaptInd].title|lower}}</h1>
 						<h2 class="v-ended-cd-num">10</h2>
 						<a class="v-ended-cd-cancel">cancel</a>
-{% endcache %}
-					{% else %}
-						<span>{{ relatedMessage[random(relatedMessage|length - 1)] }}</span>
 					{% endif %}
+{% endcache %}
 					<div class="v-suggestions">
+						{% if playlist == true and nextChaptInd != siblings|length %}
+							<span>we also suggest:</span>
+						{% else %}
+							<span>
+								{# {{ relatedMessage[random(relatedMessage|length - 1)] }} #}still curious? there's more.
+							</span>
+						{% endif %}
 						{% for entry in relatedEntries %}
 							{% if entry.type == 'interviewVideo' %}
 								{% set image = entry.parent.intPortrait.first() %}
@@ -200,15 +202,15 @@ Y88b   d88P 8888b.  888d888 888  8888b.  88888b.  888  .d88b.  .d8888b
 				{% if playlist == true %}
 					{% if chaptIndex >= 1 and siblings|length > 1 %}
 						<a class="v-prevVid" href="{{siblings[chaptIndex - 1].url}}?autoplay">
-							<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 53 146.7">
-								<path id="Chevron-L" class="st0" d="M47.9 0L53 3.3 7.2 73.4l45.8 70-5.1 3.3L0 73.4z"/>
+							<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="-2 0 43 123">
+							  <path id="Chevron-L" d="M40 0L20 30.6 0 61.2l20 30.6 20 30.6"/>
 							</svg>
 						</a>
 					{% endif %}
 					{% if nextChaptInd < siblings|length %}
 						<a class="v-nextVid" href="{{siblings[nextChaptInd].url}}?autoplay">
-							<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 53 146.7">
-								<path id="Chevron-R" class="st0" d="M5 146.7l-5-3.3 45.8-70L0 3.3 5 0l48 73.4z"/>
+							<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="-2 0 43 123">
+							  <path id="Chevron-R" d="M0 0l20 30.6 20 30.6-20 30.6-20 30.6"/>
 							</svg>
 						</a>
 					{% endif %}

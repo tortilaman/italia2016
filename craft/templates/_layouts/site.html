@@ -12,7 +12,8 @@
 {% extends "_layouts/base" %}
 {# Define the site navigation #}
 {% set nav = {
-	design: { title: "videos"},
+	"/": { title: "home"},
+	film: { title: "film"},
 	team: { title: "team"}
 } %}
 {# Set the `bodyClass` variable to the entry's section handle if there is one,
@@ -50,20 +51,24 @@
 </script>
 <script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
 	{% block nav %}
+	{% cache globally %}
 		<header class="header">
 			<nav>
-				<a id="home-btn" href="{{url('')}}"><img src="/assets/images/logo_letters.png"></a>
+				<a class="home-btn" href="/"></a>
 				<ul>
 					{% for slug, item in nav %}
 					<li>
-						<a href="{{ url(slug) }}" class="navLink {{ craft.request.firstSegment == slug ? 'sel'}}">
-							{{ item.title }}
+						<a href="{{ url(slug) }}" {% if loop.first %} class="home-btn" {% endif %} class="{{ craft.request.firstSegment == slug ? 'sel'}}">
+							<span>
+								{{ item.title }}
+							</span>
 						</a>
 					</li>
 					{% endfor %}
 				</ul>
 			</nav>
 		</header>
+	{% endcache %}
 	{% endblock %}
 
 	<main id="main" role="main" class="{{bodyClass}}">
@@ -74,7 +79,7 @@
 {% block foot %}
 {% includeJsFile "https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js" first %}
 {% includeJsFile "/js/scroll-up-bar.min.js" %}
-{# {% includeJsFile "/js/blazy.min.js" %} #}
+{% includeJsFile "/js/ls.unveilhooks.min.js" %}
 {% includeJsFile "https://cdnjs.cloudflare.com/ajax/libs/lazysizes/2.0.1/lazysizes.min.js" %}
 {% includeJsFile "/js/allPages.js" %}
 {% includeJsFile "/js/jquery.fittext.js" %}

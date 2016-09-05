@@ -24,8 +24,11 @@ $(document).ready(function() {
 		iterator = 0,
 		totalHeight = 0,
 		offset = 0,
-		mobile = $window.outerWidth() > 480 ? false : true;
 	$entries = $("main>section[class*='-section']");
+	var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream,
+			android = /Android/.test(navigator.userAgent),
+			firefox = /Firefox/.test(navigator.userAgent),
+			mobile = iOS || android ? true : false;
 
 	/*********************************************************************
 	 .d8888b.                           888 888 d8b
@@ -40,10 +43,6 @@ $(document).ready(function() {
 	                                                         Y8b d88P
 	                                                          "Y88P"
 	*******************************************************************/
-
-	var bLazy = new Blazy({
-    offset: 200
-  });
 
 	/*******************
 	  Calculate Heights
@@ -64,17 +63,21 @@ $(document).ready(function() {
 		iterator = offset = totalHeight = 0;
 	}
 
-	if ($window.outerWidth() >= 700) {
+	if ($window.outerWidth() >= 1024 && !mobile) {
 		calcHeights();
 	}
 
 	//Delays implementation of scrolling on pages with lots of images, and avoids scrolling script on mobile.
-	if ($window.outerWidth() >= 700) {
+	// if ($window.outerWidth() >= 1024 && !mobile) {
+	if ($window.outerWidth() >= 1024) {
 		$window.on('load', function() {
 			calcHeights();
 			//NOTE: Now autoplay can wait until there's something to scroll to.
 			$(document).trigger("grid:loaded");
-			console.log("Finished loading");
+		});
+	} else {
+		$window.on('load', function() {
+			$(document).trigger("grid:loaded");
 		});
 	}
 
@@ -157,10 +160,11 @@ $(document).ready(function() {
 	function showOnScroll() {
 		var page = $("body").attr('class').split(" ")[0],
 			offsets = {
-				home: [0.5, 0.75],
-				italiaIndex: [0, 0.5],
-				team: [0, 0.5],
-				v: [0.5, 0.75]
+				'home' : [0.5, 0.75],
+				'italiaIndex' : [0, 0.5],
+				'team' : [0, 0.5],
+				'team-vid': [0, 0.5],
+				'v' : [0.5, 0.75]
 			};
 
 		if (offsets[page]) {
@@ -181,23 +185,60 @@ $(document).ready(function() {
 		}
 	}
 
-	/*=================================
-		EVENT LISTENERS
-	**===============================*/
-
-	//Keep cards at top of page / Control is-scrollable scrolling
-	window.addEventListener('scroll', function() {
+	/***********************************************
+		Mobile device orientation change functions
+	***********************************************/
+	function mobLandscape() {
 		this.requestAnimationFrame(function() {
 			scrollPos = window.pageYOffset;
-			//If we're not on mobile
-			if (!mobile) scrollToggle();
-			parallax();
+			scrollToggle();
 			showOnScroll();
 		});
-	});
+	}
 
-	//Cards bounce in on page load
-	// if (!$("main").hasClass("autoplay")) {
-	//     $("[class*='-section']").animateCss("bounceInUp");
-	// }
+	function orientationChange(mql) {
+		if(mql.matches) {
+			$window.scrollTop(0);
+			$("body").css('height', '');
+			$entries.find(".scrollHide").css('opacity', 1);
+			$window.off('scroll', mobLandscape);
+		} else {
+			calcHeights();
+			$window.on('scroll', mobLandscape);
+		}
+	}
+
+	/***************************************************************
+	888      d8b          888
+	888      Y8P          888
+	888                   888
+	888      888 .d8888b  888888 .d88b.  88888b.   .d88b.  888d888
+	888      888 88K      888   d8P  Y8b 888 "88b d8P  Y8b 888P"
+	888      888 "Y8888b. 888   88888888 888  888 88888888 888
+	888      888      X88 Y88b. Y8b.     888  888 Y8b.     888
+	88888888 888  88888P'  "Y888 "Y8888  888  888  "Y8888  888
+	***************************************************************/
+
+	if(mobile && $window.outerWidth() > 700) {
+		var pCheck = window.matchMedia("(orientation: portrait)");
+		pCheck.addListener(orientationChange);
+		orientationChange(pCheck);
+	} else {
+		//Keep cards at top of page / Control is-scrollable scrolling
+		window.addEventListener('scroll', function() {
+			this.requestAnimationFrame(function() {
+				scrollPos = window.pageYOffset;
+				scrollToggle();
+				parallax();
+				showOnScroll();
+			});
+		});
+	}
+
+	// Cards bounce in on page load
+	if (window.location.search != '?autoplay' && !mobile) {
+	    $("[class*='-section']").animateCss("bounceInUp");
+	} else {
+		$("[class*='-section']").css('opacity', 1);
+	}
 });

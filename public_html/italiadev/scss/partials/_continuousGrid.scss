@@ -23,8 +23,6 @@ Y88b  d88P Y8b.     888  888 888    Y88b.    888  888
 #d-filter {
 	position  : fixed;
 	top       : 12vmin;
-	right     : 8%;
-	left      : 2%;
 	width     : 100%;
 	height    : 12vmin;
 	background: none;
@@ -44,28 +42,22 @@ Y88b  d88P Y8b.     888  888 888    Y88b.    888  888
 
 	form {
 		position: relative;
-		float   : right;
 		top     : 3vmin;
-		right   : 28vmin;
+		left    : 6vmin;
 		bottom  : 0;
-		height  : 3em;
 		width   : 3em;
 		overflow: hidden;
 		// transition: transform 0.5s;
 		@include respond-to(tablet) {
-			position: absolute;
-			top     : auto;
-			bottom  : 0;
-			right   : 0;
-			height  : $tSize;
-			width   : auto;
+			position : absolute;
+			top      : auto;
+			bottom   : 0;
+			right    : 0;
+			left     : auto;
+			width    : auto;
 		}
 		@include respond-to(laptop) {
 			bottom: -0.1rem;
-			height: $lSize;
-		}
-		@include respond-to(desktop) {
-			height: $dSize;
 		}
 	}
 
@@ -124,7 +116,7 @@ Y88b  d88P Y8b.     888  888 888    Y88b.    888  888
 		}
 		@include respond-to(laptop) {
 			font-size    : $lSize;
-			border-bottom: 0.4rem solid $color5;
+			border-bottom: 0.5rem solid $color5;
 		}
 		@include respond-to(desktop) {
 			font-size: $dSize;
@@ -140,18 +132,18 @@ Y88b  d88P Y8b.     888  888 888    Y88b.    888  888
 		display       : inline-block;
 		vertical-align: middle;
 		right         : 0;
-		bottom        : 0;
+		top           : 0;
 		// height        : 0.6em;
 		// width         : 0.6em;
-		height        : 1.2em;
-		width         : 1.2em;
+		height        : 1em;
+		width         : 1em;
 		font-size     : $pSize;
 		line-height   : 1;
 		opacity       : 0;
 		visibility    : hidden;
 		cursor        : pointer;
-		transition    : all 0.5s;
-		z-index       : 301;
+		// transition    : all 0.5s;
+		z-index       : 350;
 
 		path,
 		svg {
@@ -163,7 +155,10 @@ Y88b  d88P Y8b.     888  888 888    Y88b.    888  888
 			stroke      : $color5;
 			fill        : $color5;
 			stroke-width: 0.3em;
-			z-index     : 310;
+			// z-index     : 300;
+			@include respond-to(desktop) {
+				stroke-width: 0.2em;
+			}
 		}
 
 		svg {
@@ -189,7 +184,7 @@ Y88b  d88P Y8b.     888  888 888    Y88b.    888  888
 			svg {
 				height: 45%;
 				width : 45%;
-				bottom: 30%;
+				bottom: 40%;
 				right : 30%;
 			}
 		}
@@ -205,28 +200,40 @@ Y88b  d88P Y8b.     888  888 888    Y88b.    888  888
 	.lSearch {
 		position  : relative;
 		top       : 0;
-		right     : 5vw;
-		width     : 90vw;
+		right     : 6vw;
+		width     : 88vw;
 		background: none;
 		z-index   : 300;
 
 		input {
 			display: inline-block !important;
-			width  : 90vw;
+			width  : 88vw;
+			top    : 0;
+			bottom : auto;
 		}
 
 		#close-btn {
-			right     : 0.2em;
-			opacity   : 1;
-			visibility: visible;
+			// right     : 0.2em;
+			// opacity   : 1;
+			// visibility: visible;
 		}
 		@include respond-to(tablet) {
-			right: 25vw;
+			display: inline-block;
+			right: auto;
 			left : auto;
+			// width: 100%;
 			width: auto;
+			margin: 0 auto;
 
 			input {
-				width: 50vw;
+				// min-width: 50vw;
+				width: auto;
+			}
+			#close-btn {
+				position: relative;
+				display: inline-block;
+				margin-left: -1em;
+				vertical-align: top;
 			}
 		}
 	}
@@ -258,33 +265,36 @@ d88P     888  "Y88888  "Y888 "Y88P"   "Y8888P"   "Y88P"  888  888  888 88888P"
 //	box has focus, so a bit frustrating to style.
 
 ul.ui-autocomplete {
-	position  : fixed;
-	top       : 0 !important;
-	left      : 5vw !important;
+	// 	position  : fixed;
+	// 	top       : 0 !important;
+	// 	left      : 6vw !important;
 	background: none;
 	padding   : 0.25rem 0;
 	box-shadow: none;
 	border    : none;
 	z-index   : 300;
-	margin-top: $tSize;
-	@include respond-to(tablet) {
-		left      : 19vw !important;
-		margin-top: $tSize;
-	}
-	@include respond-to(laptop) {
-		left      : 19vw !important;
-		margin-top: $lSize;
-	}
-
-	&::-webkit-scrollbar {
-		display: none;
-	}
-
+	// 	margin-top: $tSize;
+	// 	@include respond-to(tablet) {
+	// 		left      : 19vw !important;
+	// 		margin-top: $tSize;
+	// 	}
+	// 	@include respond-to(laptop) {
+	// 		left      : 15vw !important;
+	// 		margin-top: $lSize;
+	// 	}
+	//
+	// 	&::-webkit-scrollbar {
+	// 		display: none;
+	// 	}
+	//
 	li.ui-autocomplete-category {
 		font-family: "SubHeadAlt", "SubHead", arial, sans-serif;
-		font-size  : 1.5em;
+		font-size  : 2em;
+		@include respond-to(tablet) {
+			font-size: 1.5em;
+		}
 	}
-
+	//
 	.ui-menu-item {
 		box-shadow    : none;
 		border        : none;
@@ -321,6 +331,7 @@ ul.ui-autocomplete {
 			font-family           : subhead;
 			font-variant-ligatures: no-common-ligatures;
 			border-bottom         : none;
+			letter-spacing        : normal;
 
 			&:hover {}
 		}
@@ -361,6 +372,21 @@ span[role="status"] {
 //	javascript, none of that is in the scss code.
 //
 // =============================================================================
+section[id^="flex-grid-"] {
+	position       : relative;
+	display        : flex;
+	flex-flow      : row wrap;
+	// justify-content: space-between;
+	justify-content: space-around;
+	align-items    : center;
+	width          : 88vw;
+	margin         : 2vh 6vw;
+	padding-bottom : 2rem;
+	@include respond-to(phone) {
+		width : 84vw;
+		margin: 2vh auto 3vh;
+	}
+}
 
 main.team {
 	margin-bottom: 0;
@@ -370,24 +396,30 @@ main.team {
 	}
 
 	#flex-grid-team {
-		width    : 88vw;
-		max-width: 88vw;
-		margin   : 6% 6% 0;
+		@include respond-to(laptop) {
+			margin : 2vw 8vw 11em;
+			padding: 2vw;
+		}
 
-		.inner {
-			min-height: 0;
-			transition: none;
-			margin    : 0;
-			padding   : 2rem 0;
+		article.blank {
 			@include respond-to(tablet) {
-				padding: 2rem 5%;
+				width: 10vw;
 			}
 		}
 	}
 
 	#footer {
-		position: relative;
-		width   : 100%;
+		position  : relative;
+		bottom    : 0;
+		left      : 0;
+		right     : 0;
+		// height    : 9em;
+		width     : 100%;
+		padding   : 0 6vw;
+		background: white;
+		@include respond-to(laptop) {
+			position: fixed;
+		}
 
 		h1,
 		p {
@@ -404,14 +436,14 @@ main.team {
 	#contact-info {
 		position: relative;
 		display : inline-block;
-		padding : 1vw 5vw;
+		padding : 1vw 0;
 	}
 
 	#connect {
 		position  : absolute;
 		top       : 0;
 		right     : 0;
-		padding   : 1vw 5vw;
+		padding   : 1vw 6vw;
 		text-align: center;
 	}
 
@@ -443,24 +475,8 @@ main.team {
 	}
 }
 
-section[id^="flex-grid-"] {
-	position       : relative;
-	display        : flex;
-	flex-flow      : row wrap;
-	justify-content: space-between;
-	align-items    : flex-start;
-	width          : 96vw;
-	max-width      : 96%;
-	margin         : 2vh 2vw;
-	padding-bottom : 2rem;
-	@include respond-to(phone) {
-		width    : 90vw;
-		max-width: 90%;
-		margin   : 2vh auto 3vh;
-	}
-}
-
 #page-info {
+	position  : relative;
 	z-index   : 100;
 	margin-top: 2em;
 	width     : 100%;
@@ -469,8 +485,10 @@ section[id^="flex-grid-"] {
 		background   : white;
 		padding      : 2em 2em 3em;
 		margin-bottom: 3em;
-		width        : 30em;
 		color        : $color5;
+		@include respond-to(tablet) {
+			width: 35em;
+		}
 
 		h1 {
 			line-height  : 1.8;
@@ -501,10 +519,20 @@ section[id^="flex-grid-"] {
 	}
 	@include respond-to(tablet) {
 		margin-top: 2em;
-		width     : calc(5vw + 30em);
+		width     : calc(5vw + 35em);
+	}
+	@include respond-to(laptop) {
+		top: -8vw;
 	}
 	@include respond-to(desktop) {
-		width: calc(10vw + 30em);
+		width: calc(10vw + 35em);
+	}
+
+	& + .design-entry {
+		margin-top: 6rem;
+		@include respond-to(laptop) {
+			margin-top: auto;
+		}
 	}
 }
 
@@ -525,6 +553,12 @@ section[id^="flex-grid-"] {
 	}
 }
 
+#year-title-2016 {
+	position: absolute;
+	bottom  : -1.5em;
+	left    : 0;
+}
+
 /************************************************
 Y88b   d88P
  Y88b d88P
@@ -538,16 +572,10 @@ Y88b   d88P
 
 #year-links {
 	position  : fixed;
-	top       : 14vw;
-	right     : 5.5vw;
+	top       : 15vw;
+	right     : 6vw;
 	z-index   : 300;
 	transition: top 0.5s;
-	@include respond-to(tablet) {
-		position: fixed;
-		top     : 7vh;
-		right   : 5.5vw;
-		// height  : 25vh;
-	}
 	@include respond-to(laptop) {
 		top: 15vh;
 	}
@@ -556,11 +584,11 @@ Y88b   d88P
 		display       : inline-block;
 		vertical-align: middle;
 		font-size     : $pSize;
-		height        : 1.5em;
-		line-height   : 1.5em;
+		height        : 2em;
+		line-height   : 2em;
 		color         : $color5;
 		text-shadow   : 0.1em 0.1em 0.3em rgba(0, 0, 0, 0.1);
-		@include respond-to(tablet) {
+		@include respond-to(laptop) {
 			display    : none;
 			text-shadow: none;
 			line-height: 1;
@@ -591,7 +619,7 @@ Y88b   d88P
 			opacity  : 1;
 			//			transition: all 0.5s;
 		}
-		@include respond-to(tablet) {
+		@include respond-to(laptop) {
 			display        : flex;
 			flex-direction : column;
 			flex-wrap      : nowrap;
@@ -605,8 +633,9 @@ Y88b   d88P
 	}
 
 	li {
-		list-style: none;
-		@include respond-to(tablet) {
+		list-style    : none;
+		padding-bottom: 1em;
+		@include respond-to(laptop) {
 			margin-bottom: 0.5rem;
 		}
 	}
@@ -614,11 +643,15 @@ Y88b   d88P
 	a {
 		position     : relative;
 		color        : $color5;
-		font-family  : subhead;
+		font-family  : "HeaderAlt";
 		opacity      : 1;
 		border-bottom: none;
 		font-size    : $pSize;
 		line-height  : 1;
+		@include respond-to(laptop) {
+			font-size  : 1em;
+			font-family: "SubHeadAlt";
+		}
 
 		&.active {
 			&::before {
@@ -687,7 +720,7 @@ Y88b   d88P
 		border-bottom: none;
 
 		&.scrollHide {
-			@include respond-to(tablet) {
+			@include respond-to(laptop) {
 				opacity   : 0;
 				transition: opacity 0.1s;
 			}
@@ -696,7 +729,7 @@ Y88b   d88P
 		&::before {
 			display: none;
 		}
-		@include respond-to(tablet) {
+		@include respond-to(laptop) {
 			&:hover {
 				img {
 					opacity: 0.2;
@@ -711,13 +744,13 @@ Y88b   d88P
 
 	.entry-thumb-cont {
 		//This will center images bigger than the container.
-		position   : relative;
-		display    : inline-block;
-		margin-left: 50%;
-		transform  : translateX(-50%);
-		width      : auto;
-		height     : 100%;
-		margin-top : 0;
+		position  : relative;
+		display   : inline-block;
+		// margin-left: 50%;
+		// transform  : translateX(-50%);
+		width     : 100%;
+		height    : auto;
+		margin-top: 0;
 	}
 
 	img,
@@ -770,6 +803,7 @@ Y88b   d88P
 		display: none;
 		@include respond-to(tablet) {
 			display: block;
+			width  : 6vw;
 		}
 	}
 	@include respond-to(laptop) {
@@ -799,18 +833,17 @@ Y88b   d88P
 .design-entry {
 	@extend .entry;
 	width     : 100%;
-	height    : 20vh;
+	height    : 44vw;
 	margin-top: 1.5vh;
 	// opacity   : 0;
 
 	.entry-thumb-cont {
-		width     : 80vw;
+		width     : 88vw;
 		height    : auto;
-		margin-top: -35vw;
+		margin-top: 0;
 		@include respond-to(phone) {
-			width     : auto;
-			height    : 100%;
-			margin-top: 0;
+			width : auto;
+			height: 100%;
 		}
 	}
 
@@ -836,6 +869,7 @@ Y88b   d88P
 		top       : 0.5em;
 		left      : 0.5em;
 		list-style: none;
+		white-space: nowrap;
 		opacity   : 0;
 		z-index   : 202;
 		transition: opacity 0.5s;
@@ -844,14 +878,41 @@ Y88b   d88P
 			color  : white;
 			z-index: 50;
 		}
+
+		svg {
+			position      : relative;
+			display       : inline-block;
+			vertical-align: middle;
+			top           : 0;
+			left          : 0;
+			height        : 1em;
+			width         : auto;
+			margin-right  : 0.5em;
+		}
+
+		path {
+			height: 100%;
+			width : auto;
+			fill  : white;
+		}
+
+		.entry-location {
+			display       : inline-block;
+			vertical-align: middle;
+			font-family   : "Quotes", arial, sans-serif;
+		}
 	}
 
 	.entry-meet {
 		position      : absolute;
+		display       : inline-block;
 		bottom        : 0.5em;
 		right         : 0.5em;
 		opacity       : 0;
 		font-size     : 0.9em;
+		line-height   : 1.3;
+		text-align    : right;
+		max-width     : 80%;
 		color         : white;
 		padding-bottom: 0.02em;
 		border-bottom : 0.2em solid white;
@@ -912,15 +973,11 @@ Y88b   d88P
 	@include respond-to(phone) {
 		width: 88vw;
 
-		&.v16-9 {
+		&.v16-9, &.v21-9 {
 			height: 49.5vw;
 		}
 
-		&.v21-9 {
-			height: 37.71vw;
-		}
-
-		video {
+		video, img {
 			width : 88vw;
 			height: auto;
 		}
@@ -928,15 +985,11 @@ Y88b   d88P
 	@include respond-to(tablet) {
 		width: 54vw;
 
-		&.v16-9 {
+		&.v16-9, &.v21-9 {
 			height: 30.38vw;
 		}
 
-		&.v21-9 {
-			height: 23.14vw;
-		}
-
-		video {
+		video, img {
 			width : 54vw;
 			height: auto;
 		}
@@ -944,15 +997,11 @@ Y88b   d88P
 	@include respond-to(laptop) {
 		width: 40vw;
 
-		&.v16-9 {
+		&.v16-9, &.v21-9 {
 			height: 22.5vw;
 		}
 
-		&.v21-9 {
-			height: 17.14vw;
-		}
-
-		video {
+		video, img {
 			width : 40vw;
 			height: auto;
 		}
@@ -989,6 +1038,14 @@ Y88b   d88P
 		z-index    : 50;
 		transform  : translateY(-50%);
 		transition : all 0.5s;
+		@include respond-to(laptop) {
+			line-height: 1.4;
+			font-size  : 0.8em;
+		}
+		@include respond-to(desktop) {
+			line-height: 1.6;
+			font-size  : 1em;
+		}
 	}
 
 	.entry-meet {

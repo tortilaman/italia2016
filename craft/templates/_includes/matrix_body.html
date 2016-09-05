@@ -8,17 +8,18 @@
 #}
 
 {% set matrix = entry.type == 'interviewVideo' ? entry.parent.additionalContent : entry.additionalContent %}
+
 {% if matrix|length %}
-	<section id="v-context" class="v-section">
+	<section id="v-context" class="v-section" style="{{craft.request.queryString == '?autoplay' ? 'opacity: 1;' : 'opacity: 0;' }}">
 		{% for block in matrix %}
 			{########## QUESTION AND ANSWER ##########}
 			{% if block.type == "qa" %}
 				<div class="qa col-{{block.size}} {{block.overlap}}">
 					{% if block.question == "" %}
 					{% else %}
-						<h2>Q: {{block.question}}</h2>
+						<h2 class="scrollHide">Q: {{block.question}}</h2>
 					{% endif %}
-					<p>A: {{block.answer}}</p>
+					<p class="scrollHide">A: {{block.answer}}</p>
 				</div>
 			{########## PULLQUOTE ##########}
 			{% elseif block.type == "pullquote" %}
@@ -38,10 +39,6 @@
 					image, [{width: imgSize[block.size - 1]}, {width: 650}, {width: 350}],
 					{position: image.focusPctX ~ '% ' ~ image.focusPctY ~ '%'})
 				%}
-				{# {% set transformedImage = craft.imager.transformImage(
-					image, [{width: 1920 }, { width: 500 }, { width: 150 }],
-					{ position: image.focusPctX ~ '% ' ~ image.focusPctY ~ '%' })
-				%} #}
 				{% set imgW = block.size/6*100 %}
 				<div class="v-mat-img-container col-{{block.size}}">
 					<img 	class="v-mat-img scrollHide" src="{{ craft.imager.base64Pixel(2, 3) }}"

@@ -13,20 +13,18 @@
 ** ==========================================================*/
 
 $(document).ready(function() {
-    if ($(window).outerWidth() < 700) {
-        var $homeBtn = $("#home-btn"),
-            $homeURL = $homeBtn.attr('href'),
-            $nav = $("header.header"),
-            $filters = $("#d-filter, #year-links");
-        $homeBtn.attr('href', null);
+    if ($(window).outerWidth() < 1024) {
+        var $nav = $("header.header"),
+            $dFilter = $("#d-filter"),
+            $yearLinks = $("#year-links");
         $nav.scrollupbar({
             enterViewport: function() {
-                $("#d-filter").css('top', '12vmin');
-                $("#year-links").css('top', '15vmin');
+                $dFilter.css('top', '12vmin');
+                $yearLinks.css('top', '12vmin');
             },
             partiallyExitViewport: function() {
-                $("#d-filter").css('top', '0');
-                $("#year-links").css('top', '3vmin');
+                $dFilter.css('top', '0');
+                $yearLinks.css('top', '3vmin');
             }
         });
     }

@@ -46,7 +46,8 @@ String.prototype.toMMSS = function() {
 $(document).ready(function() {
     var $window = $(window),
         $vCont = $("#v-middle.v21-9"),
-        $vPlayer = $("#v-player");
+        $vPlayer = $("#v-player"),
+        vPlayer = document.getElementById("v-player");
     //Video Resizing Variables
     var scrollPos;
     var opacityValue = 0;
@@ -61,8 +62,7 @@ $(document).ready(function() {
         $vTimeCont = $(".v-time-ind"),
         $vProgBarCont = $("#v-progress-bar");
     //Interface Variables
-    var vPlayer = document.getElementById("v-player"),
-        $vTime = $(".v-cur-time"),
+    var $vTime = $(".v-cur-time"),
         $vDur = $(".v-duration"),
         $background = $('body'),
         $vProgBar = $("#v-show-progress");
@@ -87,7 +87,7 @@ $(document).ready(function() {
     **********************************/
 
     if (iOS || android) {
-        $vPlayer.attr('controls', 'controls');
+        // $vPlayer.attr('controls', 'controls');
         $vCont.addClass("mobile");
         $(".v-controls, .v-init-play, .v-ended, .v-suggestions").remove();
     } else {
@@ -114,10 +114,6 @@ $(document).ready(function() {
                 scrollPercent = 1;
                 opacityValue = 1;
                 $zVal = -1;
-                if (!played && $("main").hasClass("home")) {
-                    playButton.toggle();
-                    $(".v-init-play").addClass("oHidden").remove();
-                }
             } else if (scrollPercent < 0.1) {
                 scrollPercent = 0;
                 opacityValue = 0;
@@ -364,10 +360,17 @@ $(document).ready(function() {
     var cdTime = 10,
         count = 1;
 
-    document.querySelector("#v-player").onended = function() {
+    vPlayer.onended = function() {
         //Show end of video UI everywhere but about / bio pages
         if (!$("body").hasClass("team") && !$("body").hasClass("team-vid")) {
-            $(".v-controls").css('opacity', 0);
+            $(".v-play-btn-cont, .v-time-ind, #v-progress-bar").css({
+              'opacity': 0,
+              'visibility': 'hidden'
+            });
+            // $("#v-full-btn").css({
+            //   'opacity': 1,
+            //   'visibility': visible
+            // });
             $(".suggested h1").fitText(0.5);
             $(".suggested h2").fitText(1.2);
             $(".v-ended").css('z-index', '5').removeClass("oHidden");
@@ -396,12 +399,13 @@ $(document).ready(function() {
     /**********************************
     	EVENT LISTENERS
     **********************************/
+    //Trigger the autoplay function on grid:loaded.
     if (!$('body').hasClass('home') && window.location.search == '?autoplay' && !mobile) {
         $(document).one("grid:loaded", autoplayVid);
     }
 
     if ($("#v-intro").length || $("main").hasClass("home")) {
-        //Scroll progress even tlistener
+        //Scroll progress event listener
         window.addEventListener('scroll', function() {
             requestAnimationFrame(function() {
                 scrollPos = window.pageYOffset;
@@ -421,7 +425,6 @@ $(document).ready(function() {
 
     //Click vieo to pause.
     vPlayer.addEventListener('click', function(e) {
-        console.log("Video clicked");
         playButton.toggle();
     });
 });

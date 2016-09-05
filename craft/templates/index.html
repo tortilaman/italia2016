@@ -18,7 +18,7 @@
  #}
 
 {% extends "_layouts/site" %}
-{% set bodyClass = "home autoplay" %}
+{% set bodyClass = "home" %}
 {% set collage1 = entry.aboutImage.first() %}
 {% set collage2 = entry.interviewsImage.first() %}
 {% set transformedCollage1 = craft.imager.transformImage(
@@ -41,8 +41,8 @@
 		<section id="home-about" class="home-section">
 			<div class="inner scrollHide">
 				{{entry.aboutPreview}}
-				<a href="/about" class="button-green">
-					<span>learn more</span>
+				<a href="/team" class="button-green">
+					<span>meet the team</span>
 				</a>
 			</div>
 			<img class="collage scrollHide" srcset="{{ craft.imager.srcset(transformedCollage1) }}"
@@ -51,8 +51,8 @@
 		<section id="home-videos" class="home-section">
 				<div class="inner scrollHide">
 					{{entry.interviewsPreview}}
-					<a href="/design" class="button-blue">
-						<span>see interviews</span>
+					<a href="/film" class="button-blue">
+						<span>explore videos</span>
 					</a>
 				</div>
 				<img class="collage scrollHide" srcset="{{craft.imager.srcset(transformedCollage2) }}" sizes="(min-width: 1024px) 65vw, 100vw" src="{{collage2.url}}" />

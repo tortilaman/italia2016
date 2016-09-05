@@ -14,6 +14,15 @@ _#}
 {% set bodyClass = "team-vid" %}
 {% set portrait = entry.intPortrait.first %}
 
+{% set collage = entry.portraitCollage.first() %}
+{% set transformedCollage = craft.imager.transformImage(
+	collage, [
+	{ width: 700 },
+	{ width: 460 },
+	{ width: 350, pngCompressionLevel: 4 }
+	])
+%}
+
 {% block head %}
 	{{ parent() }}
 	<meta property="og:site_name"	content="SFU italiaDesign field school" />
@@ -31,12 +40,15 @@ _#}
 {% block main %}
 	{# ============= INTRODUCTION ================ #}
 	<section id="v-intro" class="v-section is-scrollable">
-		<img class="v-portrait" src="{{entry.portraitCollage.first().url()}}">
-		<div id="v-contents">
+		<img class="v-portrait"
+			sizes="(min-width: 1024px) 43vw, (min-width: 700px) 86vw, 100vw"
+			srcset="{{ craft.imager.srcset(transformedCollage) }}"
+			src="{{ craft.imager.base64Pixel(16, 9) }}" />
+		<div id="v-name">
 			<h1 class="v-contents-title">{{entry}}</h1>
-			<p class="quote">{{entry.nameHover}}</p>
 		</div>
 		<div id="v-description">
+			<p class="quote">{{entry.nameHover}}</p>
 			<p class="v-chapter-desc">{{entry.videoDescription}}</p>
 		</div>
 	</section>

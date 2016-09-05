@@ -53,11 +53,12 @@ $(document).ready(function() {
     pImgs = [];
     $("#v-context").on('scrollable:yes', function() {
         $items.each(function(index) {
+            var $wHeight = $window.outerHeight();
             pImg = {};
             pImg.el = $(this);
             pImg.iMax = pImg.el.offset().top;
-            pImg.iMin = parseFloat(pImg.iMax) > $window.outerHeight() ? parseFloat(pImg.iMax) - $window.outerHeight() : 0;
-            pImg.oMax = parseFloat(pImg.el.outerHeight()) * 0.2 * parseFloat(getRandomInt(1, 6));
+            pImg.iMin = parseFloat(pImg.iMax) > $wHeight ? parseFloat(pImg.iMax) - $wHeight : 0;
+            pImg.oMax = parseFloat(pImg.el.outerHeight()) < $wHeight * 0.2 ? parseFloat(pImg.el.outerHeight()) * 0.2 * parseFloat(getRandomInt(1, 5)) : $wHeight * 0.04 * parseFloat(getRandomInt(1, 5));
             pImgs.push(pImg);
         });
     });

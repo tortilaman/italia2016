@@ -34,12 +34,12 @@
 					/>
 				</svg>
 			</div>
+			<input id="search" type="search" size="13" placeholder="type to search">
 			<div id="close-btn">
 				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 71.65 71.65">
 			    <path d="M7.07 7.07l57.51 57.51m0-57.51L7.07 64.58"/>
 				</svg>
 			</div>
-			<input id="search" type="search" size="13" placeholder="type to search">
 		</form>
 	</div>
 
@@ -61,7 +61,7 @@
 					'iosThumbnail'
 				]
 			}) %}
-			{# =================== Display Entries =================== #}
+{# =================== Display Entries =================== #}
 			{% if entries | length %}
 				{% set entryYears = entryYears|merge([year]) %}
 				<section id="flex-grid-{{year}}" class="flexbox-grid clearfix">
@@ -77,7 +77,7 @@
 					{% endif %}
 					{% for entry in entries %}
 						<article class="{{entry.type == 'shortFilm' ? 'film-entry' : 'design-entry'}} {{entry.videoYear >= '2015' ? 'v21-9' : 'v16-9'}} item" data-title="{{entry.title}}" {% if entry.nameFull|length %} data-name="{{entry.nameFull}}" {% endif %} {% if entry.nameCompany|length %} data-company="{{entry.nameCompany}}" {% endif %} data-tags="{% for tag in entry.disciplines %}{{tag}}{{tag == entry.disciplines[entry.disciplines|length - 1] ? '' :','}}{% endfor %}" {% if entry.secondaryTags|length %} data-topics="{% for tag in entry.secondaryTags %}{{tag}}{{tag == entry.secondaryTags[entry.secondaryTags|length - 1] ? '' :','}}{% endfor %}" {% endif %} data-show="true" >
-
+{# =================== Card Images =================== #}
 							{% if entry.type == "interviewVideo" %}
 								{% set image = entry.parent.intPortrait %}
 							{% elseif entry.type == 'designer' %}
@@ -89,30 +89,44 @@
 							{% if entry.type != 'shortFilm' and image %}
 								{% set transformedPortrait = craft.imager.transformImage(
 									image, [
-									{ width: 288, pngCompressionLevel: 4 },
 									{ width: 250 },
 									{ width: 150 }
 									], {ratio: 2/3, position: image.focusPctX ~ '% ' ~ image.focusPctY ~ '%'})
 								%}
 								{% set transformedLandscape = craft.imager.transformImage(
 									image, [
-									{ width: 500},
 									{ width: 288, pngCompressionLevel: 4}
-									], {ratio: 4/1, position: image.focusPctX ~ '% ' ~ image.focusPctY ~ '%'})
+									], {ratio: 2/1, position: image.focusPctX ~ '% ' ~ image.focusPctY ~ '%'})
 								%}
 							{% endif %}
 							<a href="{{ entry.children|length ? entry.children.first.url : entry.url }}">
 								<div class="entry-thumb-cont">
 									{% if entry.type == 'shortFilm' %}
-										<video class="" autoplay loop muted preload poster="{{ iosThumb.url }}">
-											<source src="{{ video.url }}" type="video/mp4" data-title="{{ entry.title }}">
+										<video class="lazyload" autoplay loop muted data-poster="{{iosThumb.url}}" preload="none">
+											<source src="{{ video.url }}" type="video/mp4">
 										</video>
+										<img class="iosThumb" src="{{ iosThumb.url }}" />
 									{% else %}
-										<img class="lazyload"
-											data-sizes="(min-width: 1024px) 12vw, (min-width: 700px) 18vw, (min-width: 480px) 42vw, 80vw"
-											data-srcset="{{ craft.imager.srcset(transformedPortrait) }}"
-											srcset="{{ craft.imager.base64Pixel(16, 9) }}" />
+										<picture>
+											<source
+												data-srcset="{{transformedPortrait[1]}}"
+												data-src="{{transformedPortrait[1]}}"
+												media="(min-width: 700px)" />
+											<source
+												data-srcset="{{transformedPortrait[0]}}"
+												data-src="{{transformedPortrait[0]}}"
+												media="(min-width: 480px)" />
+											<source
+												data-srcset="{{transformedLandscape[0]}}"
+												data-src="{{transformedLandscape[0]}}"/>
+											<img class="lazyload"
+												data-srcset="{{transformedPortrait[1]}}"
+												srcset="{{ craft.imager.base64Pixel(16, 9) }}"
+												src="{{ transformedPortrait[1] }}"
+											/>
+										</picture>
 									{% endif %}
+{# =================== Card Info =================== #}
 								</div>
 								{% if entry.type == 'shortFilm' %}
 									<div class="entry-description">
@@ -127,6 +141,12 @@
 										{% for topic in entry.secondaryTags %}
 												<li>{{topic}}</li>
 										{% endfor %}
+										<li>
+											{#<svg xmlns="http://www.w3.org/2000/svg" viewBox="1161 1006.7 25 40.5">
+											  <path d="M1173.5 1047c-.9-4.5-2.5-8.3-4.5-11.8-1.5-2.6-3.2-5-4.7-7.5-.5-.8-1-1.7-1.5-2.6-1-1.7-1.8-3.8-1.8-6.4.1-2.6.8-4.6 1.9-6.3 1.8-2.8 4.7-5 8.6-5.6 3.2-.5 6.2.3 8.4 1.6 1.8 1 3.1 2.4 4.1 4 1.1 1.7 1.8 3.7 1.9 6.3 0 1.3-.2 2.6-.5 3.6s-.8 1.9-1.3 2.8c-.9 1.8-2 3.4-3 5.1-3.2 4.9-6.2 9.9-7.6 16.8z"/>
+											</svg>#}
+											<span class="entry-location">{{entry.location is defined ? entry.location|lower}}</span>
+										</li>
 									</ul>
 									<span class="entry-meet">meet {{entry.nameHover}}</span>
 								{% endif %}
@@ -166,5 +186,6 @@
 {% block foot %}
 	{{ parent() }}
 	{% includeJsFile "https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" %}
+	{% includeJsFile "/js/continuousGrid.js" %}
 	{% includeJsFile "/js/designIndex.js" %}
 {% endblock %}

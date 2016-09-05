@@ -24,43 +24,72 @@ _#}
 	<div id="bg"></div>
 
 	{# Find your entries #}
-	{% cache %}
+	{% cache unless craft.config.devMode %}
 	{# {% cache unless craft.config.devMode %} #}
 	{% set entries = craft.entries.section('team') %}
 	{# If this gets cached it'll never be random, so yeah... #}
 		{# {% set entries = craft.entries.section('team').order('RAND()') %} #}
-	{% endcache %}
+	{% set aboutPhoto = entry.groupPhoto.first() %}
+	{% set transformedPhoto = craft.imager.transformImage(
+		aboutPhoto, [
+		{ width: 1350 },
+		{ width: 700 },
+		{ width: 480, pngCompressionLevel: 4 }
+		], {ratio: 3/2, position: aboutPhoto.focusPctX ~ '% ' ~ aboutPhoto.focusPctY ~ '%'})
+	%}
 	<div id="a-border"></div>
 	{# ===================== Display Entries ===================== #}
-{% cache %}
 	<section id="team-about" class="team-section bghidden is-scrollable">
 		<div class="inner hide ">
 			{{entry.aboutItalia}}
 		</div>
 		<div class="img-bg">
-			<img src="{{entry.groupPhoto.first().url}}"
+			<img srcset="{{ craft.imager.srcset(transformedPhoto) }}"
+				src="{{ craft.imager.base64Pixel(16, 9) }}"
+				sizes="(min-width: 1024px) 70vw, 100vw" />
 		</div>
 	</section>
 
 	<section id="flex-grid-team" class="flexbox-grid team-section">
-		<section class="inner">
-			{% if entries | length %}
-				<article id="page-info">
+		<div id="bottom-bg"></div>
+		{# <section class="inner"> #}
+			{% if entries is defined %}
+				{# <article id="page-info">
 					<div class="scrollHide">
 						{{entry.aboutDieci}}
 					</div>
-				</article>
+				</article> #}
 				{% for entry in entries %}
 					<article class="design-entry item">
-						{% set image = entry.intPortrait.first %}
+						{% set image = entry.intPortrait.first() %}
+						{% set transformedPortrait = craft.imager.transformImage(
+							image, [
+							{ width: 250 },
+							{ width: 150 }
+							], {ratio: 2/3, position: image.focusPctX ~ '% ' ~ image.focusPctY ~ '%'})
+						%}
+						{% set transformedLandscape = craft.imager.transformImage(
+							image, [
+							{ width: 288, pngCompressionLevel: 4}
+							], {ratio: 2/1, position: image.focusPctX ~ '% ' ~ image.focusPctY ~ '%'})
+						%}
 						<a class="scrollHide" href="{{ entry.url }}">
 							{% if image %}
 								<div class="entry-thumb-cont">
-									<img src="{{ image.url }}" alt="{{ image.title }}">
-								</div>
-							{% else %}
-								<div class="entry-thumb-cont">
-									<img src="{{image.url}}" alt="Placeholder image">
+									<picture>
+										<source
+											data-srcset="{{transformedPortrait[1]}}"
+											media="(min-width: 700px)" />
+										<source
+											data-srcset="{{transformedPortrait[0]}}"
+											media="(min-width: 480px)" />
+										<source
+											data-srcset="{{transformedLandscape[0]}}"/>
+										<img class="lazyload"
+											srcset="{{ craft.imager.base64Pixel(16, 9) }}"
+											src="{{ transformedPortrait[1] }}"
+										/>
+									</picture>
 								</div>
 							{% endif %}
 							<ul class="entry-tags">
@@ -68,7 +97,7 @@ _#}
 									<li> {{ tag }} </li>
 								{% endfor %}
 							</ul>
-							<span class="entry-meet">meet {{ entry.title|split(' ')|first }}</span>
+							<div class="entry-meet">meet {{ entry.title|split(' ')|first }}</div>
 							<div class="entry-title">
 								<h1>{{ entry }}</h1>
 								<h2>{{entry.type != 'shortFilm'?entry.funnyRole}}</h2>
@@ -82,41 +111,41 @@ _#}
 			{% else %}
 				{#<p>That's strange, we couldn't find anything, our bad. Maybe try looking for something else? We'll fix this ASAP!</p> #}
 			{% endif %}
-		</section>
-		<div id="footer">
-			<div id="contact-info">
-				<h1>contact</h1>
-				<p>Russell Taylor, Field School Director</p>
-				<p>rgtaylor@sfu.ca | 778.782.7493</p>
-				<p>2811, SFU Surrey Campus Surrey, BC, Canada</p>
-			</div>
-			<div id="connect">
-				<h1>connect with us</h1>
-				<div id="social-icons">
-					<a href="https://www.instagram.com/sfuitalia/">
-						<svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" viewBox="100 100 200 200">
-						  <path d="M228.7 302.4h-67.2c-.6-.1-1.2-.2-1.7-.3-6.7-.6-13.5-.6-20.1-1.9-22-4.2-36.6-16.9-43.2-38.5-2.9-9.7-3.1-19.7-3.3-29.6-.2-17.9-.2-35.8-.1-53.6 0-11.3-.1-22.6 2.1-33.7 4.3-21.8 16.8-36.4 38.3-43 9.5-2.9 19.4-3.3 29.2-3.3 22.6-.2 45.2 0 67.8.1 8 0 16 .5 23.9 2.5 17.4 4.4 30 14.6 37.1 31.2 4.1 9.5 5.1 19.6 5.4 29.8 0 1.5.3 3.1.4 4.6v67.2c-.1.6-.3 1.2-.3 1.8-.2 8-.6 16-2.6 23.9-4.4 17.4-14.6 30-31.2 37.1-9.5 4.1-19.6 5.1-29.8 5.4-1.7-.1-3.2.2-4.7.3zM111.8 200.1h-.1c0 8.6-.2 17.3.1 25.9.3 8.6.4 17.3 1.7 25.8 2.4 15.4 11.3 25.5 26.7 29.6 8.2 2.2 16.7 2.2 25.1 2.3 18.5.2 37 .3 55.5 0 8.7-.1 17.4-.4 26-1.7 15.4-2.4 25.5-11.3 29.6-26.6 2.2-8.2 2.2-16.7 2.3-25.1.2-18.5.3-37 0-55.5-.1-8.7-.4-17.4-1.7-26-2.4-15.4-11.3-25.5-26.6-29.6-8.2-2.2-16.7-2.2-25.1-2.3-18.5-.2-37-.3-55.5 0-8.7.1-17.4.4-26 1.7-15.4 2.4-25.5 11.3-29.6 26.6-1.9 7.2-2.1 14.7-2.2 22.1-.4 11-.2 21.9-.2 32.8z" class="st0"/>
-						  <path d="M195 252.9c-28.9 0-52.5-23.6-52.5-52.5 0-29 23.7-52.6 52.7-52.6 28.9 0 52.4 23.7 52.4 52.6 0 28.9-23.7 52.5-52.6 52.5zm34-52.4c0-18.7-15.1-34-33.6-34-18.9 0-34.2 15.1-34.2 33.7 0 18.8 15.1 34.1 33.7 34.1 18.8 0 34.1-15.2 34.1-33.8zm20.5-42.3c-6.8 0-12.3-5.5-12.2-12.4 0-6.8 5.5-12.3 12.4-12.2 6.8 0 12.3 5.5 12.2 12.4-.1 6.8-5.6 12.2-12.4 12.2z" class="st0"/>
-						</svg>
-					</a>
-					<a href="https://www.facebook.com/sfuitalia/">
-						<svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 40">
-							<path id="facebook" d="M16.6 18.6h-5.2v18.6H3.7V18.6H0V12h3.7V7.8c0-3 1.4-7.8 7.8-7.8h5.7v6.4h-4.1c-.7 0-1.6.3-1.6 1.8V12h5.9l-.8 6.6z" />
-						</svg>
-					</a>
-					<a href="https://twitter.com/sfuitalia">
-						<svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 35">
-							<path id="twitter" d="M32.2 7.3v1c0 9.7-7.4 21-21 21-4.2 0-8-1.2-11.3-3.3.7-.1 1.3 0 1.9 0 3.5 0 6.6-1.2 9.1-3.2-3.2 0-5.9-2.2-6.9-5.1.4.1.9.1 1.4.1.7 0 1.3-.1 1.9-.3-3.4-.7-5.9-3.7-5.9-7.2v-.1c1 .6 2.1.9 3.3.9-2-1.3-3.3-3.6-3.3-6.1 0-1.4.4-2.6 1-3.7C6.1 5.8 11.6 8.7 17.7 9c-.1-.5-.2-1.1-.2-1.7 0-4.1 3.3-7.4 7.4-7.4 2.1 0 4 .9 5.4 2.3 1.7-.3 3.3-.9 4.7-1.8-.6 1.7-1.7 3.2-3.2 4.1 1.5-.2 2.9-.6 4.2-1.2-1.1 1.6-2.3 2.9-3.8 4z"/>
-						</svg>
-					</a>
-				</div>
+		{# </section> #}
+	</section>
+	<div id="footer">
+		<div id="contact-info">
+			<h1>contact</h1>
+			<p>Russell Taylor, Field School Director</p>
+			<p>rgtaylor@sfu.ca | 778.782.7493</p>
+			<p>2811, SFU Surrey Campus Surrey, BC, Canada</p>
+		</div>
+		<div id="connect">
+			<h1>connect with us</h1>
+			<div id="social-icons">
+				<a href="https://www.instagram.com/sfuitalia/">
+					<svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" viewBox="100 100 200 200">
+						<path d="M228.7 302.4h-67.2c-.6-.1-1.2-.2-1.7-.3-6.7-.6-13.5-.6-20.1-1.9-22-4.2-36.6-16.9-43.2-38.5-2.9-9.7-3.1-19.7-3.3-29.6-.2-17.9-.2-35.8-.1-53.6 0-11.3-.1-22.6 2.1-33.7 4.3-21.8 16.8-36.4 38.3-43 9.5-2.9 19.4-3.3 29.2-3.3 22.6-.2 45.2 0 67.8.1 8 0 16 .5 23.9 2.5 17.4 4.4 30 14.6 37.1 31.2 4.1 9.5 5.1 19.6 5.4 29.8 0 1.5.3 3.1.4 4.6v67.2c-.1.6-.3 1.2-.3 1.8-.2 8-.6 16-2.6 23.9-4.4 17.4-14.6 30-31.2 37.1-9.5 4.1-19.6 5.1-29.8 5.4-1.7-.1-3.2.2-4.7.3zM111.8 200.1h-.1c0 8.6-.2 17.3.1 25.9.3 8.6.4 17.3 1.7 25.8 2.4 15.4 11.3 25.5 26.7 29.6 8.2 2.2 16.7 2.2 25.1 2.3 18.5.2 37 .3 55.5 0 8.7-.1 17.4-.4 26-1.7 15.4-2.4 25.5-11.3 29.6-26.6 2.2-8.2 2.2-16.7 2.3-25.1.2-18.5.3-37 0-55.5-.1-8.7-.4-17.4-1.7-26-2.4-15.4-11.3-25.5-26.6-29.6-8.2-2.2-16.7-2.2-25.1-2.3-18.5-.2-37-.3-55.5 0-8.7.1-17.4.4-26 1.7-15.4 2.4-25.5 11.3-29.6 26.6-1.9 7.2-2.1 14.7-2.2 22.1-.4 11-.2 21.9-.2 32.8z" class="st0"/>
+						<path d="M195 252.9c-28.9 0-52.5-23.6-52.5-52.5 0-29 23.7-52.6 52.7-52.6 28.9 0 52.4 23.7 52.4 52.6 0 28.9-23.7 52.5-52.6 52.5zm34-52.4c0-18.7-15.1-34-33.6-34-18.9 0-34.2 15.1-34.2 33.7 0 18.8 15.1 34.1 33.7 34.1 18.8 0 34.1-15.2 34.1-33.8zm20.5-42.3c-6.8 0-12.3-5.5-12.2-12.4 0-6.8 5.5-12.3 12.4-12.2 6.8 0 12.3 5.5 12.2 12.4-.1 6.8-5.6 12.2-12.4 12.2z" class="st0"/>
+					</svg>
+				</a>
+				<a href="https://www.facebook.com/sfuitalia/">
+					<svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 40">
+						<path id="facebook" d="M16.6 18.6h-5.2v18.6H3.7V18.6H0V12h3.7V7.8c0-3 1.4-7.8 7.8-7.8h5.7v6.4h-4.1c-.7 0-1.6.3-1.6 1.8V12h5.9l-.8 6.6z" />
+					</svg>
+				</a>
+				<a href="https://twitter.com/sfuitalia">
+					<svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 35">
+						<path id="twitter" d="M32.2 7.3v1c0 9.7-7.4 21-21 21-4.2 0-8-1.2-11.3-3.3.7-.1 1.3 0 1.9 0 3.5 0 6.6-1.2 9.1-3.2-3.2 0-5.9-2.2-6.9-5.1.4.1.9.1 1.4.1.7 0 1.3-.1 1.9-.3-3.4-.7-5.9-3.7-5.9-7.2v-.1c1 .6 2.1.9 3.3.9-2-1.3-3.3-3.6-3.3-6.1 0-1.4.4-2.6 1-3.7C6.1 5.8 11.6 8.7 17.7 9c-.1-.5-.2-1.1-.2-1.7 0-4.1 3.3-7.4 7.4-7.4 2.1 0 4 .9 5.4 2.3 1.7-.3 3.3-.9 4.7-1.8-.6 1.7-1.7 3.2-3.2 4.1 1.5-.2 2.9-.6 4.2-1.2-1.1 1.6-2.3 2.9-3.8 4z"/>
+					</svg>
+				</a>
 			</div>
 		</div>
-	</section>
+	</div>
 {% endcache %}
 {% endblock %}
 {% block foot %}
 	{{ parent() }}
 	{% includeJsFile "/js/stackGrid.js" %}
-	{% includeJsFile "/js/teamIndex.js" %}
+	{% includeJsFile "/js/continuousGrid.js" %}
 {% endblock %}

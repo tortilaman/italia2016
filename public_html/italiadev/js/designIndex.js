@@ -39,13 +39,18 @@ $(document).ready(function() {
 		vOffset;
 
 	$search.focus();
+	if(mobile) {
+		$(".entry-thumb-cont video").remove();
+	} else if (!mobile) {
+		$(".entry-thumb-cont .iosThumb").remove();
+	}
 
 	/*********************************************
 	  UTILITY FUNCTIONS
 	*********************************************/
 
-	//Fit interviewee names to the container
-	$(".design-entry .entry-title h1").fitText(0.9);
+	//Fit tags to the container
+	// $(".design-entry ul").fitText(1);
 
 	function getRandomInt(min, max) {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -68,90 +73,6 @@ $(document).ready(function() {
 		}
 	});
 
-	// var bLazy = new Blazy({
-	// 	offset: 600,
-	// 	container: "[id^='flex-grid-']",
-	// 	saveViewportOffsetDelay: 25,
-	// 	selector: 'video, img',
-	// 	success: function(ele){
-  //       console.log(ele+" has loaded");
-  //   },
-	// 	error: function(ele, msg){
-  //     if(msg === 'missing'){
-  //         console.log("Data-src is  for " + ele);
-  //     }
-  //     else if(msg === 'invalid'){
-  //         console.log("Data-src is invalid for " + ele);
-  //     }
-	// 		else {
-	// 			console.log("unknown error for " + ele);
-	// 		}
-  // 	}
-	// });
-
-	/***************************************************************************
-	/*8888b.          d8b      888
-	d88P  Y88b         Y8P      888
-	888    888                  888
-	888        888d888 888  .d88888
-	888  88888 888P"   888 d88" 888
-	888    888 888     888 888  888
-	Y88b  d88P 888     888 Y88b 888
-	 "Y8888P88 888     888  "Y888*/
-	/**************************************************************************/
-
-	/********************
-		GRID FUNCTION
-	********************/
-
-	function offsetGrid() {
-		var hoLast,
-			hoThis,
-			voLast,
-			voThis;
-		if ($window.outerWidth() >= breakpoints.phone) {
-			if ($window.outerWidth() >= breakpoints.phone && $window.outerWidth() < breakpoints.tablet) {
-				hOffset = ['-4vw', '0', '4vw'];
-				vOffset = ['2vw', '6vw', '30vw', '60vw'];
-			} else if ($window.outerWidth() >= breakpoints.tablet && $window.outerWidth() < breakpoints.laptop) {
-				hOffset = ['-4vw', '0', '4vw'];
-				vOffset = ['2vw', '6vw', '16vw', '30vw'];
-			} else if ($window.outerWidth() >= breakpoints.laptop) {
-				hOffset = ['0', '2vw'];
-				vOffset = ['-1vw', '3vw', '5vw', '9vw'];
-			}
-			$entries.each(function(index, value) {
-				var el = $(this);
-				while (hoThis == hoLast) hoThis = hOffset[Math.floor(Math.random() * hOffset.length)];
-				while (voThis == voLast) voThis = vOffset[Math.floor(Math.random() * vOffset.length)];
-				el.css('left', hoThis);
-				el.css('margin-top', voThis);
-				hoLast = hoThis;
-				voLast = voThis;
-				var dict = {
-					0: "Up",
-					1: "Down",
-					2: "Left",
-					3: "Right"
-				};
-				el.attr('data-dir', dict[getRandomInt(0, 3)]);
-				el.css('opacity', '1');
-			});
-		} else {
-			$entries.each(function() {
-				var el = $(this),
-					dict = {
-						0: "Up",
-						1: "Down"
-					};
-				el.attr('data-dir', dict[getRandomInt(0, 1)]);
-				el.css('opacity', '1');
-			});
-		}
-	}
-
-	if ($scriptEnable) offsetGrid();
-
 	/*88888b.                           888 888 d8b
 	d88P  Y88b                          888 888 Y8P
 	Y88b.                               888 888
@@ -165,55 +86,33 @@ $(document).ready(function() {
 	                                                          "Y88*/
 
 	/********************************
-	  Parallax
-	********************************/
-	function parallax() {
-		var scrollPos = $window.scrollTop();
-		$.each(pImgs, function(index, pImg) {
-			if (scrollPos > pImg.iMin && scrollPos < pImg.iMax) {
-				var newVal = parseFloat(scrollPos).map(pImg.iMin, pImg.iMax, pImg.oMax, 0).toFixed(2);
-				pImg.el.css('transform', 'translateY(' + newVal + 'px)');
-			} else if (scrollPos < pImg.iMin) pImg.el.css('transform', 'translateY(' + pImg.oMax + 'px)');
-			else if (scrollPos > pImg.iMax) pImg.el.css('transform', 'translateY(' + 0 + ')');
-		});
-	}
-
-	if ($scriptEnable) {
-		pImgs = [];
-		$entries.each(function(index) {
-			var pImg = {};
-			pImg.el = $(this);
-			pImg.iMax = pImg.el.offset().top;
-			pImg.iMin = parseFloat(pImg.iMax) > $window.outerHeight() ? parseFloat(pImg.iMax) - $window.outerHeight() : 0;
-			pImg.oMax = parseFloat(pImg.el.outerHeight()) * 0.2 * parseFloat(getRandomInt(1, 6));
-			pImgs.push(pImg);
-			if (index == $entries.length - 1) requestAnimationFrame(parallax);
-		});
-	}
-
-
-
-	/********************************
 	  Year link underline
 	********************************/
 
-	if ($scriptEnable) {
-		years = [];
-		yearLinks = $("#year-links a");
+	yearLinksLoc = function() {
 
-		$("#year-links a").each(function(index) {
+		yearLinkList.each(function(index) {
 			var year = {};
+			var sel = $("[id^='year-title-']");
 			year.el = $(this);
-			year.begin = $("[id^='year-title-']").eq(index).offset().top;
+			if(index >= 1) {
+				if(sel.eq(index).offset().top - sel.eq(index - 1).offset().top < $window.outerHeight()) {
+					year.begin = sel.eq(index).offset().top - $window.outerHeight() * 0.2;
+				} else {
+					year.begin = sel.eq(index).offset().top - $window.outerHeight() * 0.7;
+				}
+			} else {
+				year.begin = 0;
+			}
 			years.push(year);
 		});
-	}
+	};
 
 	yearLinks = function() {
 		var scrollPos = $window.scrollTop();
 		$.each(years, function(index, year) {
 			if (scrollPos > year.begin) {
-				$("#year-links a").removeClass("active");
+				yearLinkList.removeClass("active");
 				year.el.addClass("active");
 			}
 		});
@@ -222,10 +121,16 @@ $(document).ready(function() {
 		}
 	};
 
-	if ($scriptEnable) yearLinks();
+	if ($scriptEnable) {
+		years = [];
+		yearLinkList = $("#year-links a");
+
+		yearLinksLoc();
+		yearLinks();
+	}
 
 	/********************************
-	  Open search scrolling
+	  Scroll while searching
 	********************************/
 
 	searchScroll = function() {
@@ -234,7 +139,7 @@ $(document).ready(function() {
 			formPos = $window.outerHeight() * 0.18 - scrollDelta,
 			ulTrans = 'translateY(' + formPos + 'px)';
 		$sForm.css('transform', ulTrans);
-		$("ul.ui-autocomplete").css('transform', ulTrans);
+		// $("ul.ui-autocomplete").css('transform', ulTrans);
 	};
 
 	/*888
@@ -360,6 +265,7 @@ $(document).ready(function() {
 		$("article img, article video, article .entry-description, article .entry-title, #page-info h1, #page-info p, [id*='year-title-'], article .entry-tags, article .entry-meet, #year-links").addClass("oHidden");
 		if ($window.outerWidth() < 700) $("#search-btn").css('opacity', 0);
 		$("#d-filter").addClass("static");
+		searchSize();
 		$("#d-filter form").addClass("lSearch")/*.css('top', $window.outerHeight() * 0.08)*/;
 		$("#d-filter #search").addClass("active").css('font-size', '');
 		searchPos = $window.scrollTop();
@@ -372,13 +278,14 @@ $(document).ready(function() {
 	}
 
 	function mobShowResults() {
-		$('#search-btn').addClass('oHidden');
+		$('#search-btn, #year-links').addClass('oHidden');
+		$('#page-info+.design-entry').css('margin-top', '1.5vh');
 		$('#d-filter form').css({
 				'top': '2vmin',
-				'width' : '67vw'
+				'width' : '88vw'
 		});
 		$('#search').css({
-			'width' : '67vw',
+			'width' : '88vw',
 			'display' : 'block'
 		});
 		$window.focus();
@@ -386,19 +293,19 @@ $(document).ready(function() {
 
 	function hideSearch() {
 		$("article img, article video, article .entry-description, article .entry-title, #page-info h1, #page-info p, [id*='year-title-'], article .entry-tags, article .entry-meet, #year-links").removeClass("oHidden");
-		$("#d-filter form, ul.ui-autocomplete").css('transform', '');
+		$("#d-filter form").css('transform', '');
+		// $("#d-filter form, ul.ui-autocomplete").css('transform', '');
 		if ($window.outerWidth() < 700) $("#search-btn").css('opacity', 1);
 		$("#d-filter").removeClass('static');
-		if ($search.hasClass('active') && $search.val().length !== 0) {
-			$search.attr('size', $search.val().length);
-		}
+		searchSize();
 		$("#d-filter form").removeClass("lSearch");
 		$window.focus();
 		searching = false;
 	}
 
 	function mobHideResults() {
-		$('#search-btn').removeClass('oHidden');
+		$('#search-btn, #year-links').removeClass('oHidden');
+		$('#page-info+.design-entry').css('margin-top', '');
 		$('#d-filter form').css({
 				'top': '',
 				'width' : ''
@@ -471,14 +378,11 @@ $(document).ready(function() {
 			}
 		});
 
-		bLazy.revalidate();
-		bLazy.load($("[data-show=true]"));
-
 		//Hide the interviews explanation box
 		if ($("article[data-title]").hasClass("dHidden")) {
-			$("#page-info").addClass("dHidden");
+			$("#page-info div").addClass("dHidden");
 		} else {
-			$("#page-info").removeClass("dHidden");
+			$("#page-info div").removeClass("dHidden");
 		}
 
 		//Year Titles
@@ -499,6 +403,9 @@ $(document).ready(function() {
 		} else {
 			$('main').removeClass("noResults");
 		}
+
+		//Update the positions of year links when they change.
+		if($scriptEnable) yearLinksLoc();
 	}
 
 	/*     /*888          888             .d8888b.
@@ -537,6 +444,7 @@ $(document).ready(function() {
 			Selected a result
 		**********************************************/
 		},
+		appendTo: "#searchForm",
 		minLength: 0,
 		delay: 0,
 		select: function(event, ui) {
@@ -544,8 +452,15 @@ $(document).ready(function() {
 			requestAnimationFrame($filterResults);
 			hideSearch();
 			$window.focus();
-			mobShowResults();
+			if(mobile) mobShowResults();
 			$('#close-btn').addClass("active");
+		},
+		open: function( event, ui) {
+			var calcHeight = parseFloat($('.ui-autocomplete').offset().top) + parseFloat($('.ui-autocomplete').outerHeight());
+			$("body").css('min-height', calcHeight);
+		},
+		close: function( event, ui) {
+			$("body").css('min-height', '');
 		}
 	}).data('ui-autocomplete')._renderItem = function(ul, item) {
 		var term = $('#search').val();
@@ -587,6 +502,30 @@ $(document).ready(function() {
 			return matcher.test(val);
 		});
 	};
+
+	var fSizeIn = $search.css('font-size').replace('px', '');
+	searchSize = function() {
+		if ($search.hasClass('active') && $search.val().length !== 0) {
+			var len = $search.val().length,
+					lenOffset = Math.floor(len.map(8, 40, 2, -3));
+					if(len > 20) {
+						var fSizeOut = parseFloat(parseFloat(fSizeIn) * 0.7),
+								newFSize = Math.floor(len.map(20, 40, parseInt(fSizeIn),parseFloat(fSizeOut)));
+						console.log("original size: " + fSizeIn +", min size: " + fSizeOut + ", new size: "+newFSize);
+						$search.css('font-size', newFSize+'px');
+						$cBtn.css('font-size', newFSize+'px');
+					}
+			$search.attr('size', len + parseFloat(lenOffset));
+
+			// $cBtn.css({
+			// 	'left' : cBtnLeft+"px",
+			// 	'right' : 'auto'
+			// });
+		}
+	};
+
+
+
 	/*8      d8b          888
 	888      Y8P          888
 	888                   888
@@ -600,10 +539,14 @@ $(document).ready(function() {
 		 EVENT LISTENERS
 	** =====================================================*/
 
+	$window.on('load', function() {
+		$(document).trigger('grid:loaded');
+	});
+
 	//Scroll events...
 		$window.on('scroll', function(e) {
 			if ($scriptEnable) {
-				this.requestAnimationFrame(parallax);
+				// this.requestAnimationFrame(parallax);
 				this.requestAnimationFrame(yearLinks);
 			}
 			if ($sForm.hasClass('lSearch')) {
@@ -624,14 +567,6 @@ $(document).ready(function() {
 		$mMenuUL.removeClass("open");
 		$mMenuA.removeClass("active");
 	});
-
-	//Reflow grid on window resize or orientation change
-	$window.on('resize', function() {
-		$scriptEnable = $window.outerWidth() > 700 ? true : false;
-		offsetGrid();
-	});
-	var orientationCheck = window.matchMedia("(orientation: portrait)");
-	orientationCheck.addListener(offsetGrid);
 
 	/*******************************
 	  SEARCH LISTENERS
@@ -655,29 +590,30 @@ $(document).ready(function() {
 		$main.removeClass("noResults");
 		$cBtn.removeClass("active");
 		$sInput.val('');
-		mobHideResults();
+		if (mobile) mobHideResults();
 		$search.attr('size', 12);
 		$search.css('font-size', '');
 		requestAnimationFrame($filterResults);
 		if ($sForm.hasClass('lSearch')) hideSearch();
-		if ($scriptEnable) $sBtn.css('opacity', 1);
+		if (!$scriptEnable) $sBtn.css('opacity', 1);
 	});
+
+	deFocus = function(event) {
+		if($(event.target).attr('id') != 'close-btn' && $sForm.hasClass('lSearch')) {
+			$sInput.val('');
+			hideSearch();
+			$("body").off('click', deFocus());
+		}
+	};
 
 	$sInput.focusin(function() {
 		$main.removeClass("noResults");
 	});
 
-	$sInput.focusout(function() {
-		hideSearch();
-		if ($sInput.val() === '') {
-			$cBtn.removeClass("active");
-		}
-	});
-
 	$sForm.submit(function() {
 		$sInput.blur();
 		if ($sInput.val() !== '') $cBtn.addClass("active");
-		if ($scriptEnable) $sBtn.css('opacity', 0);
+		if (!$scriptEnable) $sBtn.css('opacity', 0);
 		return false;
 	});
 
@@ -685,42 +621,39 @@ $(document).ready(function() {
 	  KEYBOARD LISTENERS
 	*******************************/
 
-	//You hit the enter key
-	$search.on("keyup", function(e) {
-		if (e.which === 27) {
-			$search.val("");
-			hideSearch();
-			mobShowResults();
-			if ($scriptEnable) $sBtn.css('opacity', 0);
-		} else {
-			if (!searching) {
-				showSearch();
-			}
-			requestAnimationFrame($filterResults);
-		}
-	});
-
-	if ($scriptEnable) {
-		//Hit an alphanumeric key
-		$window.on("keyup", function(e) {
-			if (e.which >= 65 && e.which <= 90) {
-				if (!searching) {
-					key = String.fromCharCode(e.which).toLowerCase();
+	// if ($scriptEnable) {
+		$window.on("keyup", function(event) {
+			//Hit an alphanumeric key
+			if (event.which >= 65 && event.which <= 90) {
+				if (!searching && $scriptEnable) {
+					showSearch();
+					key = String.fromCharCode(event.which).toLowerCase();
 					$search.focus();
 					$search.val(key);
-					showSearch();
 				}
 				requestAnimationFrame($filterResults);
-				// $sForm.css('top', '');
-				// $sAutoUL.css('top', '');
-				// if ($search.hasClass('active') && $search.val().length > 20) {
-				// 	$fSize = $search.innerWidth() / $search.val().length * 2;
-				// 	$search.css('font-size', $fSize);
-				// }
-				if ($search.hasClass('active') && $search.val().length > 12) {
-					$search.attr('size', $search.val().length + 1);
+				searchSize();
+			}
+			//Pressed Enter
+			else if (event.which == '13') {
+				if(searching) {
+					requestAnimationFrame($filterResults);
+					hideSearch();
+					$window.focus();
+					if(mobile) mobShowResults();
+					$('#close-btn').addClass("active");
 				}
 			}
+			//Pressed Escape
+			else if (event.which == '27') {
+				if(searching) {
+					$search.val('');
+					hideSearch();
+				}
+			}
+			else if (event.which == 38 || event.which <= 40) {
+				searchSize();
+			}
 		});
-	}
+	// }
 });
