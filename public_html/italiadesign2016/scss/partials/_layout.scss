@@ -1,0 +1,480 @@
+
+// ==============================
+//
+//	Things that appear on most pages and aren't
+//	general typography are here.
+//
+// ==============================
+
+*,
+*::after,
+*::before {
+	margin    : 0;
+	padding   : 0;
+	box-sizing: border-box;
+	border    : none;
+}
+
+html {}
+
+body {
+	background-color: $color4;
+	@include respond-to(laptop) {
+		background-color: transparent;
+	}
+}
+
+.clearfix:after {
+	content: "";
+	display: block;
+	clear  : both;
+}
+
+.no-js {
+	position : absolute;
+	top      : 50%;
+	left     : 50%;
+	width    : 70vw;
+	transform: translate(-50%, -50%);
+
+	div {
+		display : inline-block;
+		position: relative;
+		width   : 70%;
+		padding : 0 2em;
+	}
+
+	h1,
+	p {
+		margin-right: 2em;
+	}
+
+	h1 {
+		font-size: 3em;
+		color    : $color5;
+	}
+
+	a {
+		color: $color5;
+	}
+
+	img {
+		display : inline-block;
+		position: relative;
+		float   : right;
+		width   : 30%;
+	}
+}
+
+/****************************
+888888b.    .d8888b.
+888  "88b  d88P  Y88b
+888  .88P  888    888
+8888888K.  888
+888  "Y88b 888  88888
+888    888 888    888
+888   d88P Y88b  d88P
+8888888P"   "Y8888P88
+****************************/
+
+.bg {
+	&::after {
+		content            : '';
+		position           : absolute;
+		display            : block;
+		backface-visibility: hidden;
+		-webkit-font-smoothing : antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		font-smoothing         : antialiased;
+		top                : 0;
+		left               : 0;
+		width              : 100%;
+		height             : 100%;
+		mix-blend-mode     : multiply;
+		z-index            : 1;
+	}
+}
+
+.green-bg {
+	@extend .bg;
+
+	&::after {
+		background: $color1;
+	}
+}
+
+.blue-bg {
+	@extend .bg;
+
+	&::after {
+		background: $color2;
+	}
+}
+
+.tan-bg {
+	@extend .bg;
+
+	&::after {
+		background: $color4;
+	}
+}
+
+#bg {
+	opacity   : 0;
+	visibility: hidden;
+	@include respond-to(laptop) {
+		position        : fixed;
+		top             : 6vw;
+		left            : 6vw;
+		width           : 88vw;
+		height          : calc(100vh - 6vw);
+		background-color: $color4;
+		z-index         : 1;
+		opacity         : 1;
+		visibility      : visible;
+	}
+}
+
+/*********************************************
+888b    888
+8888b   888
+88888b  888
+888Y88b 888  8888b.  888  888
+888 Y88b888     "88b 888  888
+888  Y88888 .d888888 Y88  88P
+888   Y8888 888  888  Y8bd8P
+888    Y888 "Y888888   Y88P
+*********************************************/
+
+.design .home-btn,
+.italia .home-btn,
+.team .home-btn,
+.team-vid .home-btn {
+	z-index: 202;
+}
+
+header.header {
+	position        : absolute;
+	display         : block;
+	top             : 0;
+	left            : 0;
+	width           : 100%;
+	height          : 15vmin;
+	padding         : 0;
+	background-color: white;
+	z-index         : 210;
+	text-align      : left;
+	@include respond-to(laptop) {
+		position  : fixed;
+		background: none;
+		top       : 6vw;
+		left      : 0;
+		width     : 100vw;
+		min-height: 0;
+		height    : calc(100vh - 6vw);
+		text-align: center;
+		z-index   : 1;
+	}
+}
+
+//Basic styling for both home button implementations.
+li a.home-btn span,
+nav > a.home-btn {
+	border-bottom      : none;
+	opacity            : 1;
+	margin             : 0;
+	padding            : 0;
+	font-size          : 0;
+	background-image   : url("/assets/images/logo_letters.png");
+	background-position: center center;
+	background-repeat  : no-repeat;
+	background-size    : contain;
+}
+
+nav > a.home-btn {
+	display   : none;
+	position  : fixed;
+	top       : 0.5vw;
+	left      : 0.5vw;
+	height    : 5vw;
+	width     : 5vw;
+	padding   : 0;
+	text-align: center;
+	z-index   : 10;
+	@include respond-to(laptop) {
+		display: block;
+	}
+}
+
+// li a.home-btn span {
+// 	display: none;
+// 	@include respond-to(laptop) {
+// 		display: block;
+// 	}
+// }
+
+.home nav > a.home-btn {
+	display: block;
+	@include respond-to(laptop) {
+		display: none;
+	}
+}
+
+nav {
+	display: block;
+	height : 100%;
+
+	ul {
+		list-style     : none;
+		display        : flex !important;
+		flex-wrap      : nowrap;
+		flex-direction : row;
+		justify-content: space-between;
+		align-items    : center;
+		height         : 100%;
+		margin         : 0 6vw;
+		@include respond-to(laptop) {
+			flex-wrap      : nowrap;
+			justify-content: space-between;
+			margin         : 0;
+			width          : 100%;
+		}
+
+		li {
+			display               : inline-block;
+			line-height           : 1.5;
+			height                : 100%;
+			text-align            : center;
+			// margin                : 0.5vh 0;
+			// background            : $color4;
+			font-variant-ligatures: no-common-ligatures;
+
+			&:first-of-type {
+				height: 12vmin;
+				width : 15vmin;
+				@include respond-to(laptop) {
+					display : none;
+					position: fixed;
+					top     : 0.5vw;
+					left    : 0.5vw;
+					height  : 5vw;
+					width   : 5vw;
+				}
+
+				a {
+					display      : block;
+					height       : 100%;
+					width        : 100%;
+					opacity      : 1 !important;
+					border-bottom: none;
+
+					&::before {
+						display: none;
+					}
+				}
+
+				span {
+					display            : block;
+					position           : relative;
+					top                : 2vmin;
+					left               : 0;
+					height             : 8vmin;
+					width              : 15vmin;
+					border-bottom      : none;
+					opacity            : 1;
+					margin-top         : 0;
+					padding            : 0;
+					font-size          : 0;
+					background-image   : url("/assets/images/logo_letters.png");
+					background-position: center center;
+					background-repeat  : no-repeat;
+					background-size    : contain;
+
+					&::before {
+						display: none;
+					}
+					@include respond-to(laptop) {
+						display   : none;
+						position  : fixed;
+						top       : 0;
+						left      : 1vmin;
+						height    : 5vw;
+						width     : 5vw;
+						padding   : 0;
+						text-align: center;
+						z-index   : 10;
+					}
+				}
+			}
+			@include respond-to(laptop) {
+				margin    : 0;
+				padding   : 0;
+				// line-height     : 6vw;
+				height    : 100%;
+				width     : 6vw;
+				text-align: center;
+				background: none;
+
+				&:nth-of-type(2) span {
+					transform: rotateZ(270deg);
+				}
+
+				&:last-of-type span {
+					transform: rotateZ(90deg);
+				}
+			}
+		}
+	}
+
+	a {
+		color                  : $color5;
+		font-size              : 2em;
+		// font-family            : "Header";
+		border-bottom          : none !important;
+		//Chrome hack to fix weird text anti-aliasing fuzziness...
+		backface-visibility    : hidden;
+		-webkit-font-smoothing : antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		font-smoothing         : antialiased;
+		//Vertical Centering hack...
+		height                 : 15vmin;
+		line-height            : 15vmin;
+		font-size              : $pSize;
+		@include respond-to(laptop) {
+			display    : block;
+			position   : relative;
+			color      : $color5;
+			font-size  : 1.2em;
+			// font-family: "SubHead";
+			height     : calc(100vh - 6vw);
+			line-height: calc(100vh - 6vw);
+		}
+
+		&.sel::before {
+			left      : 0;
+			visibility: visible;
+			transform : scaleX(1);
+		}
+
+		&:hover {
+			backface-visibility    : hidden;
+			-webkit-font-smoothing : antialiased;
+			-moz-osx-font-smoothing: grayscale;
+			font-smoothing         : antialiased;
+
+			span::before {
+				visibility: visible;
+				transform : scaleX(1);
+			}
+		}
+	}
+
+	span {
+		@extend .navLink;
+		@include respond-to(laptop) {
+			display         : inline-block;
+			position        : relative;
+			height          : 1em;
+			line-height     : 1em;
+			transform-origin: center center;
+		}
+	}
+}
+
+/*********************************************
+888b     d888          d8b
+8888b   d8888          Y8P
+88888b.d88888
+888Y88888P888  8888b.  888 88888b.
+888 Y888P 888     "88b 888 888 "88b
+888  Y8P  888 .d888888 888 888  888
+888   "   888 888  888 888 888  888
+888       888 "Y888888 888 888  888
+*********************************************/
+
+main.design {
+	margin    : 25vw 0 0;
+	padding   : 0;
+	width     : 100%;
+	transition: all 0.5s;
+	@include respond-to(laptop) {
+		margin: 6vw;
+		width : 88vw;
+		// margin-bottom: 18vw;
+	}
+}
+
+// main.design {
+// 	margin-top: 20vw;
+// 	@include respond-to(tablet) {
+// 		margin-top: 6vw;
+// 	}
+// 	@include respond-to(laptop) {
+// 		margin-top: 12vw;
+// 	}
+// }
+
+main.italia,
+main.v {
+	margin-top: 18vw;
+	@include respond-to(tablet) {
+		margin-top: 0;
+	}
+}
+
+main.team {
+	opacity         : 0;
+	background-color: $color4;
+	@include respond-to(tablet) {
+		background: none;
+	}
+
+	#flex-grid-team .inner {
+		background: none;
+		@include respond-to(tablet) {}
+	}
+}
+
+/*********************************************
+888b     d888 d8b
+8888b   d8888 Y8P
+88888b.d88888
+888Y88888P888 888 .d8888b   .d8888b
+888 Y888P 888 888 88K      d88P"
+888  Y8P  888 888 "Y8888b. 888
+888   "   888 888      X88 Y88b.
+888       888 888  88888P'  "Y8888P
+*********************************************/
+
+/* fade image in after load */
+.lazyloading {
+	opacity   : 0 !important;
+	transition: opacity 500ms ease-in-out;
+}
+
+.lazyloaded {
+	opacity   : 1;
+	transition: opacity 500ms ease-in-out;
+}
+
+//Visually hide content but leave accessible to screen readers
+.aHidden {
+	position: absolute !important;
+	clip    : rect(1px 1px 1px 1px);
+	/* IE6, IE7 */
+	clip    : rect(1px, 1px, 1px, 1px);
+	padding : 0 !important;
+	border  : 0 !important;
+	height  : 1px !important;
+	width   : 1px !important;
+	overflow: hidden;
+}
+
+.oHidden {
+	opacity   : 0 !important;
+	visibility: hidden;
+}
+
+.dHidden {
+	display: none !important;
+}

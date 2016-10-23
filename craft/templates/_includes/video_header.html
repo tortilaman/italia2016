@@ -24,7 +24,7 @@ Y88b   d88P 8888b.  888d888 888  8888b.  88888b.  888  .d88b.  .d8888b
 {# {% cache %} #}
 {# Every video shows what year it's from #}
 {% set pastSchoolURLS 	= {
-	'2016' : '',
+	'2016' : '/',
 	'2015' : 'http://2015.sfudutchdesign.ca/',
 	'2014' : 'http://2014.sfuitaliadesign.com/',
 	'2013' : 'http://2013.sfudutchdesign.ca/',
@@ -122,6 +122,7 @@ Y88b   d88P 8888b.  888d888 888  8888b.  88888b.  888  .d88b.  .d8888b
 			{% endif %}
 			<div id="v-ui">
 				<div class="v-overlay"></div>
+				<div class="v-gradient"></div>
 				{# ========= Top video info ============ #}
 				<div class="v-ui-top">
 				{# Interviewee / Video Heading #}
@@ -161,9 +162,9 @@ Y88b   d88P 8888b.  888d888 888  8888b.  88888b.  888  .d88b.  .d8888b
 					<div class="v-suggestions">
 						{% if playlist == true and nextChaptInd != siblings|length %}
 							<span>we also suggest:</span>
-						{% else %}
+						{% elseif relatedEntries|length %}
 							<span>
-								{# {{ relatedMessage[random(relatedMessage|length - 1)] }} #}still curious? there's more.
+								still curious? there's more.
 							</span>
 						{% endif %}
 						{% for entry in relatedEntries %}

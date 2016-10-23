@@ -17,9 +17,9 @@
 				<div class="qa col-{{block.size}} {{block.overlap}}">
 					{% if block.question == "" %}
 					{% else %}
-						<h2 class="scrollHide">Q: {{block.question}}</h2>
+						<h2 class="scrollHide">{{block.question}}</h2>
 					{% endif %}
-					<p class="scrollHide">A: {{block.answer}}</p>
+					<p class="scrollHide">{{block.answer}}</p>
 				</div>
 			{########## PULLQUOTE ##########}
 			{% elseif block.type == "pullquote" %}

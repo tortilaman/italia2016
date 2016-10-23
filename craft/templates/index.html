@@ -19,6 +19,17 @@
 
 {% extends "_layouts/site" %}
 {% set bodyClass = "home" %}
+
+{% block head %}
+	{{ parent() }}
+	<meta property="og:site_name" content="SFU italiaDesign field school" />
+	<meta property="og:url" content="{{entry.url}}" />
+	<meta property="og:title" content="italiaDesign: Gruppo Dieci" />
+	<meta property="og:image"		content="http://2016.sfuitaliadesign.com/assets/images/ItaliaDesignShareImage-01.jpg" />
+	<meta property="og:description" content="Dieci: 10 years of italiaDesign" />
+{% endblock %}
+
+
 {% set collage1 = entry.aboutImage.first() %}
 {% set collage2 = entry.interviewsImage.first() %}
 {% set transformedCollage1 = craft.imager.transformImage(
@@ -38,7 +49,7 @@
 				<img id="home-play-logo" src="/assets/images/Logo.png">
 			</div>
 		</section>
-		<section id="home-about" class="home-section">
+		<section id="home-about" class="home-section clearfix">
 			<div class="inner scrollHide">
 				{{entry.aboutPreview}}
 				<a href="/team" class="button-green">
@@ -51,8 +62,8 @@
 		<section id="home-videos" class="home-section">
 				<div class="inner scrollHide">
 					{{entry.interviewsPreview}}
-					<a href="/film" class="button-blue">
-						<span>explore videos</span>
+					<a href="/films" class="button-blue">
+						<span>explore films</span>
 					</a>
 				</div>
 				<img class="collage scrollHide" srcset="{{craft.imager.srcset(transformedCollage2) }}" sizes="(min-width: 1024px) 65vw, 100vw" src="{{collage2.url}}" />

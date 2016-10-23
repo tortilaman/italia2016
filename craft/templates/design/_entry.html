@@ -17,6 +17,8 @@ _#}
 
 {% if entry.type == 'designer' and entry.videoYear == '2016' %}
 	{% set children = entry.children %}
+	{% set location = entry.children.first.url %}
+	{% redirect location %}
 {% elseif entry.type == 'interviewVideo' and entry.videoYear == '2016' %}
 	{% set children = entry.parent.children %}
 {% endif %}
@@ -39,17 +41,15 @@ _#}
 
 {% block head %}
 	{{ parent() }}
-	<meta property="og:"
 	<meta property="og:site_name"	content="SFU italiaDesign field school" />
-	<meta property="og:url"			content="{{entry.url|replace(craft.request.queryString, '')}}" />
-	<meta property="og:type"		content="{{entry.type == 'designer' ? 'profile' : 'video.other'}}" />
-	{% if title is defined %}
-		<meta property="og:title"	content="{{title}}" />
-	{% endif %}
+	<meta property="og:url" content="{{entry.url|replace(craft.request.queryString, '')}}" />
+	<meta property="og:type" content="video.other" /><meta property="og:title"	content="{% if entry.parent.nameFull is defined %}{{entry.parent.nameFull}}{% endif %}{% if title is defined %}: {{title}}" />{% endif %}
 	{% if entry.videDescription is defined %}
 		<meta property="og:description"	content="{{entry.videoDescription}}" />
 	{% endif %}
-	<meta property="og:image"		content="{{entry.type == 'designer' ? entry.intPortrait.first().url : entry.videoThumbnail.first().url}}" />
+	<meta property="og:image"		content="{{entry.videoThumbnail.first().url}}" />
+	<meta property="og:image:width" content="1920" />
+	<meta property="og:image:height" content="1080" />
 {% endblock %}
 
 {% block main %}

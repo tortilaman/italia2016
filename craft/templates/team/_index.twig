@@ -1,0 +1,85 @@
+{#
+# Team Index template
+# _________________________
+#
+# This template gets loaded whenever the Design index is requested, because
+# the Team Index single_entry section's Template setting is set to
+# "team/_index".
+#
+# An `entry` variable will be automatically passed to this template, which will
+# be set to the Team Index entry.
+_#}
+
+{% extends "_layouts/site" %}
+{% set bodyClass = "team" %}
+
+{% block head %}
+	{{ parent() }}
+	<meta property="og:site_name"	content="SFU italiaDesign field school" />
+	<meta property="og:url"			content="{{entry.url}}" />
+	{% if title is defined %}
+		<meta property="og:title"	content="{{title}}" />
+	{% endif %}
+	<meta property="og:description"	content="Dieci: 10 years of italiaDesign" />
+{% endblock %}
+
+{% block main %}
+	<div id="bg"></div>
+	{# Find your entries #}
+	{% set entries = craft.entries.section('team').order('postDate desc') %}
+	<div id="a-border"></div>
+{# =========================== Display Entries =========================== #}
+	<section id="team-about" class="team-section bghidden is-scrollable">
+		<div class="inner hide ">
+			<h1>what is italiaDesign?</h1>
+			<p>We are dieci, the tenth year of an on-going research program offered by the School of Interactive Arts and Technology at Simon Fraser University. We travelled to Italy to build on the foundation of the past 10 years of research on italian designers and culture.</p>
+			<a href="/about" class="button-green">
+					<span>Learn More</span>
+			</a>
+		</div>
+	</section>
+	{% if entries | length %}
+		<section id="flex-grid-team" class="flexbox-grid team-section clearfix">
+			<section class="inner">
+				<article id="page-info">
+					<h1>we are dieci</h1>
+					<p>{{entry.body}}</p>
+				</article>
+				{% for entry in entries %}
+					<article class="design-entry item">
+						{% set image = entry.intPortrait.first %}
+						<a href="{{ entry.url }}">
+							{% if image %}
+								<div class="entry-thumb-cont">
+									<img src="{{ image.url }}" alt="{{ image.title }}">
+								</div>
+							{% else %}
+								<div class="entry-thumb-cont">
+									<img src="{{image.url}}" alt="Placeholder image">
+								</div>
+							{% endif %}
+							<div class="entry-title">
+								<h1>{{ entry }}</h1>
+								<h2>{{entry.type != 'shortFilm'?entry.companyField}}</h2>
+							</div>
+						</a>
+					</article>
+					{% if random(1) == 0 %}
+						<article class="design-entry item blank" data-show="true"></article>
+					{% endif %}
+				{% endfor %}
+			</section>
+			<div id="contact-info">
+				<h1>contact</h1>
+				<p>School of Interactive Arts + Technology (SIAT) | Simon Fraser University, Surrey</p>
+				<p>250-13450 102 avenue | Surrey, BC V3T0A3 CANADA</p>
+				<p>phone: +1 778.782.7474</p>
+			</div>
+		</section>
+	{% else %}
+	{# <p>That's strange, we couldn't find anything, our bad. Maybe try looking for something else? We'll fix this ASAP!</p> #}
+{% endif %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script src="/js/teamIndex.js"></script>
+<script src="/js/stackGrid.js"></script>
+{% endblock %}

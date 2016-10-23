@@ -1,0 +1,1166 @@
+// ==============================
+//
+// 	The continuous grid is the grid used on the interviews
+//	and about pages. Search doesn't exactly belong here, but
+//	it's on the interviews page so I put it here.
+//
+// ==============================
+
+.static {
+	top: 0 !important;
+}
+
+/*8888b.                                    888
+d88P  Y88b                                   888
+Y88b.                                        888
+ "Y888b.    .d88b.   8888b.  888d888 .d8888b 88888b.
+    "Y88b. d8P  Y8b     "88b 888P"  d88P"    888 "88b
+      "888 88888888 .d888888 888    888      888  888
+Y88b  d88P Y8b.     888  888 888    Y88b.    888  888
+ "Y8888P"   "Y8888  "Y888888 888     "Y8888P 888  8*/
+
+#a-border,
+#d-filter {
+	position  : fixed;
+	top       : 15vmin;
+	width     : 100%;
+	height    : 12vmin;
+	background: none;
+	z-index   : 300;
+	@include respond-to(tablet) {
+		height: 4em;
+	}
+	@include respond-to(laptop) {
+		top   : 0;
+		height: 6vw;
+		width : 88vw;
+		left  : 6vw;
+		right : 6vw;
+	}
+
+	/**************************
+		Form
+	**************************/
+
+	form {
+		position: relative;
+		top     : 3vmin;
+		left    : 6vmin;
+		bottom  : 0;
+		width   : 3em;
+		overflow: hidden;
+		@include respond-to(tablet) {
+			top: 0.5em;
+		}
+		// @include respond-to(tablet) {
+		@include respond-to(laptop) {
+			position: absolute;
+			top     : auto;
+			bottom  : 0;
+			right   : 0;
+			left    : auto;
+			width   : auto;
+		}
+		// @include respond-to(laptop) {
+		// 	bottom: -0.1rem;
+		// }
+	}
+
+	#search-btn {
+		display       : inline-block;
+		vertical-align: middle;
+		height        : 3em;
+		width         : 3em;
+
+		&:hover {
+			cursor: pointer;
+		}
+		// @include respond-to(tablet) {
+		@include respond-to(laptop) {
+			display: none;
+			height : 3em;
+			width  : 3em;
+		}
+
+		svg {
+			height: 100%;
+			width : 100%;
+			fill  : $color5;
+			stroke: none;
+			filter: drop-shadow( 0.1em 0.1em 0.35em rgba(0, 0, 0, 0.1));
+		}
+	}
+
+	/**************************
+		Search Field
+	**************************/
+
+	input {
+
+		position          : absolute;
+		display           : none;
+		bottom            : 0;
+		right             : 0;
+		height            : 1em;
+		background        : none;
+		border            : none;
+		outline           : none;
+		-webkit-appearance: none;
+		border-radius     : 0;
+		box-shadow        : none;
+		border-bottom     : 0.13rem solid $color5;
+		font-family       : "SubHead";
+		font-size         : $pSize;
+		font-weight       : 900;
+		line-height       : 1;
+		color             : $color5;
+		transition        : all 0.5s;
+		@include respond-to(tablet) {
+			// position   : relative; //make auto-width work...
+			// display    : inline-block;
+			font-size: $tSize;
+		}
+		@include respond-to(laptop) {
+			position     : relative; //make auto-width work...
+			display      : inline-block;
+			font-size    : $lSize;
+			border-bottom: 0.5rem solid $color5;
+		}
+		@include respond-to(desktop) {
+			font-size: $dSize;
+		}
+	}
+
+	/**************************
+		Close Button
+	**************************/
+
+	#close-btn {
+		position      : absolute;
+		display       : inline-block;
+		vertical-align: middle;
+		right         : 0;
+		top           : auto;
+		bottom        : 0;
+		// height        : 0.6em;
+		// width         : 0.6em;
+		height        : 1em;
+		width         : 1em;
+		font-size     : $pSize;
+		line-height   : 1;
+		opacity       : 0;
+		visibility    : hidden;
+		cursor        : pointer;
+		// transition    : all 0.5s;
+		z-index       : 350;
+
+		path,
+		svg {
+			position    : absolute;
+			bottom      : 0;
+			right       : 0;
+			height      : 100%;
+			width       : 100%;
+			stroke      : $color5;
+			fill        : $color5;
+			stroke-width: 0.3em;
+			// z-index     : 300;
+			@include respond-to(desktop) {
+				stroke-width: 0.2em;
+			}
+		}
+
+		svg {
+			height   : 70%;
+			width    : 70%;
+			bottom   : 40%;
+			right    : 40%;
+			transform: translate(50%, 50%);
+		}
+
+		&.active {
+			opacity   : 1;
+			visibility: visible;
+		}
+		@include respond-to(tablet) {
+			// bottom     : 0.18em;
+			font-size  : $tSize;
+			font-weight: 900;
+		}
+		@include respond-to(laptop) {
+			font-size: $lSize;
+
+			svg {
+				height: 45%;
+				width : 45%;
+				bottom: 40%;
+				right : 30%;
+			}
+		}
+		@include respond-to(desktop) {
+			font-size: $dSize;
+		}
+	}
+
+	/**************************
+		Search is active
+	**************************/
+
+	.lSearch {
+		position  : relative;
+		top       : 0;
+		right     : 6vw;
+		width     : 88vw;
+		background: none;
+		z-index   : 300;
+
+		input {
+			display: inline-block !important;
+			width  : 88vw;
+			top    : 0;
+			bottom : auto;
+		}
+
+		#close-btn {
+			top   : 0;
+			bottom: auto;
+			// right     : 0.2em;
+			// opacity   : 1;
+			// visibility: visible;
+		}
+		// @include respond-to(tablet) {
+		@include respond-to(laptop) {
+			display: inline-block;
+			right  : auto;
+			left   : 2vw;
+			// width: 100%;
+			width  : auto;
+			margin : 0 auto;
+
+			input {
+				// min-width: 50vw;
+				width: auto;
+			}
+
+			#close-btn {
+				position      : relative;
+				display       : inline-block;
+				margin-left   : -1em;
+				vertical-align: top;
+			}
+		}
+	}
+}
+
+// nav #d-filter, nav #year-links {
+// 	position:absolute;
+// 	top: 15vmin;
+// }
+
+#a-border {
+	// @include respond-to(tablet) {
+	@include respond-to(laptop) {
+		height : 6vw;
+		left   : 6vw;
+		right  : 6vw;
+		z-index: 1;
+	}
+}
+
+/*		 /*888          888             .d8888b.
+      d88888          888            d88P  Y88b
+     d88P888          888            888    888
+    d88P 888 888  888 888888 .d88b.  888         .d88b.  88888b.d88b.  88888b.
+   d88P  888 888  888 888   d88""88b 888        d88""88b 888 "888 "88b 888 "88b
+  d88P   888 888  888 888   888  888 888    888 888  888 888  888  888 888  888
+ d8888888888 Y88b 888 Y88b. Y88..88P Y88b  d88P Y88..88P 888  888  888 888 d88P
+d88P     888  "Y88888  "Y888 "Y88P"   "Y8888P"   "Y88P"  888  888  888 88888P"
+                                                                       888
+                                                                       888
+                                                                       8*/
+
+//	These items are created by jQuery UI. They are only visible
+//	if you inspect the live page, and then only when the search
+//	box has focus, so a bit frustrating to style.
+
+ul.ui-autocomplete {
+	// 	position  : fixed;
+	// 	top       : 0 !important;
+	// 	left      : 6vw !important;
+	background: none;
+	padding   : 0.25rem 0;
+	box-shadow: none;
+	border    : none;
+	z-index   : 300;
+	// 	margin-top: $tSize;
+	// 	@include respond-to(tablet) {
+	// 		left      : 19vw !important;
+	// 		margin-top: $tSize;
+	// 	}
+	// 	@include respond-to(laptop) {
+	// 		left      : 15vw !important;
+	// 		margin-top: $lSize;
+	// 	}
+	//
+	// 	&::-webkit-scrollbar {
+	// 		display: none;
+	// 	}
+	//
+	li.ui-autocomplete-category {
+		font-family: "SubHeadAlt", "SubHead", arial, sans-serif;
+		font-size  : 2em;
+		@include respond-to(tablet) {
+			font-size: 1.5em;
+		}
+	}
+	//
+	.ui-menu-item {
+		box-shadow    : none;
+		border        : none;
+		padding       : 0.25rem 0;
+		color         : $color5;
+		list-style    : none;
+		cursor        : pointer;
+		line-height   : 1;
+		mix-blend-mode: multiply;
+		font-family   : "HeaderAlt", "Header", arial, sans-serif;
+		font-size     : $pSize;
+		font-weight: 900;
+		@include respond-to(tablet) {
+			font-size  : $tSize;
+		}
+		@include respond-to(laptop) {
+			font-size: $lSize;
+		}
+		@include respond-to(desktop) {
+			font-size: $dSize;
+		}
+
+		.highlight {
+			opacity        : 1;
+			color          : darken($color5, 25%);
+			font-weight    : 900;
+			text-decoration: none;
+			mix-blend-mode : multiply;
+		}
+
+		a {
+			color                 : $color5;
+			mix-blend-mode        : multiply;
+			font-family           : subhead;
+			font-variant-ligatures: no-common-ligatures;
+			border-bottom         : none;
+			letter-spacing        : normal;
+
+			&:hover {}
+		}
+	}
+}
+
+span[role="status"] {
+	display: none;
+}
+
+.noResults {
+	background-image     : url("/assets/images/bike.png");
+	background-position  : 20% 50%;
+	background-repeat    : no-repeat;
+	background-attachment: fixed;
+
+	&::after {
+		content : 'Nothing to see here, go find something else silly!';
+		display : block;
+		position: absolute;
+		top     : 60%;
+		left    : 50%;
+	}
+}
+
+/*88888888 888                    .d8888b.          d8b      888
+888        888                   d88P  Y88b         Y8P      888
+888        888                   888    888                  888
+8888888    888  .d88b.  888  888 888        888d888 888  .d88888
+888        888 d8P  Y8b `Y8bd8P' 888  88888 888P"   888 d88" 888
+888        888 88888888   X88K   888    888 888     888 888  888
+888        888 Y8b.     .d8""8b. Y88b  d88P 888     888 Y88b 888
+888        888  "Y8888  888  888  "Y8888P88 888     888  "Y888*/
+
+// =============================================================================
+//
+//	Each year of interview results has its own flexbox grid. The layering and randomness is done with
+//	javascript, none of that is in the scss code.
+//
+// =============================================================================
+section[id^="flex-grid-"] {
+	position       : relative;
+	display        : flex;
+	flex-flow      : row wrap;
+	// justify-content: space-between;
+	justify-content: space-around;
+	align-items    : center;
+	width          : 88vw;
+	margin         : 2vw 6vw;
+	padding-bottom : 2rem;
+	@include respond-to(phone) {
+		width : 84vw;
+		margin: 2vw auto 3vw;
+	}
+}
+
+main.team {
+	margin-bottom: 0;
+	padding-top  : 12vw;
+	@include respond-to(tablet) {
+		padding-top: 0;
+	}
+
+	#flex-grid-team {
+		@include respond-to(laptop) {
+			margin : 2vw 8vw 11em;
+			padding: 2vw;
+		}
+
+		article.blank {
+			@include respond-to(tablet) {
+				width: 10vw;
+			}
+		}
+	}
+
+	#footer {
+		position  : relative;
+		bottom    : 0;
+		left      : 0;
+		right     : 0;
+		// height    : 9em;
+		width     : 100%;
+		padding   : 1em 6vw;
+		background: white;
+		@include respond-to(laptop) {
+			position: fixed;
+		}
+
+		h1,
+		p {
+			color: $color5;
+		}
+
+		h1 {
+			font-family: "HeaderAlt", "Header", arial, sans-serif;
+			font-weight: 900;
+			display    : inline-block;
+		}
+	}
+
+	#contact-info {
+		position: relative;
+		display : inline-block;
+		padding : 1vw 0;
+	}
+
+	#connect {
+		position: relative;
+		display: inline-block;
+		padding: 1em 0;
+
+		@include respond-to(tablet) {
+			position  : absolute;
+			top       : 0;
+			right     : 0;
+			padding   : 1vw 6vw;
+			text-align: center;
+			padding: 0;
+		}
+	}
+
+	#social-icons {
+		display        : flex;
+		flex-direction : row;
+		flex-wrap      : nowrap;
+		justify-content: space-between;
+
+		a {
+			display     : inline-block;
+			width       : 1.5em;
+			height      : 1.5em;
+			margin-right: 0.2em;
+		}
+
+		svg {
+			position: relative;
+			height  : 100%;
+			width   : 100%;
+			fill    : $color5;
+		}
+
+		path {
+			position: relative;
+			height  : 100%;
+			width   : 100%;
+		}
+	}
+}
+
+#page-info {
+	position  : relative;
+	z-index   : 100;
+	margin-top: 2em;
+	width: 100%;
+
+	@include respond-to(tablet) {
+		width: auto;
+	}
+
+	div {
+		background   : white;
+		padding      : 2em 2em 3em;
+		margin-bottom: 3em;
+		color        : $color5;
+		@include respond-to(tablet) {
+			// width: 35em;
+		}
+
+		h1 {
+			@extend .card-header_info;
+			color: $color5;
+		}
+
+		h2,
+		p {
+			color: $color5;
+		}
+
+		p {
+			@extend .para;
+		}
+
+		h2 {
+			font-size: 1.2rem;
+		}
+
+		&::after {
+			display: none;
+		}
+		@include respond-to(tablet) {
+			margin-top : 2em;
+			margin-left: 5vw;
+		}
+		@include respond-to(desktop) {
+			margin-left: 10vw;
+		}
+	}
+	@include respond-to(tablet) {
+		margin-top: 2em;
+	}
+
+	& + .design-entry {
+		// margin-top: 6rem;
+		@include respond-to(laptop) {
+			margin-top: auto;
+		}
+	}
+}
+
+[id*="year-title-"],
+[id*="year-title-"] h1 {
+	position      : relative;
+	margin-left   : 5vw;
+	color         : $color2;
+	font-size     : 4rem;
+	margin        : 0 3vw;
+	letter-spacing: 0;
+	padding-top   : 0.5em;
+	transform     : translateY(-5vw);
+	z-index       : 200;
+	mix-blend-mode: multiply;
+	@include respond-to(phone) {
+		font-size: 8rem;
+	}
+}
+
+#year-title-2016 {
+	position: relative;
+	bottom: 0;
+	left: 0;
+}
+
+/************************************************
+Y88b   d88P
+ Y88b d88P
+  Y88o88P
+   Y888P  .d88b.   8888b.  888d888 .d8888b
+    888  d8P  Y8b     "88b 888P"   88K
+    888  88888888 .d888888 888     "Y8888b.
+    888  Y8b.     888  888 888          X88
+    888   "Y8888  "Y888888 888      88888P'
+************************************************/
+
+#year-links {
+	position  : fixed;
+	top       : 15vw;
+	right     : 6vw;
+	z-index   : 300;
+	// transition: top 0.5s;
+	@include respond-to(laptop) {
+		top: 15vh;
+	}
+
+	.mobile-year-menu {
+		display       : inline-block;
+		vertical-align: middle;
+		font-size     : $pSize;
+		height        : 2em;
+		line-height   : 2em;
+		color         : $color5;
+		text-shadow   : 0.1em 0.1em 0.3em rgba(0, 0, 0, 0.1);
+		@include respond-to(laptop) {
+			display    : none;
+			text-shadow: none;
+			line-height: 1;
+			height     : auto;
+		}
+
+		.arrow-down {
+			display       : inline-block;
+			vertical-align: middle;
+			width         : 0;
+			height        : 0;
+			border-left   : 0.3em solid transparent;
+			border-right  : 0.3em solid transparent;
+			border-top    : 0.3em solid $color5;
+		}
+	}
+
+	ul {
+		opacity         : 0;
+		transform-origin: top center;
+		padding: 1em;
+		background      : white;
+		transform       : scaleY(0);
+		list-style      : none;
+		// transition      : all 0.5s;
+
+		&.open {
+			transform: scaleY(1);
+			opacity  : 1;
+			//			transition: all 0.5s;
+		}
+		@include respond-to(laptop) {
+			display        : flex;
+			flex-direction : column;
+			flex-wrap      : nowrap;
+			justify-content: space-between;
+			align-items    : center;
+			background     : none;
+			height         : 100%;
+			transform      : scaleY(1);
+			opacity        : 1;
+		}
+	}
+
+	li {
+		list-style    : none;
+		padding-bottom: 1.5em;
+		@include respond-to(laptop) {
+			margin-bottom: 0.5rem;
+		}
+	}
+
+	a {
+		position     : relative;
+		color        : $color5;
+		font-family  : "HeaderAlt";
+		opacity      : 1;
+		border-bottom: none;
+		font-size    : $pSize;
+		line-height  : 1;
+		@include respond-to(laptop) {
+			font-size  : 1em;
+			font-family: "SubHeadAlt";
+		}
+
+		&.active {
+			&::before {
+				transform: scaleX(1);
+				opacity  : 1;
+			}
+		}
+
+		&::before {
+			content         : '';
+			position        : absolute;
+			bottom          : 0;
+			display         : block;
+			width           : 100%;
+			height          : 0.1em;
+			background-color: $color5;
+			transform-origin: center left;
+			transform       : scaleX(0);
+			opacity         : 0;
+			transition      : 0.2s;
+		}
+
+		&:hover::before {
+			transform: scaleX(1);
+			opacity  : 1;
+		}
+	}
+}
+
+.past-links {
+	position:absolute;
+	z-index: 300;
+	width: 100vw;
+	max-width: 100%;
+	padding: 1em 6vw;
+	background: white;
+
+	@include respond-to(laptop) {
+		padding: 1em 0;;
+	}
+
+	.gText {
+		color: $color1;
+	}
+	.bText {
+		color: $color3T
+	}
+
+	h1 {
+		color: $color5;
+		margin: 0.5em auto 0.5em;
+		font-size: 1.2em;
+		@include respond-to(tablet) {
+			margin: 0.5em auto 0;
+		}
+	}
+
+	ul {
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: space-between;
+		list-style: none;
+		margin: 0 -0.5em;
+		@include respond-to(tablet) {
+			margin: 0 -1.5em;
+		}
+		@include respond-to(laptop) {
+			margin: 0;
+			flex-flow: row nowrap;
+		}
+	}
+
+	@include respond-to(laptop) {
+		width: 88vw;
+	}
+
+	li {
+		display: inline-block;
+		padding: 0.5em 1em;
+
+		@include respond-to(tablet) {
+			padding: 0.5 1.5em;
+		}
+		@include respond-to(laptop) {
+			padding: 0;
+		}
+	}
+	a {
+		color: $color5;
+		height: 3em;
+		line-height: 3em;
+	}
+}
+
+/*88888888          888
+888                 888
+888                 888
+8888888    88888b.  888888 888d888 888  888
+888        888 "88b 888    888P"   888  888
+888        888  888 888    888     888  888
+888        888  888 Y88b.  888     Y88b 888
+8888888888 888  888  "Y888 888      "Y88888
+                                        888
+                                   Y8b d88P
+                                    "Y88*/
+
+// ========================================================
+// 	ENTRY CLASS:
+// 	Gets extended, never called directly.
+// 	Useful for designer and team thumbnails.
+// ========================================================
+.entry {
+	position      : relative;
+	display       : block;
+	margin        : 1vw 0 0;
+	padding       : 0;
+	z-index       : 200;
+	mix-blend-mode: multiply;
+
+	a {
+		//Links hide the overflow
+		position     : relative;
+		display      : block;
+		top          : 0;
+		left         : 0;
+		height       : 100%;
+		width        : 100%;
+		overflow     : hidden;
+		opacity      : 1;
+		transition   : none;
+		border-bottom: none;
+
+		&.scrollHide {
+			@include respond-to(laptop) {
+				opacity   : 0;
+				transition: opacity 0.1s;
+			}
+		}
+
+		&::before {
+			display: none;
+		}
+		@include respond-to(laptop) {
+			&:hover {
+				img {
+					opacity: 0.2;
+				}
+
+				&::before {
+					display: none;
+				}
+			}
+		}
+	}
+
+	.entry-thumb-cont {
+		//This will center images bigger than the container.
+		position  : relative;
+		display   : inline-block;
+		// margin-left: 50%;
+		// transform  : translateX(-50%);
+		width     : 100%;
+		height    : auto;
+		margin-top: 0;
+	}
+
+	img,
+	video {
+		//These are inside a parent b/c of multiply effect. Maybe removable.
+		position  : relative;
+		display   : block;
+		width     : auto;
+		height    : 100%;
+		opacity   : 0.5;
+		transition: all 0.5s;
+	}
+
+	.entry-title {
+		position      : absolute;
+		top           : 50%;
+		left          : 0;
+		right         : 0;
+		letter-spacing: 0.15em;
+		transform     : translateY(-50%);
+		text-align    : center;
+		padding       : 0;
+		z-index       : 50;
+		transition    : all 0.5s;
+
+		h2 {
+			font-size: 0.9em;
+		}
+		@include respond-to(tablet) {
+			top      : 0;
+			transform: none;
+			left     : 0;
+			right    : 0;
+		}
+	}
+
+	&.blank {
+		display: none;
+		@include respond-to(tablet) {
+			display: block;
+			width  : 6vw;
+		}
+	}
+	@include respond-to(laptop) {
+		mix-blend-mode: multiply;
+
+		&:hover {
+			z-index: 200 !important;
+		}
+	}
+}
+
+/*88888888          888            d8b
+888                 888            Y8P
+888                 888
+8888888    88888b.  888888 888d888 888  .d88b.  .d8888b
+888        888 "88b 888    888P"   888 d8P  Y8b 88K
+888        888  888 888    888     888 88888888 "Y8888b.
+888        888  888 Y88b.  888     888 Y8b.          X88
+8888888888 888  888  "Y888 888     888  "Y8888   88888*/
+
+// ========================================================
+// 	Entries:
+// 	Controls aspect ratios of entries as well as
+// 	the multiplied color. Responsive sizing is also
+//	done here.
+// ========================================================
+.design-entry {
+	@extend .entry;
+	width     : 100%;
+	height    : 44vw;
+	margin-top: 1.5vw;
+	// opacity   : 0;
+
+	.entry-thumb-cont {
+		width     : 88vw;
+		height    : auto;
+		margin-top: 0;
+		@include respond-to(phone) {
+			width : auto;
+			height: 100%;
+		}
+	}
+
+	img {
+		width : 100%;
+		height: auto;
+		@include respond-to(phone) {
+			width : auto;
+			height: 100%;
+		}
+	}
+
+	.entry-title {
+		transition: opacity 0.5s;
+		@include respond-to(tablet) {
+			height     : 100%;
+			padding-top: 1em;
+		}
+	}
+
+	.entry-tags {
+		position   : absolute;
+		top        : 0.5em;
+		left       : 0.5em;
+		list-style : none;
+		white-space: nowrap;
+		opacity    : 0;
+		z-index    : 202;
+		transition : opacity 0.5s;
+
+		li {
+			font-family: "SubHeadAlt", "SubHead", arial, sans-serif;
+			color  : white;
+			z-index: 50;
+		}
+
+		svg {
+			position      : relative;
+			display       : inline-block;
+			vertical-align: middle;
+			top           : 0;
+			left          : 0;
+			height        : 1em;
+			width         : auto;
+			margin-right  : 0.5em;
+		}
+
+		path {
+			height: 100%;
+			width : auto;
+			fill  : white;
+		}
+
+		.entry-location {
+			display       : inline-block;
+			vertical-align: middle;
+			font-family   : "Quotes", arial, sans-serif;
+		}
+	}
+
+	.entry-meet {
+		position      : absolute;
+		display       : inline-block;
+		bottom        : 0.5em;
+		right         : 0.5em;
+		opacity       : 0;
+		font-size     : 0.9em;
+		line-height   : 1.3;
+		text-align    : right;
+		max-width     : 80%;
+		font-family: "SubHeadAlt", "SubHead", arial, sans-serif;
+		color         : white;
+		padding-bottom: 0.02em;
+		border-bottom : 0.2em solid white;
+		z-index       : 202;
+		transition    : opacity 0.5s;
+	}
+
+	&:not(.blank) {
+		@extend .blue-bg;
+	}
+	@include respond-to(phone) {
+		width : 42vw;
+		height: 63vw;
+	}
+	@include respond-to(tablet) {
+		width : 18vw;
+		height: 27vw;
+
+		&:hover {
+			.entry-meet,
+			.entry-tags {
+				opacity: 1;
+			}
+
+			.entry-title {
+				opacity: 0;
+			}
+		}
+	}
+	@include respond-to(laptop) {
+		width : 12vw;
+		height: 18vw;
+	}
+}
+
+/*==============================================================================
+	FILM ENTRIES
+==============================================================================*/
+.film-entry {
+	@extend .entry;
+	@extend .green-bg;
+	width     : 100%;
+	margin-top: 1.5vw;
+
+	&.v16-9,
+	&.v21-9 {
+		height: 56.25vw;
+	}
+
+	// &.v21-9 {
+	// 	height: 42.86vw;
+	//
+	// 	video {
+	// 		margin-top: -6.75%;
+	// 		// opacity   : 1;
+	// 	}
+	// }
+	@include respond-to(phone) {
+		width: 88vw;
+
+		&.v16-9,
+		&.v21-9 {
+			height: 49.5vw;
+		}
+
+		img,
+		video {
+			width : 88vw;
+			height: auto;
+		}
+	}
+	@include respond-to(tablet) {
+		width: 54vw;
+
+		&.v16-9,
+		&.v21-9 {
+			height: 30.38vw;
+		}
+
+		img,
+		video {
+			width : 54vw;
+			height: auto;
+		}
+	}
+	@include respond-to(laptop) {
+		width: 40vw;
+
+		&.v16-9,
+		&.v21-9 {
+			height: 22.5vw;
+		}
+
+		img,
+		video {
+			width : 40vw;
+			height: auto;
+		}
+	}
+
+	.entry-title {
+		@include respond-to(tablet) {
+			height: 100%;
+			top   : 0;
+			width : auto;
+		}
+
+		h1 {
+			@include respond-to(tablet) {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				display      : inline-block;
+				transition   : all 0.5s;
+				transform: translate(-50%, -50%);
+			}
+		}
+	}
+
+	.entry-description {
+		position   : absolute;
+		top        : 50%;
+		left       : 10%;
+		line-height: 1.6;
+		opacity    : 0;
+		width      : 80%;
+		height     : auto;
+		font-family: "Karla", arial, sans-serif;
+		color      : white;
+		z-index    : 50;
+		transform  : translateY(-50%);
+		transition : all 0.5s;
+		@include respond-to(laptop) {
+			line-height: 1.4;
+			font-size  : 0.8em;
+		}
+		@include respond-to(desktop) {
+			line-height: 1.6;
+			font-size  : 1em;
+		}
+	}
+
+	.entry-meet {
+		position      : absolute;
+		bottom        : 0.5em;
+		right         : 0.5em;
+		opacity       : 0;
+		color         : white;
+		padding-bottom: 0.05em;
+		border-bottom : 0.2em solid white;
+		z-index       : 202;
+		transition    : opacity 0.5s;
+	}
+	@include respond-to(tablet) {
+		&:hover {
+			.entry-description,
+			.entry-meet {
+				opacity: 1;
+			}
+
+			video {
+				// opacity: 0.3;
+			}
+
+			.entry-title h1 {
+				opacity: 0;
+			}
+		}
+	}
+}

@@ -141,7 +141,8 @@
 	}
 }
 
-[id^='home-'], .home #v-header {
+.home #v-header,
+[id^='home-'] {
 	margin-top: 4vw;
 	@include respond-to(tablet) {
 		margin-top: auto;
@@ -191,20 +192,22 @@
 	}
 
 	.inner {
-		padding: 3vw;
+		// padding: 3vw;
+		padding: 3vw 0;
 		@include respond-to(tablet) {
 			float       : right;
 			margin-top  : 0;
 			margin-right: 3vw;
 			width       : 35em;
-			height      : 100%;
+			height      : auto;
 		}
 		@include respond-to(tablet, p) {
 			margin-top: 30vw;
 		}
 		@include respond-to(laptop) {
-			margin-right: 7vw;
-			width       : 36vw;
+			// margin-right: 7vw;
+			margin-right: 0;
+			// width       : 36vw;
 		}
 
 		p {
@@ -252,9 +255,16 @@
 	@include respond-to(tablet, p) {
 		height       : 80vw;
 		margin-bottom: 3vw;
+
+		// h1 {
+		// 	clear: both;
+		// 	position: absolute;
+		// 	top: 3em;
+		// }
 	}
 	@include respond-to(laptop) {
-		height       : calc(100vh - 30vw);
+		// height       : calc(100vh - 30vw);
+		height       : auto;
 		width        : calc(9vmin + 35em);
 		margin-bottom: 12vw;
 	}
@@ -270,17 +280,17 @@
 		mix-blend-mode: multiply;
 		@include respond-to(tablet) {
 			position: absolute;
-			width   : 80vw;
+			width   : 65vw;
 			height  : auto;
-			top     : 32vw;
-			left    : 5vw;
+			top     : 35vw;
+			left    : 10.5vw;
 		}
 		@include respond-to(laptop) {
 			position: absolute;
 			height  : auto;
-			width   : 70vw;
-			top     : 2vw;
-			left    : 15.5vw;
+			width   : 43vw;
+			top     : 5vw;
+			left    : calc(-2vmin + 35em);
 		}
 	}
 
@@ -313,9 +323,9 @@
 .home #v-header {
 	animation-delay    : 0s;
 	animation-fill-mode: forwards;
-	margin-bottom: 2em;
+	margin-bottom      : 2em;
 	@include respond-to(tablet) {
-		width: 86vw;
+		width      : 86vw;
 		margin-left: 8vw;
 	}
 	@include respond-to(laptop) {
@@ -338,8 +348,8 @@ Y88b   d88P 888  .d88888  .d88b.   .d88b.  .d8888b
 *******************************************************************************/
 
 #v-intro {
-	margin             : 0 auto;
-	width              : 98vw;
+	margin             : 0 6vw;
+	width              : 88vw;
 	box-shadow         : none;
 	z-index            : 3;
 	animation-delay    : 0.75s;
@@ -527,7 +537,7 @@ Y88b   d88P 888  .d88888  .d88b.   .d88b.  .d8888b
 			// left  : 43%;
 			// width : 57%;
 			margin    : 0;
-			left      : 10%;
+			left      : 7%;
 			top       : 0;
 			margin-top: -2em;
 			width     : 40em;
@@ -597,13 +607,12 @@ Y88b   d88P 888  .d88888  .d88b.   .d88b.  .d8888b
 
 main.team-vid {
 	#v-intro {
-		margin  : 12vmin 6vw 4em;
+		margin  : 18vmin 6vw 4em;
 		height  : auto;
 		overflow: visible;
 		z-index : 3;
 		@include respond-to(tablet) {
-			margin-top   : 10vw;
-			margin-bottom: 0;
+			margin: 10vw 6vw 0;
 		}
 
 		.v-portrait {
@@ -637,9 +646,8 @@ main.team-vid {
 		position: relative;
 		display : table;
 		width   : 100%;
-		padding : 1.5em 3% 3%;
+		padding : 1.5em 3% 0.5em;
 		height  : auto;
-
 		@include respond-to(tablet) {
 			left          : auto;
 			top           : 0;
@@ -651,8 +659,8 @@ main.team-vid {
 		}
 		@include respond-to(laptop) {
 			position  : absolute;
-			top       : 9.5vh;
-			right     : 40vw;
+			top       : 9vh;
+			right     : 5vw;
 			margin-top: 0;
 			min-height: 0;
 			width     : auto;
@@ -663,7 +671,16 @@ main.team-vid {
 			left : 29vw;
 		}
 
-		.v-contents-title {
+		.roles {
+			@extend .card-header_subhead;
+			margin: 0.5em 0;
+			@include respond-to(tablet) {
+				white-space: nowrap;
+			}
+		}
+
+		.v-contents-title,
+		p.quote {
 			@include respond-to(tablet) {
 				padding-left: 3rem;
 			}
@@ -681,33 +698,24 @@ main.team-vid {
 	#v-intro #v-description {
 		position     : relative;
 		width        : 100%;
-		right        : 0;
+		left         : 0;
 		top          : 0;
 		height       : auto;
 		margin-bottom: 1em;
-		padding-top: 0;
-
-		p.quote {
-			font-size   : 1.5em;
-			margin  : 0.5em 0;
-
-			@include respond-to(tablet) {
-				white-space : nowrap;
-			}
-		}
-
+		padding-top  : 1em;
 		@include respond-to(tablet) {
-			width      : 40em;
-			left       : 6vw;
-			top        : -5vh;
-			margin-top : 0;
+			width     : 40em;
+			left      : 6vw;
+			top       : -5vh;
+			margin-top: 0;
 		}
 		@include respond-to(laptop) {
-			position: absolute;
-			top     : calc(9.5vh + 3.5em);
-			width   : 40em;
-			right   : 2vw;
-			left    : auto;
+			position   : absolute;
+			top        : calc(9.5vh + 3.5em);
+			width      : 40em;
+			right      : 2vw;
+			left       : auto;
+			padding-top: 4em;
 		}
 		@include respond-to(desktop) {
 			top  : calc(6vh + 7em);
@@ -745,6 +753,7 @@ main.team-vid {
 	overflow        : hidden;
 
 	.img-bg {
+		display       : none;
 		position      : relative;
 		width         : 70%;
 		height        : auto;
@@ -757,9 +766,13 @@ main.team-vid {
 			height  : auto;
 			opacity : 0.5;
 		}
+		@include respond-to(tablet) {
+			display: block;
+		}
 	}
 
 	p {
+		@extend .para;
 		margin-bottom: 1em;
 	}
 	@include respond-to(tablet) {
@@ -770,7 +783,7 @@ main.team-vid {
 		position   : fixed;
 		margin-top : 7vw;
 		margin-left: 9vw;
-		width      : 70vw;
+		width      : 85vw;
 
 		h2 {
 			font-family: "SubHead", Arial, sans-serif;
@@ -780,7 +793,7 @@ main.team-vid {
 
 	.inner {
 		@include respond-to(phone) {
-			width   : 35em;
+			width   : auto;
 			position: absolute;
 			padding : 2em;
 		}
@@ -793,8 +806,8 @@ main.team-vid {
 	}
 
 	h1 {
-		margin-bottom: 1em;
-		line-height  : 1.3;
+		@extend .card-header_info;
+		color: white;
 	}
 }
 
@@ -805,11 +818,13 @@ main.team-vid {
 }
 
 #bottom-bg {
-	position  : absolute;
-	bottom    : 0;
-	left      : 42vw;
-	height    : 12em;
-	width     : 88vw;
-	transform : translateX(-50%);
-	background: $color4;
+	position : absolute;
+	bottom   : 0;
+	left     : 42vw;
+	height   : 40vh;
+	width    : 88vw;
+	transform: translateX(-50%);
+	@include respond-to(laptop) {
+		background: $color4;
+	}
 }

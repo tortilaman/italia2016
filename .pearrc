@@ -1,0 +1,2 @@
+#PEAR_Config 0.9
+a:11:{s:10:"__channels";a:3:{s:12:"pecl.php.net";a:0:{}s:5:"__uri";a:0:{}s:11:"doc.php.net";a:0:{}}s:9:"cache_dir";s:28:"/home/sfuita5/tmp/pear/cache";s:8:"data_dir";s:22:"/home/sfuita5/php/data";s:7:"ext_dir";s:21:"/home/sfuita5/php/ext";s:7:"php_dir";s:17:"/home/sfuita5/php";s:7:"php_ini";s:22:"/usr/local/lib/php.ini";s:7:"bin_dir";s:17:"/home/sfuita5/bin";s:12:"download_dir";s:28:"/home/sfuita5/tmp/pear/cache";s:8:"temp_dir";s:22:"/home/sfuita5/tmp/pear";s:8:"test_dir";s:23:"/home/sfuita5/php/tests";s:7:"doc_dir";s:22:"/home/sfuita5/php/docs";}

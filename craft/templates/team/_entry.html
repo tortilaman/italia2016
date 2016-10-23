@@ -46,10 +46,12 @@ _#}
 			src="{{ craft.imager.base64Pixel(16, 9) }}" />
 		<div id="v-name">
 			<h1 class="v-contents-title">{{entry}}</h1>
+			<p class="roles">{{entry.nameHover}}</p>
 		</div>
 		<div id="v-description">
-			<p class="quote">{{entry.nameHover}}</p>
 			<p class="v-chapter-desc">{{entry.videoDescription}}</p>
+			{% if entry.linkedinLink|length %}<a class="button-blue" href="{{entry.linkedinLink}}">linkedin</a>{% endif %}
+			{% if entry.profileLink|length %}<a class="button-blue" href="{{entry.profileLink}}">portfolio</a>{% endif %}
 		</div>
 	</section>
 	{# ============= VIDEO ================ #}

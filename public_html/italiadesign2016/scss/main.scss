@@ -1,0 +1,17 @@
+// Main TODO List:
+//
+// TODO: Cards slide in from bottom on homepage load.
+// TODO: Justify align navigation elements to take up most of the page worth of height.
+// FIXME: Using the hide() method moves the nav when lots of shit is hidden
+// FIXME: Searching for UN Studio doesn't give Ben Van Berkel as a result
+// FIXME: Search still has some bugs. Deal with it later.
+// FIXME: On the interviews page the full image doesn't link to the interview, only the title.
+// FIXME: Use Modernizr to disable multiply on ie!!!
+
+@import "partials/_scss";
+@import "partials/_typography";
+@import "partials/_layout";
+@import "partials/_stackGrid";
+@import "partials/_continuousGrid";
+@import "partials/_elements";
+@import "partials/_videoPlayer";

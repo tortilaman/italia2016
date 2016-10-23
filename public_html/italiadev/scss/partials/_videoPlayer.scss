@@ -69,7 +69,7 @@ main.home #v-header {
 	position : relative;
 	display  : block;
 	//	height: 100%;
-	margin   : 0 auto;
+	margin   : 0;
 	left     : 50%;
 	transform: translateX(-50%);
 	@include respond-to(tablet) {
@@ -79,21 +79,21 @@ main.home #v-header {
 }
 
 #v-container {
-	position  : relative;
-	display   : block;
-	margin    : 0;
-	padding   : 0;
-	height    : 100%;
-	overflow  : hidden;
+	position: relative;
+	display : block;
+	margin  : 0;
+	padding : 0;
+	height  : 100%;
+	overflow: hidden;
 	@include respond-to(laptop) {
 		#play-btn {
-			position: absolute;
-			bottom  : 0.2em;
-			left    : 0.2em;
+			position  : absolute;
+			bottom    : 0.2em;
+			left      : 0.2em;
 			margin-top: -4vw;
-			height  : 6em;
-			width   : 6em;
-			z-index : 250;
+			height    : 6em;
+			width     : 6em;
+			z-index   : 250;
 
 			#play-icon {
 				fill: $color5;
@@ -132,6 +132,27 @@ main.home #v-header {
 /*****************
 	Fullscreen
 *****************/
+.v16-9 #v-container:-moz-full-screen,
+.v21-9 #v-container:-moz-full-screen {
+	video {
+		width : 100vw !important;
+		height: 56.25vw !important;
+		top   : 0;
+		bottom: 0;
+		margin: auto;
+	}
+
+	#v-ui {
+		position : absolute;
+		top      : 50%;
+		left     : 0;
+		width    : 100%;
+		height   : 42.86vw;
+		transform: translateY(-50%);
+		z-index  : 2;
+	}
+}
+
 .v16-9 #v-container:-webkit-full-screen,
 .v21-9 #v-container:-webkit-full-screen {
 	background-color: black;
@@ -176,13 +197,15 @@ main.home #v-header {
 
 .home [id^='v-'] .v21-9,
 .home [id^='v-'].v21-9 {
-	width: 86vw !important;
-	height: 48.375vw !important;
+	width : 86vw !important;
+	height: 36vw !important;
+
 	#v-player {
-		width: 86vw !important;
-		height: 48.375vw !important;
+		top: -6.5vw;
+		width : 86vw !important;
 	}
 }
+
 [id^='v-'] .v21-9,
 [id^='v-'].v21-9 {
 
@@ -197,12 +220,12 @@ main.home #v-header {
 
 	&.mobile {
 		height: 49.5vw !important;
-		width: 88vw !important;
+		width : 88vw !important;
 
 		#v-player {
 			top   : 0 !important;
 			height: 49.5vw !important;
-			width: 88vw !important;
+			width : 88vw !important;
 		}
 	}
 	@include respond-to(laptop, l) {
@@ -268,7 +291,20 @@ main.home #v-header {
 8888888 888  888  "Y888 "Y8888  888     888   "Y888888  "Y8888P "Y8888
 
 *************************************************************************/
-
+//Let's try a big gradient instead maybe.
+.v-gradient {
+	@include respond-to(laptop) {
+		position      : relative;
+		height        : 100%;
+		width         : 100%;
+		background    : -moz-linear-gradient(top,rgba(0,0,0,.2) 0,rgba(0,0,0,0) 20%,rgba(32,124,202,0) 80%,rgba(0,0,0,0.2) 100%);
+		background    : -webkit-linear-gradient(top,rgba(0,0,0,.2) 0,rgba(0,0,0,0) 20%,rgba(32,124,202,0) 80%,rgba(0,0,0,0.2) 100%);
+		background    : linear-gradient(to bottom,rgba(0,0,0,.2) 0,rgba(0,0,0,0) 20%,rgba(32,124,202,0) 80%,rgba(0,0,0,0.2) 100%);
+		z-index       : 1;
+		mix-blend-mode: multiply;
+		transition    : opacity 1s;
+	}
+}
 //Make things visible with shadows
 #v-interviewee,
 .v-cur-time,
@@ -380,7 +416,7 @@ a.v-prev-link {
 		font-size  : 3em;
 		line-height: 1.3;
 		@include respond-to(desktop) {
-			font-size: 4em;
+			// font-size: 3em;
 		}
 	}
 
@@ -430,10 +466,12 @@ a.v-prev-link {
 
 		h1 {
 			font-weight: 900;
+			font-size: 1.4em;
 		}
 
 		h2 {
 			font-weight: 400;
+			font-size: 1.2em;
 		}
 
 		.bg {

@@ -19,12 +19,12 @@ $(document).ready(function() {
             $yearLinks = $("#year-links");
         $nav.scrollupbar({
             enterViewport: function() {
-                $dFilter.css('top', '12vmin');
-                $yearLinks.css('top', '12vmin');
+                $dFilter.css('transform', '');
+                $yearLinks.css('transform', '');
             },
-            partiallyExitViewport: function() {
-                $dFilter.css('top', '0');
-                $yearLinks.css('top', '3vmin');
+            exitViewport: function() {
+                $dFilter.css('transform', 'translateY(-15vmin');
+                $yearLinks.css('transform', 'translateY(-15vmin');
             }
         });
     }

@@ -4,7 +4,7 @@
 //
 // =================================================================================
 
-$body-font-sizes: ( null: (0.7rem, 1.8), tablet: (0.9rem, 1.8), laptop: (0.9rem, 1.8), desktop: (1.0 rem, 1.8) );
+$body-font-sizes: ( null: (0.8rem, 1.8), tablet: (0.9rem, 1.8), laptop: (0.9rem, 1.8), desktop: (1.0rem, 1.8), xl: (1.1rem, 1.8) );
 
 body {
 	font-family: 'karla', sans-serif;
@@ -18,6 +18,7 @@ $pSize: 2em;
 $tSize: 2em;
 $lSize: 4em;
 $dSize: 5em;
+$xSize: 4em;
 
 h1,
 h2,
@@ -51,18 +52,20 @@ h2 {
 }
 
 a {
-	position       : relative;
-	font-family    : 'SubHeadAlt', 'SubHead', Arial, sans-serif;
-	color          : white;
-	letter-spacing : 0.15em;
-	text-decoration: none;
-	padding        : 0;
-	cursor         : pointer;
+	font-family           : 'HeaderAlt', 'Header', arial, sans-serif;
+	color                 : white;
+	letter-spacing        : 0.15em;
+	font-variant-ligatures: no-common-ligatures;
+	text-decoration       : none;
+	padding               : 0;
+	cursor                : pointer;
 
 	&:not(.navLink) {
 		border-bottom: 0.1em solid;
-		opacity      : 0.6;
-		transition   : opacity 0.2s !important;
+		@include respond-to(laptop) {
+			opacity      : 0.6;
+			transition   : opacity 0.2s !important;
+		}
 	}
 
 	&:hover {
@@ -71,16 +74,21 @@ a {
 }
 
 .navLink {
+	position: relative;
+	font-family: "HeaderAlt", "Header2", arial, sans-serif;
 	border-bottom      : none;
 	opacity            : 1;
-	backface-visibility: hidden;
+	backface-visibility    : hidden;
+	-webkit-font-smoothing : antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-smoothing         : antialiased;
 
 	&::before {
 		content         : '';
 		position        : absolute;
 		width           : 100%;
-		height          : 0.2em;
-		top             : 1.1em;
+		height          : 0.1em;
+		top             : 1em;
 		left            : 0;
 		background-color: $color5;
 		visibility      : hidden;
@@ -101,15 +109,81 @@ a {
 	}
 }
 
-// ==================================
-// 	FONT FACES
-// ==================================
+//All text should have a proper line-length.
+.para {
+	@include respond-to(tablet) {
+		width: 35em;
+	}
+}
+
+.footer {
+	font-family: "karla", arial, sans-serif;
+	h1 {
+		font-familiy: "HeaderAlt", "Header", arial, sans-serif;
+		margin-bottom: 1em;
+	}
+}
+
+/*****************************************************************
+ .d8888b.  888             888
+d88P  Y88b 888             888
+Y88b.      888             888
+ "Y888b.   888888 888  888 888  .d88b.  .d8888b
+    "Y88b. 888    888  888 888 d8P  Y8b 88K
+      "888 888    888  888 888 88888888 "Y8888b.
+Y88b  d88P Y88b.  Y88b 888 888 Y8b.          X88
+ "Y8888P"   "Y888  "Y88888 888  "Y8888   88888P'
+                       888
+                  Y8b d88P
+                   "Y88P"
+*****************************************************************/
+
+.card-header {
+	font-family           : "HeaderAlt", "Header", arial, sans-serif;
+	font-variant-ligatures: no-common-ligatures;
+	letter-spacing        : 0.1em;
+	margin-bottom         : 0.5em;
+}
+
+//Page info cards (about team, about films etc.)
+$card-header-info-sizes: ( null: (1.8rem, 1.4), tablet: (1.4rem, 1.3), laptop: (1.75rem, 1.3), desktop: (1.75rem, 1.3), xl: (2rem, 1.3) );
+
+.card-header_info {
+	@extend .card-header;
+	@include font-size($card-header-info-sizes);
+}
+
+$card-header-name-sizes: ( null: (1.5rem, 1.4), tablet: (1rem, 1.1), laptop: (1.15rem, 1.1), desktop: (1.25rem, 1.1), xl: (1.7rem, 1.1) );
+
+.card-header_name {
+	@extend .card-header;
+	@include font-size($card-header-name-sizes);
+	// word-wrap: break-word;
+	color: white;
+}
+
+$card-header-subhead-sizes: ( null: (0.7rem, 1.4), tablet: (0.9rem, 1.1), laptop: (0.9rem, 1.1), desktop: (0.9rem, 1.1), xl: (1.1rem, 1.1) );
+.card-header_subhead {
+	@extend .card-header;
+	color: white;
+}
+
+/*********************************************
+8888888888                888
+888                       888
+888                       888
+8888888  .d88b.  88888b.  888888 .d8888b
+888     d88""88b 888 "88b 888    88K
+888     888  888 888  888 888    "Y8888b.
+888     Y88..88P 888  888 Y88b.       X88
+888      "Y88P"  888  888  "Y888  88888P'
+*********************************************/
 
 //Change the numbers to alt, the two @font-face properties are used cumulatively
 @font-face {
-	font-family :'HeaderAlt';
-	src:url('../assets/fonts/N_Boldalt.eot');
-	src:url('../assets/fonts/N_Boldalt.woff') format('woff2'), url('../assets/fonts/N_Boldalt.ttf') format('truetype'), url('../assets/fonts/N_Boldalt.svg') format('svg');
+	font-family  : 'HeaderAlt';
+	src          : url('../assets/fonts/N_Boldalt.eot');
+	src          : url('../assets/fonts/N_Boldalt.woff') format('woff2'), url('../assets/fonts/N_Boldalt.ttf') format('truetype'), url('../assets/fonts/N_Boldalt.svg') format('svg');
 	font-weight  : bold;
 	font-style   : normal;
 	unicode-range: U+30-39;

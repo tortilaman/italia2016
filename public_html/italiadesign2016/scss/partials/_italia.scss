@@ -1,0 +1,32 @@
+#italia-content {
+	width: 80vw;
+}
+.italia-entry {
+	position: fixed;
+	top     : 0;
+	margin  : 0;
+	padding : 10rem 0 0;
+	width   : 80vw;
+	color   : white;
+	.inner {
+		position: relative;
+	}
+	.v-title {
+		position: absolute;
+		top     : 1.5rem;
+		left    : 2rem;
+		zindex  : 5;
+	}
+	.v-thumbnail {
+		position: relative;
+		width   : 100%;
+		height  : auto;
+		zindex  : 1;
+	}
+	.v-description {
+		position: absolute;
+		top     : 5rem;
+		left    : 2rem;
+		zindex  : 5;
+	}
+}

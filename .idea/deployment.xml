@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" autoUpload="Always" serverName="italia server">
+    <serverData>
+      <paths name="italia server">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath path="/.cphorde" />
+            <excludedPath path="/.sqmailattach" />
+            <excludedPath path="/bin" />
+            <excludedPath path="/.imh" />
+            <excludedPath path="/.softaculous" />
+            <excludedPath path="/.sqmaildata" />
+            <excludedPath path="/.fantasticodata" />
+            <excludedPath path="/cache" />
+            <excludedPath path="/cpmove.psql" />
+            <excludedPath path="/.fontconfig" />
+            <excludedPath path="/.htpasswds" />
+            <excludedPath path="/.matplotlib" />
+            <excludedPath path="/.trash" />
+            <excludedPath path="/etc" />
+            <excludedPath path="/logs" />
+            <excludedPath path="/mail" />
+            <excludedPath path="/perl5" />
+            <excludedPath path="/php" />
+            <excludedPath path="/public" />
+            <excludedPath path="/public_ftp" />
+            <excludedPath path="/public_html_2011-07-11" />
+            <excludedPath path="/routes" />
+            <excludedPath path="/tmp" />
+            <excludedPath path="/views" />
+            <excludedPath path="/.bash_logout" />
+            <excludedPath path="/.bash_profile" />
+            <excludedPath path="/.bashrc" />
+            <excludedPath path="/.contactemail" />
+            <excludedPath path="/.ftpquota" />
+            <excludedPath path="/.lastlogin" />
+            <excludedPath path="/.minos.db" />
+            <excludedPath path="/.pearrc" />
+            <excludedPath path="/access-logs" />
+            <excludedPath path="/brackets.json" />
+            <excludedPath path="/cpbackup-exclude.conf" />
+            <excludedPath path="/newtwistedmenu.css" />
+            <excludedPath path="/phpinfo.php" />
+            <excludedPath path="/wp-config.php" />
+            <excludedPath path="/www" />
+            <excludedPath path="/.cpanel" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myAutoUpload" value="ALWAYS" />
+  </component>
+</project>
