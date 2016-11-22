@@ -214,9 +214,9 @@ nav > a.home-btn {
 // }
 
 .home nav > a.home-btn {
-	display: block;
+	display: none;
 	@include respond-to(laptop) {
-		display: none;
+		display: block;
 	}
 }
 

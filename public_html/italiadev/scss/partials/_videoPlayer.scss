@@ -74,6 +74,7 @@ main.home #v-header {
 	transform: translateX(-50%);
 	@include respond-to(tablet) {
 		left     : 0;
+		margin: 0 auto;
 		transform: translateX(0);
 	}
 }

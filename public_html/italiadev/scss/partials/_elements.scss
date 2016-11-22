@@ -182,6 +182,10 @@ div.v-mat-pull-container {
 		color      : white;
 		font-family: "Header2", Arial, sans-serif;
 	}
+
+	&:last-of-type .v-mat-pull {
+		text-indent: 0em;
+	}
 }
 
 /*=========================
